@@ -78,7 +78,7 @@ export function SourceDetailPage(props: { namespace: string }) {
   };
 
   return (
-    <div className="flex h-full flex-col overflow-hidden">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       {/* Header bar */}
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur-sm">
         <div className="flex min-w-0 items-center gap-3">

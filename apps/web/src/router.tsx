@@ -2,7 +2,6 @@ import {
   createRouter,
   createRootRoute,
   createRoute,
-  Outlet,
 } from "@tanstack/react-router";
 import { ExecutorProvider } from "@executor/react";
 import { ToolsPage } from "./pages/tools";
@@ -12,15 +11,13 @@ import { SecretsPage } from "./pages/secrets";
 import { Shell } from "./shell";
 
 // ---------------------------------------------------------------------------
-// Root layout
+// Root layout — Shell renders <Outlet /> directly
 // ---------------------------------------------------------------------------
 
 const rootRoute = createRootRoute({
   component: () => (
     <ExecutorProvider>
-      <Shell>
-        <Outlet />
-      </Shell>
+      <Shell />
     </ExecutorProvider>
   ),
 });
