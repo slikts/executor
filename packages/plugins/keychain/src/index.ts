@@ -16,6 +16,7 @@ import { makeKeychainProvider } from "./provider";
 
 export { KeychainError } from "./errors";
 export { makeKeychainProvider } from "./provider";
+export { isSupportedPlatform, displayName } from "./keyring";
 
 // ---------------------------------------------------------------------------
 // Plugin config

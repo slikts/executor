@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@executor/plugin-openapi": "workspace:*",
+    "@executor/sdk": "workspace:*",
     "@executor/react": "workspace:*",
     "@executor/server": "workspace:*",
     "@executor/ui": "workspace:*",

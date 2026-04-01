@@ -4,8 +4,9 @@ import * as SqlClient from "@effect/sql/SqlClient";
 import * as fs from "node:fs";
 
 import { createExecutor, scopeKv } from "@executor/sdk";
-import { makeSqliteKv, makeKvConfig, migrate } from "@executor/storage-file";
+import { makeSqliteKv, makeKvConfig, migrate, makeFileSecretProvider } from "@executor/storage-file";
 import { openApiPlugin, makeKvOperationStore, type OpenApiPluginExtension } from "@executor/plugin-openapi";
+import { makeKeychainProvider, isSupportedPlatform } from "@executor/plugin-keychain";
 
 import type { Executor, ExecutorPlugin } from "@executor/sdk";
 
@@ -33,7 +34,7 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 const DB_PATH = `${DATA_DIR}/data.db`;
 
 // ---------------------------------------------------------------------------
-// Layer — SQLite-backed executor with persistent plugin state
+// Layer — SQLite-backed executor with persistent plugin state + secrets
 // ---------------------------------------------------------------------------
 
 export const ExecutorServiceLive = Layer.effect(
@@ -47,6 +48,14 @@ export const ExecutorServiceLive = Layer.effect(
     // Single KV for everything
     const kv = makeSqliteKv(sql);
     const config = makeKvConfig(kv);
+
+    // Secret providers: keychain first (if available), file fallback
+    // Keychain ops silently return null on unsupported platforms,
+    // so file provider catches anything keychain can't handle.
+    if (isSupportedPlatform()) {
+      yield* config.secrets.addProvider(makeKeychainProvider("executor"));
+    }
+    yield* config.secrets.addProvider(makeFileSecretProvider());
 
     return yield* createExecutor({
       ...config,
