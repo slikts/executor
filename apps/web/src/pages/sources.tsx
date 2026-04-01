@@ -22,10 +22,10 @@ export function SourcesPage() {
     if (tools._tag !== "Success") return [];
     const namespaces = new Map<string, number>();
     for (const tool of tools.value) {
-      const ns = tool.tags.find(
-        (t) => t !== "openapi" && !sourcePlugins.some((p) => p.key === t),
-      );
-      if (ns) {
+      if (!tool.tags.includes("openapi")) continue;
+      // Namespace is the last tag (after op tags and "openapi")
+      const ns = tool.tags[tool.tags.length - 1];
+      if (ns && ns !== "openapi") {
         namespaces.set(ns, (namespaces.get(ns) ?? 0) + 1);
       }
     }

@@ -34,8 +34,9 @@ function SourceList() {
     if (tools._tag !== "Success") return [];
     const namespaces = new Map<string, number>();
     for (const tool of tools.value) {
-      const ns = tool.tags.find((t) => t !== "openapi");
-      if (ns && ns !== tool.tags[0]) {
+      if (!tool.tags.includes("openapi")) continue;
+      const ns = tool.tags[tool.tags.length - 1];
+      if (ns && ns !== "openapi") {
         namespaces.set(ns, (namespaces.get(ns) ?? 0) + 1);
       }
     }
