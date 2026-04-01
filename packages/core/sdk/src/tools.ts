@@ -1,0 +1,106 @@
+import { Context, Effect, Schema } from "effect";
+
+import { ToolId } from "./ids";
+import { ToolNotFoundError, ToolInvocationError } from "./errors";
+import type {
+  ElicitationHandler,
+  ElicitationDeclinedError,
+} from "./elicitation";
+
+// ---------------------------------------------------------------------------
+// Tool models
+// ---------------------------------------------------------------------------
+
+export class ToolMetadata extends Schema.Class<ToolMetadata>("ToolMetadata")({
+  id: ToolId,
+  name: Schema.String,
+  description: Schema.optional(Schema.String),
+  tags: Schema.Array(Schema.String),
+  /** Whether this tool may request elicitation during invocation */
+  mayElicit: Schema.optional(Schema.Boolean),
+}) {}
+
+export class ToolSchema extends Schema.Class<ToolSchema>("ToolSchema")({
+  id: ToolId,
+  inputSchema: Schema.optional(Schema.Unknown),
+  outputSchema: Schema.optional(Schema.Unknown),
+}) {}
+
+export class ToolInvocationResult extends Schema.Class<ToolInvocationResult>(
+  "ToolInvocationResult",
+)({
+  data: Schema.Unknown,
+  error: Schema.NullOr(Schema.Unknown),
+  status: Schema.optional(Schema.Number),
+}) {}
+
+// ---------------------------------------------------------------------------
+// Invocation options
+// ---------------------------------------------------------------------------
+
+export interface InvokeOptions {
+  /** Handler for elicitation requests. If not provided, elicitations are auto-declined. */
+  readonly onElicitation?: ElicitationHandler;
+}
+
+// ---------------------------------------------------------------------------
+// ToolRegistry — unified view across all plugins
+// ---------------------------------------------------------------------------
+
+export class ToolRegistry extends Context.Tag("@executor/sdk/ToolRegistry")<
+  ToolRegistry,
+  {
+    readonly list: (filter?: {
+      readonly tags?: readonly string[];
+      readonly query?: string;
+    }) => Effect.Effect<readonly ToolMetadata[]>;
+
+    readonly schema: (
+      toolId: ToolId,
+    ) => Effect.Effect<ToolSchema, ToolNotFoundError>;
+
+    readonly invoke: (
+      toolId: ToolId,
+      args: unknown,
+      options?: InvokeOptions,
+    ) => Effect.Effect<
+      ToolInvocationResult,
+      ToolNotFoundError | ToolInvocationError | ElicitationDeclinedError
+    >;
+
+    /** Register tools (used by plugins to push tools into the registry) */
+    readonly register: (
+      tools: readonly ToolRegistration[],
+    ) => Effect.Effect<void>;
+
+    /** Unregister tools by id (used by plugins on cleanup) */
+    readonly unregister: (
+      toolIds: readonly ToolId[],
+    ) => Effect.Effect<void>;
+  }
+>() {}
+
+// ---------------------------------------------------------------------------
+// ToolRegistration — what a plugin provides when registering a tool
+// ---------------------------------------------------------------------------
+
+export interface ToolRegistration {
+  readonly id: ToolId;
+  readonly name: string;
+  readonly description?: string;
+  readonly tags?: readonly string[];
+  readonly mayElicit?: boolean;
+  readonly inputSchema?: unknown;
+  readonly outputSchema?: unknown;
+  /**
+   * The tool's invoke function. Receives args and an optional elicitation
+   * handler that it can call to request user input mid-invocation.
+   */
+  readonly invoke: (
+    args: unknown,
+    options?: InvokeOptions,
+  ) => Effect.Effect<
+    ToolInvocationResult,
+    ToolInvocationError | ElicitationDeclinedError
+  >;
+}

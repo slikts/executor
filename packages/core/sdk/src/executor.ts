@@ -1,0 +1,170 @@
+import { Context, Effect } from "effect";
+
+import type { ScopeId, ToolId, SecretId, PolicyId } from "./ids";
+import type { Secret, SecretStore } from "./secrets";
+import type {
+  ToolMetadata,
+  ToolSchema,
+  ToolInvocationResult,
+  ToolRegistry,
+  InvokeOptions,
+} from "./tools";
+import type { Policy, PolicyEngine } from "./policies";
+import type { Scope } from "./scope";
+import type {
+  ExecutorPlugin,
+  PluginExtensions,
+  PluginHandle,
+} from "./plugin";
+import type {
+  ToolNotFoundError,
+  ToolInvocationError,
+  SecretNotFoundError,
+  PolicyDeniedError,
+} from "./errors";
+import type { ElicitationDeclinedError } from "./elicitation";
+
+// ---------------------------------------------------------------------------
+// Executor — the main public API, expands with plugins
+// ---------------------------------------------------------------------------
+
+export type Executor<
+  TPlugins extends readonly ExecutorPlugin<string, object>[] = [],
+> = {
+  readonly scope: Scope;
+
+  readonly tools: {
+    readonly list: (filter?: {
+      readonly tags?: readonly string[];
+      readonly query?: string;
+    }) => Effect.Effect<readonly ToolMetadata[]>;
+    readonly schema: (
+      toolId: string,
+    ) => Effect.Effect<ToolSchema, ToolNotFoundError>;
+    readonly invoke: (
+      toolId: string,
+      args: unknown,
+      options?: InvokeOptions,
+    ) => Effect.Effect<
+      ToolInvocationResult,
+      | ToolNotFoundError
+      | ToolInvocationError
+      | PolicyDeniedError
+      | ElicitationDeclinedError
+    >;
+  };
+
+  readonly policies: {
+    readonly list: () => Effect.Effect<readonly Policy[]>;
+    readonly add: (
+      policy: Omit<Policy, "id" | "createdAt">,
+    ) => Effect.Effect<Policy>;
+    readonly remove: (policyId: string) => Effect.Effect<boolean>;
+  };
+
+  readonly secrets: {
+    readonly list: () => Effect.Effect<readonly Secret[]>;
+    readonly store: (input: {
+      readonly name: string;
+      readonly value: string;
+      readonly purpose?: string;
+    }) => Effect.Effect<Secret>;
+    readonly remove: (
+      secretId: string,
+    ) => Effect.Effect<boolean, SecretNotFoundError>;
+  };
+
+  readonly close: () => Effect.Effect<void>;
+} & PluginExtensions<TPlugins>;
+
+// ---------------------------------------------------------------------------
+// Resolved services — what we need to build an Executor
+// ---------------------------------------------------------------------------
+
+type ToolRegistryService = Context.Tag.Service<typeof ToolRegistry>;
+type SecretStoreService = Context.Tag.Service<typeof SecretStore>;
+type PolicyEngineService = Context.Tag.Service<typeof PolicyEngine>;
+
+export interface ExecutorConfig<
+  TPlugins extends readonly ExecutorPlugin<string, object>[] = [],
+> {
+  readonly scope: Scope;
+  readonly tools: ToolRegistryService;
+  readonly secrets: SecretStoreService;
+  readonly policies: PolicyEngineService;
+  readonly plugins?: TPlugins;
+}
+
+// ---------------------------------------------------------------------------
+// createExecutor — builds an Executor, initializes plugins
+// ---------------------------------------------------------------------------
+
+export const createExecutor = <
+  const TPlugins extends readonly ExecutorPlugin<string, object>[] = [],
+>(
+  config: ExecutorConfig<TPlugins>,
+): Effect.Effect<Executor<TPlugins>, Error> =>
+  Effect.gen(function* () {
+    const { scope, tools, secrets, policies, plugins = [] } = config;
+
+    // Initialize all plugins
+    const handles = new Map<string, PluginHandle<object>>();
+    const extensions: Record<string, object> = {};
+
+    for (const plugin of plugins) {
+      const handle = yield* plugin.init({
+        scopeId: scope.id,
+        tools,
+        secrets,
+      });
+      handles.set(plugin.key, handle);
+      extensions[plugin.key] = handle.extension;
+    }
+
+    const base = {
+      scope,
+
+      tools: {
+        list: (filter?: {
+          readonly tags?: readonly string[];
+          readonly query?: string;
+        }) => tools.list(filter),
+        schema: (toolId: string) => tools.schema(toolId as ToolId),
+        invoke: (toolId: string, args: unknown, options?: InvokeOptions) => {
+          const tid = toolId as ToolId;
+          return Effect.gen(function* () {
+            yield* policies.check({ scopeId: scope.id, toolId: tid });
+            return yield* tools.invoke(tid, args, options);
+          });
+        },
+      },
+
+      policies: {
+        list: () => policies.list(scope.id),
+        add: (policy: Omit<Policy, "id" | "createdAt">) =>
+          policies.add({ ...policy, scopeId: scope.id }),
+        remove: (policyId: string) =>
+          policies.remove(policyId as PolicyId),
+      },
+
+      secrets: {
+        list: () => secrets.list(scope.id),
+        store: (input: {
+          readonly name: string;
+          readonly value: string;
+          readonly purpose?: string;
+        }) => secrets.store({ ...input, scopeId: scope.id }),
+        remove: (secretId: string) =>
+          secrets.remove(secretId as SecretId),
+      },
+
+      close: () =>
+        Effect.gen(function* () {
+          for (const handle of handles.values()) {
+            if (handle.close) yield* handle.close();
+          }
+        }),
+    };
+
+    return Object.assign(base, extensions) as Executor<TPlugins>;
+  });
