@@ -66,7 +66,16 @@ export const makeInMemoryToolRegistry = () => {
         invokers.set(pluginKey, invoker);
       }),
 
-    invoke: (toolId: ToolId, args: unknown, options?: InvokeOptions) =>
+    resolveAnnotations: (toolId: ToolId) =>
+      Effect.gen(function* () {
+        const tool = tools.get(toolId);
+        if (!tool) return undefined;
+        const invoker = invokers.get(tool.pluginKey);
+        if (!invoker?.resolveAnnotations) return undefined;
+        return yield* invoker.resolveAnnotations(toolId);
+      }),
+
+    invoke: (toolId: ToolId, args: unknown, options: InvokeOptions) =>
       Effect.gen(function* () {
         const tool = yield* Effect.fromNullable(tools.get(toolId)).pipe(
           Effect.mapError(() => new ToolNotFoundError({ toolId })),

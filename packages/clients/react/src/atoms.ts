@@ -58,7 +58,7 @@ export const secretStatusAtom = (scopeId: ScopeId, secretId: SecretId) =>
 // Mutation atoms
 // ---------------------------------------------------------------------------
 
-export const invokeTool = ExecutorApiClient.mutation("tools", "invoke");
+
 
 export const setSecret = ExecutorApiClient.mutation("secrets", "set");
 

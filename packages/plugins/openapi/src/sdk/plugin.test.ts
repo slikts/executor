@@ -11,8 +11,10 @@ import {
 } from "@effect/platform";
 import { NodeHttpServer } from "@effect/platform-node";
 
-import { createExecutor, makeTestConfig, SecretId } from "@executor/sdk";
+import { createExecutor, makeTestConfig, SecretId, type InvokeOptions } from "@executor/sdk";
 import { openApiPlugin } from "./plugin";
+
+const autoApprove: InvokeOptions = { onElicitation: "accept-all" };
 
 // ---------------------------------------------------------------------------
 // Define a test API with Effect HttpApi
@@ -151,6 +153,7 @@ layer(TestLayer)("OpenAPI Plugin", (it) => {
       const result = yield* executor.tools.invoke(
         "authed.items.echoHeaders",
         {},
+        autoApprove,
       );
 
       expect(result.error).toBeNull();
@@ -185,7 +188,7 @@ layer(TestLayer)("OpenAPI Plugin", (it) => {
 
       // Invoke — should fail with a clear error about the missing secret
       const error = yield* Effect.flip(
-        executor.tools.invoke("noauth.items.listItems", {}),
+        executor.tools.invoke("noauth.items.listItems", {}, autoApprove),
       );
 
       expect(error._tag).toBe("ToolInvocationError");
@@ -240,7 +243,7 @@ layer(TestLayer)("OpenAPI Plugin", (it) => {
         baseUrl: "",
       });
 
-      const result = yield* executor.tools.invoke("test.items.listItems", {});
+      const result = yield* executor.tools.invoke("test.items.listItems", {}, autoApprove);
       expect(result.error).toBeNull();
       expect(result.data).toEqual(ITEMS);
     }),
@@ -267,7 +270,7 @@ layer(TestLayer)("OpenAPI Plugin", (it) => {
 
       const result = yield* executor.tools.invoke("test.items.getItem", {
         itemId: "2",
-      });
+      }, autoApprove);
       expect(result.error).toBeNull();
       expect(result.data).toEqual({ id: 2, name: "Gadget" });
     }),

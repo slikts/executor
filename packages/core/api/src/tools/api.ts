@@ -4,9 +4,6 @@ import {
   ScopeId,
   ToolId,
   ToolNotFoundError,
-  ToolInvocationError,
-  PolicyDeniedError,
-  ElicitationDeclinedError,
 } from "@executor/sdk";
 
 // ---------------------------------------------------------------------------
@@ -35,31 +32,12 @@ const ToolSchemaResponse = Schema.Struct({
   outputSchema: Schema.optional(Schema.Unknown),
 });
 
-const ToolInvokePayload = Schema.Struct({
-  args: Schema.Unknown,
-});
-
-const ToolInvokeResponse = Schema.Struct({
-  data: Schema.Unknown,
-  error: Schema.NullOr(Schema.Unknown),
-  status: Schema.optional(Schema.Number),
-});
-
 // ---------------------------------------------------------------------------
 // Error schemas with HTTP status annotations
 // ---------------------------------------------------------------------------
 
 const ToolNotFound = ToolNotFoundError.annotations(
   HttpApiSchema.annotations({ status: 404 }),
-);
-const ToolInvocation = ToolInvocationError.annotations(
-  HttpApiSchema.annotations({ status: 500 }),
-);
-const PolicyDenied = PolicyDeniedError.annotations(
-  HttpApiSchema.annotations({ status: 403 }),
-);
-const ElicitationDeclined = ElicitationDeclinedError.annotations(
-  HttpApiSchema.annotations({ status: 422 }),
 );
 
 // ---------------------------------------------------------------------------
@@ -75,14 +53,5 @@ export class ToolsApi extends HttpApiGroup.make("tools")
     HttpApiEndpoint.get("schema")`/scopes/${scopeIdParam}/tools/${toolIdParam}/schema`
       .addSuccess(ToolSchemaResponse)
       .addError(ToolNotFound),
-  )
-  .add(
-    HttpApiEndpoint.post("invoke")`/scopes/${scopeIdParam}/tools/${toolIdParam}/invoke`
-      .setPayload(ToolInvokePayload)
-      .addSuccess(ToolInvokeResponse)
-      .addError(ToolNotFound)
-      .addError(ToolInvocation)
-      .addError(PolicyDenied)
-      .addError(ElicitationDeclined),
   )
   .prefix("/v1") {}

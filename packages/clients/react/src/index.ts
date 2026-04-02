@@ -28,7 +28,6 @@ export {
   sourceAtom,
   secretsAtom,
   secretStatusAtom,
-  invokeTool,
   setSecret,
   resolveSecret,
   removeSecret,

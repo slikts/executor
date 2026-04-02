@@ -278,13 +278,36 @@ export const invoke = Effect.fn("OpenApi.invoke")(function* (
 // ToolInvoker — bridges operation store + HTTP client into SDK invoker
 // ---------------------------------------------------------------------------
 
+const SAFE_METHODS = new Set(["get", "head", "options"]);
+
+/**
+ * Derive tool annotations from the HTTP method and path.
+ */
+export const annotationsForOperation = (method: string, pathTemplate: string): {
+  requiresApproval?: boolean;
+  approvalDescription?: string;
+} => {
+  if (SAFE_METHODS.has(method.toLowerCase())) return {};
+  return {
+    requiresApproval: true,
+    approvalDescription: `${method.toUpperCase()} ${pathTemplate}`,
+  };
+};
+
 export const makeOpenApiInvoker = (opts: {
   readonly operationStore: OpenApiOperationStore;
   readonly httpClientLayer: Layer.Layer<HttpClient.HttpClient>;
   readonly secrets: { readonly resolve: (secretId: SecretId, scopeId: ScopeId) => Effect.Effect<string, unknown> };
   readonly scopeId: ScopeId;
 }): ToolInvoker => ({
-  invoke: (toolId: ToolId, args: unknown, _options) =>
+  resolveAnnotations: (toolId: ToolId) =>
+    Effect.gen(function* () {
+      const entry = yield* opts.operationStore.get(toolId);
+      if (!entry) return undefined;
+      return annotationsForOperation(entry.binding.method, entry.binding.pathTemplate);
+    }),
+
+  invoke: (toolId: ToolId, args: unknown) =>
     Effect.gen(function* () {
       const entry = yield* opts.operationStore.get(toolId);
       if (!entry) {

@@ -125,7 +125,7 @@ export const formatPausedExecution = (paused: PausedExecution): {
 
 const makeFullInvoker = (
   executor: Executor,
-  invokeOptions?: InvokeOptions,
+  invokeOptions: InvokeOptions,
 ): SandboxToolInvoker => {
   const base = makeExecutorToolInvoker(executor, { invokeOptions });
   return {
@@ -155,7 +155,7 @@ export type ExecutionEngine = {
    */
   readonly execute: (
     code: string,
-    options?: { readonly onElicitation?: ElicitationHandler },
+    options: { readonly onElicitation: ElicitationHandler },
   ) => Promise<ExecuteResult>;
 
   /**
@@ -188,7 +188,7 @@ export const createExecutionEngine = (config: ExecutionEngineConfig): ExecutionE
   return {
     execute: async (code, options) => {
       const invoker = makeFullInvoker(executor, {
-        onElicitation: options?.onElicitation,
+        onElicitation: options.onElicitation,
       });
       return runEffect(codeExecutor.execute(code, invoker));
     },

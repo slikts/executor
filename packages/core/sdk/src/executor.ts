@@ -25,7 +25,17 @@ import type {
   SecretResolutionError,
   PolicyDeniedError,
 } from "./errors";
-import type { ElicitationDeclinedError } from "./elicitation";
+import {
+  FormElicitation,
+  ElicitationDeclinedError,
+  ElicitationResponse,
+  type ElicitationHandler,
+} from "./elicitation";
+
+const resolveElicitationHandler = (options: InvokeOptions): ElicitationHandler =>
+  options.onElicitation === "accept-all"
+    ? () => Effect.succeed(new ElicitationResponse({ action: "accept" }))
+    : options.onElicitation;
 
 // ---------------------------------------------------------------------------
 // Executor — the main public API, expands with plugins
@@ -46,7 +56,7 @@ export type Executor<
     readonly invoke: (
       toolId: string,
       args: unknown,
-      options?: InvokeOptions,
+      options: InvokeOptions,
     ) => Effect.Effect<
       ToolInvocationResult,
       | ToolNotFoundError
@@ -149,10 +159,31 @@ export const createExecutor = <
         list: (filter?: ToolListFilter) => tools.list(filter),
         schema: (toolId: string) => tools.schema(toolId as ToolId),
         definitions: () => tools.definitions(),
-        invoke: (toolId: string, args: unknown, options?: InvokeOptions) => {
+        invoke: (toolId: string, args: unknown, options: InvokeOptions) => {
           const tid = toolId as ToolId;
           return Effect.gen(function* () {
             yield* policies.check({ scopeId: scope.id, toolId: tid });
+
+            // Dynamically resolve annotations from the plugin
+            const annotations = yield* tools.resolveAnnotations(tid);
+            if (annotations?.requiresApproval) {
+              const handler = resolveElicitationHandler(options);
+              const response = yield* handler({
+                toolId: tid,
+                args,
+                request: new FormElicitation({
+                  message: annotations.approvalDescription ?? `Approve ${toolId}?`,
+                  requestedSchema: {},
+                }),
+              });
+              if (response.action !== "accept") {
+                return yield* new ElicitationDeclinedError({
+                  toolId: tid,
+                  action: response.action,
+                });
+              }
+            }
+
             return yield* tools.invoke(tid, args, options);
           });
         },

@@ -12,6 +12,8 @@ import {
 } from "../tools";
 import {
   ElicitationDeclinedError,
+  ElicitationResponse,
+  type ElicitationHandler,
   type ElicitationRequest,
 } from "../elicitation";
 import { definePlugin, type PluginContext } from "../plugin";
@@ -192,13 +194,16 @@ const makeInvoker = (
       },
       elicit: (request) =>
         Effect.gen(function* () {
-          const handler = options?.onElicitation;
-          if (!handler) {
+          const raw = options?.onElicitation;
+          if (!raw) {
             return yield* new ElicitationDeclinedError({
               toolId,
               action: "decline",
             });
           }
+          const handler: ElicitationHandler = raw === "accept-all"
+            ? () => Effect.succeed(new ElicitationResponse({ action: "accept" }))
+            : raw;
           const response = yield* handler({
             toolId,
             args,

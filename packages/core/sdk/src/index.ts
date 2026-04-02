@@ -17,6 +17,7 @@ export {
   ToolInvocationResult,
   ToolRegistry,
   ToolRegistration,
+  ToolAnnotations,
   ToolListFilter,
   type ToolInvoker,
   type InvokeOptions,

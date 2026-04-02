@@ -28,11 +28,5 @@ export const ToolsHandlers = HttpApiBuilder.group(
           const executor = yield* ExecutorService;
           return yield* executor.tools.schema(path.toolId);
         }),
-      )
-      .handle("invoke", ({ path, payload }) =>
-        Effect.gen(function* () {
-          const executor = yield* ExecutorService;
-          return yield* executor.tools.invoke(path.toolId, payload.args);
-        }),
       ),
 );

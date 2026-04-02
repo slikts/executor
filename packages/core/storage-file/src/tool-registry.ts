@@ -99,7 +99,16 @@ export const makeKvToolRegistry = (
     registerInvoker: (pluginKey: string, invoker: ToolInvoker) =>
       Effect.sync(() => { invokers.set(pluginKey, invoker); }),
 
-    invoke: (toolId: ToolId, args: unknown, options?: InvokeOptions) =>
+    resolveAnnotations: (toolId: ToolId) =>
+      Effect.gen(function* () {
+        const tool = yield* getTool(toolId);
+        if (!tool) return undefined;
+        const invoker = invokers.get(tool.pluginKey);
+        if (!invoker?.resolveAnnotations) return undefined;
+        return yield* invoker.resolveAnnotations(toolId);
+      }),
+
+    invoke: (toolId: ToolId, args: unknown, options: InvokeOptions) =>
       Effect.gen(function* () {
         const tool = yield* getTool(toolId);
         if (!tool) return yield* new ToolNotFoundError({ toolId });

@@ -11,6 +11,13 @@ import type {
 // Tool models
 // ---------------------------------------------------------------------------
 
+export class ToolAnnotations extends Schema.Class<ToolAnnotations>("ToolAnnotations")({
+  /** Whether this tool requires user approval before execution */
+  requiresApproval: Schema.optional(Schema.Boolean),
+  /** Human-readable description shown in the approval prompt */
+  approvalDescription: Schema.optional(Schema.String),
+}) {}
+
 export class ToolMetadata extends Schema.Class<ToolMetadata>("ToolMetadata")({
   id: ToolId,
   pluginKey: Schema.String,
@@ -51,8 +58,8 @@ export class ToolListFilter extends Schema.Class<ToolListFilter>("ToolListFilter
 // ---------------------------------------------------------------------------
 
 export interface InvokeOptions {
-  /** Handler for elicitation requests. If not provided, elicitations are auto-declined. */
-  readonly onElicitation?: ElicitationHandler;
+  /** Handler for elicitation requests, or "accept-all" to auto-approve everything. */
+  readonly onElicitation: ElicitationHandler | "accept-all";
 }
 
 // ---------------------------------------------------------------------------
@@ -71,7 +78,7 @@ export class ToolRegistry extends Context.Tag("@executor/sdk/ToolRegistry")<
     readonly invoke: (
       toolId: ToolId,
       args: unknown,
-      options?: InvokeOptions,
+      options: InvokeOptions,
     ) => Effect.Effect<
       ToolInvocationResult,
       ToolNotFoundError | ToolInvocationError | ElicitationDeclinedError
@@ -100,6 +107,13 @@ export class ToolRegistry extends Context.Tag("@executor/sdk/ToolRegistry")<
       invoker: ToolInvoker,
     ) => Effect.Effect<void>;
 
+    /**
+     * Resolve annotations for a tool by delegating to the plugin's invoker.
+     */
+    readonly resolveAnnotations: (
+      toolId: ToolId,
+    ) => Effect.Effect<ToolAnnotations | undefined>;
+
     /** Register tools (used by plugins to push tools into the registry) */
     readonly register: (
       tools: readonly ToolRegistration[],
@@ -125,11 +139,16 @@ export interface ToolInvoker {
   readonly invoke: (
     toolId: ToolId,
     args: unknown,
-    options?: InvokeOptions,
+    options: InvokeOptions,
   ) => Effect.Effect<
     ToolInvocationResult,
     ToolInvocationError | ElicitationDeclinedError
   >;
+
+  /** Dynamically compute annotations for a tool (e.g. approval requirements). */
+  readonly resolveAnnotations?: (
+    toolId: ToolId,
+  ) => Effect.Effect<ToolAnnotations | undefined>;
 }
 
 // ---------------------------------------------------------------------------

@@ -5,6 +5,63 @@ import { createServerHandlers } from "@executor/server";
 
 const handlersPromise = createServerHandlers();
 
+// Build a Web Request from a Node IncomingMessage
+const toWebRequest = async (
+  req: import("http").IncomingMessage,
+): Promise<Request> => {
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) {
+      for (const v of value) headers.append(key, v);
+    } else {
+      headers.set(key, value);
+    }
+  }
+
+  const host = req.headers.host ?? "localhost";
+  const url = `http://${host}${req.url}`;
+
+  return new Request(url, {
+    method: req.method,
+    headers,
+    body:
+      req.method !== "GET" && req.method !== "HEAD"
+        ? (await new Promise<Buffer>((resolve) => {
+            const chunks: Buffer[] = [];
+            req.on("data", (c: Buffer) => chunks.push(c));
+            req.on("end", () => resolve(Buffer.concat(chunks)));
+          }) as unknown as BodyInit)
+        : undefined,
+    duplex: "half" as const,
+  });
+};
+
+// Pipe a Web Response back to a Node ServerResponse, streaming if needed
+const sendWebResponse = async (
+  webRes: Response,
+  nodeRes: import("http").ServerResponse,
+) => {
+  nodeRes.statusCode = webRes.status;
+  webRes.headers.forEach((value, key) => nodeRes.setHeader(key, value));
+
+  if (!webRes.body) {
+    nodeRes.end();
+    return;
+  }
+
+  const reader = webRes.body.getReader();
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      nodeRes.write(value);
+    }
+  } finally {
+    nodeRes.end();
+  }
+};
+
 export default defineConfig({
   plugins: [
     react(),
@@ -24,50 +81,13 @@ export default defineConfig({
           if (!isApi && !isMcp) return next();
 
           const handlers = await handlersPromise;
-
-          // Build a standard Request from the Node HTTP request
-          const headers = new Headers();
-          for (const [key, value] of Object.entries(req.headers)) {
-            if (value === undefined) continue;
-            if (Array.isArray(value)) {
-              for (const v of value) headers.append(key, v);
-            } else {
-              headers.set(key, value);
-            }
-          }
-
-          const host = req.headers.host ?? "localhost";
-          const request = new Request(`http://${host}${url}`, {
-            method: req.method,
-            headers,
-            body:
-              req.method !== "GET" && req.method !== "HEAD"
-                ? (await new Promise<Uint8Array>((resolve) => {
-                    const chunks: Uint8Array[] = [];
-                    req.on("data", (c: Uint8Array) => chunks.push(c));
-                    req.on("end", () => {
-                      const total = chunks.reduce((n, c) => n + c.length, 0);
-                      const buf = new Uint8Array(total);
-                      let offset = 0;
-                      for (const c of chunks) {
-                        buf.set(c, offset);
-                        offset += c.length;
-                      }
-                      resolve(buf);
-                    });
-                  }) as unknown as BodyInit)
-                : undefined,
-          });
+          const request = await toWebRequest(req);
 
           const response = isMcp
             ? await handlers.mcp.handleRequest(request)
             : await handlers.api.handler(request);
 
-          res.statusCode = response.status;
-          response.headers.forEach((value, key) => res.setHeader(key, value));
-
-          const body = await response.arrayBuffer();
-          res.end(Buffer.from(body));
+          await sendWebResponse(response, res);
         });
       },
     },

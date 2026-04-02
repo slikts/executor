@@ -8,14 +8,14 @@ import type { SandboxToolInvoker } from "@executor/codemode-core";
  */
 export const makeExecutorToolInvoker = (
   executor: Executor,
-  options?: { readonly invokeOptions?: InvokeOptions },
+  options: { readonly invokeOptions: InvokeOptions },
 ): SandboxToolInvoker => ({
   invoke: ({ path, args }) =>
     Effect.gen(function* () {
       const result = yield* executor.tools.invoke(
         path as ToolId,
         args,
-        options?.invokeOptions,
+        options.invokeOptions,
       );
       if (result.error !== null && result.error !== undefined) {
         return yield* Effect.fail(result.error);

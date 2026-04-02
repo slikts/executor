@@ -11,8 +11,11 @@ import {
   ElicitationResponse,
   type MemoryToolContext,
   type ToolId,
+  type InvokeOptions,
   SecretId,
 } from "./index";
+
+const autoApprove: InvokeOptions = { onElicitation: "accept-all" };
 
 // ---------------------------------------------------------------------------
 // Schemas
@@ -95,7 +98,7 @@ describe("SDK Executor", () => {
         }),
       );
 
-      const result = yield* executor.tools.invoke("inventory.getItem", { itemId: 42 });
+      const result = yield* executor.tools.invoke("inventory.getItem", { itemId: 42 }, autoApprove);
       expect(result.data).toEqual({ id: 42, name: "Widget" });
       expect(result.error).toBeNull();
     }),
@@ -121,12 +124,12 @@ describe("SDK Executor", () => {
       );
 
       const exit = yield* executor.tools
-        .invoke("inventory.getItem", { itemId: "not-a-number" })
+        .invoke("inventory.getItem", { itemId: "not-a-number" }, autoApprove)
         .pipe(Effect.exit);
 
       expect(Exit.isFailure(exit)).toBe(true);
       const error = yield* Effect.flip(
-        executor.tools.invoke("inventory.getItem", { itemId: "not-a-number" }),
+        executor.tools.invoke("inventory.getItem", { itemId: "not-a-number" }, autoApprove),
       );
       expect(error._tag).toBe("ToolInvocationError");
     }),
@@ -136,7 +139,7 @@ describe("SDK Executor", () => {
     Effect.gen(function* () {
       const executor = yield* createExecutor(makeTestConfig());
       const error = yield* Effect.flip(
-        executor.tools.invoke("nonexistent", {}),
+        executor.tools.invoke("nonexistent", {}, autoApprove),
       );
       expect(error._tag).toBe("ToolNotFoundError");
     }),
@@ -204,7 +207,7 @@ describe("SDK Executor", () => {
       expect(tools).toHaveLength(1);
       expect(tools[0]!.name).toBe("dynamicTool");
 
-      const result = yield* executor.tools.invoke("runtime.dynamicTool", {});
+      const result = yield* executor.tools.invoke("runtime.dynamicTool", {}, autoApprove);
       expect(result.data).toBe("dynamic result");
     }),
   );
@@ -352,7 +355,7 @@ describe("SDK Executor", () => {
       );
 
       const error = yield* Effect.flip(
-        executor.tools.invoke("auth.login", {}),
+        executor.tools.invoke("auth.login", {}, autoApprove),
       );
       expect(error._tag).toBe("ElicitationDeclinedError");
     }),
@@ -471,7 +474,7 @@ describe("SDK Executor", () => {
       const result = yield* executor.tools.invoke("vault.rotateKey", {
         secretName: "DB_PASSWORD",
         newValue: "correct-horse-battery-staple",
-      });
+      }, autoApprove);
 
       // 4. Verify the tool returned old and new values
       expect(result.data).toEqual({
