@@ -112,7 +112,7 @@ const makeProvider = (filePath: string): SecretProvider => ({
   list: () =>
     Effect.sync(() => {
       const data = readAuthFile(filePath);
-      return Object.keys(data);
+      return Object.keys(data).map((k) => ({ id: k, name: k }));
     }),
 });
 

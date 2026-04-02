@@ -46,10 +46,36 @@ export const makeKvSecretStore = (refsKv: ScopedKv) => {
   return {
     list: (scopeId: ScopeId) =>
       Effect.gen(function* () {
+        // Stored refs from KV
         const entries = yield* refsKv.list();
-        return entries
+        const storedRefs = entries
           .map((e) => decodeRef(e.value))
           .filter((r) => r.scopeId === scopeId);
+
+        const seenIds = new Set(storedRefs.map((r) => r.id));
+
+        // Merge in secrets from providers that can enumerate
+        const providerRefs: SecretRef[] = [];
+        for (const provider of providers) {
+          if (!provider.list) continue;
+          const items = yield* provider.list().pipe(Effect.orElseSucceed(() => [] as { id: string; name: string }[]));
+          for (const item of items) {
+            if (seenIds.has(item.id as SecretId)) continue;
+            seenIds.add(item.id as SecretId);
+            providerRefs.push(
+              new SecretRef({
+                id: SecretId.make(item.id),
+                scopeId,
+                name: item.name,
+                provider: Option.some(provider.key),
+                purpose: undefined,
+                createdAt: new Date(),
+              }),
+            );
+          }
+        }
+
+        return [...storedRefs, ...providerRefs];
       }),
 
     get: (secretId: SecretId) =>

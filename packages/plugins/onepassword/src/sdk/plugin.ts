@@ -1,5 +1,4 @@
 import { Effect, Schema } from "effect";
-import type { Client } from "@1password/sdk";
 
 import {
   definePlugin,
@@ -13,7 +12,7 @@ import {
 import { OnePasswordConfig, Vault, ConnectionStatus } from "./types";
 import type { OnePasswordAuth } from "./types";
 import { OnePasswordError } from "./errors";
-import { make1PClient, withTimeout, type ResolvedAuth } from "./client";
+import { makeOnePasswordClient, type ResolvedAuth, type OnePasswordClient } from "./client";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -84,9 +83,9 @@ const getClientFromConfig = (
   config: OnePasswordConfig,
   ctx: PluginContext,
   timeoutMs: number,
-): Effect.Effect<Client, OnePasswordError> =>
+): Effect.Effect<OnePasswordClient, OnePasswordError> =>
   resolveAuth(config.auth, ctx).pipe(
-    Effect.flatMap((resolved) => make1PClient(resolved, timeoutMs)),
+    Effect.flatMap((resolved) => makeOnePasswordClient(resolved, timeoutMs)),
   );
 
 // ---------------------------------------------------------------------------
@@ -111,27 +110,36 @@ const makeProvider = (
           : `op://${config.vaultId}/${secretId}/${CREDENTIAL_FIELD}`;
 
         return getClientFromConfig(config, ctx, timeoutMs).pipe(
-          Effect.flatMap((client) =>
-            Effect.tryPromise({
-              try: () =>
-                withTimeout(
-                  "secret resolution",
-                  () => client.secrets.resolve(uri),
-                  timeoutMs,
-                ),
-              catch: (cause) =>
-                new OnePasswordError({
-                  operation: "secret resolution",
-                  message:
-                    cause instanceof Error ? cause.message : String(cause),
-                }),
-            }),
+          Effect.flatMap((op) =>
+            op.use(
+              (client) => client.secrets.resolve(uri),
+              "secret resolution",
+            ),
           ),
           Effect.map((v): string | null => v),
           Effect.orElseSucceed(() => null),
         );
       }),
       Effect.orElseSucceed(() => null),
+    ),
+
+  list: () =>
+    getConfig().pipe(
+      Effect.flatMap((config) => {
+        if (!config) return Effect.succeed([] as { id: string; name: string }[]);
+        return getClientFromConfig(config, ctx, timeoutMs).pipe(
+          Effect.flatMap((op) =>
+            op.use(
+              (client) => client.items.list(config.vaultId),
+              "item listing",
+            ),
+          ),
+          Effect.map((items) =>
+            items.map((item) => ({ id: item.id, name: item.title })),
+          ),
+        );
+      }),
+      Effect.orElseSucceed(() => [] as { id: string; name: string }[]),
     ),
 });
 
@@ -191,10 +199,8 @@ export const onepasswordPlugin = (
     key: PLUGIN_KEY,
     init: (ctx) =>
       Effect.gen(function* () {
-        // Config accessor (reads from KV each time — always fresh)
         const getConfig = () => loadConfig(kv);
 
-        // Register as secret provider
         yield* ctx.secrets.addProvider(
           makeProvider(getConfig, ctx, timeoutMs),
         );
@@ -216,24 +222,11 @@ export const onepasswordPlugin = (
                   error: "Not configured",
                 });
               }
-              // Try to list vaults as a health check
-              const client = yield* getClientFromConfig(config, ctx, timeoutMs);
-              const vaults = yield* Effect.tryPromise({
-                try: () =>
-                  withTimeout(
-                    "connection check",
-                    () => client.vaults.list({ decryptDetails: true }),
-                    timeoutMs,
-                  ),
-                catch: (cause) =>
-                  new OnePasswordError({
-                    operation: "connection check",
-                    message:
-                      cause instanceof Error
-                        ? cause.message
-                        : String(cause),
-                  }),
-              });
+              const op = yield* getClientFromConfig(config, ctx, timeoutMs);
+              const vaults = yield* op.use(
+                (client) => client.vaults.list({ decryptDetails: true }),
+                "connection check",
+              );
               const vault = vaults.find((v) => v.id === config.vaultId);
               return new ConnectionStatus({
                 connected: true,
@@ -244,23 +237,11 @@ export const onepasswordPlugin = (
           listVaults: (auth) =>
             Effect.gen(function* () {
               const resolved = yield* resolveAuth(auth, ctx);
-              const client = yield* make1PClient(resolved, timeoutMs);
-              const vaults = yield* Effect.tryPromise({
-                try: () =>
-                  withTimeout(
-                    "vault listing",
-                    () => client.vaults.list({ decryptDetails: true }),
-                    timeoutMs,
-                  ),
-                catch: (cause) =>
-                  new OnePasswordError({
-                    operation: "vault listing",
-                    message:
-                      cause instanceof Error
-                        ? cause.message
-                        : String(cause),
-                  }),
-              });
+              const op = yield* makeOnePasswordClient(resolved, timeoutMs);
+              const vaults = yield* op.use(
+                (client) => client.vaults.list({ decryptDetails: true }),
+                "vault listing",
+              );
               return vaults
                 .map((v) => new Vault({ id: v.id, name: v.title }))
                 .sort((a, b) => a.name.localeCompare(b.name));
@@ -275,23 +256,11 @@ export const onepasswordPlugin = (
                   message: "1Password is not configured",
                 });
               }
-              const client = yield* getClientFromConfig(config, ctx, timeoutMs);
-              return yield* Effect.tryPromise({
-                try: () =>
-                  withTimeout(
-                    "secret resolution",
-                    () => client.secrets.resolve(uri),
-                    timeoutMs,
-                  ),
-                catch: (cause) =>
-                  new OnePasswordError({
-                    operation: "secret resolution",
-                    message:
-                      cause instanceof Error
-                        ? cause.message
-                        : String(cause),
-                  }),
-              });
+              const op = yield* getClientFromConfig(config, ctx, timeoutMs);
+              return yield* op.use(
+                (client) => client.secrets.resolve(uri),
+                "secret resolution",
+              );
             }),
         };
 

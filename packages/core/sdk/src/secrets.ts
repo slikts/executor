@@ -18,8 +18,8 @@ export interface SecretProvider {
   readonly set?: (key: string, value: string) => Effect.Effect<void>;
   /** Delete a secret. Only called on writable providers. */
   readonly delete?: (key: string) => Effect.Effect<boolean>;
-  /** List known secret keys. Optional — not all providers can enumerate. */
-  readonly list?: () => Effect.Effect<readonly string[]>;
+  /** List known secret entries. Optional — not all providers can enumerate. */
+  readonly list?: () => Effect.Effect<readonly { id: string; name: string }[]>;
 }
 
 // ---------------------------------------------------------------------------

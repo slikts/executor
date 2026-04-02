@@ -16,7 +16,7 @@ export const makeInMemorySecretProvider = (): SecretProvider => {
     get: (key) => Effect.sync(() => values.get(key) ?? null),
     set: (key, value) => Effect.sync(() => { values.set(key, value); }),
     delete: (key) => Effect.sync(() => values.delete(key)),
-    list: () => Effect.sync(() => [...values.keys()]),
+    list: () => Effect.sync(() => [...values.keys()].map((k) => ({ id: k, name: k }))),
   };
 };
 
