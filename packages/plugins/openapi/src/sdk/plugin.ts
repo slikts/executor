@@ -84,6 +84,37 @@ const AddSourceOutputSchema = Schema.Struct({
   toolCount: Schema.Number,
 });
 
+/** Rewrite OpenAPI `#/components/schemas/X` refs to standard `#/$defs/X`. */
+const normalizeOpenApiRefs = (node: unknown): unknown => {
+  if (node == null || typeof node !== "object") return node;
+  if (Array.isArray(node)) {
+    let changed = false;
+    const out = node.map((item) => {
+      const n = normalizeOpenApiRefs(item);
+      if (n !== item) changed = true;
+      return n;
+    });
+    return changed ? out : node;
+  }
+
+  const obj = node as Record<string, unknown>;
+
+  if (typeof obj.$ref === "string") {
+    const match = obj.$ref.match(/^#\/components\/schemas\/(.+)$/);
+    if (match) return { ...obj, $ref: `#/$defs/${match[1]}` };
+    return obj;
+  }
+
+  let changed = false;
+  const result: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    const n = normalizeOpenApiRefs(v);
+    if (n !== v) changed = true;
+    result[k] = n;
+  }
+  return changed ? result : obj;
+};
+
 const toRegistration = (
   def: ToolDefinition,
   namespace: string,
@@ -101,8 +132,8 @@ const toRegistration = (
     sourceId: namespace,
     name: def.toolPath,
     description,
-    inputSchema: Option.getOrUndefined(op.inputSchema),
-    outputSchema: Option.getOrUndefined(op.outputSchema),
+    inputSchema: normalizeOpenApiRefs(Option.getOrUndefined(op.inputSchema)),
+    outputSchema: normalizeOpenApiRefs(Option.getOrUndefined(op.outputSchema)),
   };
 };
 
@@ -185,7 +216,12 @@ export const openApiPlugin = (options?: {
                 .replace(/[^a-z0-9]+/g, "_");
 
             if (doc.components?.schemas) {
-              yield* ctx.tools.registerDefinitions(doc.components.schemas);
+              // Normalize OpenAPI $ref format to standard JSON Schema $defs
+              const defs: Record<string, unknown> = {};
+              for (const [k, v] of Object.entries(doc.components.schemas)) {
+                defs[k] = normalizeOpenApiRefs(v);
+              }
+              yield* ctx.tools.registerDefinitions(defs);
             }
 
             const baseUrl = config.baseUrl ?? resolveBaseUrl(result.servers);

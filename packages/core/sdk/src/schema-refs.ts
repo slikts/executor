@@ -3,31 +3,23 @@
 //
 // Core logic for deduplicating shared definitions across tools.
 // Used by any ToolRegistry implementation (in-memory, database-backed, etc.)
+//
+// Only handles standard JSON Schema formats ($defs, definitions).
+// Plugin-specific formats (e.g. OpenAPI components/schemas) must be
+// normalized by the plugin before calling registerDefinitions/register.
 // ---------------------------------------------------------------------------
 
 type Obj = Record<string, unknown>;
 
-/** Canonical $ref prefix used internally. */
-const CANONICAL_PREFIX = "#/$defs/";
+/** Standard JSON Schema $ref patterns. */
+const REF_PATTERN = /^#\/(?:\$defs|definitions)\/(.+)$/;
 
-/** Patterns we accept as equivalent $ref pointers into shared definitions. */
-const REF_PATTERN = /^#\/(?:\$defs|definitions|components\/schemas)\/(.+)$/;
-
-/** Extract the definition name from a $ref pointer */
+/** Extract the definition name from a standard $ref pointer. */
 const parseRefName = (ref: string): string | undefined =>
   ref.match(REF_PATTERN)?.[1];
 
 /**
- * Normalize a single `$ref` string to canonical `#/$defs/<name>` form.
- * Returns the string unchanged if it doesn't match a known pattern.
- */
-const normalizeRef = (ref: string): string => {
-  const name = parseRefName(ref);
-  return name ? `${CANONICAL_PREFIX}${name}` : ref;
-};
-
-/**
- * Recursively rewrite all `$ref` pointers in a schema to canonical form.
+ * Recursively rewrite `#/definitions/<name>` pointers to `#/$defs/<name>`.
  * Returns the input unchanged if no rewrites are needed.
  */
 export const normalizeRefs = (node: unknown): unknown => {
@@ -44,10 +36,13 @@ export const normalizeRefs = (node: unknown): unknown => {
 
   const obj = node as Obj;
 
-  // Fast path: $ref node — only rewrite the pointer, shallow copy rest
   if (typeof obj.$ref === "string") {
-    const normalized = normalizeRef(obj.$ref);
-    return normalized !== obj.$ref ? { ...obj, $ref: normalized } : obj;
+    const name = parseRefName(obj.$ref);
+    if (name) {
+      const canonical = `#/$defs/${name}`;
+      return canonical !== obj.$ref ? { ...obj, $ref: canonical } : obj;
+    }
+    return obj;
   }
 
   let changed = false;
@@ -61,7 +56,7 @@ export const normalizeRefs = (node: unknown): unknown => {
 };
 
 /**
- * Extract `$defs`, `definitions`, and `components.schemas` from a JSON Schema,
+ * Extract `$defs` and `definitions` from a JSON Schema,
  * returning { stripped, defs } where `stripped` is the schema without local
  * definitions and `defs` is a flat map of definition name → schema.
  */
@@ -74,38 +69,19 @@ export const hoistDefinitions = (
   const obj = schema as Obj;
   const defs: Record<string, unknown> = {};
 
-  // $defs (JSON Schema draft 2019+, Effect)
   if (obj.$defs && typeof obj.$defs === "object") {
     for (const [k, v] of Object.entries(obj.$defs as Obj)) {
       defs[k] = v;
     }
   }
 
-  // definitions (JSON Schema draft-07)
   if (obj.definitions && typeof obj.definitions === "object") {
     for (const [k, v] of Object.entries(obj.definitions as Obj)) {
       defs[k] = v;
     }
   }
 
-  // components.schemas (OpenAPI)
-  const components = obj.components as Obj | undefined;
-  if (components?.schemas && typeof components.schemas === "object") {
-    for (const [k, v] of Object.entries(components.schemas as Obj)) {
-      defs[k] = v;
-    }
-  }
-
-  // Build stripped schema without the definition containers
-  const { $defs: _a, definitions: _b, components: _c, ...rest } = obj;
-  // If components had other keys besides schemas, preserve them
-  if (components && typeof components === "object") {
-    const { schemas: _s, ...otherComponents } = components;
-    if (Object.keys(otherComponents).length > 0) {
-      (rest as Obj).components = otherComponents;
-    }
-  }
-
+  const { $defs: _a, definitions: _b, ...rest } = obj;
   return { stripped: rest, defs };
 };
 
