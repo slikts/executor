@@ -482,6 +482,7 @@ export default function AddOpenApiSource(props: {
   };
 
   const addCustomHeader = () => {
+    if (presetIndex === -1) setPresetIndex(-2);
     setCustomHeaders([...customHeaders, { name: "", secretId: null, presetKey: undefined }]);
   };
 
