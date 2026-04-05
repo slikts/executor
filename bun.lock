@@ -234,6 +234,20 @@
         "vitest": "catalog:",
       },
     },
+    "packages/kernel/runtime-deno-subprocess": {
+      "name": "@executor/runtime-deno-subprocess",
+      "version": "0.0.0",
+      "dependencies": {
+        "@executor/codemode-core": "workspace:*",
+        "effect": "catalog:",
+      },
+      "devDependencies": {
+        "@effect/vitest": "catalog:",
+        "@types/node": "catalog:",
+        "bun-types": "catalog:",
+        "vitest": "catalog:",
+      },
+    },
     "packages/kernel/runtime-quickjs": {
       "name": "@executor/runtime-quickjs",
       "version": "1.4.0-beta.0",
@@ -709,6 +723,8 @@
     "@executor/plugin-openapi": ["@executor/plugin-openapi@workspace:packages/plugins/openapi"],
 
     "@executor/react": ["@executor/react@workspace:packages/clients/react"],
+
+    "@executor/runtime-deno-subprocess": ["@executor/runtime-deno-subprocess@workspace:packages/kernel/runtime-deno-subprocess"],
 
     "@executor/runtime-quickjs": ["@executor/runtime-quickjs@workspace:packages/kernel/runtime-quickjs"],
 
