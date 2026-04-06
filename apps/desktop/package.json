@@ -25,6 +25,7 @@
   "build": {
     "appId": "com.executor.desktop",
     "productName": "Executor",
+    "publish": null,
     "files": [
       "dist/**/*"
     ],

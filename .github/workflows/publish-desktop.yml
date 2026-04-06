@@ -102,44 +102,18 @@ jobs:
         working-directory: apps/desktop
 
       - name: Build desktop distributables
-        run: npx electron-builder --${{ matrix.platform }} --${{ matrix.arch }} --dir
+        run: npx electron-builder --${{ matrix.platform }} --${{ matrix.arch }}
         working-directory: apps/desktop
-
-      - name: Package (macOS)
-        if: matrix.platform == 'mac'
-        working-directory: apps/desktop/dist
-        run: |
-          APP_DIR=$(find . -name "*.app" -maxdepth 2 | head -1)
-          if [ -n "$APP_DIR" ]; then
-            ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "Executor-${{ matrix.arch }}-mac.zip"
-          fi
-
-      - name: Package (Linux)
-        if: matrix.platform == 'linux'
-        working-directory: apps/desktop/dist
-        run: |
-          UNPACKED=$(find . -name "unpacked" -type d -maxdepth 2 | head -1)
-          if [ -n "$UNPACKED" ]; then
-            tar -czf "Executor-x64-linux.tar.gz" -C "$UNPACKED" .
-          fi
-
-      - name: Package (Windows)
-        if: matrix.platform == 'win'
-        working-directory: apps/desktop/dist
-        shell: pwsh
-        run: |
-          $unpacked = Get-ChildItem -Path . -Filter "win-unpacked" -Directory -Recurse | Select-Object -First 1
-          if ($unpacked) {
-            Compress-Archive -Path "$($unpacked.FullName)\*" -DestinationPath "Executor-x64-win.zip"
-          }
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: desktop-${{ matrix.platform }}-${{ matrix.arch }}
           path: |
-            apps/desktop/dist/Executor-*.zip
-            apps/desktop/dist/Executor-*.tar.gz
+            apps/desktop/dist/*.dmg
+            apps/desktop/dist/*.exe
+            apps/desktop/dist/*.AppImage
+            apps/desktop/dist/*.deb
           if-no-files-found: warn
 
   release:
@@ -157,7 +131,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          find artifacts -type f \( -name "*.zip" -o -name "*.tar.gz" \) | while read file; do
+          find artifacts -type f \( -name "*.dmg" -o -name "*.exe" -o -name "*.AppImage" -o -name "*.deb" \) | while read file; do
             echo "Uploading: $file"
             gh release upload "${{ inputs.tag }}" "$file" --repo "${{ github.repository }}" --clobber || true
           done
