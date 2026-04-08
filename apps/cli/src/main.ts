@@ -28,7 +28,7 @@ import * as Option from "effect/Option";
 import * as Cause from "effect/Cause";
 
 import { ExecutorApi } from "@executor/api";
-import { createServerHandlers, runMcpStdioServer, getExecutor } from "@executor/local";
+import { startServer, runMcpStdioServer, getExecutor } from "@executor/local";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -38,9 +38,6 @@ const CLI_NAME = "executor";
 const { version: CLI_VERSION } = await import("../package.json");
 const DEFAULT_PORT = 4788;
 const DEFAULT_BASE_URL = `http://localhost:${DEFAULT_PORT}`;
-
-// Embedded web UI — baked into compiled binaries via `with { type: "file" }`
-import embeddedWebUI from "./embedded-web-ui.gen";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -57,38 +54,13 @@ const waitForShutdownSignal = () =>
     });
   });
 
-const appendUrlPath = (baseUrl: string, pathname: string): string =>
-  new URL(pathname, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`).toString();
-
-const renderSessionSummary = (kind: "web" | "mcp", baseUrl: string): string => {
-  const displayKind = kind === "mcp" ? "MCP" : "web";
-  const primaryLabel = kind === "web" ? "Web" : "MCP";
-  const primaryUrl = kind === "web" ? baseUrl : appendUrlPath(baseUrl, "mcp");
-  const secondaryLabel = kind === "web" ? "MCP" : "Web";
-  const secondaryUrl = kind === "web" ? appendUrlPath(baseUrl, "mcp") : baseUrl;
-  const guidance =
-    kind === "web"
-      ? "Keep this process running while you use the browser session."
-      : "Use this MCP URL in your client and keep this process running.";
-
-  return [
-    `Executor ${displayKind} session is ready.`,
-    `${primaryLabel}: ${primaryUrl}`,
-    `${secondaryLabel}: ${secondaryUrl}`,
-    `OpenAPI: ${appendUrlPath(baseUrl, "api/docs")}`,
-    "",
-    guidance,
-    "Press Ctrl+C to stop.",
-  ].join("\n");
-};
-
 // ---------------------------------------------------------------------------
 // Background server management
 // ---------------------------------------------------------------------------
 
 const isServerReachable = async (baseUrl: string): Promise<boolean> => {
   try {
-    const res = await fetch(`${baseUrl}/api/docs`, { signal: AbortSignal.timeout(2000) });
+    const res = await fetch(`${baseUrl}/api/scope`, { signal: AbortSignal.timeout(2000) });
     return res.ok;
   } catch {
     return false;
@@ -133,121 +105,27 @@ const ensureServer = (baseUrl: string) =>
 // ---------------------------------------------------------------------------
 
 const makeApiClient = (baseUrl: string) =>
-  HttpApiClient.make(ExecutorApi, { baseUrl }).pipe(
+  HttpApiClient.make(ExecutorApi, { baseUrl: `${baseUrl}/api` }).pipe(
     Effect.provide(FetchHttpClient.layer),
   );
 
 // ---------------------------------------------------------------------------
-// Static file serving from embedded web UI
+// Foreground session
 // ---------------------------------------------------------------------------
 
-const WEB_DIST_DIR = resolve(import.meta.dirname, "../../local/dist");
-
-const serveStatic = async (pathname: string): Promise<Response | null> => {
-  const key = pathname.replace(/^\//, "");
-
-  // Compiled binary: serve from embedded bunfs
-  if (embeddedWebUI) {
-    const match = embeddedWebUI[key] ?? embeddedWebUI["index.html"] ?? null;
-    if (!match) return null;
-    const file = Bun.file(match);
-    return new Response(file, {
-      headers: { "content-type": file.type || "application/octet-stream" },
-    });
-  }
-
-  // Dev mode: serve from apps/local/dist on disk
-  const filePath = resolve(WEB_DIST_DIR, key);
-  if (!filePath.startsWith(WEB_DIST_DIR)) return null;
-
-  const file = Bun.file(filePath);
-  if (await file.exists()) {
-    return new Response(file, {
-      headers: { "content-type": file.type || "application/octet-stream" },
-    });
-  }
-
-  // SPA fallback
-  const index = Bun.file(resolve(WEB_DIST_DIR, "index.html"));
-  if (await index.exists()) {
-    return new Response(index, { headers: { "content-type": "text/html" } });
-  }
-
-  return null;
-};
-
-// ---------------------------------------------------------------------------
-// Host-header allowlist — blocks DNS rebinding attacks
-// ---------------------------------------------------------------------------
-
-const ALLOWED_HOSTS = new Set([
-  "localhost",
-  "127.0.0.1",
-  "[::1]",
-  "::1",
-]);
-
-const isAllowedHost = (request: Request): boolean => {
-  const host = request.headers.get("host");
-  if (!host) return true; // no host header (e.g. HTTP/1.0) — allow
-  // Strip port ("localhost:4788" → "localhost")
-  const hostname = host.replace(/:\d+$/, "");
-  return ALLOWED_HOSTS.has(hostname);
-};
-
-// ---------------------------------------------------------------------------
-// Foreground session — API + MCP + Web UI on one Bun.serve()
-// ---------------------------------------------------------------------------
-
-const runForegroundSession = (input: { kind: "web" | "mcp"; port: number }) =>
+const runForegroundSession = (input: { port: number }) =>
   Effect.gen(function* () {
-    const handlers = yield* Effect.promise(() => createServerHandlers());
-
-    // Bind to loopback only — one server per address family so both
-    // "localhost" (which may resolve to ::1 on Windows) and 127.0.0.1 work,
-    // without exposing the server on the LAN.
-    const fetch = async (request: Request): Promise<Response> => {
-      if (!isAllowedHost(request)) {
-        return new Response("Forbidden", { status: 403 });
-      }
-
-      const url = new URL(request.url);
-
-      if (url.pathname.startsWith("/mcp")) {
-        return handlers.mcp.handleRequest(request);
-      }
-
-      if (url.pathname.startsWith("/api/") || url.pathname === "/api") {
-        return handlers.api.handler(request);
-      }
-
-      const staticResponse = await serveStatic(url.pathname);
-      if (staticResponse) return staticResponse;
-
-      return new Response("Not Found", { status: 404 });
-    };
-
-    const serverV4 = Bun.serve({ port: input.port, hostname: "127.0.0.1", fetch });
-
-    // IPv6 loopback — may fail on systems without IPv6; that's fine.
-    let serverV6: ReturnType<typeof Bun.serve> | null = null;
-    try {
-      serverV6 = Bun.serve({ port: input.port, hostname: "::1", fetch });
-    } catch {
-      // IPv6 not available — continue with IPv4 only
-    }
-
-    const server = serverV4;
+    const server = yield* Effect.promise(() => startServer({ port: input.port }));
 
     const baseUrl = `http://localhost:${server.port}`;
-    console.log(renderSessionSummary(input.kind, baseUrl));
+    console.log(`Executor is ready.`);
+    console.log(`Web:     ${baseUrl}`);
+    console.log(`MCP:     ${baseUrl}/mcp`);
+    console.log(`OpenAPI: ${baseUrl}/api/docs`);
+    console.log(`\nPress Ctrl+C to stop.`);
 
     yield* waitForShutdownSignal();
-
-    serverV4.stop(true);
-    serverV6?.stop(true);
-    yield* Effect.promise(() => handlers.mcp.close());
-    yield* Effect.promise(() => handlers.api.dispose());
+    yield* Effect.promise(() => server.stop());
   });
 
 // ---------------------------------------------------------------------------
@@ -387,7 +265,7 @@ const webCommand = Command.make(
   },
   ({ port, scope }) => Effect.gen(function* () {
     applyScope(scope);
-    yield* runForegroundSession({ kind: "web", port });
+    yield* runForegroundSession({ port });
   }),
 ).pipe(Command.withDescription("Start a foreground web session"));
 

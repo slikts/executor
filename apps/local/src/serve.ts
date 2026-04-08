@@ -1,0 +1,111 @@
+/**
+ * Production server for @executor/local.
+ *
+ * Serves the Vite-built SPA + Effect API + MCP server.
+ *
+ * Run directly:   bun run apps/local/src/serve.ts
+ * Or import:      import { startServer } from "@executor/local/serve"
+ */
+
+import { resolve, join } from "node:path";
+import { readdirSync } from "node:fs";
+import { getServerHandlers } from "./server/main";
+
+// ---------------------------------------------------------------------------
+// Host allowlist
+// ---------------------------------------------------------------------------
+
+const ALLOWED_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+
+const isAllowedHost = (request: Request): boolean => {
+  const host = request.headers.get("host");
+  if (!host) return true;
+  const hostname = host.replace(/:\d+$/, "");
+  return ALLOWED_HOSTS.has(hostname);
+};
+
+// ---------------------------------------------------------------------------
+// Static files
+// ---------------------------------------------------------------------------
+
+function collectStaticRoutes(dir: string, prefix = ""): Record<string, ReturnType<typeof Bun.file>> {
+  const routes: Record<string, ReturnType<typeof Bun.file>> = {};
+  try {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const fullPath = join(dir, entry.name);
+      const routePath = `${prefix}/${entry.name}`;
+      if (entry.isDirectory()) {
+        Object.assign(routes, collectStaticRoutes(fullPath, routePath));
+      } else {
+        routes[routePath] = Bun.file(fullPath);
+      }
+    }
+  } catch {}
+  return routes;
+}
+
+// ---------------------------------------------------------------------------
+// Server
+// ---------------------------------------------------------------------------
+
+export interface StartServerOptions {
+  port?: number;
+  clientDir?: string;
+}
+
+export interface ServerInstance {
+  port: number;
+  stop: () => Promise<void>;
+}
+
+export async function startServer(opts: StartServerOptions = {}): Promise<ServerInstance> {
+  const port = opts.port ?? parseInt(process.env.PORT ?? "4788", 10);
+  const clientDir = opts.clientDir ?? resolve(import.meta.dirname, "../dist");
+
+  const handlers = await getServerHandlers();
+  const staticRoutes = collectStaticRoutes(clientDir);
+  const indexHtml = Bun.file(join(clientDir, "index.html"));
+
+  const server = Bun.serve({
+    port,
+    hostname: "127.0.0.1",
+    routes: { ...staticRoutes },
+    async fetch(req) {
+      if (!isAllowedHost(req)) {
+        return new Response("Forbidden", { status: 403 });
+      }
+
+      const url = new URL(req.url);
+
+      if (url.pathname.startsWith("/mcp")) {
+        return handlers.mcp.handleRequest(req);
+      }
+
+      if (url.pathname.startsWith("/api/") || url.pathname === "/api") {
+        url.pathname = url.pathname.slice("/api".length) || "/";
+        return handlers.api.handler(new Request(url, req));
+      }
+
+      // SPA fallback
+      return new Response(indexHtml, { headers: { "content-type": "text/html" } });
+    },
+    error(error) {
+      console.error("Server error:", error);
+      return new Response("Internal Server Error", { status: 500 });
+    },
+  });
+
+  return {
+    port: server.port!,
+    async stop() {
+      server.stop(true);
+      await handlers.mcp.close();
+      await handlers.api.dispose();
+    },
+  };
+}
+
+if (import.meta.main) {
+  const server = await startServer();
+  console.log(`Executor listening on http://localhost:${server.port}`);
+}

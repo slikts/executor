@@ -28,13 +28,13 @@
     "@executor/storage-file": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.12.1",
     "@tanstack/react-router": "catalog:",
-    "@tanstack/react-start": "catalog:",
     "effect": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:",
+    "@tanstack/router-plugin": "^1.167.12",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -46,7 +46,8 @@
   },
   "scripts": {
     "dev": "portless run --name executor-local bunx --bun vite dev",
-    "build": "vite build",
+    "build": "bunx --bun vite build",
+    "start": "bun run src/serve.ts",
     "typecheck": "tsc --noEmit"
   }
 }
