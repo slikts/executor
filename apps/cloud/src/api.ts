@@ -9,7 +9,7 @@ import {
   HttpMiddleware,
   HttpServer,
 } from "@effect/platform";
-import { Effect, Layer } from "effect";
+import { Effect, Layer, ManagedRuntime } from "effect";
 import { setCookie } from "@tanstack/react-start/server";
 
 import { addGroup, CoreHandlers, ExecutorService, ExecutionEngineService } from "@executor/api";
@@ -66,11 +66,16 @@ const SharedServices = Layer.mergeAll(
   HttpServer.layerContext,
 );
 
+const cloudRuntime = ManagedRuntime.make(SharedServices);
+
 const publicApiHandler = HttpApiBuilder.toWebHandler(
   PublicCloudApiLive.pipe(
     Layer.provideMerge(SharedServices),
   ),
-  { middleware: HttpMiddleware.logger },
+  {
+    middleware: HttpMiddleware.logger,
+    memoMap: cloudRuntime.memoMap,
+  },
 );
 
 const parseCookie = (cookieHeader: string | null, name: string): string | null => {
@@ -101,10 +106,7 @@ const resolveAuth = (request: Request) =>
   Effect.gen(function* () {
     const workos = yield* WorkOSAuth;
     return yield* workos.authenticateRequest(request);
-  }).pipe(
-    Effect.provide(SharedServices),
-    Effect.runPromise,
-  );
+  });
 
 const resolveTeamId = (
   auth: {
@@ -137,10 +139,7 @@ const resolveTeamId = (
     );
     yield* users.use((store) => store.addMember(team.id, user.id, "owner"));
     return team.id;
-  }).pipe(
-    Effect.provide(SharedServices),
-    Effect.runPromise,
-  );
+  });
 
 const resolveExecutor = (teamId: string) =>
   Effect.gen(function* () {
@@ -149,21 +148,13 @@ const resolveExecutor = (teamId: string) =>
     const teamName = team?.name ?? "Unknown Team";
     const encryptionKey = process.env.ENCRYPTION_KEY ?? "local-dev-encryption-key";
     return yield* createTeamExecutor(teamId, teamName, encryptionKey);
-  }).pipe(
-    Effect.provide(SharedServices),
-    Effect.runPromise,
-  );
+  });
 
-type TeamExecutor = Awaited<ReturnType<typeof resolveExecutor>>;
+type ResolvedAuth = Exclude<Effect.Effect.Success<ReturnType<typeof resolveAuth>>, null>;
+type TeamExecutor = Effect.Effect.Success<ReturnType<typeof resolveExecutor>>;
 
 const createProtectedHandler = (
-  auth: {
-    readonly userId: string;
-    readonly email: string;
-    readonly firstName: string | null | undefined;
-    readonly lastName: string | null | undefined;
-    readonly avatarUrl: string | null | undefined;
-  },
+  auth: ResolvedAuth,
   teamId: string,
   executor: TeamExecutor,
 ) => {
@@ -192,9 +183,24 @@ const createProtectedHandler = (
       Layer.provideMerge(requestServices),
       Layer.provideMerge(SharedServices),
     ),
-    { middleware: HttpMiddleware.logger },
+    {
+      middleware: HttpMiddleware.logger,
+      memoMap: cloudRuntime.memoMap,
+    },
   );
 };
+
+type ProtectedHandler = ReturnType<typeof createProtectedHandler>;
+
+const closeExecutor = (executor: TeamExecutor) =>
+  executor.close().pipe(
+    Effect.orElseSucceed(() => undefined),
+  );
+
+const disposeProtectedHandler = (handler: ProtectedHandler) =>
+  Effect.promise(() => handler.dispose()).pipe(
+    Effect.orElseSucceed(() => undefined),
+  );
 
 export const handleApiRequest = async (request: Request): Promise<Response> => {
   const pathname = new URL(request.url).pathname;
@@ -203,27 +209,42 @@ export const handleApiRequest = async (request: Request): Promise<Response> => {
     return publicApiHandler.handler(request);
   }
 
-  const auth = await resolveAuth(request);
-  if (!auth) return unauthorized("Unauthorized");
+  const requestProgram = Effect.gen(function* () {
+    const auth = yield* resolveAuth(request);
+    if (!auth) return unauthorized("Unauthorized");
 
-  const cookieTeamId = parseCookie(request.headers.get("cookie"), "executor_team");
-  const teamId = await resolveTeamId(auth, cookieTeamId);
+    const cookieTeamId = parseCookie(request.headers.get("cookie"), "executor_team");
+    const teamId = yield* resolveTeamId(auth, cookieTeamId);
 
-  const executor = await resolveExecutor(teamId);
-  const handler = createProtectedHandler(auth, teamId, executor);
+    const executor = yield* Effect.acquireRelease(
+      resolveExecutor(teamId),
+      closeExecutor,
+    );
 
-  try {
-    const response = await handler.handler(request);
+    const handler = yield* Effect.acquireRelease(
+      Effect.sync(() => createProtectedHandler(auth, teamId, executor)),
+      disposeProtectedHandler,
+    );
 
-    if (auth.refreshedSession) {
-      setCookie("wos-session", auth.refreshedSession, COOKIE_OPTIONS);
+    const response = yield* Effect.promise(() => handler.handler(request));
+
+    const refreshedSession = auth.refreshedSession;
+    if (refreshedSession) {
+      yield* Effect.sync(() => {
+        setCookie("wos-session", refreshedSession, COOKIE_OPTIONS);
+      });
     }
     if (!cookieTeamId) {
-      setCookie("executor_team", teamId, COOKIE_OPTIONS);
+      yield* Effect.sync(() => {
+        setCookie("executor_team", teamId, COOKIE_OPTIONS);
+      });
     }
     return response;
-  } finally {
-    await Effect.runPromise(executor.close()).catch(() => undefined);
-    await handler.dispose().catch(() => undefined);
-  }
+  });
+
+  return cloudRuntime.runPromise(
+    requestProgram.pipe(
+      Effect.scoped,
+    ),
+  );
 };

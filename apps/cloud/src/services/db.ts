@@ -17,9 +17,12 @@ const MIGRATIONS_DIR = resolve(
   "../../../../packages/core/storage-postgres/drizzle",
 );
 
-let dbPromise: Promise<DrizzleDb> | undefined;
+type DbResource = {
+  readonly db: DrizzleDb;
+  readonly close: () => Promise<void>;
+};
 
-const createDb = async (): Promise<DrizzleDb> => {
+const createDbResource = async (): Promise<DbResource> => {
   if (process.env.DATABASE_URL) {
     const { drizzle } = await import("drizzle-orm/node-postgres");
     const { migrate } = await import("drizzle-orm/node-postgres/migrator");
@@ -27,7 +30,10 @@ const createDb = async (): Promise<DrizzleDb> => {
     const pool = new Pool({ connectionString: process.env.DATABASE_URL });
     const db = drizzle(pool, { schema }) as DrizzleDb;
     await migrate(db as any, { migrationsFolder: MIGRATIONS_DIR });
-    return db;
+    return {
+      db,
+      close: () => pool.end(),
+    };
   }
 
   const { PGlite } = await import("@electric-sql/pglite");
@@ -36,26 +42,32 @@ const createDb = async (): Promise<DrizzleDb> => {
   const dataDir = process.env.PGLITE_DATA_DIR ?? ".pglite";
   const client = new PGlite(dataDir);
   const db = drizzle(client, { schema }) as DrizzleDb;
-  await migrate(db as any, { migrationsFolder: MIGRATIONS_DIR });
-  return db;
+  await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  return {
+    db,
+    close: async () => {
+      const closeClient = (client as { close?: () => Promise<void> }).close;
+      if (closeClient) {
+        await closeClient.call(client);
+      }
+    },
+  };
 };
 
-const getOrCreateDb = async (): Promise<DrizzleDb> => {
-  if (!dbPromise) {
-    dbPromise = createDb().catch((error) => {
-      dbPromise = undefined;
-      throw error;
-    });
-  }
-  return dbPromise;
-};
+const closeDbResource = (resource: DbResource) =>
+  Effect.promise(() => resource.close()).pipe(
+    Effect.orElseSucceed(() => undefined),
+  );
 
 export class DbService extends Context.Tag("@executor/cloud/DbService")<
   DbService,
   DrizzleDb
 >() {
-  static Live = Layer.effect(
+  static Live = Layer.scoped(
     this,
-    Effect.promise(getOrCreateDb),
+    Effect.acquireRelease(
+      Effect.promise(() => createDbResource()),
+      closeDbResource,
+    ).pipe(Effect.map((resource) => resource.db)),
   );
 }
