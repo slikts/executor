@@ -271,9 +271,13 @@ export function createEnv<
 
   const isServer = opts.isServer ?? (!("window" in globalThis) || "Deno" in globalThis);
 
+  const hasKeys = Object.keys(normalizedShape).length > 0;
+
   const finalConfig =
     opts.createFinalConfig?.(normalizedShape, isServer) ??
-    (Config.all(normalizedShape) as unknown as TFinalConfig);
+    (hasKeys
+      ? (Config.all(normalizedShape) as unknown as TFinalConfig)
+      : (Config.succeed({}) as unknown as TFinalConfig));
 
   const parsed = Effect.runSync(
     Effect.withConfigProvider(ConfigProvider.fromMap(toRuntimeMap(normalizedRuntimeEnv)))(

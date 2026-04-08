@@ -13,7 +13,6 @@
     "@executor/plugin-google-discovery": "workspace:*",
     "@executor/plugin-graphql": "workspace:*",
     "@executor/plugin-mcp": "workspace:*",
-    "@executor/plugin-onepassword": "workspace:*",
     "@executor/plugin-openapi": "workspace:*",
     "@executor/react": "workspace:*",
     "@executor/sdk": "workspace:*",
