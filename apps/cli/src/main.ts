@@ -75,7 +75,7 @@ const renderSessionSummary = (kind: "web" | "mcp", baseUrl: string): string => {
     `Executor ${displayKind} session is ready.`,
     `${primaryLabel}: ${primaryUrl}`,
     `${secondaryLabel}: ${secondaryUrl}`,
-    `OpenAPI: ${appendUrlPath(baseUrl, "docs")}`,
+    `OpenAPI: ${appendUrlPath(baseUrl, "api/docs")}`,
     "",
     guidance,
     "Press Ctrl+C to stop.",
@@ -88,7 +88,7 @@ const renderSessionSummary = (kind: "web" | "mcp", baseUrl: string): string => {
 
 const isServerReachable = async (baseUrl: string): Promise<boolean> => {
   try {
-    const res = await fetch(`${baseUrl}/docs`, { signal: AbortSignal.timeout(2000) });
+    const res = await fetch(`${baseUrl}/api/docs`, { signal: AbortSignal.timeout(2000) });
     return res.ok;
   } catch {
     return false;
@@ -217,11 +217,7 @@ const runForegroundSession = (input: { kind: "web" | "mcp"; port: number }) =>
         return handlers.mcp.handleRequest(request);
       }
 
-      if (
-        url.pathname.startsWith("/v1/") ||
-        url.pathname.startsWith("/docs") ||
-        url.pathname === "/openapi.json"
-      ) {
+      if (url.pathname.startsWith("/api/") || url.pathname === "/api") {
         return handlers.api.handler(request);
       }
 

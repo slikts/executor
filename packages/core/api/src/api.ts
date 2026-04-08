@@ -23,9 +23,8 @@ export const CoreExecutorApi = HttpApi.make("executor")
 /**
  * Compose the core API with a plugin group.
  */
-export const addGroup = <G extends HttpApiGroup.HttpApiGroup.Any>(
-  group: G,
-) => CoreExecutorApi.add(group);
+export const addGroup = <G extends HttpApiGroup.HttpApiGroup.Any>(group: G) =>
+  CoreExecutorApi.add(group);
 
 /** Default API with no plugin groups */
 export const ExecutorApi = CoreExecutorApi;
