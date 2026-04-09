@@ -7,6 +7,9 @@
   "routes": [
     { "pattern": "executor.sh", "custom_domain": true }
   ],
+  "limits": {
+    "cpu_ms": 300000
+  },
   "observability": {
     "enabled": true
   },
@@ -20,6 +23,11 @@
     {
       "binding": "HYPERDRIVE",
       "id": "776c27dfec5f47f59343603b35a7b4c2"
+    }
+  ],
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
     }
   ]
 }
