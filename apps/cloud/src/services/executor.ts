@@ -6,14 +6,8 @@ import { Effect } from "effect";
 
 import { createExecutor } from "@executor/sdk";
 import { makePgConfig, makePgKv } from "@executor/storage-postgres";
-import {
-  openApiPlugin,
-  makeKvOperationStore,
-} from "@executor/plugin-openapi";
-import {
-  mcpPlugin,
-  makeKvBindingStore,
-} from "@executor/plugin-mcp";
+import { openApiPlugin, makeKvOperationStore } from "@executor/plugin-openapi";
+import { mcpPlugin, makeKvBindingStore } from "@executor/plugin-mcp";
 import {
   googleDiscoveryPlugin,
   makeKvBindingStore as makeKvGoogleDiscoveryBindingStore,
@@ -48,7 +42,10 @@ export const createOrgExecutor = (
           bindingStore: makeKvBindingStore(kv, "mcp"),
         }),
         googleDiscoveryPlugin({
-          bindingStore: makeKvGoogleDiscoveryBindingStore(kv, "google-discovery"),
+          bindingStore: makeKvGoogleDiscoveryBindingStore(
+            kv,
+            "google-discovery",
+          ),
         }),
         graphqlPlugin({
           operationStore: makeKvGraphqlOperationStore(kv, "graphql"),
