@@ -36,7 +36,7 @@ const getResult = () =>
     return cachedResult;
   });
 
-describe("Real specs: Cloudflare API", () => {
+describe("Real specs: Cloudflare API", { timeout: 60_000 }, () => {
   it.effect("parses the full Cloudflare spec", () =>
     Effect.gen(function* () {
       const doc = yield* getDoc();
@@ -126,7 +126,6 @@ describe("Real specs: Cloudflare API", () => {
       const zoneTools = yield* executor.tools.list({ query: "zone" });
       expect(zoneTools.length).toBeGreaterThan(0);
     }),
-    { timeout: 60_000 },
   );
 
   it.effect("schema deduplication: definitions stored once, tools reference via $ref", () =>
