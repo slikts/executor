@@ -18,7 +18,7 @@ const COOKIE_OPTIONS = {
 
 // ---------------------------------------------------------------------------
 // Single non-protected API surface — public (login/callback) + session
-// (me/logout). The session group has SessionAuth on it.
+// (me/logout/organizations/switch-organization). The session group has SessionAuth on it.
 // ---------------------------------------------------------------------------
 
 export const NonProtectedApi = HttpApi.make("cloudWeb").add(CloudAuthPublicApi).add(CloudAuthApi);
@@ -57,7 +57,7 @@ export const CloudAuthPublicHandlers = HttpApiBuilder.group(
           let organizationId = result.organizationId;
 
           // If the auth response doesn't include an org, check if the user
-          // already belongs to one. Only create a new workspace if they truly
+          // already belongs to one. Only create a new organization if they truly
           // have no memberships — this prevents duplicate orgs on re-login.
           if (!organizationId) {
             const memberships = yield* workos.listUserMemberships(result.user.id);
@@ -133,10 +133,63 @@ export const CloudSessionAuthHandlers = HttpApiBuilder.group(
           };
         }),
       )
-      .handleRaw("logout", () =>
-        Effect.sync(() => {
-          deleteCookie("wos-session", { path: "/" });
-          return HttpServerResponse.redirect("/", { status: 302 });
+      .handleRaw("logout", () => {
+        deleteCookie("wos-session", { path: "/" });
+        return Effect.succeed(HttpServerResponse.redirect("/", { status: 302 }));
+      })
+      .handle("organizations", () =>
+        Effect.gen(function* () {
+          const workos = yield* WorkOSAuth;
+          const session = yield* SessionContext;
+
+          const memberships = yield* workos.listUserMemberships(session.accountId);
+          const organizations = yield* Effect.all(
+            memberships.data.map((m) =>
+              workos.getOrganization(m.organizationId).pipe(
+                Effect.map((org) => ({ id: org.id, name: org.name })),
+                Effect.orElseSucceed(() => null),
+              ),
+            ),
+            { concurrency: "unbounded" },
+          );
+
+          return {
+            organizations: organizations.filter((org): org is NonNullable<typeof org> => org !== null),
+            activeOrganizationId: session.organizationId,
+          };
+        }),
+      )
+      .handle("switchOrganization", ({ payload }) =>
+        Effect.gen(function* () {
+          const workos = yield* WorkOSAuth;
+          const session = yield* SessionContext;
+
+          const refreshed = yield* workos.refreshSession(
+            session.sealedSession,
+            payload.organizationId,
+          );
+          if (refreshed) {
+            setCookie("wos-session", refreshed, COOKIE_OPTIONS);
+          }
+        }),
+      )
+      .handle("createOrganization", ({ payload }) =>
+        Effect.gen(function* () {
+          const workos = yield* WorkOSAuth;
+          const users = yield* UserStoreService;
+          const session = yield* SessionContext;
+
+          const name = payload.name.trim();
+          const org = yield* workos.createOrganization(name);
+          yield* workos.createMembership(org.id, session.accountId, "admin");
+          yield* users.use((s) => s.upsertOrganization({ id: org.id, name: org.name }));
+
+          const refreshed = yield* workos.refreshSession(session.sealedSession, org.id);
+          if (refreshed) {
+            setCookie("wos-session", refreshed, COOKIE_OPTIONS);
+          }
+
+          return { id: org.id, name: org.name };
         }),
       ),
 );
