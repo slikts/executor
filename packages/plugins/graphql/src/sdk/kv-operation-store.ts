@@ -6,7 +6,7 @@ import { Effect, Schema } from "effect";
 import { scopeKv, makeInMemoryScopedKv, type Kv, type ToolId, type ScopedKv } from "@executor/sdk";
 
 import type { GraphqlOperationStore, StoredSource } from "./operation-store";
-import { OperationBinding, InvocationConfig } from "./types";
+import { InvocationConfig, OperationBinding } from "./types";
 import { StoredSourceSchema } from "./stored-source";
 
 // ---------------------------------------------------------------------------
@@ -16,7 +16,6 @@ import { StoredSourceSchema } from "./stored-source";
 class StoredEntry extends Schema.Class<StoredEntry>("StoredEntry")({
   namespace: Schema.String,
   binding: OperationBinding,
-  config: InvocationConfig,
 }) {}
 
 const encodeEntry = Schema.encodeSync(Schema.parseJson(StoredEntry));
@@ -29,18 +28,36 @@ const decodeSource = Schema.decodeUnknownSync(Schema.parseJson(StoredSourceSchem
 // Implementation
 // ---------------------------------------------------------------------------
 
+// TODO(migration): remove DecodedSource + rehydrate once all source rows
+// have been migrated to carry invocationConfig. For GraphQL the endpoint
+// is always user-provided in SourceConfig, so rehydration is lossless.
+type DecodedSource = Omit<StoredSource, "invocationConfig"> & {
+  invocationConfig?: InvocationConfig;
+};
+
+const rehydrate = (source: DecodedSource): StoredSource =>
+  source.invocationConfig
+    ? (source as StoredSource)
+    : {
+        ...source,
+        invocationConfig: new InvocationConfig({
+          endpoint: source.config.endpoint,
+          headers: source.config.headers ?? {},
+        }),
+      };
+
 const makeStore = (bindings: ScopedKv, sources: ScopedKv): GraphqlOperationStore => ({
   get: (toolId) =>
     Effect.gen(function* () {
       const raw = yield* bindings.get(toolId);
       if (!raw) return null;
       const entry = decodeEntry(raw);
-      return { binding: entry.binding, config: entry.config };
+      return { binding: entry.binding, namespace: entry.namespace };
     }),
 
-  put: (toolId, namespace, binding, config) =>
+  put: (toolId, namespace, binding) =>
     bindings.set([
-      { key: toolId, value: encodeEntry(new StoredEntry({ namespace, binding, config })) },
+      { key: toolId, value: encodeEntry(new StoredEntry({ namespace, binding })) },
     ]),
 
   remove: (toolId) => bindings.delete([toolId]).pipe(Effect.asVoid),
@@ -75,14 +92,20 @@ const makeStore = (bindings: ScopedKv, sources: ScopedKv): GraphqlOperationStore
   listSources: () =>
     Effect.gen(function* () {
       const entries = yield* sources.list();
-      return entries.map((e) => decodeSource(e.value) as StoredSource);
+      // TODO(migration): rehydrate in memory only — avoid N writes per list.
+      return entries.map((e) => rehydrate(decodeSource(e.value) as DecodedSource));
     }),
 
   getSource: (namespace) =>
     Effect.gen(function* () {
       const raw = yield* sources.get(namespace);
       if (!raw) return null;
-      return decodeSource(raw) as StoredSource;
+      const source = decodeSource(raw) as DecodedSource;
+      if (source.invocationConfig) return source as StoredSource;
+      // TODO(migration): self-heal — rehydrate and write back once.
+      const healed = rehydrate(source);
+      yield* sources.set([{ key: namespace, value: encodeSource(healed) }]);
+      return healed;
     }),
 
   getSourceConfig: (namespace) =>
