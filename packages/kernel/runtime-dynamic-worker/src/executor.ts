@@ -12,9 +12,13 @@ import { RpcTarget } from "cloudflare:workers";
 import * as Data from "effect/Data";
 import * as Effect from "effect/Effect";
 
-import type { CodeExecutor, ExecuteResult, SandboxToolInvoker } from "@executor/codemode-core";
+import {
+  recoverExecutionBody,
+  type CodeExecutor,
+  type ExecuteResult,
+  type SandboxToolInvoker,
+} from "@executor/codemode-core";
 
-import { normalizeCode } from "./normalize";
 import { buildExecutorModule } from "./module-template";
 
 // ---------------------------------------------------------------------------
@@ -107,8 +111,8 @@ const evaluate = async (
   toolInvoker: SandboxToolInvoker,
 ): Promise<ExecuteResult> => {
   const timeoutMs = Math.max(100, options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
-  const normalized = normalizeCode(code);
-  const executorModule = buildExecutorModule(normalized, timeoutMs);
+  const recoveredBody = recoverExecutionBody(code);
+  const executorModule = buildExecutorModule(recoveredBody, timeoutMs);
 
   const { [ENTRY_MODULE]: _, ...safeModules } = options.modules ?? {};
 

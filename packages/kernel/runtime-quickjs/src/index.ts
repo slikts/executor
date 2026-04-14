@@ -1,4 +1,9 @@
-import type { CodeExecutor, ExecuteResult, SandboxToolInvoker } from "@executor/codemode-core";
+import {
+  recoverExecutionBody,
+  type CodeExecutor,
+  type ExecuteResult,
+  type SandboxToolInvoker,
+} from "@executor/codemode-core";
 import * as Data from "effect/Data";
 import * as Effect from "effect/Effect";
 import {
@@ -81,17 +86,7 @@ const normalizeExecutionError = (cause: unknown, deadlineMs: number, timeoutMs: 
 };
 
 const buildExecutionSource = (code: string): string => {
-  const trimmed = code.trim();
-  const looksLikeArrowFunction =
-    (trimmed.startsWith("async") || trimmed.startsWith("(")) && trimmed.includes("=>");
-
-  const body = looksLikeArrowFunction
-    ? [
-        `const __fn = (${trimmed});`,
-        "if (typeof __fn !== 'function') throw new Error('Code must evaluate to a function');",
-        "return await __fn();",
-      ].join("\n")
-    : code;
+  const body = recoverExecutionBody(code);
 
   return [
     '"use strict";',

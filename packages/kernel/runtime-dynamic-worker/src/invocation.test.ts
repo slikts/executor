@@ -82,6 +82,18 @@ describe("makeDynamicWorkerExecutor", () => {
     expect(result.result).toBe(42);
   });
 
+  it("recovers prose-wrapped fenced async arrow input", async () => {
+    const executor = makeDynamicWorkerExecutor({ loader });
+    const invoker = makeInvoker(() => null);
+
+    const result = await Effect.runPromise(
+      executor.execute(["Use this snippet.", "", "```ts", "async () => 42", "```"].join("\n"), invoker),
+    );
+
+    expect(result.error).toBeUndefined();
+    expect(result.result).toBe(42);
+  });
+
   it("executes code that returns an object", async () => {
     const executor = makeDynamicWorkerExecutor({ loader });
     const invoker = makeInvoker(() => null);

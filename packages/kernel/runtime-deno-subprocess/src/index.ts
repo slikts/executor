@@ -1,7 +1,12 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-import type { CodeExecutor, ExecuteResult, SandboxToolInvoker } from "@executor/codemode-core";
+import {
+  recoverExecutionBody,
+  type CodeExecutor,
+  type ExecuteResult,
+  type SandboxToolInvoker,
+} from "@executor/codemode-core";
 import * as Cause from "effect/Cause";
 import * as Data from "effect/Data";
 import * as Deferred from "effect/Deferred";
@@ -152,6 +157,7 @@ const executeInDeno = (
   toolInvoker: SandboxToolInvoker,
   options: DenoSubprocessExecutorOptions,
 ): Effect.Effect<ExecuteResult, never> => {
+  const recoveredBody = recoverExecutionBody(code);
   const denoExecutable = options.denoExecutable ?? defaultDenoExecutable();
   const timeoutMs = Math.max(100, options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
 
@@ -218,7 +224,7 @@ const executeInDeno = (
     });
 
     // Send code to the subprocess
-    writeMessage(worker.stdin, { type: "start", code });
+    writeMessage(worker.stdin, { type: "start", code: recoveredBody });
 
     // Set up timeout — kills process and completes the deferred
     const timer = setTimeout(() => {
