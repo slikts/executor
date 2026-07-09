@@ -3,4 +3,4 @@
 export {
   createExecutorMcpServer,
   type ExecutorMcpServerConfig,
-} from "../../../hosts/mcp/src/tool-server.ts";
+} from "@executor-js/host-mcp/tool-server";

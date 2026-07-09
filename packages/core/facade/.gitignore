@@ -1,0 +1,2 @@
+# Override root gitignore: dist must be committed for git dep consumption
+!dist

@@ -4,11 +4,26 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./packages/core/facade/src/index.ts",
-    "./mcp": "./packages/core/facade/src/mcp.ts",
-    "./execution": "./packages/core/facade/src/execution.ts",
-    "./config": "./packages/core/facade/src/config.ts",
-    "./plugin-mcp": "./packages/core/facade/src/plugin-mcp.ts"
+    ".": {
+      "types": "./packages/core/facade/dist/index.d.ts",
+      "default": "./packages/core/facade/dist/index.js"
+    },
+    "./mcp": {
+      "types": "./packages/core/facade/dist/mcp.d.ts",
+      "default": "./packages/core/facade/dist/mcp.js"
+    },
+    "./execution": {
+      "types": "./packages/core/facade/dist/execution.d.ts",
+      "default": "./packages/core/facade/dist/execution.js"
+    },
+    "./config": {
+      "types": "./packages/core/facade/dist/config.d.ts",
+      "default": "./packages/core/facade/dist/config.js"
+    },
+    "./plugin-mcp": {
+      "types": "./packages/core/facade/dist/plugin-mcp.d.ts",
+      "default": "./packages/core/facade/dist/plugin-mcp.js"
+    }
   },
   "description": "Local AI executor with a CLI, local API server, and web UI.",
   "keywords": [
