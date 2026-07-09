@@ -1,13 +1,13 @@
 import {
   EXECUTE_SKILL,
   INTEGRATION_INVENTORY_HEADER,
+  SKILLS,
   createExecutionEngine,
   findSkill,
   formatExecuteResult,
   formatPausedExecution,
-  formatTtlDuration,
-  renderSkillsIndex
-} from "./chunk-57RSGHHS.js";
+  formatTtlDuration
+} from "./chunk-JN7UNSYS.js";
 import {
   _enum,
   string
@@ -1415,17 +1415,23 @@ var fallbackOutcomeResult = (executionId, outcome) => {
     ttlMs: "ttlMs" in outcome ? outcome.ttlMs : void 0
   });
 };
-var skillsResult = (name, executeInventory) => {
+var skillsResult = (name, executeInventory, extra) => {
+  const allSkills = extra.length > 0 ? [...SKILLS, ...extra] : SKILLS;
+  const index = () => [
+    'Available skills. Fetch one with `skills({ name: "<name>" })`.',
+    "",
+    ...allSkills.map((s) => `- \`${s.name}\` \u2014 ${s.summary}`)
+  ].join("\n");
   const trimmed = name?.trim();
   if (!trimmed) {
-    return { content: [{ type: "text", text: renderSkillsIndex() }] };
+    return { content: [{ type: "text", text: index() }] };
   }
-  const skill = findSkill(trimmed);
+  const skill = allSkills.find((s) => s.name === trimmed) ?? findSkill(trimmed);
   if (!skill) {
     return {
       content: [{ type: "text", text: `No skill named "${trimmed}".
 
-${renderSkillsIndex()}` }],
+${index()}` }],
       isError: true
     };
   }
@@ -1665,7 +1671,7 @@ var createExecutorMcpServer = (config) => Effect_exports.gen(function* () {
           name: string().optional().describe('The skill to fetch, e.g. "execute". Omit to list available skills.')
         }
       },
-      ({ name }) => runToolEffect(Effect_exports.succeed(skillsResult(name, executeInventory)))
+      ({ name }) => runToolEffect(Effect_exports.succeed(skillsResult(name, executeInventory, config.additionalSkills?.() ?? [])))
     )
   ).pipe(
     Effect_exports.withSpan("mcp.host.register_tool", {

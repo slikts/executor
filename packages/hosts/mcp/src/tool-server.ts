@@ -27,6 +27,8 @@ import {
   findSkill,
   renderSkillsIndex,
   EXECUTE_SKILL,
+  SKILLS,
+  type Skill,
   INTEGRATION_INVENTORY_HEADER,
   type ExecutionEngine,
   type ExecutionEngineConfig,
@@ -118,6 +120,11 @@ type SharedMcpServerConfig = {
     executionId: string,
     response: ResumeResponse,
   ) => Effect.Effect<ResumeFallbackOutcome | null, unknown>;
+  /**
+   * Additional skills to expose alongside the built-in ones. Called on each
+   * `skills` tool invocation so content is always live from disk.
+   */
+  readonly additionalSkills?: () => readonly Skill[];
 };
 
 export type ExecutorMcpServerConfig<E extends Cause.YieldableError = Cause.YieldableError> =
@@ -620,15 +627,23 @@ const fallbackOutcomeResult = (
 // The `execute` skill also gets the live integration inventory appended, the
 // same block the execute tool description carries, so a model reading the guide
 // sees what is connected without a second round trip.
-const skillsResult = (name: string | undefined, executeInventory: string): McpToolResult => {
+const skillsResult = (name: string | undefined, executeInventory: string, extra: readonly Skill[]): McpToolResult => {
+  const allSkills: readonly Skill[] = extra.length > 0 ? [...SKILLS, ...extra] : SKILLS;
+  const index = () =>
+    [
+      'Available skills. Fetch one with `skills({ name: "<name>" })`.',
+      "",
+      ...allSkills.map((s) => `- \`${s.name}\` — ${s.summary}`),
+    ].join("\n");
+
   const trimmed = name?.trim();
   if (!trimmed) {
-    return { content: [{ type: "text", text: renderSkillsIndex() }] };
+    return { content: [{ type: "text", text: index() }] };
   }
-  const skill = findSkill(trimmed);
+  const skill = allSkills.find((s) => s.name === trimmed) ?? findSkill(trimmed);
   if (!skill) {
     return {
-      content: [{ type: "text", text: `No skill named "${trimmed}".\n\n${renderSkillsIndex()}` }],
+      content: [{ type: "text", text: `No skill named "${trimmed}".\n\n${index()}` }],
       isError: true,
     };
   }
@@ -961,7 +976,7 @@ export const createExecutorMcpServer = <E extends Cause.YieldableError>(
               .describe('The skill to fetch, e.g. "execute". Omit to list available skills.'),
           },
         },
-        ({ name }) => runToolEffect(Effect.succeed(skillsResult(name, executeInventory))),
+        ({ name }) => runToolEffect(Effect.succeed(skillsResult(name, executeInventory, config.additionalSkills?.() ?? []))),
       ),
     ).pipe(
       Effect.withSpan("mcp.host.register_tool", {

@@ -44631,11 +44631,6 @@ var EXECUTE_SKILL = {
 };
 var SKILLS = [EXECUTE_SKILL];
 var findSkill = (name) => SKILLS.find((skill) => skill.name === name);
-var renderSkillsIndex = () => [
-  'Available skills. Fetch one with `skills({ name: "<name>" })`.',
-  "",
-  ...SKILLS.map((skill) => `- \`${skill.name}\` \u2014 ${skill.summary}`)
-].join("\n");
 
 export {
   recoverExecutionBody,
@@ -44646,6 +44641,6 @@ export {
   formatTtlDuration,
   createExecutionEngine,
   EXECUTE_SKILL,
-  findSkill,
-  renderSkillsIndex
+  SKILLS,
+  findSkill
 };
