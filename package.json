@@ -1,7 +1,15 @@
 {
-  "name": "executor-workspace",
-  "version": "1.4.0-beta.0",
+  "name": "@slikts/executor",
+  "version": "0.0.1",
   "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./packages/core/facade/src/index.ts",
+    "./mcp": "./packages/core/facade/src/mcp.ts",
+    "./execution": "./packages/core/facade/src/execution.ts",
+    "./config": "./packages/core/facade/src/config.ts",
+    "./plugin-mcp": "./packages/core/facade/src/plugin-mcp.ts"
+  },
   "description": "Local AI executor with a CLI, local API server, and web UI.",
   "keywords": [
     "agent",
@@ -65,8 +73,7 @@
     "release:publish:packages:dry-run": "bun run scripts/publish-packages.ts --dry-run",
     "release:publish:packages:prepare": "bun run scripts/publish-packages.ts --prepare-only",
     "release:smoke:packages": "bun run scripts/smoke-test-packed.ts",
-    "clean": "bun run scripts/clean.ts",
-    "prepare": "effect-language-service patch && effect-tsgo patch && bun run --cwd packages/core/vite-plugin build:bundle && bun run --cwd packages/plugins/apps build:bundle && bun run --cwd packages/react build"
+    "clean": "bun run scripts/clean.ts"
   },
   "dependencies": {},
   "devDependencies": {
