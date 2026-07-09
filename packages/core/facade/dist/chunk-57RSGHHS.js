@@ -6,7 +6,17 @@ import {
   isToolResult,
   isUserActionableError,
   parseToolAddress
-} from "./chunk-QEPUABPQ.js";
+} from "./chunk-PODQSLKX.js";
+import {
+  Deferred_exports,
+  Effect_exports,
+  Fiber_exports,
+  Predicate_exports,
+  Queue_exports,
+  TaggedError,
+  isFailReason,
+  map5 as map
+} from "./chunk-RDRLBN2D.js";
 import {
   __commonJS,
   __toESM
@@ -23255,24 +23265,16 @@ var require_build = __commonJS({
   }
 });
 
-// ../execution/src/engine.ts
-import { Deferred, Effect as Effect4, Fiber, Predicate as Predicate2, Queue } from "effect";
-import * as Exit from "effect/Exit";
-
-// ../../kernel/core/src/validation.ts
-import * as Effect from "effect/Effect";
-
 // ../../kernel/core/src/effect-errors.ts
-import * as Data from "effect/Data";
-var KernelCoreEffectError = class extends Data.TaggedError("KernelCoreEffectError") {
+var KernelCoreEffectError = class extends TaggedError("KernelCoreEffectError") {
 };
-var CodeExecutionError = class extends Data.TaggedError("CodeExecutionError") {
+var CodeExecutionError = class extends TaggedError("CodeExecutionError") {
 };
-var CodeCompilationError = class extends Data.TaggedError("CodeCompilationError") {
+var CodeCompilationError = class extends TaggedError("CodeCompilationError") {
 };
-var SandboxRuntimeError = class extends Data.TaggedError("SandboxRuntimeError") {
+var SandboxRuntimeError = class extends TaggedError("SandboxRuntimeError") {
 };
-var SandboxHostTimeoutError = class extends Data.TaggedError("SandboxHostTimeoutError") {
+var SandboxHostTimeoutError = class extends TaggedError("SandboxHostTimeoutError") {
 };
 
 // ../../kernel/core/src/json-schema.ts
@@ -43647,13 +43649,8 @@ var stripTypeScript = (code) => transform(code, {
   keepUnusedImports: true
 }).code;
 
-// ../execution/src/tool-invoker.ts
-import { Effect as Effect2, Predicate } from "effect";
-import * as Cause from "effect/Cause";
-
 // ../execution/src/errors.ts
-import * as Data2 from "effect/Data";
-var ExecutionToolError = class extends Data2.TaggedError("ExecutionToolError") {
+var ExecutionToolError = class extends TaggedError("ExecutionToolError") {
 };
 
 // ../execution/src/tool-invoker.ts
@@ -43728,10 +43725,10 @@ var validationIssues = (value) => {
   return Array.isArray(issues) ? issues : null;
 };
 var openApiPreflightMessage = (value) => {
-  if (!Predicate.isTagged(value, "OpenApiInvocationError")) return null;
+  if (!Predicate_exports.isTagged(value, "OpenApiInvocationError")) return null;
   const err = value;
   if (err.cause !== void 0) return null;
-  if (!Predicate.isTagged(err.statusCode, "None")) return null;
+  if (!Predicate_exports.isTagged(err.statusCode, "None")) return null;
   return typeof err.message === "string" && err.message.length > 0 ? err.message : null;
 };
 var credentialResolutionToolFailure = (input2) => authToolFailure({
@@ -43743,7 +43740,7 @@ var credentialResolutionToolFailure = (input2) => authToolFailure({
   }
 });
 var bindingToolFailure = (value) => {
-  if (!Predicate.isTagged(value, "BindingError")) return null;
+  if (!Predicate_exports.isTagged(value, "BindingError")) return null;
   const maybeBinding = value;
   const details = {};
   if (typeof maybeBinding.role === "string") details.role = maybeBinding.role;
@@ -43764,7 +43761,7 @@ var expectedToolFailure = (value) => {
       message: value.userMessage
     };
   }
-  if (Predicate.isTagged(value, "ToolNotFoundError") && "address" in value) {
+  if (Predicate_exports.isTagged(value, "ToolNotFoundError") && "address" in value) {
     const suggestions = "suggestions" in value && Array.isArray(value.suggestions) ? value.suggestions.map((suggestion) => addressToPath(String(suggestion))) : void 0;
     const address = addressToPath(String(value.address));
     return {
@@ -43773,14 +43770,14 @@ var expectedToolFailure = (value) => {
       details: { path: address, ...suggestions ? { suggestions } : {} }
     };
   }
-  if (Predicate.isTagged(value, "ToolBlockedError") && "address" in value) {
+  if (Predicate_exports.isTagged(value, "ToolBlockedError") && "address" in value) {
     return {
       code: "tool_blocked",
       message: `Tool blocked by policy: ${addressToPath(String(value.address))}`,
       details: value
     };
   }
-  if (Predicate.isTagged(value, "ToolInvocationError")) {
+  if (Predicate_exports.isTagged(value, "ToolInvocationError")) {
     const cause = value.cause;
     if (isUserActionableError(cause)) {
       return {
@@ -43814,16 +43811,16 @@ var extractNamespace = (path) => {
   return idx === -1 ? normalized : normalized.slice(0, idx);
 };
 var makeExecutorToolInvoker = (executor, options) => ({
-  invoke: Effect2.fn("mcp.tool.dispatch")(function* ({ path, args }) {
-    yield* Effect2.annotateCurrentSpan({
+  invoke: Effect_exports.fn("mcp.tool.dispatch")(function* ({ path, args }) {
+    yield* Effect_exports.annotateCurrentSpan({
       "mcp.tool.name": path,
       "mcp.tool.integration": extractNamespace(path)
     });
     const address = pathToAddress(path);
     const result = yield* executor.execute(address, args, options.invokeOptions).pipe(
-      Effect2.catchTag(
+      Effect_exports.catchTag(
         "CredentialResolutionError",
-        (err) => Effect2.succeed(
+        (err) => Effect_exports.succeed(
           credentialResolutionToolFailure({
             label: `${err.integration}.${err.owner}.${err.name}`,
             message: err.message,
@@ -43831,14 +43828,14 @@ var makeExecutorToolInvoker = (executor, options) => ({
           })
         )
       ),
-      Effect2.catchCause((cause) => {
-        const err = cause.reasons.find(Cause.isFailReason)?.error;
+      Effect_exports.catchCause((cause) => {
+        const err = cause.reasons.find(isFailReason)?.error;
         const expected = expectedToolFailure(err);
         if (expected) {
-          return Effect2.succeed(ToolResult.fail(expected));
+          return Effect_exports.succeed(ToolResult.fail(expected));
         }
         if (isElicitationDeclinedError(err)) {
-          return Effect2.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: `Tool "${addressToPath(String(err.address))}" requires approval but the request was ${err.action === "cancel" ? "cancelled" : "declined"} by the user.`,
               cause: err
@@ -43846,13 +43843,13 @@ var makeExecutorToolInvoker = (executor, options) => ({
           );
         }
         const correlationId = newCorrelationId();
-        return Effect2.logError("tool dispatch failed", cause).pipe(
-          Effect2.annotateLogs({
+        return Effect_exports.logError("tool dispatch failed", cause).pipe(
+          Effect_exports.annotateLogs({
             "executor.correlation_id": correlationId,
             "mcp.tool.name": path
           }),
-          Effect2.flatMap(
-            () => Effect2.fail(
+          Effect_exports.flatMap(
+            () => Effect_exports.fail(
               new ExecutionToolError({
                 message: `${OPAQUE_DEFECT_MESSAGE} [${correlationId}]`,
                 cause: err ?? cause
@@ -43869,7 +43866,7 @@ var makeExecutorToolInvoker = (executor, options) => ({
     return { ok: true, data: result };
   })
 });
-var isElicitationDeclinedError = (value) => Predicate.isTagged(value, "ElicitationDeclinedError") && value !== null && typeof value === "object" && "address" in value && typeof value.address === "string" && "action" in value && (value.action === "cancel" || value.action === "decline");
+var isElicitationDeclinedError = (value) => Predicate_exports.isTagged(value, "ElicitationDeclinedError") && value !== null && typeof value === "object" && "address" in value && typeof value.address === "string" && "action" in value && (value.action === "cancel" || value.action === "decline");
 var paginate = (all, offset, limit) => {
   const total = all.length;
   const start = Math.min(Math.max(offset, 0), total);
@@ -44009,9 +44006,9 @@ var scoreToolMatch = (tool, query) => {
     score
   };
 };
-var searchTools = Effect2.fn("executor.tools.search")(function* (executor, query, limit = 12, options) {
+var searchTools = Effect_exports.fn("executor.tools.search")(function* (executor, query, limit = 12, options) {
   const offset = options?.offset ?? 0;
-  yield* Effect2.annotateCurrentSpan({
+  yield* Effect_exports.annotateCurrentSpan({
     "executor.search.query_length": query.length,
     "executor.search.limit": limit,
     "executor.search.offset": offset,
@@ -44027,7 +44024,7 @@ var searchTools = Effect2.fn("executor.tools.search")(function* (executor, query
     return empty;
   }
   const all = yield* executor.tools.list({ includeAnnotations: false }).pipe(
-    Effect2.mapError(
+    Effect_exports.mapError(
       (cause) => new ExecutionToolError({
         message: "Failed to list tools for search",
         cause
@@ -44035,9 +44032,9 @@ var searchTools = Effect2.fn("executor.tools.search")(function* (executor, query
     )
   );
   const searchable = all.map(toSearchableTool);
-  const ranked = searchable.filter((tool) => matchesNamespace(tool, options?.namespace)).map((tool) => scoreToolMatch(tool, query)).filter(Predicate.isNotNull).sort((left, right) => right.score - left.score || left.path.localeCompare(right.path));
+  const ranked = searchable.filter((tool) => matchesNamespace(tool, options?.namespace)).map((tool) => scoreToolMatch(tool, query)).filter(Predicate_exports.isNotNull).sort((left, right) => right.score - left.score || left.path.localeCompare(right.path));
   const page = paginate(ranked, offset, limit);
-  yield* Effect2.annotateCurrentSpan({
+  yield* Effect_exports.annotateCurrentSpan({
     "executor.search.candidate_count": all.length,
     "executor.search.match_count": ranked.length,
     "executor.search.result_count": page.items.length,
@@ -44048,12 +44045,12 @@ var searchTools = Effect2.fn("executor.tools.search")(function* (executor, query
 var defaultToolDiscoveryProvider = {
   searchTools: ({ executor, query, namespace, limit, offset }) => searchTools(executor, query, limit, { namespace, offset })
 };
-var listExecutorIntegrations = Effect2.fn("executor.integrations.list")(function* (executor, options) {
+var listExecutorIntegrations = Effect_exports.fn("executor.integrations.list")(function* (executor, options) {
   const normalizedQuery = normalizeSearchText(options?.query ?? "");
   const limit = options?.limit ?? 50;
   const offset = options?.offset ?? 0;
   const integrations = yield* executor.integrations.list().pipe(
-    Effect2.mapError(
+    Effect_exports.mapError(
       (cause) => new ExecutionToolError({
         message: "Failed to list executor integrations",
         cause
@@ -44067,7 +44064,7 @@ var listExecutorIntegrations = Effect2.fn("executor.integrations.list")(function
     return tokenizeSearchText(normalizedQuery).every((token) => haystack.includes(token));
   });
   const allTools = yield* executor.tools.list({ includeAnnotations: false }).pipe(
-    Effect2.mapError(
+    Effect_exports.mapError(
       (cause) => new ExecutionToolError({
         message: "Failed to list tools for integration counts",
         cause
@@ -44094,7 +44091,7 @@ var listExecutorIntegrations = Effect2.fn("executor.integrations.list")(function
     })
   ).sort((left, right) => left.name.localeCompare(right.name) || left.id.localeCompare(right.id));
   const page = paginate(sortedWithCounts, offset, limit);
-  yield* Effect2.annotateCurrentSpan({
+  yield* Effect_exports.annotateCurrentSpan({
     "executor.integrations.candidate_count": integrations.length,
     "executor.integrations.match_count": sortedWithCounts.length,
     "executor.integrations.result_count": page.items.length,
@@ -44102,8 +44099,8 @@ var listExecutorIntegrations = Effect2.fn("executor.integrations.list")(function
   });
   return page;
 });
-var describeTool = Effect2.fn("executor.tools.describe")(function* (executor, path) {
-  yield* Effect2.annotateCurrentSpan({ "mcp.tool.name": path });
+var describeTool = Effect_exports.fn("executor.tools.describe")(function* (executor, path) {
+  yield* Effect_exports.annotateCurrentSpan({ "mcp.tool.name": path });
   const builtin = BUILTIN_TOOL_DESCRIPTIONS.get(path);
   if (builtin) return builtin;
   const address = pathToAddress(path);
@@ -44139,15 +44136,14 @@ var describeTool = Effect2.fn("executor.tools.describe")(function* (executor, pa
 });
 
 // ../execution/src/description.ts
-import { Effect as Effect3 } from "effect";
 var INTEGRATION_INVENTORY_HEADER = "## Available integrations";
-var buildExecuteDescription = (executor) => Effect3.gen(function* () {
+var buildExecuteDescription = (executor) => Effect_exports.gen(function* () {
   const connections = yield* executor.connections.list().pipe(
     // oxlint-disable-next-line executor/no-effect-escape-hatch -- boundary: ExecutionEngine.getDescription currently exposes no error channel; engine typed-error widening is covered separately
-    Effect3.orDie,
-    Effect3.withSpan("executor.connections.list")
+    Effect_exports.orDie,
+    Effect_exports.withSpan("executor.connections.list")
   );
-  const description = yield* Effect3.sync(() => {
+  const description = yield* Effect_exports.sync(() => {
     const lines = [
       "Execute TypeScript in a sandboxed runtime.",
       "",
@@ -44160,11 +44156,11 @@ var buildExecuteDescription = (executor) => Effect3.gen(function* () {
     }
     return lines.join("\n");
   }).pipe(
-    Effect3.withSpan("schema.compile.description", {
+    Effect_exports.withSpan("schema.compile.description", {
       attributes: { "executor.connection_count": connections.length }
     })
   );
-  yield* Effect3.annotateCurrentSpan({
+  yield* Effect_exports.annotateCurrentSpan({
     "executor.connection_count": connections.length,
     "schema.kind": "execute",
     // Connection inventory so a failing session build (which runs this during
@@ -44178,7 +44174,7 @@ var buildExecuteDescription = (executor) => Effect3.gen(function* () {
     ].join(",")
   });
   return description;
-}).pipe(Effect3.withSpan("schema.describe.execute"));
+}).pipe(Effect_exports.withSpan("schema.describe.execute"));
 var connectionPath = (connection) => {
   const address = String(connection.address);
   return address.startsWith("tools.") ? address.slice("tools.".length) : address;
@@ -44203,7 +44199,7 @@ var formatIntegrationInventory = (connections) => {
 };
 
 // ../execution/src/engine.ts
-var acceptAllHandler = () => Effect4.succeed({ action: "accept" });
+var acceptAllHandler = () => Effect_exports.succeed({ action: "accept" });
 var MAX_PREVIEW_CHARS = 3e4;
 var truncate = (value, max) => value.length > max ? `${value.slice(0, max)}
 ... [truncated ${value.length - max} chars]` : value;
@@ -44247,8 +44243,8 @@ var formatPausedExecution = (paused, options) => {
   const req = paused.elicitationContext.request;
   const lines = [`Execution paused: ${req.message}`];
   const deadline = options?.deadline;
-  const isUrlElicitation = Predicate2.isTagged(req, "UrlElicitation");
-  const isFormElicitation = Predicate2.isTagged(req, "FormElicitation");
+  const isUrlElicitation = Predicate_exports.isTagged(req, "UrlElicitation");
+  const isFormElicitation = Predicate_exports.isTagged(req, "FormElicitation");
   const requestedSchema = isFormElicitation ? req.requestedSchema : void 0;
   const hasRequestedSchema = requestedSchema !== void 0 && Object.keys(requestedSchema).length > 0;
   const baseInstructions = isUrlElicitation ? `The user needs to open this URL in a browser and complete the flow. After the user finishes, call the resume tool with executionId "${paused.id}" and action "accept".` : hasRequestedSchema ? `Ask the user for values matching requestedSchema. Then call the resume tool with executionId "${paused.id}", action "accept", and content matching requestedSchema. If the user declines, call resume with action "decline" or "cancel".` : `This is a model-side confirmation gate; there is no browser form to open. Ask the user whether to approve the paused tool call. If the user approves, call the resume tool with executionId "${paused.id}" and action "accept". If the user declines, call resume with action "decline" or "cancel".`;
@@ -44336,33 +44332,33 @@ var makeFullInvoker = (executor, invokeOptions, toolDiscoveryProvider) => {
     invoke: ({ path, args }) => {
       if (path === "search") {
         if (!isRecord(args)) {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.search expects an object: { query?: string; namespace?: string; limit?: number; offset?: number }"
             })
           );
         }
         if (args.query !== void 0 && typeof args.query !== "string") {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.search query must be a string when provided"
             })
           );
         }
         if (args.namespace !== void 0 && typeof args.namespace !== "string") {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.search namespace must be a string when provided"
             })
           );
         }
         const limit = readOptionalLimit(args.limit, "tools.search");
-        if (Predicate2.isTagged(limit, "ExecutionToolError")) {
-          return Effect4.fail(limit);
+        if (Predicate_exports.isTagged(limit, "ExecutionToolError")) {
+          return Effect_exports.fail(limit);
         }
         const offset = readOptionalOffset(args.offset, "tools.search");
-        if (Predicate2.isTagged(offset, "ExecutionToolError")) {
-          return Effect4.fail(offset);
+        if (Predicate_exports.isTagged(offset, "ExecutionToolError")) {
+          return Effect_exports.fail(offset);
         }
         return toolDiscoveryProvider.searchTools({
           executor,
@@ -44371,21 +44367,21 @@ var makeFullInvoker = (executor, invokeOptions, toolDiscoveryProvider) => {
           namespace: args.namespace,
           offset
         }).pipe(
-          Effect4.withSpan("mcp.tool.dispatch", {
+          Effect_exports.withSpan("mcp.tool.dispatch", {
             attributes: { "mcp.tool.name": path, "executor.tool.builtin": true }
           })
         );
       }
       if (path === "executor.integrations.list") {
         if (args !== void 0 && !isRecord(args)) {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.executor.integrations.list expects an object: { query?: string; limit?: number; offset?: number }"
             })
           );
         }
         if (isRecord(args) && args.query !== void 0 && typeof args.query !== "string") {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.executor.integrations.list query must be a string when provided"
             })
@@ -44395,46 +44391,46 @@ var makeFullInvoker = (executor, invokeOptions, toolDiscoveryProvider) => {
           isRecord(args) ? args.limit : void 0,
           "tools.executor.integrations.list"
         );
-        if (Predicate2.isTagged(limit, "ExecutionToolError")) {
-          return Effect4.fail(limit);
+        if (Predicate_exports.isTagged(limit, "ExecutionToolError")) {
+          return Effect_exports.fail(limit);
         }
         const offset = readOptionalOffset(
           isRecord(args) ? args.offset : void 0,
           "tools.executor.integrations.list"
         );
-        if (Predicate2.isTagged(offset, "ExecutionToolError")) {
-          return Effect4.fail(offset);
+        if (Predicate_exports.isTagged(offset, "ExecutionToolError")) {
+          return Effect_exports.fail(offset);
         }
         return listExecutorIntegrations(executor, {
           query: isRecord(args) && typeof args.query === "string" ? args.query : void 0,
           limit,
           offset
         }).pipe(
-          Effect4.withSpan("mcp.tool.dispatch", {
+          Effect_exports.withSpan("mcp.tool.dispatch", {
             attributes: { "mcp.tool.name": path, "executor.tool.builtin": true }
           })
         );
       }
       if (path === "describe.tool") {
         if (!isRecord(args)) {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.describe.tool expects an object: { path: string }"
             })
           );
         }
         if (typeof args.path !== "string" || args.path.trim().length === 0) {
-          return Effect4.fail(new ExecutionToolError({ message: "describe.tool requires a path" }));
+          return Effect_exports.fail(new ExecutionToolError({ message: "describe.tool requires a path" }));
         }
         if ("includeSchemas" in args) {
-          return Effect4.fail(
+          return Effect_exports.fail(
             new ExecutionToolError({
               message: "tools.describe.tool no longer accepts includeSchemas"
             })
           );
         }
         return describeTool(executor, args.path).pipe(
-          Effect4.withSpan("mcp.tool.dispatch", {
+          Effect_exports.withSpan("mcp.tool.dispatch", {
             attributes: {
               "mcp.tool.name": path,
               "executor.tool.builtin": true,
@@ -44469,28 +44465,28 @@ var createExecutionEngine = (config) => {
       settledOutcomes.delete(oldest);
     }
   };
-  const awaitCompletionOrPause = (fiber, pauseQueue) => Effect4.raceFirst(
-    Fiber.join(fiber).pipe(
-      Effect4.map((result) => ({ status: "completed", result }))
+  const awaitCompletionOrPause = (fiber, pauseQueue) => Effect_exports.raceFirst(
+    Fiber_exports.join(fiber).pipe(
+      Effect_exports.map((result) => ({ status: "completed", result }))
     ),
-    Queue.take(pauseQueue).pipe(
-      Effect4.map((paused) => ({ status: "paused", execution: paused }))
+    Queue_exports.take(pauseQueue).pipe(
+      Effect_exports.map((paused) => ({ status: "paused", execution: paused }))
     )
   );
-  const startPausableExecution = Effect4.fn("mcp.execute")(function* (code, options) {
-    yield* Effect4.annotateCurrentSpan({
+  const startPausableExecution = Effect_exports.fn("mcp.execute")(function* (code, options) {
+    yield* Effect_exports.annotateCurrentSpan({
       "mcp.execute.mode": "pausable",
       "mcp.execute.code_length": code.length
     });
     if (options?.autoApprove) {
-      yield* Effect4.annotateCurrentSpan({ "mcp.execute.auto_approve": true });
+      yield* Effect_exports.annotateCurrentSpan({ "mcp.execute.auto_approve": true });
       const result = yield* runInlineExecution(code, { onElicitation: acceptAllHandler });
       return { status: "completed", result };
     }
-    const pauseQueue = yield* Queue.unbounded();
+    const pauseQueue = yield* Queue_exports.unbounded();
     let fiber;
-    const elicitationHandler = (ctx) => Effect4.gen(function* () {
-      const responseDeferred = yield* Deferred.make();
+    const elicitationHandler = (ctx) => Effect_exports.gen(function* () {
+      const responseDeferred = yield* Deferred_exports.make();
       const id = `exec_${crypto.randomUUID()}`;
       const paused = {
         id,
@@ -44500,23 +44496,23 @@ var createExecutionEngine = (config) => {
         pauseQueue
       };
       pausedExecutions.set(id, paused);
-      yield* Queue.offer(pauseQueue, paused);
-      return yield* Deferred.await(responseDeferred);
+      yield* Queue_exports.offer(pauseQueue, paused);
+      return yield* Deferred_exports.await(responseDeferred);
     });
     const invoker = makeFullInvoker(
       executor,
       { onElicitation: elicitationHandler },
       toolDiscoveryProvider
     );
-    fiber = yield* Effect4.forkDetach(
-      codeExecutor.execute(code, invoker).pipe(Effect4.withSpan("executor.code.exec"))
+    fiber = yield* Effect_exports.forkDetach(
+      codeExecutor.execute(code, invoker).pipe(Effect_exports.withSpan("executor.code.exec"))
     );
     const sandboxFiber = fiber;
-    yield* Effect4.forkDetach(
-      Fiber.await(sandboxFiber).pipe(
-        Effect4.flatMap(
-          (exit) => Effect4.sync(() => {
-            const outcome = Exit.map(
+    yield* Effect_exports.forkDetach(
+      Fiber_exports.await(sandboxFiber).pipe(
+        Effect_exports.flatMap(
+          (exit) => Effect_exports.sync(() => {
+            const outcome = map(
               exit,
               (result) => ({ status: "completed", result })
             );
@@ -44531,41 +44527,41 @@ var createExecutionEngine = (config) => {
     );
     return yield* awaitCompletionOrPause(fiber, pauseQueue);
   });
-  const resumeExecution = Effect4.fn("mcp.execute.resume")(function* (executionId, response) {
-    yield* Effect4.annotateCurrentSpan({
+  const resumeExecution = Effect_exports.fn("mcp.execute.resume")(function* (executionId, response) {
+    yield* Effect_exports.annotateCurrentSpan({
       "mcp.execute.resume.action": response.action
     });
     const settled = settledOutcomes.get(executionId);
     if (settled) {
-      yield* Effect4.annotateCurrentSpan({ "mcp.execute.resume.replayed": true });
+      yield* Effect_exports.annotateCurrentSpan({ "mcp.execute.resume.replayed": true });
       return yield* settled;
     }
     const pending = pendingResumes.get(executionId);
     if (pending) {
-      yield* Effect4.annotateCurrentSpan({ "mcp.execute.resume.joined_inflight": true });
-      return yield* Deferred.await(pending);
+      yield* Effect_exports.annotateCurrentSpan({ "mcp.execute.resume.joined_inflight": true });
+      return yield* Deferred_exports.await(pending);
     }
     const paused = pausedExecutions.get(executionId);
     if (!paused) return null;
     pausedExecutions.delete(executionId);
-    const inflight = yield* Deferred.make();
+    const inflight = yield* Deferred_exports.make();
     pendingResumes.set(executionId, inflight);
-    yield* Deferred.succeed(paused.response, {
+    yield* Deferred_exports.succeed(paused.response, {
       action: response.action,
       content: response.content
     });
     return yield* awaitCompletionOrPause(paused.fiber, paused.pauseQueue).pipe(
-      Effect4.onExit(
-        (exit) => Effect4.gen(function* () {
+      Effect_exports.onExit(
+        (exit) => Effect_exports.gen(function* () {
           recordSettledOutcome(executionId, exit);
           pendingResumes.delete(executionId);
-          yield* Deferred.done(inflight, exit);
+          yield* Deferred_exports.done(inflight, exit);
         })
       )
     );
   });
-  const runInlineExecution = Effect4.fn("mcp.execute")(function* (code, options) {
-    yield* Effect4.annotateCurrentSpan({
+  const runInlineExecution = Effect_exports.fn("mcp.execute")(function* (code, options) {
+    yield* Effect_exports.annotateCurrentSpan({
       "mcp.execute.mode": "inline",
       "mcp.execute.code_length": code.length
     });
@@ -44576,16 +44572,16 @@ var createExecutionEngine = (config) => {
       },
       toolDiscoveryProvider
     );
-    return yield* codeExecutor.execute(code, invoker).pipe(Effect4.withSpan("executor.code.exec"));
+    return yield* codeExecutor.execute(code, invoker).pipe(Effect_exports.withSpan("executor.code.exec"));
   });
   return {
     execute: runInlineExecution,
     executeWithPause: startPausableExecution,
     resume: resumeExecution,
-    isExecutionSettled: (executionId) => Effect4.sync(() => settledExecutionIds.has(executionId)),
-    getPausedExecution: (executionId) => Effect4.sync(() => pausedExecutions.get(executionId) ?? null),
-    pausedExecutionCount: () => Effect4.sync(() => pausedExecutions.size),
-    hasPausedExecutions: () => Effect4.sync(() => pausedExecutions.size > 0),
+    isExecutionSettled: (executionId) => Effect_exports.sync(() => settledExecutionIds.has(executionId)),
+    getPausedExecution: (executionId) => Effect_exports.sync(() => pausedExecutions.get(executionId) ?? null),
+    pausedExecutionCount: () => Effect_exports.sync(() => pausedExecutions.size),
+    hasPausedExecutions: () => Effect_exports.sync(() => pausedExecutions.size > 0),
     getDescription: buildExecuteDescription(executor)
   };
 };

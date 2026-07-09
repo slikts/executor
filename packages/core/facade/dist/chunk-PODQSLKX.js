@@ -1,5 +1,233 @@
 import {
+  BaseProto,
+  Cause_exports,
+  Class,
+  Clock,
+  Context_exports,
+  CurrentMemoMap,
+  Data_exports,
+  DisablePropagation,
+  Done,
+  Duration_exports,
+  Effect_exports,
+  Encoding_exports,
+  Error as Error2,
+  ErrorClass,
+  Exit_exports,
+  FileSystem,
+  Forbidden,
+  Inspectable_exports,
+  InvalidValue,
+  Layer_exports,
+  Match_exports,
+  Never,
+  NodeInspectSymbol,
+  Option_exports,
+  Path,
+  PipeInspectableProto,
+  Predicate_exports,
+  Reference,
+  Result_exports,
+  Schema_exports,
+  Scope,
+  Service,
+  Size,
+  String as String2,
+  Struct,
+  Struct_exports,
+  TaggedClass,
+  TaggedError,
+  Union,
+  Union2,
+  VALID_OPEN_API_COMPONENTS_SCHEMAS_KEY_REGEXP,
+  Void,
+  add,
+  addFinalizer,
+  andThen,
+  append,
+  appendAll,
+  apply,
+  array,
+  brand,
+  buildWithMemoMap,
+  cached,
+  catchCause,
+  catchTag,
+  catchTags,
+  catch_,
+  constFalse,
+  constTrue,
+  constVoid,
+  constant,
+  context,
+  contextWith,
+  declare,
+  decodeBase64String,
+  decodeTo,
+  decodeUnknownEffect,
+  delay,
+  die,
+  done,
+  dual,
+  effect,
+  effectContext,
+  effectDiscard,
+  empty,
+  empty2,
+  empty3,
+  empty4,
+  encodeUnknownEffect,
+  encodeUnknownEffect2,
+  ensure,
+  ensuring,
+  equals,
+  escapeToken,
+  fail,
+  fail2,
+  fail3,
+  fail4,
+  failCause,
+  failCause2,
+  filter,
+  filterOrElse,
+  filterOrFail,
+  flatMap,
+  flow,
+  fnUntraced,
+  format,
+  fromASTs,
+  fromChannel,
+  fromInputUnsafe,
+  fromIterable,
+  fromIterable2,
+  fromNullishOr,
+  fromPull,
+  fromReadableStream,
+  fromTransform,
+  gen,
+  get,
+  get2,
+  getAST,
+  getCurrent,
+  getLastEncoding,
+  getOption,
+  getOrElse,
+  getOrUndefined,
+  getUnsafe,
+  hasInterrupts,
+  hasProperty,
+  identity,
+  ignore,
+  isArrayNonEmpty,
+  isDeclaration,
+  isDoneCause,
+  isEffect,
+  isEmptyRecord,
+  isFailure,
+  isFinite,
+  isObjects,
+  isOptional,
+  isReadonlyArrayNonEmpty,
+  isSchedule,
+  isSchema,
+  isSome,
+  isSuccess,
+  isTimeoutError,
+  isVoid,
+  isZero,
+  make,
+  make2,
+  makeEquivalence,
+  makeEquivalence2,
+  makeEquivalence3,
+  makeUnsafe,
+  map,
+  map2,
+  map3,
+  map4,
+  map6 as map5,
+  map7 as map6,
+  mapError,
+  mapError2,
+  match,
+  match2,
+  match3,
+  matchCauseEffect,
+  matchEffect,
+  max,
+  merge,
+  millis,
+  mkUint8Array,
+  none,
+  omit,
+  onInterrupt,
+  or,
+  orDie,
+  passthrough,
+  pipeArguments,
+  pipeThroughChannel,
+  provide,
+  provideContext,
+  provideContext2,
+  provideMerge,
+  redact,
+  repeat,
+  resolveAt,
+  resolveDescription,
+  resolveIdentifier,
+  result,
+  retry,
+  run,
+  runFold,
+  runForEach,
+  runSync,
+  seconds,
+  set,
+  sleep,
+  some,
+  strictEqual,
+  stringOrRedacted,
+  structure,
+  succeed,
+  succeed2,
+  succeed3,
+  succeed4,
+  succeedContext,
+  suspend,
+  suspend2,
+  symbol,
+  symbol2,
+  symbolRedactable,
+  sync,
+  tag,
+  tap,
+  tapError,
+  toCodecJson,
+  toCodecStringTree,
+  toEncoded,
+  toJsonSchemaMultiDocument,
+  toMultiDocumentOpenApi3_1,
+  toReadableStreamEffect,
+  toReadableStreamWith,
+  toType,
+  transform,
+  transformOrFail,
+  tryPromise,
+  try_,
+  try_2,
+  uninterruptibleMask,
+  unwrap,
+  update,
+  updateContext,
+  useSpan,
+  void_,
+  withErrorReporting,
+  withFiber,
+  withParentSpan
+} from "./chunk-RDRLBN2D.js";
+import {
   __commonJS,
+  __export,
   __toESM
 } from "./chunk-4VNS5WPM.js";
 
@@ -69,8 +297,8 @@ var require_re = __commonJS({
       [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]
     ];
     var makeSafeRegex = (value) => {
-      for (const [token, max] of safeRegexReplacements) {
-        value = value.split(`${token}*`).join(`${token}{0,${max}}`).split(`${token}+`).join(`${token}{1,${max}}`);
+      for (const [token, max2] of safeRegexReplacements) {
+        value = value.split(`${token}*`).join(`${token}{0,${max2}}`).split(`${token}+`).join(`${token}{1,${max2}}`);
       }
       return value;
     };
@@ -139,14 +367,14 @@ var require_parse_options = __commonJS({
     "use strict";
     var looseOption = Object.freeze({ loose: true });
     var emptyOpts = Object.freeze({});
-    var parseOptions = (options) => {
-      if (!options) {
+    var parseOptions = (options4) => {
+      if (!options4) {
         return emptyOpts;
       }
-      if (typeof options !== "object") {
+      if (typeof options4 !== "object") {
         return looseOption;
       }
-      return options;
+      return options4;
     };
     module.exports = parseOptions;
   }
@@ -199,10 +427,10 @@ var require_semver = __commonJS({
       return true;
     };
     var SemVer = class _SemVer {
-      constructor(version, options) {
-        options = parseOptions(options);
+      constructor(version, options4) {
+        options4 = parseOptions(options4);
         if (version instanceof _SemVer) {
-          if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+          if (version.loose === !!options4.loose && version.includePrerelease === !!options4.includePrerelease) {
             return version;
           } else {
             version = version.version;
@@ -215,11 +443,11 @@ var require_semver = __commonJS({
             `version is longer than ${MAX_LENGTH} characters`
           );
         }
-        debug("SemVer", version, options);
-        this.options = options;
-        this.loose = !!options.loose;
-        this.includePrerelease = !!options.includePrerelease;
-        const m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+        debug("SemVer", version, options4);
+        this.options = options4;
+        this.loose = !!options4.loose;
+        this.includePrerelease = !!options4.includePrerelease;
+        const m = version.trim().match(options4.loose ? re[t.LOOSE] : re[t.FULL]);
         if (!m) {
           throw new TypeError(`Invalid Version: ${version}`);
         }
@@ -358,8 +586,8 @@ var require_semver = __commonJS({
             throw new Error("invalid increment argument: identifier is empty");
           }
           if (identifier) {
-            const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE]);
-            if (!match || match[1] !== identifier) {
+            const match4 = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE]);
+            if (!match4 || match4[1] !== identifier) {
               throw new Error(`invalid identifier: ${identifier}`);
             }
           }
@@ -474,12 +702,12 @@ var require_parse = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/parse.js"(exports, module) {
     "use strict";
     var SemVer = require_semver();
-    var parse2 = (version, options, throwErrors = false) => {
+    var parse3 = (version, options4, throwErrors = false) => {
       if (version instanceof SemVer) {
         return version;
       }
       try {
-        return new SemVer(version, options);
+        return new SemVer(version, options4);
       } catch (er) {
         if (!throwErrors) {
           return null;
@@ -487,7 +715,7 @@ var require_parse = __commonJS({
         throw er;
       }
     };
-    module.exports = parse2;
+    module.exports = parse3;
   }
 });
 
@@ -495,9 +723,9 @@ var require_parse = __commonJS({
 var require_valid = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/valid.js"(exports, module) {
     "use strict";
-    var parse2 = require_parse();
-    var valid2 = (version, options) => {
-      const v = parse2(version, options);
+    var parse3 = require_parse();
+    var valid2 = (version, options4) => {
+      const v = parse3(version, options4);
       return v ? v.version : null;
     };
     module.exports = valid2;
@@ -508,9 +736,9 @@ var require_valid = __commonJS({
 var require_clean = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/clean.js"(exports, module) {
     "use strict";
-    var parse2 = require_parse();
-    var clean2 = (version, options) => {
-      const s = parse2(version.trim().replace(/^[=v]+/, ""), options);
+    var parse3 = require_parse();
+    var clean2 = (version, options4) => {
+      const s = parse3(version.trim().replace(/^[=v]+/, ""), options4);
       return s ? s.version : null;
     };
     module.exports = clean2;
@@ -522,16 +750,16 @@ var require_inc = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/inc.js"(exports, module) {
     "use strict";
     var SemVer = require_semver();
-    var inc = (version, release, options, identifier, identifierBase) => {
-      if (typeof options === "string") {
+    var inc = (version, release, options4, identifier, identifierBase) => {
+      if (typeof options4 === "string") {
         identifierBase = identifier;
-        identifier = options;
-        options = void 0;
+        identifier = options4;
+        options4 = void 0;
       }
       try {
         return new SemVer(
           version instanceof SemVer ? version.version : version,
-          options
+          options4
         ).inc(release, identifier, identifierBase).version;
       } catch (er) {
         return null;
@@ -545,10 +773,10 @@ var require_inc = __commonJS({
 var require_diff = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/diff.js"(exports, module) {
     "use strict";
-    var parse2 = require_parse();
+    var parse3 = require_parse();
     var diff = (version1, version2) => {
-      const v1 = parse2(version1, null, true);
-      const v2 = parse2(version2, null, true);
+      const v1 = parse3(version1, null, true);
+      const v2 = parse3(version2, null, true);
       const comparison = v1.compare(v2);
       if (comparison === 0) {
         return null;
@@ -610,8 +838,8 @@ var require_patch = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/patch.js"(exports, module) {
     "use strict";
     var SemVer = require_semver();
-    var patch = (a, loose) => new SemVer(a, loose).patch;
-    module.exports = patch;
+    var patch4 = (a, loose) => new SemVer(a, loose).patch;
+    module.exports = patch4;
   }
 });
 
@@ -619,9 +847,9 @@ var require_patch = __commonJS({
 var require_prerelease = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/prerelease.js"(exports, module) {
     "use strict";
-    var parse2 = require_parse();
-    var prerelease = (version, options) => {
-      const parsed = parse2(version, options);
+    var parse3 = require_parse();
+    var prerelease = (version, options4) => {
+      const parsed = parse3(version, options4);
       return parsed && parsed.prerelease.length ? parsed.prerelease : null;
     };
     module.exports = prerelease;
@@ -807,9 +1035,9 @@ var require_coerce = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/coerce.js"(exports, module) {
     "use strict";
     var SemVer = require_semver();
-    var parse2 = require_parse();
+    var parse3 = require_parse();
     var { safeRe: re, t } = require_re();
-    var coerce = (version, options) => {
+    var coerce = (version, options4) => {
       if (version instanceof SemVer) {
         return version;
       }
@@ -819,30 +1047,30 @@ var require_coerce = __commonJS({
       if (typeof version !== "string") {
         return null;
       }
-      options = options || {};
-      let match = null;
-      if (!options.rtl) {
-        match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
+      options4 = options4 || {};
+      let match4 = null;
+      if (!options4.rtl) {
+        match4 = version.match(options4.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
       } else {
-        const coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
+        const coerceRtlRegex = options4.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
         let next;
-        while ((next = coerceRtlRegex.exec(version)) && (!match || match.index + match[0].length !== version.length)) {
-          if (!match || next.index + next[0].length !== match.index + match[0].length) {
-            match = next;
+        while ((next = coerceRtlRegex.exec(version)) && (!match4 || match4.index + match4[0].length !== version.length)) {
+          if (!match4 || next.index + next[0].length !== match4.index + match4[0].length) {
+            match4 = next;
           }
           coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
         }
         coerceRtlRegex.lastIndex = -1;
       }
-      if (match === null) {
+      if (match4 === null) {
         return null;
       }
-      const major = match[2];
-      const minor = match[3] || "0";
-      const patch = match[4] || "0";
-      const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : "";
-      const build = options.includePrerelease && match[6] ? `+${match[6]}` : "";
-      return parse2(`${major}.${minor}.${patch}${prerelease}${build}`, options);
+      const major = match4[2];
+      const minor = match4[3] || "0";
+      const patch4 = match4[4] || "0";
+      const prerelease = options4.includePrerelease && match4[5] ? `-${match4[5]}` : "";
+      const build2 = options4.includePrerelease && match4[6] ? `+${match4[6]}` : "";
+      return parse3(`${major}.${minor}.${patch4}${prerelease}${build2}`, options4);
     };
     module.exports = coerce;
   }
@@ -852,19 +1080,19 @@ var require_coerce = __commonJS({
 var require_truncate = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/truncate.js"(exports, module) {
     "use strict";
-    var parse2 = require_parse();
+    var parse3 = require_parse();
     var constants = require_constants();
     var SemVer = require_semver();
-    var truncate = (version, truncation, options) => {
+    var truncate = (version, truncation, options4) => {
       if (!constants.RELEASE_TYPES.includes(truncation)) {
         return null;
       }
-      const clonedVersion = cloneInputVersion(version, options);
+      const clonedVersion = cloneInputVersion(version, options4);
       return clonedVersion && doTruncation(clonedVersion, truncation);
     };
-    var cloneInputVersion = (version, options) => {
+    var cloneInputVersion = (version, options4) => {
       const versionStringToParse = version instanceof SemVer ? version.version : version;
-      return parse2(versionStringToParse, options);
+      return parse3(versionStringToParse, options4);
     };
     var doTruncation = (version, truncation) => {
       if (isPrerelease(truncation)) {
@@ -933,13 +1161,13 @@ var require_range = __commonJS({
     "use strict";
     var SPACE_CHARACTERS = /\s+/g;
     var Range = class _Range {
-      constructor(range, options) {
-        options = parseOptions(options);
+      constructor(range, options4) {
+        options4 = parseOptions(options4);
         if (range instanceof _Range) {
-          if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) {
+          if (range.loose === !!options4.loose && range.includePrerelease === !!options4.includePrerelease) {
             return range;
           } else {
-            return new _Range(range.raw, options);
+            return new _Range(range.raw, options4);
           }
         }
         if (range instanceof Comparator) {
@@ -948,9 +1176,9 @@ var require_range = __commonJS({
           this.formatted = void 0;
           return this;
         }
-        this.options = options;
-        this.loose = !!options.loose;
-        this.includePrerelease = !!options.includePrerelease;
+        this.options = options4;
+        this.loose = !!options4.loose;
+        this.includePrerelease = !!options4.includePrerelease;
         this.raw = range.trim().replace(SPACE_CHARACTERS, " ");
         this.set = this.raw.split("||").map((r) => this.parseRange(r.trim())).filter((c) => c.length);
         if (!this.set.length) {
@@ -1000,9 +1228,9 @@ var require_range = __commonJS({
         range = range.replace(BUILDSTRIPRE, "");
         const memoOpts = (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) | (this.options.loose && FLAG_LOOSE);
         const memoKey = memoOpts + ":" + range;
-        const cached = cache.get(memoKey);
-        if (cached) {
-          return cached;
+        const cached2 = cache.get(memoKey);
+        if (cached2) {
+          return cached2;
         }
         const loose = this.options.loose;
         const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE];
@@ -1033,19 +1261,19 @@ var require_range = __commonJS({
         if (rangeMap.size > 1 && rangeMap.has("")) {
           rangeMap.delete("");
         }
-        const result = [...rangeMap.values()];
-        cache.set(memoKey, result);
-        return result;
+        const result2 = [...rangeMap.values()];
+        cache.set(memoKey, result2);
+        return result2;
       }
-      intersects(range, options) {
+      intersects(range, options4) {
         if (!(range instanceof _Range)) {
           throw new TypeError("a Range is required");
         }
         return this.set.some((thisComparators) => {
-          return isSatisfiable(thisComparators, options) && range.set.some((rangeComparators) => {
-            return isSatisfiable(rangeComparators, options) && thisComparators.every((thisComparator) => {
+          return isSatisfiable(thisComparators, options4) && range.set.some((rangeComparators) => {
+            return isSatisfiable(rangeComparators, options4) && thisComparators.every((thisComparator) => {
               return rangeComparators.every((rangeComparator) => {
-                return thisComparator.intersects(rangeComparator, options);
+                return thisComparator.intersects(rangeComparator, options4);
               });
             });
           });
@@ -1090,39 +1318,39 @@ var require_range = __commonJS({
     var BUILDSTRIPRE = new RegExp(src[t.BUILD], "g");
     var isNullSet = (c) => c.value === "<0.0.0-0";
     var isAny = (c) => c.value === "";
-    var isSatisfiable = (comparators, options) => {
-      let result = true;
+    var isSatisfiable = (comparators, options4) => {
+      let result2 = true;
       const remainingComparators = comparators.slice();
       let testComparator = remainingComparators.pop();
-      while (result && remainingComparators.length) {
-        result = remainingComparators.every((otherComparator) => {
-          return testComparator.intersects(otherComparator, options);
+      while (result2 && remainingComparators.length) {
+        result2 = remainingComparators.every((otherComparator) => {
+          return testComparator.intersects(otherComparator, options4);
         });
         testComparator = remainingComparators.pop();
       }
-      return result;
+      return result2;
     };
-    var parseComparator = (comp, options) => {
+    var parseComparator = (comp, options4) => {
       comp = comp.replace(re[t.BUILD], "");
-      debug("comp", comp, options);
-      comp = replaceCarets(comp, options);
+      debug("comp", comp, options4);
+      comp = replaceCarets(comp, options4);
       debug("caret", comp);
-      comp = replaceTildes(comp, options);
+      comp = replaceTildes(comp, options4);
       debug("tildes", comp);
-      comp = replaceXRanges(comp, options);
+      comp = replaceXRanges(comp, options4);
       debug("xrange", comp);
-      comp = replaceStars(comp, options);
+      comp = replaceStars(comp, options4);
       debug("stars", comp);
       return comp;
     };
     var isX = (id) => !id || id.toLowerCase() === "x" || id === "*";
     var invalidXRangeOrder = (M, m, p) => isX(M) && !isX(m) || isX(m) && p && !isX(p);
-    var replaceTildes = (comp, options) => {
-      return comp.trim().split(/\s+/).map((c) => replaceTilde(c, options)).join(" ");
+    var replaceTildes = (comp, options4) => {
+      return comp.trim().split(/\s+/).map((c) => replaceTilde(c, options4)).join(" ");
     };
-    var replaceTilde = (comp, options) => {
-      const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
-      const z = options.includePrerelease ? "-0" : "";
+    var replaceTilde = (comp, options4) => {
+      const r = options4.loose ? re[t.TILDELOOSE] : re[t.TILDE];
+      const z = options4.includePrerelease ? "-0" : "";
       return comp.replace(r, (_, M, m, p, pr) => {
         debug("tilde", comp, _, M, m, p, pr);
         let ret;
@@ -1142,13 +1370,13 @@ var require_range = __commonJS({
         return ret;
       });
     };
-    var replaceCarets = (comp, options) => {
-      return comp.trim().split(/\s+/).map((c) => replaceCaret(c, options)).join(" ");
+    var replaceCarets = (comp, options4) => {
+      return comp.trim().split(/\s+/).map((c) => replaceCaret(c, options4)).join(" ");
     };
-    var replaceCaret = (comp, options) => {
-      debug("caret", comp, options);
-      const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET];
-      const z = options.includePrerelease ? "-0" : "";
+    var replaceCaret = (comp, options4) => {
+      debug("caret", comp, options4);
+      const r = options4.loose ? re[t.CARETLOOSE] : re[t.CARET];
+      const z = options4.includePrerelease ? "-0" : "";
       return comp.replace(r, (_, M, m, p, pr) => {
         debug("caret", comp, _, M, m, p, pr);
         let ret;
@@ -1189,13 +1417,13 @@ var require_range = __commonJS({
         return ret;
       });
     };
-    var replaceXRanges = (comp, options) => {
-      debug("replaceXRanges", comp, options);
-      return comp.split(/\s+/).map((c) => replaceXRange(c, options)).join(" ");
+    var replaceXRanges = (comp, options4) => {
+      debug("replaceXRanges", comp, options4);
+      return comp.split(/\s+/).map((c) => replaceXRange(c, options4)).join(" ");
     };
-    var replaceXRange = (comp, options) => {
+    var replaceXRange = (comp, options4) => {
       comp = comp.trim();
-      const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
+      const r = options4.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
       return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
         debug("xRange", comp, ret, gtlt, M, m, p, pr);
         if (invalidXRangeOrder(M, m, p)) {
@@ -1208,7 +1436,7 @@ var require_range = __commonJS({
         if (gtlt === "=" && anyX) {
           gtlt = "";
         }
-        pr = options.includePrerelease ? "-0" : "";
+        pr = options4.includePrerelease ? "-0" : "";
         if (xM) {
           if (gtlt === ">" || gtlt === "<") {
             ret = "<0.0.0-0";
@@ -1251,13 +1479,13 @@ var require_range = __commonJS({
         return ret;
       });
     };
-    var replaceStars = (comp, options) => {
-      debug("replaceStars", comp, options);
+    var replaceStars = (comp, options4) => {
+      debug("replaceStars", comp, options4);
       return comp.trim().replace(re[t.STAR], "");
     };
-    var replaceGTE0 = (comp, options) => {
-      debug("replaceGTE0", comp, options);
-      return comp.trim().replace(re[options.includePrerelease ? t.GTE0PRE : t.GTE0], "");
+    var replaceGTE0 = (comp, options4) => {
+      debug("replaceGTE0", comp, options4);
+      return comp.trim().replace(re[options4.includePrerelease ? t.GTE0PRE : t.GTE0], "");
     };
     var hyphenReplace = (incPr) => ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr) => {
       if (isX(fM)) {
@@ -1286,20 +1514,20 @@ var require_range = __commonJS({
       }
       return `${from} ${to}`.trim();
     };
-    var testSet = (set, version, options) => {
-      for (let i = 0; i < set.length; i++) {
-        if (!set[i].test(version)) {
+    var testSet = (set5, version, options4) => {
+      for (let i = 0; i < set5.length; i++) {
+        if (!set5[i].test(version)) {
           return false;
         }
       }
-      if (version.prerelease.length && !options.includePrerelease) {
-        for (let i = 0; i < set.length; i++) {
-          debug(set[i].semver);
-          if (set[i].semver === Comparator.ANY) {
+      if (version.prerelease.length && !options4.includePrerelease) {
+        for (let i = 0; i < set5.length; i++) {
+          debug(set5[i].semver);
+          if (set5[i].semver === Comparator.ANY) {
             continue;
           }
-          if (set[i].semver.prerelease.length > 0) {
-            const allowed = set[i].semver;
+          if (set5[i].semver.prerelease.length > 0) {
+            const allowed = set5[i].semver;
             if (allowed.major === version.major && allowed.minor === version.minor && allowed.patch === version.patch) {
               return true;
             }
@@ -1321,19 +1549,19 @@ var require_comparator = __commonJS({
       static get ANY() {
         return ANY;
       }
-      constructor(comp, options) {
-        options = parseOptions(options);
+      constructor(comp, options4) {
+        options4 = parseOptions(options4);
         if (comp instanceof _Comparator) {
-          if (comp.loose === !!options.loose) {
+          if (comp.loose === !!options4.loose) {
             return comp;
           } else {
             comp = comp.value;
           }
         }
         comp = comp.trim().split(/\s+/).join(" ");
-        debug("comparator", comp, options);
-        this.options = options;
-        this.loose = !!options.loose;
+        debug("comparator", comp, options4);
+        this.options = options4;
+        this.loose = !!options4.loose;
         this.parse(comp);
         if (this.semver === ANY) {
           this.value = "";
@@ -1375,7 +1603,7 @@ var require_comparator = __commonJS({
         }
         return cmp(version, this.operator, this.semver, this.options);
       }
-      intersects(comp, options) {
+      intersects(comp, options4) {
         if (!(comp instanceof _Comparator)) {
           throw new TypeError("a Comparator is required");
         }
@@ -1383,18 +1611,18 @@ var require_comparator = __commonJS({
           if (this.value === "") {
             return true;
           }
-          return new Range(comp.value, options).test(this.value);
+          return new Range(comp.value, options4).test(this.value);
         } else if (comp.operator === "") {
           if (comp.value === "") {
             return true;
           }
-          return new Range(this.value, options).test(comp.semver);
+          return new Range(this.value, options4).test(comp.semver);
         }
-        options = parseOptions(options);
-        if (options.includePrerelease && (this.value === "<0.0.0-0" || comp.value === "<0.0.0-0")) {
+        options4 = parseOptions(options4);
+        if (options4.includePrerelease && (this.value === "<0.0.0-0" || comp.value === "<0.0.0-0")) {
           return false;
         }
-        if (!options.includePrerelease && (this.value.startsWith("<0.0.0") || comp.value.startsWith("<0.0.0"))) {
+        if (!options4.includePrerelease && (this.value.startsWith("<0.0.0") || comp.value.startsWith("<0.0.0"))) {
           return false;
         }
         if (this.operator.startsWith(">") && comp.operator.startsWith(">")) {
@@ -1406,10 +1634,10 @@ var require_comparator = __commonJS({
         if (this.semver.version === comp.semver.version && this.operator.includes("=") && comp.operator.includes("=")) {
           return true;
         }
-        if (cmp(this.semver, "<", comp.semver, options) && this.operator.startsWith(">") && comp.operator.startsWith("<")) {
+        if (cmp(this.semver, "<", comp.semver, options4) && this.operator.startsWith(">") && comp.operator.startsWith("<")) {
           return true;
         }
-        if (cmp(this.semver, ">", comp.semver, options) && this.operator.startsWith("<") && comp.operator.startsWith(">")) {
+        if (cmp(this.semver, ">", comp.semver, options4) && this.operator.startsWith("<") && comp.operator.startsWith(">")) {
           return true;
         }
         return false;
@@ -1430,9 +1658,9 @@ var require_satisfies = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/functions/satisfies.js"(exports, module) {
     "use strict";
     var Range = require_range();
-    var satisfies = (version, range, options) => {
+    var satisfies = (version, range, options4) => {
       try {
-        range = new Range(range, options);
+        range = new Range(range, options4);
       } catch (er) {
         return false;
       }
@@ -1447,7 +1675,7 @@ var require_to_comparators = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/ranges/to-comparators.js"(exports, module) {
     "use strict";
     var Range = require_range();
-    var toComparators = (range, options) => new Range(range, options).set.map((comp) => comp.map((c) => c.value).join(" ").trim().split(" "));
+    var toComparators = (range, options4) => new Range(range, options4).set.map((comp) => comp.map((c) => c.value).join(" ").trim().split(" "));
     module.exports = toComparators;
   }
 });
@@ -1458,24 +1686,24 @@ var require_max_satisfying = __commonJS({
     "use strict";
     var SemVer = require_semver();
     var Range = require_range();
-    var maxSatisfying = (versions, range, options) => {
-      let max = null;
+    var maxSatisfying = (versions, range, options4) => {
+      let max2 = null;
       let maxSV = null;
       let rangeObj = null;
       try {
-        rangeObj = new Range(range, options);
+        rangeObj = new Range(range, options4);
       } catch (er) {
         return null;
       }
       versions.forEach((v) => {
         if (rangeObj.test(v)) {
-          if (!max || maxSV.compare(v) === -1) {
-            max = v;
-            maxSV = new SemVer(max, options);
+          if (!max2 || maxSV.compare(v) === -1) {
+            max2 = v;
+            maxSV = new SemVer(max2, options4);
           }
         }
       });
-      return max;
+      return max2;
     };
     module.exports = maxSatisfying;
   }
@@ -1487,12 +1715,12 @@ var require_min_satisfying = __commonJS({
     "use strict";
     var SemVer = require_semver();
     var Range = require_range();
-    var minSatisfying = (versions, range, options) => {
+    var minSatisfying = (versions, range, options4) => {
       let min = null;
       let minSV = null;
       let rangeObj = null;
       try {
-        rangeObj = new Range(range, options);
+        rangeObj = new Range(range, options4);
       } catch (er) {
         return null;
       }
@@ -1500,7 +1728,7 @@ var require_min_satisfying = __commonJS({
         if (rangeObj.test(v)) {
           if (!min || minSV.compare(v) === 1) {
             min = v;
-            minSV = new SemVer(min, options);
+            minSV = new SemVer(min, options4);
           }
         }
       });
@@ -1574,9 +1802,9 @@ var require_valid2 = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/ranges/valid.js"(exports, module) {
     "use strict";
     var Range = require_range();
-    var validRange = (range, options) => {
+    var validRange = (range, options4) => {
       try {
-        return new Range(range, options).range || "*";
+        return new Range(range, options4).range || "*";
       } catch (er) {
         return null;
       }
@@ -1598,9 +1826,9 @@ var require_outside = __commonJS({
     var lt = require_lt();
     var lte = require_lte();
     var gte = require_gte();
-    var outside = (version, range, hilo, options) => {
-      version = new SemVer(version, options);
-      range = new Range(range, options);
+    var outside = (version, range, hilo, options4) => {
+      version = new SemVer(version, options4);
+      range = new Range(range, options4);
       let gtfn, ltefn, ltfn, comp, ecomp;
       switch (hilo) {
         case ">":
@@ -1620,7 +1848,7 @@ var require_outside = __commonJS({
         default:
           throw new TypeError('Must provide a hilo val of "<" or ">"');
       }
-      if (satisfies(version, range, options)) {
+      if (satisfies(version, range, options4)) {
         return false;
       }
       for (let i = 0; i < range.set.length; ++i) {
@@ -1633,9 +1861,9 @@ var require_outside = __commonJS({
           }
           high = high || comparator;
           low = low || comparator;
-          if (gtfn(comparator.semver, high.semver, options)) {
+          if (gtfn(comparator.semver, high.semver, options4)) {
             high = comparator;
-          } else if (ltfn(comparator.semver, low.semver, options)) {
+          } else if (ltfn(comparator.semver, low.semver, options4)) {
             low = comparator;
           }
         });
@@ -1659,7 +1887,7 @@ var require_gtr = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/ranges/gtr.js"(exports, module) {
     "use strict";
     var outside = require_outside();
-    var gtr = (version, range, options) => outside(version, range, ">", options);
+    var gtr = (version, range, options4) => outside(version, range, ">", options4);
     module.exports = gtr;
   }
 });
@@ -1669,7 +1897,7 @@ var require_ltr = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/ranges/ltr.js"(exports, module) {
     "use strict";
     var outside = require_outside();
-    var ltr = (version, range, options) => outside(version, range, "<", options);
+    var ltr = (version, range, options4) => outside(version, range, "<", options4);
     module.exports = ltr;
   }
 });
@@ -1679,10 +1907,10 @@ var require_intersects = __commonJS({
   "../../../node_modules/.bun/semver@7.8.5/node_modules/semver/ranges/intersects.js"(exports, module) {
     "use strict";
     var Range = require_range();
-    var intersects = (r1, r2, options) => {
-      r1 = new Range(r1, options);
-      r2 = new Range(r2, options);
-      return r1.intersects(r2, options);
+    var intersects = (r1, r2, options4) => {
+      r1 = new Range(r1, options4);
+      r2 = new Range(r2, options4);
+      return r1.intersects(r2, options4);
     };
     module.exports = intersects;
   }
@@ -1694,13 +1922,13 @@ var require_simplify = __commonJS({
     "use strict";
     var satisfies = require_satisfies();
     var compare3 = require_compare();
-    module.exports = (versions, range, options) => {
-      const set = [];
+    module.exports = (versions, range, options4) => {
+      const set5 = [];
       let first = null;
       let prev = null;
-      const v = versions.sort((a, b) => compare3(a, b, options));
+      const v = versions.sort((a, b) => compare3(a, b, options4));
       for (const version of v) {
-        const included = satisfies(version, range, options);
+        const included = satisfies(version, range, options4);
         if (included) {
           prev = version;
           if (!first) {
@@ -1708,27 +1936,27 @@ var require_simplify = __commonJS({
           }
         } else {
           if (prev) {
-            set.push([first, prev]);
+            set5.push([first, prev]);
           }
           prev = null;
           first = null;
         }
       }
       if (first) {
-        set.push([first, null]);
+        set5.push([first, null]);
       }
       const ranges = [];
-      for (const [min, max] of set) {
-        if (min === max) {
+      for (const [min, max2] of set5) {
+        if (min === max2) {
           ranges.push(min);
-        } else if (!max && min === v[0]) {
+        } else if (!max2 && min === v[0]) {
           ranges.push("*");
-        } else if (!max) {
+        } else if (!max2) {
           ranges.push(`>=${min}`);
         } else if (min === v[0]) {
-          ranges.push(`<=${max}`);
+          ranges.push(`<=${max2}`);
         } else {
-          ranges.push(`${min} - ${max}`);
+          ranges.push(`${min} - ${max2}`);
         }
       }
       const simplified = ranges.join(" || ");
@@ -1747,16 +1975,16 @@ var require_subset = __commonJS({
     var { ANY } = Comparator;
     var satisfies = require_satisfies();
     var compare3 = require_compare();
-    var subset = (sub, dom, options = {}) => {
+    var subset = (sub, dom, options4 = {}) => {
       if (sub === dom) {
         return true;
       }
-      sub = new Range(sub, options);
-      dom = new Range(dom, options);
+      sub = new Range(sub, options4);
+      dom = new Range(dom, options4);
       let sawNonNull = false;
       OUTER: for (const simpleSub of sub.set) {
         for (const simpleDom of dom.set) {
-          const isSub = simpleSubset(simpleSub, simpleDom, options);
+          const isSub = simpleSubset(simpleSub, simpleDom, options4);
           sawNonNull = sawNonNull || isSub !== null;
           if (isSub) {
             continue OUTER;
@@ -1770,21 +1998,21 @@ var require_subset = __commonJS({
     };
     var minimumVersionWithPreRelease = [new Comparator(">=0.0.0-0")];
     var minimumVersion = [new Comparator(">=0.0.0")];
-    var simpleSubset = (sub, dom, options) => {
+    var simpleSubset = (sub, dom, options4) => {
       if (sub === dom) {
         return true;
       }
       if (sub.length === 1 && sub[0].semver === ANY) {
         if (dom.length === 1 && dom[0].semver === ANY) {
           return true;
-        } else if (options.includePrerelease) {
+        } else if (options4.includePrerelease) {
           sub = minimumVersionWithPreRelease;
         } else {
           sub = minimumVersion;
         }
       }
       if (dom.length === 1 && dom[0].semver === ANY) {
-        if (options.includePrerelease) {
+        if (options4.includePrerelease) {
           return true;
         } else {
           dom = minimumVersion;
@@ -1794,9 +2022,9 @@ var require_subset = __commonJS({
       let gt, lt;
       for (const c of sub) {
         if (c.operator === ">" || c.operator === ">=") {
-          gt = higherGT(gt, c, options);
+          gt = higherGT(gt, c, options4);
         } else if (c.operator === "<" || c.operator === "<=") {
-          lt = lowerLT(lt, c, options);
+          lt = lowerLT(lt, c, options4);
         } else {
           eqSet.add(c.semver);
         }
@@ -1806,7 +2034,7 @@ var require_subset = __commonJS({
       }
       let gtltComp;
       if (gt && lt) {
-        gtltComp = compare3(gt.semver, lt.semver, options);
+        gtltComp = compare3(gt.semver, lt.semver, options4);
         if (gtltComp > 0) {
           return null;
         } else if (gtltComp === 0 && (gt.operator !== ">=" || lt.operator !== "<=")) {
@@ -1814,14 +2042,14 @@ var require_subset = __commonJS({
         }
       }
       for (const eq of eqSet) {
-        if (gt && !satisfies(eq, String(gt), options)) {
+        if (gt && !satisfies(eq, String(gt), options4)) {
           return null;
         }
-        if (lt && !satisfies(eq, String(lt), options)) {
+        if (lt && !satisfies(eq, String(lt), options4)) {
           return null;
         }
         for (const c of dom) {
-          if (!satisfies(eq, String(c), options)) {
+          if (!satisfies(eq, String(c), options4)) {
             return false;
           }
         }
@@ -1829,8 +2057,8 @@ var require_subset = __commonJS({
       }
       let higher, lower;
       let hasDomLT, hasDomGT;
-      let needDomLTPre = lt && !options.includePrerelease && lt.semver.prerelease.length ? lt.semver : false;
-      let needDomGTPre = gt && !options.includePrerelease && gt.semver.prerelease.length ? gt.semver : false;
+      let needDomLTPre = lt && !options4.includePrerelease && lt.semver.prerelease.length ? lt.semver : false;
+      let needDomGTPre = gt && !options4.includePrerelease && gt.semver.prerelease.length ? gt.semver : false;
       if (needDomLTPre && needDomLTPre.prerelease.length === 1 && lt.operator === "<" && needDomLTPre.prerelease[0] === 0) {
         needDomLTPre = false;
       }
@@ -1844,7 +2072,7 @@ var require_subset = __commonJS({
             }
           }
           if (c.operator === ">" || c.operator === ">=") {
-            higher = higherGT(gt, c, options);
+            higher = higherGT(gt, c, options4);
             if (higher === c && higher !== gt) {
               return false;
             }
@@ -1859,7 +2087,7 @@ var require_subset = __commonJS({
             }
           }
           if (c.operator === "<" || c.operator === "<=") {
-            lower = lowerLT(lt, c, options);
+            lower = lowerLT(lt, c, options4);
             if (lower === c && lower !== lt) {
               return false;
             }
@@ -1882,18 +2110,18 @@ var require_subset = __commonJS({
       }
       return true;
     };
-    var higherGT = (a, b, options) => {
+    var higherGT = (a, b, options4) => {
       if (!a) {
         return b;
       }
-      const comp = compare3(a.semver, b.semver, options);
+      const comp = compare3(a.semver, b.semver, options4);
       return comp > 0 ? a : comp < 0 ? b : b.operator === ">" && a.operator === ">=" ? b : a;
     };
-    var lowerLT = (a, b, options) => {
+    var lowerLT = (a, b, options4) => {
       if (!a) {
         return b;
       }
-      const comp = compare3(a.semver, b.semver, options);
+      const comp = compare3(a.semver, b.semver, options4);
       return comp < 0 ? a : comp > 0 ? b : b.operator === "<" && a.operator === "<=" ? b : a;
     };
     module.exports = subset;
@@ -1908,14 +2136,14 @@ var require_semver2 = __commonJS({
     var constants = require_constants();
     var SemVer = require_semver();
     var identifiers = require_identifiers();
-    var parse2 = require_parse();
+    var parse3 = require_parse();
     var valid2 = require_valid();
     var clean2 = require_clean();
     var inc = require_inc();
     var diff = require_diff();
     var major = require_major();
     var minor = require_minor();
-    var patch = require_patch();
+    var patch4 = require_patch();
     var prerelease = require_prerelease();
     var compare3 = require_compare();
     var rcompare = require_rcompare();
@@ -1947,14 +2175,14 @@ var require_semver2 = __commonJS({
     var simplifyRange = require_simplify();
     var subset = require_subset();
     module.exports = {
-      parse: parse2,
+      parse: parse3,
       valid: valid2,
       clean: clean2,
       inc,
       diff,
       major,
       minor,
-      patch,
+      patch: patch4,
       prerelease,
       compare: compare3,
       rcompare,
@@ -1998,27 +2226,3538 @@ var require_semver2 = __commonJS({
 });
 
 // ../sdk/src/ids.ts
-import { Schema } from "effect";
-var IntegrationSlug = Schema.String.pipe(Schema.brand("IntegrationSlug"));
-var AuthTemplateSlug = Schema.String.pipe(Schema.brand("AuthTemplateSlug"));
+var IntegrationSlug = Schema_exports.String.pipe(Schema_exports.brand("IntegrationSlug"));
+var AuthTemplateSlug = Schema_exports.String.pipe(Schema_exports.brand("AuthTemplateSlug"));
 var NO_AUTH_TEMPLATE = AuthTemplateSlug.make("none");
-var ConnectionName = Schema.String.pipe(Schema.brand("ConnectionName"));
-var OAuthClientSlug = Schema.String.pipe(Schema.brand("OAuthClientSlug"));
-var OAuthState = Schema.String.pipe(Schema.brand("OAuthState"));
-var ProviderKey = Schema.String.pipe(Schema.brand("ProviderKey"));
-var ProviderItemId = Schema.String.pipe(Schema.brand("ProviderItemId"));
-var ConnectionAddress = Schema.String.pipe(Schema.brand("ConnectionAddress"));
-var ToolAddress = Schema.String.pipe(Schema.brand("ToolAddress"));
-var ToolName = Schema.String.pipe(Schema.brand("ToolName"));
-var ElicitationId = Schema.String.pipe(Schema.brand("ElicitationId"));
-var PolicyId = Schema.String.pipe(Schema.brand("PolicyId"));
-var Tenant = Schema.String.pipe(Schema.brand("Tenant"));
-var Subject = Schema.String.pipe(Schema.brand("Subject"));
-var Owner = Schema.Literals(["org", "user"]);
+var ConnectionName = Schema_exports.String.pipe(Schema_exports.brand("ConnectionName"));
+var OAuthClientSlug = Schema_exports.String.pipe(Schema_exports.brand("OAuthClientSlug"));
+var OAuthState = Schema_exports.String.pipe(Schema_exports.brand("OAuthState"));
+var ProviderKey = Schema_exports.String.pipe(Schema_exports.brand("ProviderKey"));
+var ProviderItemId = Schema_exports.String.pipe(Schema_exports.brand("ProviderItemId"));
+var ConnectionAddress = Schema_exports.String.pipe(Schema_exports.brand("ConnectionAddress"));
+var ToolAddress = Schema_exports.String.pipe(Schema_exports.brand("ToolAddress"));
+var ToolName = Schema_exports.String.pipe(Schema_exports.brand("ToolName"));
+var ElicitationId = Schema_exports.String.pipe(Schema_exports.brand("ElicitationId"));
+var PolicyId = Schema_exports.String.pipe(Schema_exports.brand("PolicyId"));
+var Tenant = Schema_exports.String.pipe(Schema_exports.brand("Tenant"));
+var Subject = Schema_exports.String.pipe(Schema_exports.brand("Subject"));
+var Owner = Schema_exports.Literals(["org", "user"]);
 
-// ../sdk/src/executor.ts
-import { Effect as Effect11, Inspectable, Option as Option5, Predicate as Predicate4, Schema as Schema14 } from "effect";
-import { FetchHttpClient as FetchHttpClient3 } from "effect/unstable/http";
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/Cookies.js
+var TypeId = "~effect/http/Cookies";
+var isCookies = (u) => hasProperty(u, TypeId);
+var CookieTypeId = "~effect/http/Cookies/Cookie";
+var CookieErrorTypeId = "~effect/http/Cookies/CookieError";
+var CookiesErrorReason = class extends Error2 {
+};
+var CookiesError = class _CookiesError extends (/* @__PURE__ */ TaggedError("CookieError")) {
+  /**
+   * @since 4.0.0
+   */
+  static fromReason(reason, cause) {
+    return new _CookiesError({
+      reason: new CookiesErrorReason({
+        _tag: reason,
+        cause
+      })
+    });
+  }
+  /**
+   * @since 4.0.0
+   */
+  [CookieErrorTypeId] = CookieErrorTypeId;
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    return this.reason._tag;
+  }
+};
+var Proto = {
+  [TypeId]: TypeId,
+  ...BaseProto,
+  toJSON() {
+    return {
+      _id: "effect/Cookies",
+      cookies: map3(this.cookies, (cookie) => cookie.toJSON())
+    };
+  },
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+var fromReadonlyRecord = (cookies) => {
+  const self = Object.create(Proto);
+  self.cookies = cookies;
+  return self;
+};
+var fromIterable3 = (cookies) => {
+  const record = {};
+  for (const cookie of cookies) {
+    record[cookie.name] = cookie;
+  }
+  return fromReadonlyRecord(record);
+};
+var fromSetCookie = (headers) => {
+  const arrayHeaders = typeof headers === "string" ? [headers] : headers;
+  const cookies = [];
+  for (const header of arrayHeaders) {
+    const cookie = parseSetCookie(header.trim());
+    if (cookie) {
+      cookies.push(cookie);
+    }
+  }
+  return fromIterable3(cookies);
+};
+function parseSetCookie(header) {
+  const parts = header.split(";").map((_) => _.trim()).filter((_) => _ !== "");
+  if (parts.length === 0) {
+    return void 0;
+  }
+  const firstEqual = parts[0].indexOf("=");
+  if (firstEqual === -1) {
+    return void 0;
+  }
+  const name = parts[0].slice(0, firstEqual);
+  if (!fieldContentRegExp.test(name)) {
+    return void 0;
+  }
+  const valueEncoded = parts[0].slice(firstEqual + 1);
+  const value = tryDecodeURIComponent(valueEncoded);
+  if (parts.length === 1) {
+    return Object.assign(Object.create(CookieProto), {
+      name,
+      value,
+      valueEncoded
+    });
+  }
+  const options4 = {};
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    const equalIndex = part.indexOf("=");
+    const key = equalIndex === -1 ? part : part.slice(0, equalIndex).trim();
+    const value2 = equalIndex === -1 ? void 0 : part.slice(equalIndex + 1).trim();
+    switch (key.toLowerCase()) {
+      case "domain": {
+        if (value2 === void 0) {
+          break;
+        }
+        const domain = value2.trim().replace(/^\./, "");
+        if (domain) {
+          options4.domain = domain;
+        }
+        break;
+      }
+      case "expires": {
+        if (value2 === void 0) {
+          break;
+        }
+        const date = new Date(value2);
+        if (!isNaN(date.getTime())) {
+          options4.expires = date;
+        }
+        break;
+      }
+      case "max-age": {
+        if (value2 === void 0) {
+          break;
+        }
+        const maxAge = parseInt(value2, 10);
+        if (!isNaN(maxAge)) {
+          options4.maxAge = seconds(maxAge);
+        }
+        break;
+      }
+      case "path": {
+        if (value2 === void 0) {
+          break;
+        }
+        if (value2[0] === "/") {
+          options4.path = value2;
+        }
+        break;
+      }
+      case "priority": {
+        if (value2 === void 0) {
+          break;
+        }
+        switch (value2.toLowerCase()) {
+          case "low":
+            options4.priority = "low";
+            break;
+          case "medium":
+            options4.priority = "medium";
+            break;
+          case "high":
+            options4.priority = "high";
+            break;
+        }
+        break;
+      }
+      case "httponly": {
+        options4.httpOnly = true;
+        break;
+      }
+      case "secure": {
+        options4.secure = true;
+        break;
+      }
+      case "partitioned": {
+        options4.partitioned = true;
+        break;
+      }
+      case "samesite": {
+        if (value2 === void 0) {
+          break;
+        }
+        switch (value2.toLowerCase()) {
+          case "lax":
+            options4.sameSite = "lax";
+            break;
+          case "strict":
+            options4.sameSite = "strict";
+            break;
+          case "none":
+            options4.sameSite = "none";
+            break;
+        }
+        break;
+      }
+    }
+  }
+  return Object.assign(Object.create(CookieProto), {
+    name,
+    value,
+    valueEncoded,
+    options: Object.keys(options4).length > 0 ? options4 : void 0
+  });
+}
+var empty5 = /* @__PURE__ */ fromIterable3([]);
+var isEmpty = (self) => isEmptyRecord(self.cookies);
+var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
+var CookieProto = {
+  [CookieTypeId]: CookieTypeId,
+  ...BaseProto,
+  toJSON() {
+    return {
+      _id: "effect/Cookies/Cookie",
+      name: this.name,
+      value: this.value,
+      options: this.options
+    };
+  }
+};
+function makeCookie(name, value, options4) {
+  if (!fieldContentRegExp.test(name)) {
+    return fail(CookiesError.fromReason("InvalidCookieName"));
+  }
+  const encodedValue = encodeURIComponent(value);
+  if (encodedValue && !fieldContentRegExp.test(encodedValue)) {
+    return fail(CookiesError.fromReason("InvalidCookieValue"));
+  }
+  if (options4 !== void 0) {
+    if (options4.domain !== void 0 && !fieldContentRegExp.test(options4.domain)) {
+      return fail(CookiesError.fromReason("InvalidCookieDomain"));
+    }
+    if (options4.path !== void 0 && !fieldContentRegExp.test(options4.path)) {
+      return fail(CookiesError.fromReason("InvalidCookiePath"));
+    }
+    if (options4.maxAge !== void 0 && !isFinite(fromInputUnsafe(options4.maxAge))) {
+      return fail(CookiesError.fromReason("CookieInfinityMaxAge"));
+    }
+  }
+  return succeed(Object.assign(Object.create(CookieProto), {
+    name,
+    value,
+    valueEncoded: encodedValue,
+    options: options4
+  }));
+}
+var merge2 = /* @__PURE__ */ dual(2, (self, that) => fromReadonlyRecord({
+  ...self.cookies,
+  ...that.cookies
+}));
+var set2 = /* @__PURE__ */ dual((args) => isCookies(args[0]), (self, name, value, options4) => map2(makeCookie(name, value, options4), (cookie) => fromReadonlyRecord(set(self.cookies, name, cookie))));
+var toCookieHeader = (self) => Object.values(self.cookies).map((cookie) => `${cookie.name}=${cookie.valueEncoded}`).join("; ");
+function parseHeader(header) {
+  const result2 = {};
+  const strLen = header.length;
+  let pos = 0;
+  let terminatorPos = 0;
+  while (true) {
+    if (terminatorPos === strLen) break;
+    terminatorPos = header.indexOf(";", pos);
+    if (terminatorPos === -1) terminatorPos = strLen;
+    let eqIdx = header.indexOf("=", pos);
+    if (eqIdx === -1) break;
+    if (eqIdx > terminatorPos) {
+      pos = terminatorPos + 1;
+      continue;
+    }
+    const key = header.substring(pos, eqIdx++).trim();
+    if (result2[key] === void 0) {
+      const val = header.charCodeAt(eqIdx) === 34 ? header.substring(eqIdx + 1, terminatorPos - 1).trim() : header.substring(eqIdx, terminatorPos).trim();
+      result2[key] = !(val.indexOf("%") === -1) ? tryDecodeURIComponent(val) : val;
+    }
+    pos = terminatorPos + 1;
+  }
+  return result2;
+}
+var tryDecodeURIComponent = (str) => {
+  try {
+    return decodeURIComponent(str);
+  } catch (_) {
+    return str;
+  }
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/FetchHttpClient.js
+var FetchHttpClient_exports = {};
+__export(FetchHttpClient_exports, {
+  Fetch: () => Fetch,
+  RequestInit: () => RequestInit,
+  layer: () => layer
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/Headers.js
+var TypeId2 = /* @__PURE__ */ Symbol.for("~effect/http/Headers");
+var Proto2 = /* @__PURE__ */ Object.create(null);
+Object.defineProperties(Proto2, {
+  [TypeId2]: {
+    value: TypeId2
+  },
+  [symbolRedactable]: {
+    value(context2) {
+      return redact2(this, get(context2, CurrentRedactedNames));
+    }
+  },
+  toJSON: {
+    value() {
+      return redact(this);
+    }
+  },
+  [symbol2]: {
+    value(that) {
+      return Equivalence(this, that);
+    }
+  },
+  [symbol]: {
+    value() {
+      return structure(this);
+    }
+  },
+  toString: {
+    value: BaseProto.toString
+  },
+  [NodeInspectSymbol]: {
+    value: BaseProto[NodeInspectSymbol]
+  }
+});
+var make3 = (input) => Object.assign(Object.create(Proto2), input);
+var Equivalence = /* @__PURE__ */ makeEquivalence2(/* @__PURE__ */ strictEqual());
+var empty6 = /* @__PURE__ */ Object.create(Proto2);
+var fromInput = (input) => {
+  if (input === void 0) {
+    return empty6;
+  } else if (Symbol.iterator in input) {
+    const out2 = Object.create(Proto2);
+    for (const [k, v] of input) {
+      out2[k.toLowerCase()] = v;
+    }
+    return out2;
+  }
+  const out = Object.create(Proto2);
+  for (const [k, v] of Object.entries(input)) {
+    if (Array.isArray(v)) {
+      out[k.toLowerCase()] = v.join(", ");
+    } else if (v !== void 0) {
+      out[k.toLowerCase()] = v;
+    }
+  }
+  return out;
+};
+var fromRecordUnsafe = (input) => Object.setPrototypeOf(input, Proto2);
+var set3 = /* @__PURE__ */ dual(3, (self, key, value) => {
+  const out = make3(self);
+  out[key.toLowerCase()] = value;
+  return out;
+});
+var setAll = /* @__PURE__ */ dual(2, (self, headers) => make3({
+  ...self,
+  ...fromInput(headers)
+}));
+var merge3 = /* @__PURE__ */ dual(2, (self, headers) => {
+  const out = make3(self);
+  Object.assign(out, headers);
+  return out;
+});
+var remove2 = /* @__PURE__ */ dual(2, (self, key) => {
+  const out = make3(self);
+  delete out[key.toLowerCase()];
+  return out;
+});
+var redact2 = /* @__PURE__ */ dual(2, (self, key) => {
+  const out = {
+    ...self
+  };
+  const modify2 = (key2) => {
+    if (typeof key2 === "string") {
+      const k = key2.toLowerCase();
+      if (k in self) {
+        out[k] = make2(self[k]);
+      }
+    } else {
+      for (const name in self) {
+        if (key2.test(name)) {
+          out[name] = make2(self[name]);
+        }
+      }
+    }
+  };
+  if (Array.isArray(key)) {
+    for (let i = 0; i < key.length; i++) {
+      modify2(key[i]);
+    }
+  } else {
+    modify2(key);
+  }
+  return out;
+});
+var CurrentRedactedNames = /* @__PURE__ */ Reference("effect/Headers/CurrentRedactedNames", {
+  defaultValue: () => ["authorization", "cookie", "set-cookie", "x-api-key"]
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClient.js
+var HttpClient_exports = {};
+__export(HttpClient_exports, {
+  HttpClient: () => HttpClient,
+  SpanNameGenerator: () => SpanNameGenerator,
+  TracerDisabledWhen: () => TracerDisabledWhen,
+  TracerPropagationEnabled: () => TracerPropagationEnabled,
+  catch: () => catch_2,
+  catchTag: () => catchTag2,
+  catchTags: () => catchTags2,
+  del: () => del2,
+  execute: () => execute,
+  filterOrElse: () => filterOrElse2,
+  filterOrFail: () => filterOrFail2,
+  filterStatus: () => filterStatus2,
+  filterStatusOk: () => filterStatusOk2,
+  followRedirects: () => followRedirects,
+  get: () => get4,
+  head: () => head2,
+  isHttpClient: () => isHttpClient,
+  layerMergedContext: () => layerMergedContext,
+  make: () => make6,
+  makeWith: () => makeWith2,
+  mapRequest: () => mapRequest,
+  mapRequestEffect: () => mapRequestEffect,
+  mapRequestInput: () => mapRequestInput,
+  mapRequestInputEffect: () => mapRequestInputEffect,
+  options: () => options2,
+  patch: () => patch2,
+  post: () => post2,
+  put: () => put2,
+  retry: () => retry2,
+  retryTransient: () => retryTransient,
+  tap: () => tap2,
+  tapError: () => tapError2,
+  tapRequest: () => tapRequest,
+  transform: () => transform3,
+  transformResponse: () => transformResponse,
+  withCookiesRef: () => withCookiesRef,
+  withRateLimiter: () => withRateLimiter,
+  withScope: () => withScope
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClientError.js
+var TypeId3 = "~effect/http/HttpClientError";
+var isHttpClientError = (u) => hasProperty(u, TypeId3);
+var HttpClientError = class extends (/* @__PURE__ */ TaggedError("HttpClientError")) {
+  constructor(props) {
+    if ("cause" in props.reason) {
+      super({
+        ...props,
+        cause: props.reason.cause
+      });
+    } else {
+      super(props);
+    }
+  }
+  /**
+   * @since 4.0.0
+   */
+  [TypeId3] = TypeId3;
+  /**
+   * @since 4.0.0
+   */
+  get request() {
+    return this.reason.request;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get response() {
+    return "response" in this.reason ? this.reason.response : void 0;
+  }
+  get message() {
+    return this.reason.message;
+  }
+};
+var formatReason = (tag2) => tag2.endsWith("Error") ? tag2.slice(0, -5) : tag2;
+var formatMessage = (reason, description, info) => description ? `${reason}: ${description} (${info})` : `${reason} error (${info})`;
+var TransportError = class extends (/* @__PURE__ */ TaggedError("TransportError")) {
+  /**
+   * @since 4.0.0
+   */
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    return formatMessage(formatReason(this._tag), this.description, this.methodAndUrl);
+  }
+};
+var InvalidUrlError = class extends (/* @__PURE__ */ TaggedError("InvalidUrlError")) {
+  /**
+   * @since 4.0.0
+   */
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    return formatMessage(formatReason(this._tag), this.description, this.methodAndUrl);
+  }
+};
+var StatusCodeError = class extends (/* @__PURE__ */ TaggedError("StatusCodeError")) {
+  /**
+   * @since 4.0.0
+   */
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    const info = `${this.response.status} ${this.methodAndUrl}`;
+    return formatMessage(formatReason(this._tag), this.description, info);
+  }
+};
+var DecodeError = class extends (/* @__PURE__ */ TaggedError("DecodeError")) {
+  /**
+   * @since 4.0.0
+   */
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    const info = `${this.response.status} ${this.methodAndUrl}`;
+    return formatMessage(formatReason(this._tag), this.description, info);
+  }
+};
+var EmptyBodyError = class extends (/* @__PURE__ */ TaggedError("EmptyBodyError")) {
+  /**
+   * @since 4.0.0
+   */
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    const info = `${this.response.status} ${this.methodAndUrl}`;
+    return formatMessage(formatReason(this._tag), this.description, info);
+  }
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClientRequest.js
+var HttpClientRequest_exports = {};
+__export(HttpClientRequest_exports, {
+  accept: () => accept,
+  acceptJson: () => acceptJson,
+  appendUrl: () => appendUrl,
+  appendUrlParam: () => appendUrlParam,
+  appendUrlParams: () => appendUrlParams,
+  basicAuth: () => basicAuth,
+  bearerToken: () => bearerToken,
+  bodyFile: () => bodyFile,
+  bodyFormData: () => bodyFormData,
+  bodyFormDataRecord: () => bodyFormDataRecord,
+  bodyJson: () => bodyJson,
+  bodyJsonUnsafe: () => bodyJsonUnsafe,
+  bodyStream: () => bodyStream,
+  bodyText: () => bodyText,
+  bodyUint8Array: () => bodyUint8Array,
+  bodyUrlParams: () => bodyUrlParams,
+  delete: () => del,
+  empty: () => empty9,
+  fromWeb: () => fromWeb,
+  get: () => get3,
+  head: () => head,
+  isHttpClientRequest: () => isHttpClientRequest,
+  make: () => make5,
+  makeWith: () => makeWith,
+  modify: () => modify,
+  options: () => options,
+  patch: () => patch,
+  post: () => post,
+  prependUrl: () => prependUrl,
+  put: () => put,
+  removeHash: () => removeHash,
+  schemaBodyJson: () => schemaBodyJson,
+  setBody: () => setBody,
+  setHash: () => setHash,
+  setHeader: () => setHeader,
+  setHeaders: () => setHeaders,
+  setMethod: () => setMethod,
+  setUrl: () => setUrl,
+  setUrlParam: () => setUrlParam,
+  setUrlParams: () => setUrlParams,
+  toUrl: () => toUrl,
+  toWeb: () => toWeb,
+  toWebResult: () => toWebResult,
+  trace: () => trace,
+  updateUrl: () => updateUrl
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/UrlParams.js
+var TypeId4 = "~effect/http/UrlParams";
+var Proto3 = {
+  ...PipeInspectableProto,
+  [TypeId4]: TypeId4,
+  [Symbol.iterator]() {
+    return this.params[Symbol.iterator]();
+  },
+  toJSON() {
+    return {
+      _id: "UrlParams",
+      params: Object.fromEntries(this.params)
+    };
+  },
+  [symbol2](that) {
+    return Equivalence2(this, that);
+  },
+  [symbol]() {
+    return array(this.params.flat());
+  }
+};
+var make4 = (params) => {
+  const self = Object.create(Proto3);
+  self.params = params;
+  return self;
+};
+var fromInput2 = (input) => {
+  const parsed = fromInputNested(input);
+  const out = [];
+  for (let i = 0; i < parsed.length; i++) {
+    if (Array.isArray(parsed[i][0])) {
+      const [keys, value] = parsed[i];
+      out.push([`${keys[0]}[${keys.slice(1).join("][")}]`, value]);
+    } else {
+      out.push(parsed[i]);
+    }
+  }
+  return make4(out);
+};
+var fromInputNested = (input) => {
+  const entries = typeof input[Symbol.iterator] === "function" ? fromIterable(input) : Object.entries(input);
+  const out = [];
+  for (const [key, value] of entries) {
+    if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) {
+        if (value[i] !== void 0) {
+          out.push([key, String(value[i])]);
+        }
+      }
+    } else if (typeof value === "object") {
+      const nested = fromInputNested(value);
+      for (const [k, v] of nested) {
+        out.push([[key, ...typeof k === "string" ? [k] : k], v]);
+      }
+    } else if (value !== void 0) {
+      out.push([key, String(value)]);
+    }
+  }
+  return out;
+};
+var Equivalence2 = /* @__PURE__ */ make((a, b) => arrayEquivalence(a.params, b.params));
+var arrayEquivalence = /* @__PURE__ */ makeEquivalence3(/* @__PURE__ */ makeEquivalence([/* @__PURE__ */ strictEqual(), /* @__PURE__ */ strictEqual()]));
+var empty7 = /* @__PURE__ */ make4([]);
+var set4 = /* @__PURE__ */ dual(3, (self, key, value) => make4(append(filter(self.params, ([k]) => k !== key), [key, String(value)])));
+var transform2 = /* @__PURE__ */ dual(2, (self, f) => make4(f(self.params)));
+var setAll2 = /* @__PURE__ */ dual(2, (self, input) => {
+  const out = fromInput2(input);
+  const params = out.params;
+  const keys = /* @__PURE__ */ new Set();
+  for (let i = 0; i < params.length; i++) {
+    keys.add(params[i][0]);
+  }
+  for (let i = 0; i < self.params.length; i++) {
+    if (keys.has(self.params[i][0])) continue;
+    params.push(self.params[i]);
+  }
+  return out;
+});
+var append2 = /* @__PURE__ */ dual(3, (self, key, value) => make4(append(self.params, [key, String(value)])));
+var appendAll2 = /* @__PURE__ */ dual(2, (self, input) => transform2(self, appendAll(fromInput2(input).params)));
+var UrlParamsError = class extends (/* @__PURE__ */ TaggedError("UrlParamsError")) {
+};
+var makeUrl = (url, params, hash2) => {
+  try {
+    const urlInstance = new URL(url, baseUrl());
+    for (let i = 0; i < params.params.length; i++) {
+      const [key, value] = params.params[i];
+      if (value !== void 0) {
+        urlInstance.searchParams.append(key, value);
+      }
+    }
+    if (hash2 !== void 0) {
+      urlInstance.hash = hash2;
+    }
+    return succeed(urlInstance);
+  } catch (e) {
+    return fail(new UrlParamsError({
+      cause: e
+    }));
+  }
+};
+var toString = (self) => new URLSearchParams(self.params).toString();
+var baseUrl = () => {
+  if ("location" in globalThis && globalThis.location !== void 0 && globalThis.location.origin !== void 0 && globalThis.location.pathname !== void 0) {
+    return location.origin + location.pathname;
+  }
+  return void 0;
+};
+var toRecord = (self) => {
+  const out = {};
+  for (const [k, value] of self.params) {
+    const curr = out[k];
+    if (curr === void 0) {
+      out[k] = value;
+    } else if (typeof curr === "string") {
+      out[k] = [curr, value];
+    } else {
+      curr.push(value);
+    }
+  }
+  return out;
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpBody.js
+var TypeId5 = "~effect/http/HttpBody";
+var HttpBodyErrorTypeId = "~effect/http/HttpBody/HttpBodyError";
+var HttpBodyError = class extends (/* @__PURE__ */ TaggedError("HttpBodyError")) {
+  /**
+   * @since 4.0.0
+   */
+  [HttpBodyErrorTypeId] = HttpBodyErrorTypeId;
+};
+var Proto4 = class {
+  [TypeId5];
+  constructor() {
+    this[TypeId5] = TypeId5;
+  }
+  [NodeInspectSymbol]() {
+    return this.toJSON();
+  }
+  toString() {
+    return format(this, {
+      ignoreToString: true
+    });
+  }
+};
+var Empty = class extends Proto4 {
+  _tag = "Empty";
+  toJSON() {
+    return {
+      _id: "effect/HttpBody",
+      _tag: "Empty"
+    };
+  }
+};
+var empty8 = /* @__PURE__ */ new Empty();
+var Raw = class extends Proto4 {
+  _tag = "Raw";
+  body;
+  contentType;
+  contentLength;
+  constructor(body, contentType, contentLength) {
+    super();
+    this.body = body;
+    this.contentType = contentType;
+    this.contentLength = contentLength;
+  }
+  toJSON() {
+    return {
+      _id: "effect/HttpBody",
+      _tag: "Raw",
+      body: this.body,
+      contentType: this.contentType,
+      contentLength: this.contentLength
+    };
+  }
+};
+var raw = (body, options4) => new Raw(body, options4?.contentType, options4?.contentLength);
+var Uint8Array2 = class extends Proto4 {
+  _tag = "Uint8Array";
+  body;
+  contentType;
+  contentLength;
+  constructor(body, contentType, contentLength) {
+    super();
+    this.body = body;
+    this.contentType = contentType;
+    this.contentLength = contentLength;
+  }
+  toJSON() {
+    const toString2 = this.contentType.startsWith("text/") || this.contentType.endsWith("json");
+    return {
+      _id: "effect/HttpBody",
+      _tag: "Uint8Array",
+      body: toString2 ? new TextDecoder().decode(this.body) : `Uint8Array(${this.body.length})`,
+      contentType: this.contentType,
+      contentLength: this.contentLength
+    };
+  }
+};
+var uint8Array = (body, contentType) => new Uint8Array2(body, contentType ?? "application/octet-stream", body.length);
+var encoder = /* @__PURE__ */ new TextEncoder();
+var text = (body, contentType) => uint8Array(encoder.encode(body), contentType ?? "text/plain");
+var jsonUnsafe = (body, contentType) => text(JSON.stringify(body), contentType ?? "application/json");
+var json = (body, contentType) => try_2({
+  try: () => text(JSON.stringify(body), contentType ?? "application/json"),
+  catch: (cause) => new HttpBodyError({
+    reason: {
+      _tag: "JsonError"
+    },
+    cause
+  })
+});
+var jsonSchema = (schema2, options4) => {
+  const encode = encodeUnknownEffect(toCodecJson(schema2));
+  return (body, contentType) => encode(body, options4).pipe(mapError((issue) => new HttpBodyError({
+    reason: {
+      _tag: "SchemaError",
+      issue
+    },
+    cause: issue
+  })), flatMap((body2) => json(body2, contentType)));
+};
+var urlParams = (urlParams3, contentType) => text(toString(urlParams3), contentType ?? "application/x-www-form-urlencoded");
+var FormData2 = class extends Proto4 {
+  _tag = "FormData";
+  contentType = void 0;
+  contentLength = void 0;
+  formData;
+  constructor(formData2) {
+    super();
+    this.formData = formData2;
+  }
+  toJSON() {
+    return {
+      _id: "effect/HttpBody",
+      _tag: "FormData",
+      formData: this.formData
+    };
+  }
+};
+var formData = (body) => new FormData2(body);
+var appendFormDataValue = (formData2, key, value) => {
+  if (value == null) {
+    return;
+  }
+  if (typeof value === "object") {
+    formData2.append(key, value);
+    return;
+  }
+  formData2.append(key, String(value));
+};
+var formDataRecord = (entries) => {
+  const data = new globalThis.FormData();
+  for (const [key, value] of Object.entries(entries)) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        appendFormDataValue(data, key, item);
+      }
+    } else {
+      appendFormDataValue(data, key, value);
+    }
+  }
+  return formData(data);
+};
+var Stream = class extends Proto4 {
+  _tag = "Stream";
+  stream;
+  contentType;
+  contentLength;
+  constructor(stream2, contentType, contentLength) {
+    super();
+    this.stream = stream2;
+    this.contentType = contentType;
+    this.contentLength = contentLength;
+  }
+  toJSON() {
+    return {
+      _id: "effect/HttpBody",
+      _tag: "Stream",
+      contentType: this.contentType,
+      contentLength: this.contentLength
+    };
+  }
+};
+var stream = (body, contentType, contentLength) => new Stream(body, contentType ?? "application/octet-stream", contentLength);
+var file = (path, options4) => flatMap(FileSystem.asEffect(), (fs) => map5(fs.stat(path), (info) => stream(fs.stream(path, options4), options4?.contentType, Number(info.size))));
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpMethod.js
+var hasBody = (method) => method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && method !== "TRACE";
+var allShort = [["GET", "get"], ["POST", "post"], ["PUT", "put"], ["DELETE", "del"], ["PATCH", "patch"], ["HEAD", "head"], ["OPTIONS", "options"], ["TRACE", "trace"]];
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClientRequest.js
+var TypeId6 = "~effect/http/HttpClientRequest";
+var isHttpClientRequest = (u) => hasProperty(u, TypeId6);
+var Proto5 = {
+  [TypeId6]: TypeId6,
+  ...BaseProto,
+  toJSON() {
+    return {
+      _id: "HttpClientRequest",
+      method: this.method,
+      url: this.url,
+      urlParams: this.urlParams,
+      hash: this.hash,
+      headers: redact(this.headers),
+      body: this.body.toJSON()
+    };
+  },
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+function makeWith(method, url, urlParams3, hash2, headers, body) {
+  const self = Object.create(Proto5);
+  self.method = method;
+  self.url = url;
+  self.urlParams = urlParams3;
+  self.hash = hash2;
+  self.headers = headers;
+  self.body = body;
+  return self;
+}
+var empty9 = /* @__PURE__ */ makeWith("GET", "", empty7, /* @__PURE__ */ none(), empty6, empty8);
+var make5 = (method) => (url, options4) => modify(empty9, {
+  method,
+  url,
+  ...options4 ?? void 0
+});
+var get3 = /* @__PURE__ */ make5("GET");
+var post = /* @__PURE__ */ make5("POST");
+var patch = /* @__PURE__ */ make5("PATCH");
+var put = /* @__PURE__ */ make5("PUT");
+var del = /* @__PURE__ */ make5("DELETE");
+var head = /* @__PURE__ */ make5("HEAD");
+var options = /* @__PURE__ */ make5("OPTIONS");
+var trace = /* @__PURE__ */ make5("TRACE");
+var modify = /* @__PURE__ */ dual(2, (self, options4) => {
+  let result2 = self;
+  if (options4.method) {
+    result2 = setMethod(result2, options4.method);
+  }
+  if (options4.url) {
+    result2 = setUrl(result2, options4.url);
+  }
+  if (options4.headers) {
+    result2 = setHeaders(result2, options4.headers);
+  }
+  if (options4.urlParams) {
+    result2 = setUrlParams(result2, options4.urlParams);
+  }
+  if (options4.hash) {
+    result2 = setHash(result2, options4.hash);
+  }
+  if (options4.body) {
+    result2 = setBody(result2, options4.body);
+  }
+  if (options4.accept) {
+    result2 = accept(result2, options4.accept);
+  }
+  if (options4.acceptJson) {
+    result2 = acceptJson(result2);
+  }
+  return result2;
+});
+var setMethod = /* @__PURE__ */ dual(2, (self, method) => makeWith(method, self.url, self.urlParams, self.hash, self.headers, self.body));
+var setHeader = /* @__PURE__ */ dual(3, (self, key, value) => makeWith(self.method, self.url, self.urlParams, self.hash, set3(self.headers, key, value), self.body));
+var setHeaders = /* @__PURE__ */ dual(2, (self, input) => makeWith(self.method, self.url, self.urlParams, self.hash, setAll(self.headers, input), self.body));
+var basicAuth = /* @__PURE__ */ dual(3, (self, username, password) => setHeader(self, "Authorization", `Basic ${btoa(`${stringOrRedacted(username)}:${stringOrRedacted(password)}`)}`));
+var bearerToken = /* @__PURE__ */ dual(2, (self, token) => setHeader(self, "Authorization", `Bearer ${stringOrRedacted(token)}`));
+var accept = /* @__PURE__ */ dual(2, (self, mediaType) => setHeader(self, "Accept", mediaType));
+var acceptJson = /* @__PURE__ */ accept("application/json");
+var setUrl = /* @__PURE__ */ dual(2, (self, url) => {
+  if (typeof url === "string") {
+    return makeWith(self.method, url, self.urlParams, self.hash, self.headers, self.body);
+  }
+  const clone2 = new URL(url.toString());
+  const urlParams3 = fromInput2(clone2.searchParams);
+  const hash2 = fromNullishOr(clone2.hash === "" ? void 0 : clone2.hash.slice(1));
+  clone2.search = "";
+  clone2.hash = "";
+  return makeWith(self.method, clone2.toString(), urlParams3, hash2, self.headers, self.body);
+});
+var prependUrl = /* @__PURE__ */ dual(2, (self, path) => {
+  if (path === "") return self;
+  return makeWith(self.method, joinSegments(path, self.url), self.urlParams, self.hash, self.headers, self.body);
+});
+var appendUrl = /* @__PURE__ */ dual(2, (self, path) => {
+  if (path === "") return self;
+  return makeWith(self.method, joinSegments(self.url, path), self.urlParams, self.hash, self.headers, self.body);
+});
+var joinSegments = (first, second) => {
+  const endsWithSlash = first.endsWith("/");
+  const startsWithSlash = second.startsWith("/");
+  const needsTrim = endsWithSlash && startsWithSlash;
+  const needsSlash = !endsWithSlash && !startsWithSlash;
+  return needsTrim ? first + second.slice(1) : needsSlash ? first + "/" + second : first + second;
+};
+var updateUrl = /* @__PURE__ */ dual(2, (self, f) => makeWith(self.method, f(self.url), self.urlParams, self.hash, self.headers, self.body));
+var setUrlParam = /* @__PURE__ */ dual(3, (self, key, value) => makeWith(self.method, self.url, set4(self.urlParams, key, value), self.hash, self.headers, self.body));
+var setUrlParams = /* @__PURE__ */ dual(2, (self, input) => makeWith(self.method, self.url, setAll2(self.urlParams, input), self.hash, self.headers, self.body));
+var appendUrlParam = /* @__PURE__ */ dual(3, (self, key, value) => makeWith(self.method, self.url, append2(self.urlParams, key, value), self.hash, self.headers, self.body));
+var appendUrlParams = /* @__PURE__ */ dual(2, (self, input) => makeWith(self.method, self.url, appendAll2(self.urlParams, input), self.hash, self.headers, self.body));
+var setHash = /* @__PURE__ */ dual(2, (self, hash2) => makeWith(self.method, self.url, self.urlParams, some(hash2), self.headers, self.body));
+var removeHash = (self) => makeWith(self.method, self.url, self.urlParams, none(), self.headers, self.body);
+var setBody = /* @__PURE__ */ dual(2, (self, body) => {
+  let headers = self.headers;
+  if (body._tag === "Empty" || body._tag === "FormData") {
+    headers = remove2(remove2(headers, "Content-Type"), "Content-length");
+  } else {
+    if (body.contentType) {
+      headers = set3(headers, "content-type", body.contentType);
+    }
+    if (body.contentLength !== void 0) {
+      headers = set3(headers, "content-length", body.contentLength.toString());
+    }
+  }
+  return makeWith(self.method, self.url, self.urlParams, self.hash, headers, body);
+});
+var bodyUint8Array = /* @__PURE__ */ dual((args) => isHttpClientRequest(args[0]), (self, body, contentType) => setBody(self, uint8Array(body, contentType)));
+var bodyText = /* @__PURE__ */ dual((args) => isHttpClientRequest(args[0]), (self, body, contentType) => setBody(self, text(body, contentType)));
+var bodyJson = /* @__PURE__ */ dual(2, (self, body) => map5(json(body), (body2) => setBody(self, body2)));
+var bodyJsonUnsafe = /* @__PURE__ */ dual(2, (self, body) => setBody(self, jsonUnsafe(body)));
+var schemaBodyJson = (schema2, options4) => {
+  const encode = jsonSchema(schema2, options4);
+  return dual(2, (self, body) => map5(encode(body), (body2) => setBody(self, body2)));
+};
+var bodyUrlParams = /* @__PURE__ */ dual(2, (self, input) => setBody(self, urlParams(fromInput2(input))));
+var bodyFormData = /* @__PURE__ */ dual(2, (self, body) => setBody(self, formData(body)));
+var bodyFormDataRecord = /* @__PURE__ */ dual(2, (self, entries) => setBody(self, formDataRecord(entries)));
+var bodyStream = /* @__PURE__ */ dual((args) => isHttpClientRequest(args[0]), (self, body, options4) => setBody(self, stream(body, options4?.contentType, options4?.contentLength)));
+var bodyFile = /* @__PURE__ */ dual((args) => isHttpClientRequest(args[0]), (self, path, options4) => map5(file(path, options4), (body) => setBody(self, body)));
+function toUrl(self) {
+  const r = makeUrl(self.url, self.urlParams, getOrUndefined(self.hash));
+  if (isSuccess(r)) {
+    return some(r.success);
+  }
+  return none();
+}
+var fromWeb = (request) => {
+  const method = request.method.toUpperCase();
+  return modify(empty9, {
+    method,
+    url: new URL(request.url),
+    headers: request.headers,
+    body: fromWebBody(request, method)
+  });
+};
+var fromWebBody = (request, method) => {
+  if (!hasBody(method) || request.body === null) {
+    return empty8;
+  }
+  return raw(request.body, {
+    contentType: request.headers.get("content-type") ?? void 0,
+    contentLength: parseContentLength(request.headers.get("content-length"))
+  });
+};
+var parseContentLength = (contentLength) => {
+  if (contentLength === null) {
+    return void 0;
+  }
+  const parsed = Number.parseInt(contentLength, 10);
+  return Number.isNaN(parsed) ? void 0 : parsed;
+};
+var toWebResult = (self, options4) => {
+  const url = makeUrl(self.url, self.urlParams, getOrUndefined(self.hash));
+  if (isFailure(url)) {
+    return fail(url.failure);
+  }
+  const requestInit = {
+    method: self.method,
+    headers: self.headers
+  };
+  if (options4?.signal) {
+    requestInit.signal = options4.signal;
+  }
+  if (hasBody(self.method)) {
+    switch (self.body._tag) {
+      case "Empty": {
+        break;
+      }
+      case "Raw": {
+        requestInit.body = self.body.body;
+        if (isReadableStream(self.body.body)) {
+          ;
+          requestInit.duplex = "half";
+        }
+        break;
+      }
+      case "Uint8Array": {
+        requestInit.body = self.body.body;
+        break;
+      }
+      case "FormData": {
+        requestInit.body = self.body.formData;
+        break;
+      }
+      case "Stream": {
+        requestInit.body = toReadableStreamWith(self.body.stream, options4?.context ?? empty3());
+        requestInit.duplex = "half";
+        break;
+      }
+    }
+  }
+  return try_({
+    try: () => new Request(url.success, requestInit),
+    catch: (cause) => new UrlParamsError({
+      cause
+    })
+  });
+};
+var isReadableStream = (u) => typeof ReadableStream !== "undefined" && u instanceof ReadableStream;
+var toWeb = (self, options4) => contextWith((context2) => toWebResult(self, {
+  context: context2,
+  signal: options4?.signal
+}).asEffect());
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpIncomingMessage.js
+var TypeId7 = "~effect/http/HttpIncomingMessage";
+var MaxBodySize = /* @__PURE__ */ Reference("effect/http/HttpIncomingMessage/MaxBodySize", {
+  defaultValue: () => void 0
+});
+var inspect = (self, that) => {
+  const contentType = self.headers["content-type"] ?? "";
+  let body;
+  if (contentType.includes("application/json")) {
+    try {
+      body = runSync(self.json);
+    } catch (_) {
+    }
+  } else if (contentType.includes("text/") || contentType.includes("urlencoded")) {
+    try {
+      body = runSync(self.text);
+    } catch (_) {
+    }
+  }
+  const obj = {
+    ...that,
+    headers: redact(self.headers),
+    remoteAddress: self.remoteAddress
+  };
+  if (body !== void 0) {
+    obj.body = body;
+  }
+  return obj;
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClientResponse.js
+var TypeId8 = "~effect/http/HttpClientResponse";
+var fromWeb2 = (request, source) => new WebHttpClientResponse(request, source);
+var filterStatus = /* @__PURE__ */ dual(2, (self, f) => suspend(() => f(self.status) ? succeed3(self) : fail3(new HttpClientError({
+  reason: new StatusCodeError({
+    response: self,
+    request: self.request,
+    description: "invalid status code"
+  })
+}))));
+var filterStatusOk = (self) => self.status >= 200 && self.status < 300 ? succeed3(self) : fail3(new HttpClientError({
+  reason: new StatusCodeError({
+    response: self,
+    request: self.request,
+    description: "non 2xx status code"
+  })
+}));
+var WebHttpClientResponse = class extends Class {
+  [TypeId7];
+  [TypeId8];
+  request;
+  source;
+  constructor(request, source) {
+    super();
+    this.request = request;
+    this.source = source;
+    this[TypeId7] = TypeId7;
+    this[TypeId8] = TypeId8;
+  }
+  toJSON() {
+    return inspect(this, {
+      _id: "HttpClientResponse",
+      request: this.request.toJSON(),
+      status: this.status
+    });
+  }
+  get status() {
+    return this.source.status;
+  }
+  get headers() {
+    return fromInput(this.source.headers);
+  }
+  cachedCookies;
+  get cookies() {
+    if (this.cachedCookies) {
+      return this.cachedCookies;
+    }
+    return this.cachedCookies = fromSetCookie(this.source.headers.getSetCookie());
+  }
+  get remoteAddress() {
+    return none();
+  }
+  get stream() {
+    return this.source.body ? fromReadableStream({
+      evaluate: () => this.source.body,
+      onError: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }) : fail4(new HttpClientError({
+      reason: new EmptyBodyError({
+        request: this.request,
+        response: this,
+        description: "can not create stream from empty body"
+      })
+    }));
+  }
+  get json() {
+    return flatMap(this.text, (text3) => try_2({
+      try: () => text3 === "" ? null : JSON.parse(text3),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }));
+  }
+  textBody;
+  get text() {
+    if (this.textBody) {
+      return this.textBody;
+    }
+    this.textBody = tryPromise({
+      try: () => this.source.text(),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }).pipe(cached, runSync);
+    this.arrayBufferBody = map5(this.textBody, (_) => new TextEncoder().encode(_).buffer);
+    return this.textBody;
+  }
+  get urlParamsBody() {
+    return flatMap(this.text, (_) => try_2({
+      try: () => fromInput2(new URLSearchParams(_)),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }));
+  }
+  formDataBody;
+  get formData() {
+    return this.formDataBody ??= tryPromise({
+      try: () => this.source.formData(),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }).pipe(cached, runSync);
+  }
+  arrayBufferBody;
+  get arrayBuffer() {
+    if (this.arrayBufferBody) {
+      return this.arrayBufferBody;
+    }
+    this.arrayBufferBody = tryPromise({
+      try: () => this.source.arrayBuffer(),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }).pipe(cached, runSync);
+    this.textBody = map5(this.arrayBufferBody, (_) => new TextDecoder().decode(_));
+    return this.arrayBufferBody;
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpTraceContext.js
+var toHeaders = (span) => fromRecordUnsafe({
+  b3: `${span.traceId}-${span.spanId}-${span.sampled ? "1" : "0"}${match(span.parent, {
+    onNone: () => "",
+    onSome: (parent) => `-${parent.spanId}`
+  })}`,
+  traceparent: `00-${span.traceId}-${span.spanId}-${span.sampled ? "01" : "00"}`
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpClient.js
+var TypeId9 = "~effect/http/HttpClient";
+var isHttpClient = (u) => hasProperty(u, TypeId9);
+var HttpClient = /* @__PURE__ */ Service("effect/HttpClient");
+var accessor = (method) => (...args) => flatMap(HttpClient.asEffect(), (client) => client[method](...args));
+var execute = /* @__PURE__ */ accessor("execute");
+var get4 = /* @__PURE__ */ accessor("get");
+var head2 = /* @__PURE__ */ accessor("head");
+var post2 = /* @__PURE__ */ accessor("post");
+var patch2 = /* @__PURE__ */ accessor("patch");
+var put2 = /* @__PURE__ */ accessor("put");
+var del2 = /* @__PURE__ */ accessor("del");
+var options2 = /* @__PURE__ */ accessor("options");
+var transform3 = /* @__PURE__ */ dual(2, (self, f) => makeWith2(flatMap((request) => f(self.postprocess(succeed3(request)), request)), self.preprocess));
+var transformResponse = /* @__PURE__ */ dual(2, (self, f) => makeWith2((request) => f(self.postprocess(request)), self.preprocess));
+var catch_2 = /* @__PURE__ */ dual(2, (self, f) => transformResponse(self, catch_(f)));
+var catchTag2 = /* @__PURE__ */ dual(3, (self, tag2, f) => transformResponse(self, catchTag(tag2, f)));
+var catchTags2 = /* @__PURE__ */ dual(2, (self, cases) => transformResponse(self, catchTags(cases)));
+var filterOrElse2 = /* @__PURE__ */ dual(3, (self, f, orElse) => transformResponse(self, filterOrElse(f, orElse)));
+var filterOrFail2 = /* @__PURE__ */ dual(3, (self, f, orFailWith) => transformResponse(self, filterOrFail(f, orFailWith)));
+var filterStatus2 = /* @__PURE__ */ dual(2, (self, f) => transformResponse(self, flatMap(filterStatus(f))));
+var filterStatusOk2 = /* @__PURE__ */ transformResponse(/* @__PURE__ */ flatMap(filterStatusOk));
+var makeWith2 = (postprocess, preprocess) => {
+  const self = Object.create(Proto6);
+  self.preprocess = preprocess;
+  self.postprocess = postprocess;
+  self.execute = function(request) {
+    return postprocess(preprocess(request));
+  };
+  return self;
+};
+var Proto6 = {
+  [TypeId9]: TypeId9,
+  pipe() {
+    return pipeArguments(this, arguments);
+  },
+  ...BaseProto,
+  toJSON() {
+    return {
+      _id: "effect/HttpClient"
+    };
+  },
+  .../* @__PURE__ */ Object.fromEntries(/* @__PURE__ */ allShort.map(([fullMethod, method]) => [method, function(url, options4) {
+    return this.execute(make5(fullMethod)(url, options4));
+  }]))
+};
+var make6 = (f) => makeWith2((effect2) => flatMap(effect2, (request) => withFiber((fiber) => {
+  const scopedController = scopedRequests.get(request);
+  const controller = scopedController ?? new AbortController();
+  const urlResult = makeUrl(request.url, request.urlParams, getOrUndefined(request.hash));
+  if (isFailure(urlResult)) {
+    return fail3(new HttpClientError({
+      reason: new InvalidUrlError({
+        request,
+        cause: urlResult.failure
+      })
+    }));
+  }
+  const url = urlResult.success;
+  const tracerDisabled = fiber.getRef(DisablePropagation) || fiber.getRef(TracerDisabledWhen)(request);
+  if (tracerDisabled) {
+    const effect3 = f(request, url, controller.signal, fiber);
+    if (scopedController) return effect3;
+    return uninterruptibleMask((restore) => matchCauseEffect(restore(effect3), {
+      onSuccess(response) {
+        responseRegistry.register(response, controller);
+        return succeed3(new InterruptibleResponse(response, controller));
+      },
+      onFailure(cause) {
+        if (hasInterrupts(cause)) {
+          controller.abort();
+        }
+        return failCause2(cause);
+      }
+    }));
+  }
+  return useSpan(fiber.getRef(SpanNameGenerator)(request), {
+    kind: "client"
+  }, (span) => {
+    span.attribute("http.request.method", request.method);
+    span.attribute("server.address", url.origin);
+    if (url.port !== "") {
+      span.attribute("server.port", +url.port);
+    }
+    span.attribute("url.full", url.toString());
+    span.attribute("url.path", url.pathname);
+    span.attribute("url.scheme", url.protocol.slice(0, -1));
+    const query = url.search.slice(1);
+    if (query !== "") {
+      span.attribute("url.query", query);
+    }
+    const redactedHeaderNames = fiber.getRef(CurrentRedactedNames);
+    const redactedHeaders = redact2(request.headers, redactedHeaderNames);
+    for (const name in redactedHeaders) {
+      span.attribute(`http.request.header.${name}`, String(redactedHeaders[name]));
+    }
+    request = fiber.getRef(TracerPropagationEnabled) ? setHeaders(request, toHeaders(span)) : request;
+    return uninterruptibleMask((restore) => restore(f(request, url, controller.signal, fiber)).pipe(withParentSpan(span, {
+      captureStackTrace: false
+    }), matchCauseEffect({
+      onSuccess: (response) => {
+        span.attribute("http.response.status_code", response.status);
+        const redactedHeaders2 = redact2(response.headers, redactedHeaderNames);
+        for (const name in redactedHeaders2) {
+          span.attribute(`http.response.header.${name}`, String(redactedHeaders2[name]));
+        }
+        if (scopedController) return succeed3(response);
+        responseRegistry.register(response, controller);
+        return succeed3(new InterruptibleResponse(response, controller));
+      },
+      onFailure(cause) {
+        if (!scopedController && hasInterrupts(cause)) {
+          controller.abort();
+        }
+        return failCause2(cause);
+      }
+    })));
+  });
+})), succeed3);
+var mapRequest = /* @__PURE__ */ dual(2, (self, f) => makeWith2(self.postprocess, (request) => map5(self.preprocess(request), f)));
+var mapRequestEffect = /* @__PURE__ */ dual(2, (self, f) => makeWith2(self.postprocess, (request) => flatMap(self.preprocess(request), f)));
+var mapRequestInput = /* @__PURE__ */ dual(2, (self, f) => makeWith2(self.postprocess, (request) => self.preprocess(f(request))));
+var mapRequestInputEffect = /* @__PURE__ */ dual(2, (self, f) => makeWith2(self.postprocess, (request) => flatMap(f(request), self.preprocess)));
+var retry2 = /* @__PURE__ */ dual(2, (self, policy) => transformResponse(self, retry(policy)));
+var retryTransient = /* @__PURE__ */ dual(2, (self, options4) => {
+  const isOnlySchedule = isSchedule(options4);
+  const retryOn = isOnlySchedule ? "errors-and-responses" : options4.retryOn ?? "errors-and-responses";
+  const schedule = isOnlySchedule ? options4 : options4.schedule;
+  const passthroughSchedule = schedule && passthrough(schedule);
+  const times = isOnlySchedule ? void 0 : options4.times;
+  return transformResponse(self, flow(retryOn === "errors-only" ? identity : repeat({
+    schedule: passthroughSchedule,
+    times,
+    while: isTransientResponse
+  }), retryOn === "response-only" ? identity : retry({
+    while: isOnlySchedule || options4.while === void 0 ? isTransientError : or(isTransientError, options4.while),
+    schedule,
+    times
+  })));
+});
+var withRateLimiter = /* @__PURE__ */ dual(2, (self, options4) => {
+  const initialState = {
+    initial: true,
+    limit: options4.limit,
+    window: max(fromInputUnsafe(options4.window), millis(1))
+  };
+  const states = /* @__PURE__ */ new Map();
+  const keyOption = options4.key;
+  const resolveKey = typeof keyOption === "function" ? keyOption : constant(keyOption);
+  const tokensOption = options4.tokens;
+  const resolveTokens = typeof tokensOption === "function" ? tokensOption : constant(tokensOption ?? 1);
+  const getState = (key) => {
+    const current = states.get(key);
+    if (current !== void 0) {
+      return current;
+    }
+    states.set(key, initialState);
+    return initialState;
+  };
+  const onResponse = options4.disableResponseInspection ? void 0 : (clock, key, headers, tokens) => {
+    const current = getState(key);
+    const next = parseRateLimiterState(current, clock, headers, tokens);
+    if (next.limit !== current.limit || !equals(next.window, current.window)) {
+      states.set(key, next);
+    }
+  };
+  return transform3(self, function loop(effect2, request) {
+    const fiber = getCurrent();
+    const clock = fiber.getRef(Clock);
+    const key = resolveKey(request);
+    const tokens = Math.max(resolveTokens(request), 1);
+    const current = getState(key);
+    function retry3(response) {
+      if (options4.disableResponseInspection) return loop(effect2, request);
+      const retryAfter = parseRetryAfter(clock, getHeader(response.headers, "retry-after"));
+      return retryAfter ? flatMap(sleep(retryAfter), () => loop(effect2, request)) : loop(effect2, request);
+    }
+    return flatMap(options4.limiter.consume({
+      algorithm: options4.algorithm,
+      onExceeded: "delay",
+      key,
+      limit: current.limit,
+      window: current.window,
+      tokens
+    }), ({
+      delay: delay2
+    }) => {
+      const run2 = matchEffect(effect2, {
+        onSuccess(response) {
+          onResponse?.(clock, key, response.headers, tokens);
+          if (response.status !== 429) return succeed3(response);
+          return retry3(response);
+        },
+        onFailure(error) {
+          if (isTooManyRequestsHttpClientError(error)) {
+            onResponse?.(clock, key, error.reason.response.headers, tokens);
+            return retry3(error.reason.response);
+          }
+          return fail3(error);
+        }
+      });
+      return isZero(delay2) ? run2 : delay(run2, delay2);
+    });
+  });
+});
+var parseRateLimiterState = (state, clock, headers, tokens) => {
+  const limit = parseRateLimitLimit(state, headers, tokens) ?? state.limit;
+  const window2 = parseRateLimitWindow(clock, headers) ?? state.window;
+  if (limit === state.limit && equals(window2, state.window)) {
+    return state;
+  }
+  return {
+    limit,
+    window: window2,
+    initial: false
+  };
+};
+var parseRateLimitLimit = (state, headers, tokens) => {
+  const raw2 = getHeader(headers, "ratelimit-limit", "x-ratelimit-limit");
+  const value = parseNumberHeader(raw2);
+  if (value !== void 0 && value > 0) {
+    return value;
+  }
+  const remaining = parseRateLimitRemaining(headers);
+  if (remaining === void 0) {
+    return void 0;
+  }
+  return state.initial ? remaining + tokens : Math.max(remaining + tokens, state.limit);
+};
+var parseRateLimitRemaining = (headers) => {
+  const raw2 = getHeader(headers, "ratelimit-remaining", "x-ratelimit-remaining");
+  const value = parseNumberHeader(raw2);
+  return value !== void 0 && value >= 0 ? value : void 0;
+};
+var parseRateLimitWindow = (clock, headers) => {
+  const retryAfter = parseRetryAfter(clock, getHeader(headers, "retry-after"));
+  if (retryAfter !== void 0) {
+    return retryAfter;
+  }
+  const resetAfter = parseResetAfter(getHeader(headers, "ratelimit-reset-after", "x-ratelimit-reset-after"));
+  if (resetAfter !== void 0) {
+    return resetAfter;
+  }
+  return parseResetHeader(clock, getHeader(headers, "ratelimit-reset", "x-ratelimit-reset"));
+};
+var parseRetryAfter = (clock, value) => {
+  if (value === void 0) {
+    return void 0;
+  }
+  const numeric = parseNumberHeader(value);
+  if (numeric !== void 0) {
+    return max(seconds(numeric), millis(1));
+  }
+  const parsedDate = Date.parse(value);
+  if (Number.isNaN(parsedDate)) {
+    return void 0;
+  }
+  const millis2 = parsedDate - clock.currentTimeMillisUnsafe();
+  if (millis2 <= 0) {
+    return millis(1);
+  }
+  return millis(millis2);
+};
+var parseResetAfter = (value) => {
+  const numeric = parseNumberHeader(value);
+  if (numeric === void 0 || numeric <= 0) {
+    return void 0;
+  }
+  return max(seconds(numeric), millis(1));
+};
+var parseResetHeader = (clock, value) => {
+  const numeric = parseNumberHeader(value);
+  if (numeric === void 0 || numeric <= 0) {
+    return void 0;
+  }
+  const nowMillis = clock.currentTimeMillisUnsafe();
+  if (numeric > 1e12) {
+    return millis(Math.max(numeric - nowMillis, 1));
+  }
+  if (numeric > 1e9) {
+    return millis(Math.max(numeric * 1e3 - nowMillis, 1));
+  }
+  return max(seconds(numeric), millis(1));
+};
+var parseNumberHeader = (value) => {
+  if (value === void 0) {
+    return void 0;
+  }
+  const match4 = /-?\d+(?:\.\d+)?/.exec(value);
+  if (match4 === null) {
+    return void 0;
+  }
+  const parsed = Number(match4[0]);
+  return Number.isFinite(parsed) ? parsed : void 0;
+};
+var getHeader = (headers, ...keys) => {
+  for (let i = 0; i < keys.length; i++) {
+    const value = headers[keys[i]];
+    if (value !== void 0) {
+      return value;
+    }
+  }
+  return void 0;
+};
+var tap2 = /* @__PURE__ */ dual(2, (self, f) => transformResponse(self, tap(f)));
+var tapError2 = /* @__PURE__ */ dual(2, (self, f) => transformResponse(self, tapError(f)));
+var tapRequest = /* @__PURE__ */ dual(2, (self, f) => makeWith2(self.postprocess, (request) => tap(self.preprocess(request), f)));
+var withCookiesRef = /* @__PURE__ */ dual(2, (self, ref) => makeWith2((request) => tap(self.postprocess(request), (response) => update(ref, (cookies) => merge2(cookies, response.cookies))), (request) => flatMap(self.preprocess(request), (request2) => map5(get2(ref), (cookies) => isEmpty(cookies) ? request2 : setHeader(request2, "cookie", toCookieHeader(cookies))))));
+var withScope = (self) => transform3(self, (effect2, request) => {
+  const controller = new AbortController();
+  scopedRequests.set(request, controller);
+  return andThen(addFinalizer(() => sync(() => controller.abort())), effect2);
+});
+var followRedirects = /* @__PURE__ */ dual((args) => isHttpClient(args[0]), (self, maxRedirects) => makeWith2((request) => {
+  const loop = (request2, redirects) => flatMap(self.postprocess(succeed3(request2)), (response) => response.status >= 300 && response.status < 400 && response.headers.location && redirects < (maxRedirects ?? 10) ? loop(setUrl(request2, new URL(response.headers.location, response.request.url)), redirects + 1) : succeed3(response));
+  return flatMap(request, (request2) => loop(request2, 0));
+}, self.preprocess));
+var TracerDisabledWhen = /* @__PURE__ */ Reference("effect/http/HttpClient/TracerDisabledWhen", {
+  defaultValue: () => constFalse
+});
+var TracerPropagationEnabled = /* @__PURE__ */ Reference("effect/HttpClient/TracerPropagationEnabled", {
+  defaultValue: constTrue
+});
+var SpanNameGenerator = /* @__PURE__ */ Reference("effect/http/HttpClient/SpanNameGenerator", {
+  defaultValue: () => (request) => `http.client ${request.method}`
+});
+var layerMergedContext = (effect2) => effect(HttpClient)(contextWith((context2) => map5(effect2, (client) => transformResponse(client, updateContext((input) => merge(context2, input))))));
+var responseRegistry = /* @__PURE__ */ (() => {
+  if ("FinalizationRegistry" in globalThis && globalThis.FinalizationRegistry) {
+    const registry = /* @__PURE__ */ new FinalizationRegistry((controller) => {
+      controller.abort();
+    });
+    return {
+      register(response, controller) {
+        registry.register(response, controller, response);
+      },
+      unregister(response) {
+        registry.unregister(response);
+      }
+    };
+  }
+  const timers = /* @__PURE__ */ new Map();
+  return {
+    register(response, controller) {
+      timers.set(response, setTimeout(() => controller.abort(), 5e3));
+    },
+    unregister(response) {
+      const timer = timers.get(response);
+      if (timer === void 0) return;
+      clearTimeout(timer);
+      timers.delete(response);
+    }
+  };
+})();
+var scopedRequests = /* @__PURE__ */ new WeakMap();
+var InterruptibleResponse = class {
+  original;
+  controller;
+  constructor(original, controller) {
+    this.original = original;
+    this.controller = controller;
+  }
+  [TypeId8] = TypeId8;
+  [TypeId7] = TypeId7;
+  applyInterrupt(effect2) {
+    return suspend(() => {
+      responseRegistry.unregister(this.original);
+      return onInterrupt(effect2, () => sync(() => {
+        this.controller.abort();
+      }));
+    });
+  }
+  get request() {
+    return this.original.request;
+  }
+  get status() {
+    return this.original.status;
+  }
+  get headers() {
+    return this.original.headers;
+  }
+  get cookies() {
+    return this.original.cookies;
+  }
+  get remoteAddress() {
+    return this.original.remoteAddress;
+  }
+  get formData() {
+    return this.applyInterrupt(this.original.formData);
+  }
+  get text() {
+    return this.applyInterrupt(this.original.text);
+  }
+  get json() {
+    return this.applyInterrupt(this.original.json);
+  }
+  get urlParamsBody() {
+    return this.applyInterrupt(this.original.urlParamsBody);
+  }
+  get arrayBuffer() {
+    return this.applyInterrupt(this.original.arrayBuffer);
+  }
+  get stream() {
+    return suspend2(() => {
+      responseRegistry.unregister(this.original);
+      return ensuring(this.original.stream, sync(() => {
+        this.controller.abort();
+      }));
+    });
+  }
+  toJSON() {
+    return this.original.toJSON();
+  }
+  [NodeInspectSymbol]() {
+    return this.original[NodeInspectSymbol]();
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+var isTransientError = (error) => isTimeoutError(error) || isTransientHttpError(error);
+var isTransientHttpError = (error) => isHttpClientError(error) && (error.reason._tag === "TransportError" || error.reason._tag === "StatusCodeError" && isTransientResponse(error.reason.response));
+var isTooManyRequestsHttpClientError = (error) => isHttpClientError(error) && error.reason._tag === "StatusCodeError" && error.reason.response.status === 429;
+var isTransientResponse = (response) => response.status === 408 || response.status === 429 || response.status === 500 || response.status === 502 || response.status === 503 || response.status === 504;
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/FetchHttpClient.js
+var Fetch = /* @__PURE__ */ Reference("effect/http/FetchHttpClient/Fetch", {
+  defaultValue: () => globalThis.fetch
+});
+var RequestInit = class extends (/* @__PURE__ */ Service()("effect/http/FetchHttpClient/RequestInit")) {
+};
+var fetch2 = /* @__PURE__ */ make6((request, url, signal2, fiber) => {
+  const fetch3 = fiber.getRef(Fetch);
+  const options4 = fiber.context.mapUnsafe.get(RequestInit.key) ?? {};
+  const headers = options4.headers ? merge3(fromInput(options4.headers), request.headers) : request.headers;
+  const send = (body) => map5(tryPromise({
+    try: () => fetch3(url, {
+      ...options4,
+      method: request.method,
+      headers,
+      body,
+      duplex: request.body._tag === "Stream" ? "half" : void 0,
+      signal: signal2
+    }),
+    catch: (cause) => new HttpClientError({
+      reason: new TransportError({
+        request,
+        cause
+      })
+    })
+  }), (response) => fromWeb2(request, response));
+  switch (request.body._tag) {
+    case "Raw":
+    case "Uint8Array":
+      return send(request.body.body);
+    case "FormData":
+      return send(request.body.formData);
+    case "Stream":
+      return flatMap(toReadableStreamEffect(request.body.stream), send);
+  }
+  return send(void 0);
+});
+var layer = /* @__PURE__ */ layerMergedContext(/* @__PURE__ */ succeed3(fetch2));
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpServerResponse.js
+var TypeId10 = "~effect/http/HttpServerResponse";
+var isHttpServerResponse = (u) => hasProperty(u, TypeId10);
+var empty10 = (options4) => makeResponse({
+  status: options4?.status ?? 204,
+  statusText: options4?.statusText,
+  headers: options4?.headers ? fromInput(options4.headers) : void 0,
+  cookies: options4?.cookies
+});
+var uint8Array2 = (body, options4) => {
+  const headers = options4?.headers ? fromInput(options4.headers) : empty6;
+  return makeResponse({
+    status: options4?.status ?? 200,
+    statusText: options4?.statusText,
+    headers,
+    cookies: options4?.cookies ?? empty5,
+    body: uint8Array(body, getContentType(options4, headers))
+  });
+};
+var getContentType = (options4, headers) => {
+  if (options4?.contentType) {
+    return options4.contentType;
+  } else if (options4?.headers) {
+    return headers["content-type"];
+  }
+};
+var text2 = (body, options4) => {
+  const headers = options4?.headers ? fromInput(options4.headers) : empty6;
+  return makeResponse({
+    status: options4?.status ?? 200,
+    statusText: options4?.statusText,
+    headers,
+    cookies: options4?.cookies ?? empty5,
+    body: text(body, getContentType(options4, headers))
+  });
+};
+var jsonUnsafe2 = (body, options4) => {
+  const headers = options4?.headers ? fromInput(options4.headers) : empty6;
+  return makeResponse({
+    status: options4?.status ?? 200,
+    statusText: options4?.statusText,
+    headers,
+    cookies: options4?.cookies,
+    body: jsonUnsafe(body, getContentType(options4, headers))
+  });
+};
+var urlParams2 = (body, options4) => {
+  const headers = options4?.headers ? fromInput(options4.headers) : empty6;
+  return makeResponse({
+    status: options4?.status ?? 200,
+    statusText: options4?.statusText,
+    headers,
+    cookies: options4?.cookies,
+    body: text(toString(fromInput2(body)), getContentType(options4, headers) ?? "application/x-www-form-urlencoded")
+  });
+};
+var setHeader2 = /* @__PURE__ */ dual(3, (self, key, value) => makeResponse({
+  ...self,
+  headers: set3(self.headers, key, value)
+}));
+var setCookie = /* @__PURE__ */ dual((args) => isHttpServerResponse(args[0]), (self, name, value, options4) => map5(set2(self.cookies, name, value, options4).asEffect(), (cookies) => makeResponse({
+  ...self,
+  cookies
+})));
+var ServerHttpClientResponse = class extends Class {
+  [TypeId7];
+  [TypeId8];
+  request;
+  response;
+  constructor(request, response) {
+    super();
+    this.request = request;
+    this.response = response;
+    this[TypeId7] = TypeId7;
+    this[TypeId8] = TypeId8;
+  }
+  toJSON() {
+    return inspect(this, {
+      _id: "HttpClientResponse",
+      request: this.request.toJSON(),
+      status: this.status
+    });
+  }
+  get status() {
+    return this.response.status;
+  }
+  cachedHeaders;
+  get headers() {
+    return this.cachedHeaders ??= this.response.body._tag === "FormData" ? merge3(this.response.headers, fromInput(this.getFormDataResponse().headers)) : this.response.headers;
+  }
+  get cookies() {
+    return this.response.cookies;
+  }
+  get remoteAddress() {
+    return none();
+  }
+  get stream() {
+    const body = this.response.body;
+    switch (body._tag) {
+      case "Empty": {
+        return empty4;
+      }
+      case "Stream": {
+        return mapError2(body.stream, (cause) => this.decodeError(cause));
+      }
+      case "Uint8Array": {
+        return succeed4(body.body);
+      }
+      case "Raw": {
+        const rawBody = body.body;
+        if (rawBody instanceof Response) {
+          return rawBody.body ? fromReadableStream({
+            evaluate: () => rawBody.body,
+            onError: (cause) => this.decodeError(cause)
+          }) : empty4;
+        }
+        if (isReadableStream2(rawBody)) {
+          return fromReadableStream({
+            evaluate: () => rawBody,
+            onError: (cause) => this.decodeError(cause)
+          });
+        }
+        if (rawBody instanceof Blob) {
+          return fromReadableStream({
+            evaluate: () => rawBody.stream(),
+            onError: (cause) => this.decodeError(cause)
+          });
+        }
+        return unwrap(map5(this.bytes, succeed4));
+      }
+      case "FormData": {
+        const response = this.getFormDataResponse();
+        return fromReadableStream({
+          evaluate: () => response.body,
+          onError: (cause) => this.decodeError(cause)
+        });
+      }
+    }
+  }
+  get json() {
+    return flatMap(this.text, (text3) => try_2({
+      try: () => text3 === "" ? null : JSON.parse(text3),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }));
+  }
+  get bytes() {
+    const body = this.response.body;
+    switch (body._tag) {
+      case "Empty": {
+        return succeed3(new Uint8Array(0));
+      }
+      case "Uint8Array": {
+        return succeed3(body.body);
+      }
+      case "Stream": {
+        return mkUint8Array(this.stream);
+      }
+      case "Raw": {
+        const rawBody = body.body;
+        if (rawBody instanceof Response) {
+          return tryPromise({
+            try: () => rawBody.arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+            catch: (cause) => this.decodeError(cause)
+          });
+        }
+        return tryPromise({
+          try: () => new Response(rawBody).arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+          catch: (cause) => this.decodeError(cause)
+        });
+      }
+      case "FormData": {
+        return tryPromise({
+          try: () => new Response(body.formData).arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+          catch: (cause) => this.decodeError(cause)
+        });
+      }
+    }
+  }
+  get text() {
+    return map5(this.bytes, (bytes) => textDecoder.decode(bytes));
+  }
+  get urlParamsBody() {
+    return flatMap(this.text, (_) => try_2({
+      try: () => fromInput2(new URLSearchParams(_)),
+      catch: (cause) => new HttpClientError({
+        reason: new DecodeError({
+          request: this.request,
+          response: this,
+          cause
+        })
+      })
+    }));
+  }
+  get formData() {
+    const body = this.response.body;
+    if (body._tag === "FormData") {
+      return succeed3(body.formData);
+    }
+    return contextWith((context2) => {
+      const readableStream = toReadableStreamWith(this.stream, context2);
+      return tryPromise({
+        try: () => new Response(readableStream, {
+          headers: this.headers
+        }).formData(),
+        catch: (cause) => this.decodeError(cause)
+      });
+    });
+  }
+  get arrayBuffer() {
+    return map5(this.bytes, (bytes) => bytes.slice().buffer);
+  }
+  decodeError(cause) {
+    return new HttpClientError({
+      reason: new DecodeError({
+        request: this.request,
+        response: this,
+        cause
+      })
+    });
+  }
+  formDataResponse;
+  getFormDataResponse() {
+    return this.formDataResponse ??= new Response(this.response.body.formData);
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+var textDecoder = /* @__PURE__ */ new TextDecoder();
+var isReadableStream2 = (u) => typeof ReadableStream !== "undefined" && u instanceof ReadableStream;
+var Proto7 = {
+  ...PipeInspectableProto,
+  [TypeId10]: TypeId10,
+  [ignore]: true,
+  toJSON() {
+    return {
+      _id: "HttpServerResponse",
+      status: this.status,
+      statusText: this.statusText,
+      headers: redact(this.headers),
+      cookies: this.cookies.toJSON(),
+      body: this.body.toJSON()
+    };
+  }
+};
+var makeResponse = (options4) => {
+  const self = Object.create(Proto7);
+  self.status = options4.status;
+  self.statusText = options4.statusText;
+  self.cookies = options4.cookies ?? empty5;
+  self.body = options4.body ?? empty8;
+  if (self.body._tag !== "Empty" && (self.body.contentType || self.body.contentLength)) {
+    const newHeaders = fromRecordUnsafe({
+      ...options4.headers
+    });
+    if (self.body.contentType) {
+      newHeaders["content-type"] = self.body.contentType;
+    }
+    if (self.body.contentLength) {
+      newHeaders["content-length"] = self.body.contentLength.toString();
+    }
+    self.headers = newHeaders;
+  } else {
+    self.headers = options4.headers ?? empty6;
+  }
+  return self;
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpServerRespondable.js
+var symbol3 = "~effect/http/HttpServerRespondable";
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpServerError.js
+var TypeId11 = "~effect/http/HttpServerError";
+var HttpServerError = class extends (/* @__PURE__ */ TaggedError("HttpServerError")) {
+  constructor(props) {
+    if ("cause" in props.reason) {
+      super({
+        ...props,
+        cause: props.reason.cause
+      });
+    } else {
+      super(props);
+    }
+  }
+  [TypeId11] = TypeId11;
+  stack = `${this.name}: ${this.message}`;
+  get request() {
+    return this.reason.request;
+  }
+  get response() {
+    return "response" in this.reason ? this.reason.response : void 0;
+  }
+  [symbol3]() {
+    return this.reason[symbol3]();
+  }
+  get [ignore]() {
+    return this.reason[ignore] ?? false;
+  }
+  get message() {
+    return this.reason.message;
+  }
+};
+var RequestParseError = class extends (/* @__PURE__ */ TaggedError("RequestParseError")) {
+  /**
+   * @since 4.0.0
+   */
+  [symbol3]() {
+    return succeed3(empty10({
+      status: 400
+    }));
+  }
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  get message() {
+    return formatRequestMessage(this._tag, this.description, this.methodAndUrl);
+  }
+};
+var RouteNotFound = class extends (/* @__PURE__ */ TaggedError("RouteNotFound")) {
+  [symbol3]() {
+    return succeed3(empty10({
+      status: 404
+    }));
+  }
+  [ignore] = true;
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  get message() {
+    return formatRequestMessage(this._tag, this.description, this.methodAndUrl);
+  }
+};
+var InternalError = class extends (/* @__PURE__ */ TaggedError("InternalError")) {
+  /**
+   * @since 4.0.0
+   */
+  [symbol3]() {
+    return succeed3(empty10({
+      status: 500
+    }));
+  }
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  get message() {
+    return formatRequestMessage(this._tag, this.description, this.methodAndUrl);
+  }
+};
+var ResponseError = class extends (/* @__PURE__ */ TaggedError("ResponseError")) {
+  [symbol3]() {
+    return succeed3(empty10({
+      status: 500
+    }));
+  }
+  get methodAndUrl() {
+    return `${this.request.method} ${this.request.url}`;
+  }
+  get message() {
+    const info = `${this._tag} (${this.response.status} ${this.methodAndUrl})`;
+    return this.description ? `${info}: ${this.description}` : info;
+  }
+};
+var formatRequestMessage = (reason, description, info) => {
+  const prefix = `${reason} (${info})`;
+  return description ? `${prefix}: ${description}` : prefix;
+};
+
+// ../../../node_modules/.bun/multipasta@0.2.7/node_modules/multipasta/dist/esm/internal/contentType.js
+var paramRE = /; *([!#$%&'*+.^\w`|~-]+)=("(?:[\v\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\v\u0020-\u00ff])*"|[!#$%&'*+.^\w`|~-]+) */gu;
+var quotedPairRE = /\\([\v\u0020-\u00ff])/gu;
+var mediaTypeRE = /^[!#$%&'*+.^\w|~-]+\/[!#$%&'*+.^\w|~-]+$/u;
+var mediaTypeRENoSlash = /^[!#$%&'*+.^\w|~-]+$/u;
+var defaultContentType = {
+  value: "",
+  parameters: /* @__PURE__ */ Object.create(null)
+};
+function parse(header, withoutSlash = false) {
+  if (typeof header !== "string") {
+    return defaultContentType;
+  }
+  let index = header.indexOf(";");
+  const type = index !== -1 ? header.slice(0, index).trim() : header.trim();
+  const mediaRE = withoutSlash ? mediaTypeRENoSlash : mediaTypeRE;
+  if (mediaRE.test(type) === false) {
+    return defaultContentType;
+  }
+  const result2 = {
+    value: type.toLowerCase(),
+    parameters: /* @__PURE__ */ Object.create(null)
+  };
+  if (index === -1) {
+    return result2;
+  }
+  let key;
+  let match4;
+  let value;
+  paramRE.lastIndex = index;
+  while (match4 = paramRE.exec(header)) {
+    if (match4.index !== index) {
+      return defaultContentType;
+    }
+    index += match4[0].length;
+    key = match4[1].toLowerCase();
+    value = match4[2];
+    if (value[0] === '"') {
+      value = value.slice(1, value.length - 1);
+      !withoutSlash && quotedPairRE.test(value) && (value = value.replace(quotedPairRE, "$1"));
+    }
+    result2.parameters[key] = value;
+  }
+  if (index !== header.length) {
+    return defaultContentType;
+  }
+  return result2;
+}
+
+// ../../../node_modules/.bun/multipasta@0.2.7/node_modules/multipasta/dist/esm/internal/headers.js
+var constMaxPairs = 100;
+var constMaxSize = 16 * 1024;
+var State;
+(function(State3) {
+  State3[State3["key"] = 0] = "key";
+  State3[State3["whitespace"] = 1] = "whitespace";
+  State3[State3["value"] = 2] = "value";
+})(State || (State = {}));
+var constContinue = {
+  _tag: "Continue"
+};
+var constNameChars = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1];
+var constValueChars = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+function make7() {
+  const decoder2 = new TextDecoder();
+  const state = {
+    state: State.key,
+    headers: /* @__PURE__ */ Object.create(null),
+    key: "",
+    value: void 0,
+    crlf: 0,
+    previousChunk: void 0,
+    pairs: 0,
+    size: 0
+  };
+  function reset(value) {
+    state.state = State.key;
+    state.headers = /* @__PURE__ */ Object.create(null);
+    state.key = "";
+    state.value = void 0;
+    state.crlf = 0;
+    state.previousChunk = void 0;
+    state.pairs = 0;
+    state.size = 0;
+    return value;
+  }
+  function concatUint8Array(a, b) {
+    const newUint8Array = new Uint8Array(a.length + b.length);
+    newUint8Array.set(a);
+    newUint8Array.set(b, a.length);
+    return newUint8Array;
+  }
+  function error(reason) {
+    return reset({
+      _tag: "Failure",
+      reason,
+      headers: state.headers
+    });
+  }
+  return function write(chunk, start) {
+    let endOffset = 0;
+    let previousCursor;
+    if (state.previousChunk !== void 0) {
+      endOffset = state.previousChunk.length;
+      previousCursor = endOffset;
+      const newChunk = new Uint8Array(chunk.length + endOffset);
+      newChunk.set(state.previousChunk);
+      newChunk.set(chunk, endOffset);
+      state.previousChunk = void 0;
+      chunk = newChunk;
+    }
+    const end = chunk.length;
+    outer: while (start < end) {
+      if (state.state === State.key) {
+        let i = start;
+        for (; i < end; i++) {
+          if (state.size++ > constMaxSize) {
+            return error("HeaderTooLarge");
+          }
+          if (chunk[i] === 58) {
+            state.key += decoder2.decode(chunk.subarray(start, i)).toLowerCase();
+            if (state.key.length === 0) {
+              return error("InvalidHeaderName");
+            }
+            if (chunk[i + 1] === 32 && chunk[i + 2] !== 32 && chunk[i + 2] !== 9) {
+              start = i + 2;
+              state.state = State.value;
+              state.size++;
+            } else if (chunk[i + 1] !== 32 && chunk[i + 1] !== 9) {
+              start = i + 1;
+              state.state = State.value;
+            } else {
+              start = i + 1;
+              state.state = State.whitespace;
+            }
+            break;
+          } else if (constNameChars[chunk[i]] !== 1) {
+            return error("InvalidHeaderName");
+          }
+        }
+        if (i === end) {
+          state.key += decoder2.decode(chunk.subarray(start, end)).toLowerCase();
+          return constContinue;
+        }
+      }
+      if (state.state === State.whitespace) {
+        for (; start < end; start++) {
+          if (state.size++ > constMaxSize) {
+            return error("HeaderTooLarge");
+          }
+          if (chunk[start] !== 32 && chunk[start] !== 9) {
+            state.state = State.value;
+            break;
+          }
+        }
+        if (start === end) {
+          return constContinue;
+        }
+      }
+      if (state.state === State.value) {
+        let i = start;
+        if (previousCursor !== void 0) {
+          i = previousCursor;
+          previousCursor = void 0;
+        }
+        for (; i < end; i++) {
+          if (state.size++ > constMaxSize) {
+            return error("HeaderTooLarge");
+          }
+          if (chunk[i] === 13 || state.crlf > 0) {
+            let byte = chunk[i];
+            if (byte === 13 && state.crlf === 0) {
+              state.crlf = 1;
+              i++;
+              state.size++;
+              byte = chunk[i];
+            }
+            if (byte === 10 && state.crlf === 1) {
+              state.crlf = 2;
+              i++;
+              state.size++;
+              byte = chunk[i];
+            }
+            if (byte === 13 && state.crlf === 2) {
+              state.crlf = 3;
+              i++;
+              state.size++;
+              byte = chunk[i];
+            }
+            if (byte === 10 && state.crlf === 3) {
+              state.crlf = 4;
+              i++;
+              state.size++;
+            }
+            if (state.crlf < 4 && i >= end) {
+              state.previousChunk = chunk.subarray(start);
+              return constContinue;
+            } else if (state.crlf >= 2) {
+              state.value = state.value === void 0 ? chunk.subarray(start, i - state.crlf) : concatUint8Array(state.value, chunk.subarray(start, i - state.crlf));
+              const value = decoder2.decode(state.value);
+              if (state.headers[state.key] === void 0) {
+                state.headers[state.key] = value;
+              } else if (typeof state.headers[state.key] === "string") {
+                state.headers[state.key] = [state.headers[state.key], value];
+              } else {
+                ;
+                state.headers[state.key].push(value);
+              }
+              start = i;
+              state.size--;
+              if (state.crlf !== 4 && state.pairs === constMaxPairs) {
+                return error("TooManyHeaders");
+              } else if (state.crlf === 3) {
+                return error("InvalidHeaderValue");
+              } else if (state.crlf === 4) {
+                return reset({
+                  _tag: "Headers",
+                  headers: state.headers,
+                  endPosition: start - endOffset
+                });
+              }
+              state.pairs++;
+              state.key = "";
+              state.value = void 0;
+              state.crlf = 0;
+              state.state = State.key;
+              continue outer;
+            }
+          } else if (constValueChars[chunk[i]] !== 1) {
+            return error("InvalidHeaderValue");
+          }
+        }
+        if (i === end) {
+          state.value = state.value === void 0 ? chunk.subarray(start, end) : concatUint8Array(state.value, chunk.subarray(start, end));
+          return constContinue;
+        }
+      }
+    }
+    if (start > end) {
+      state.size += end - start;
+    }
+    return constContinue;
+  };
+}
+
+// ../../../node_modules/.bun/multipasta@0.2.7/node_modules/multipasta/dist/esm/internal/search.js
+function makeState(needle_) {
+  const needle = new TextEncoder().encode(needle_);
+  const needleLength = needle.length;
+  const indexes = {};
+  for (let i = 0; i < needleLength; i++) {
+    const b = needle[i];
+    if (indexes[b] === void 0) indexes[b] = [];
+    indexes[b].push(i);
+  }
+  return {
+    needle,
+    needleLength,
+    indexes,
+    firstByte: needle[0],
+    previousChunk: void 0,
+    previousChunkLength: 0,
+    matchIndex: 0
+  };
+}
+function make8(needle, callback2, seed) {
+  const state = makeState(needle);
+  if (seed !== void 0) {
+    state.previousChunk = seed;
+    state.previousChunkLength = seed.length;
+  }
+  function makeIndexOf() {
+    if ("Buffer" in globalThis && !("Bun" in globalThis || "Deno" in globalThis)) {
+      return function(chunk, needle2, fromIndex) {
+        return Buffer.prototype.indexOf.call(chunk, needle2, fromIndex);
+      };
+    }
+    const skipTable = new Uint8Array(256).fill(state.needle.length);
+    for (let i = 0, lastIndex = state.needle.length - 1; i < lastIndex; ++i) {
+      skipTable[state.needle[i]] = lastIndex - i;
+    }
+    return function(chunk, needle2, fromIndex) {
+      const lengthTotal = chunk.length;
+      let i = fromIndex + state.needleLength - 1;
+      while (i < lengthTotal) {
+        for (let j = state.needleLength - 1, k = i; j >= 0 && chunk[k] === needle2[j]; j--, k--) {
+          if (j === 0) return k;
+        }
+        i += skipTable[chunk[i]];
+      }
+      return -1;
+    };
+  }
+  const indexOf = makeIndexOf();
+  function write(chunk) {
+    let chunkLength = chunk.length;
+    if (state.previousChunk !== void 0) {
+      const newChunk = new Uint8Array(state.previousChunkLength + chunkLength);
+      newChunk.set(state.previousChunk);
+      newChunk.set(chunk, state.previousChunkLength);
+      chunk = newChunk;
+      chunkLength = state.previousChunkLength + chunkLength;
+      state.previousChunk = void 0;
+    }
+    if (chunkLength < state.needleLength) {
+      state.previousChunk = chunk;
+      state.previousChunkLength = chunkLength;
+      return;
+    }
+    let pos = 0;
+    while (pos < chunkLength) {
+      const match4 = indexOf(chunk, state.needle, pos);
+      if (match4 > -1) {
+        if (match4 > pos) {
+          callback2(state.matchIndex, chunk.subarray(pos, match4));
+        }
+        state.matchIndex += 1;
+        pos = match4 + state.needleLength;
+        continue;
+      } else if (chunk[chunkLength - 1] in state.indexes) {
+        const indexes = state.indexes[chunk[chunkLength - 1]];
+        let earliestIndex = -1;
+        for (let i = 0, len = indexes.length; i < len; i++) {
+          const index = indexes[i];
+          if (chunk[chunkLength - 1 - index] === state.firstByte && i > earliestIndex) {
+            earliestIndex = index;
+          }
+        }
+        if (earliestIndex === -1) {
+          if (pos === 0) {
+            callback2(state.matchIndex, chunk);
+          } else {
+            callback2(state.matchIndex, chunk.subarray(pos));
+          }
+        } else {
+          if (chunkLength - 1 - earliestIndex > pos) {
+            callback2(state.matchIndex, chunk.subarray(pos, chunkLength - 1 - earliestIndex));
+          }
+          state.previousChunk = chunk.subarray(chunkLength - 1 - earliestIndex);
+          state.previousChunkLength = earliestIndex + 1;
+        }
+      } else if (pos === 0) {
+        callback2(state.matchIndex, chunk);
+      } else {
+        callback2(state.matchIndex, chunk.subarray(pos));
+      }
+      break;
+    }
+  }
+  function end() {
+    if (state.previousChunk !== void 0 && state.previousChunk !== seed) {
+      callback2(state.matchIndex, state.previousChunk);
+    }
+    state.previousChunk = seed;
+    state.previousChunkLength = seed?.length ?? 0;
+    state.matchIndex = 0;
+  }
+  return {
+    write,
+    end
+  };
+}
+
+// ../../../node_modules/.bun/multipasta@0.2.7/node_modules/multipasta/dist/esm/internal/multipart.js
+var State2;
+(function(State3) {
+  State3[State3["headers"] = 0] = "headers";
+  State3[State3["body"] = 1] = "body";
+})(State2 || (State2 = {}));
+var errInvalidDisposition = {
+  _tag: "InvalidDisposition"
+};
+var errEndNotReached = {
+  _tag: "EndNotReached"
+};
+var errMaxParts = {
+  _tag: "ReachedLimit",
+  limit: "MaxParts"
+};
+var errMaxTotalSize = {
+  _tag: "ReachedLimit",
+  limit: "MaxTotalSize"
+};
+var errMaxPartSize = {
+  _tag: "ReachedLimit",
+  limit: "MaxPartSize"
+};
+var errMaxFieldSize = {
+  _tag: "ReachedLimit",
+  limit: "MaxFieldSize"
+};
+var constCR = /* @__PURE__ */ new TextEncoder().encode("\r\n");
+function defaultIsFile(info) {
+  return info.filename !== void 0 || info.contentType === "application/octet-stream";
+}
+function parseBoundary(headers) {
+  const contentType = parse(headers["content-type"]);
+  return contentType.parameters.boundary;
+}
+function noopOnChunk(_chunk) {
+}
+function make9({
+  headers,
+  onFile: onPart,
+  onField,
+  onError,
+  onDone,
+  isFile = defaultIsFile,
+  maxParts = Infinity,
+  maxTotalSize = Infinity,
+  maxPartSize = Infinity,
+  maxFieldSize = 1024 * 1024
+}) {
+  const boundary = parseBoundary(headers);
+  if (boundary === void 0) {
+    onError({
+      _tag: "InvalidBoundary"
+    });
+    return {
+      write: noopOnChunk,
+      end() {
+      }
+    };
+  }
+  const state = {
+    state: State2.headers,
+    index: 0,
+    parts: 0,
+    onChunk: noopOnChunk,
+    info: void 0,
+    headerSkip: 0,
+    partSize: 0,
+    totalSize: 0,
+    isFile: false,
+    fieldChunks: [],
+    fieldSize: 0
+  };
+  function skipBody() {
+    state.state = State2.body;
+    state.isFile = true;
+    state.onChunk = noopOnChunk;
+  }
+  const headerParser = make7();
+  const split2 = make8(`\r
+--${boundary}`, function(index, chunk) {
+    if (index === 0) {
+      skipBody();
+      return;
+    } else if (index !== state.index) {
+      if (state.index > 0) {
+        if (state.isFile) {
+          state.onChunk(null);
+          state.partSize = 0;
+        } else {
+          if (state.fieldChunks.length === 1) {
+            onField(state.info, state.fieldChunks[0]);
+          } else {
+            const buf2 = new Uint8Array(state.fieldSize);
+            let offset = 0;
+            for (let i = 0; i < state.fieldChunks.length; i++) {
+              const chunk2 = state.fieldChunks[i];
+              buf2.set(chunk2, offset);
+              offset += chunk2.length;
+            }
+            onField(state.info, buf2);
+          }
+          state.fieldSize = 0;
+          state.fieldChunks = [];
+        }
+      }
+      state.state = State2.headers;
+      state.index = index;
+      state.headerSkip = 2;
+      if (chunk[0] === 45 && chunk[1] === 45) {
+        return onDone();
+      }
+      state.parts++;
+      if (state.parts > maxParts) {
+        onError(errMaxParts);
+      }
+    }
+    if ((state.partSize += chunk.length) > maxPartSize) {
+      onError(errMaxPartSize);
+    }
+    if (state.state === State2.headers) {
+      const result2 = headerParser(chunk, state.headerSkip);
+      state.headerSkip = 0;
+      if (result2._tag === "Continue") {
+        return;
+      } else if (result2._tag === "Failure") {
+        skipBody();
+        return onError({
+          _tag: "BadHeaders",
+          error: result2
+        });
+      }
+      const contentType = parse(result2.headers["content-type"]);
+      const contentDisposition = parse(result2.headers["content-disposition"], true);
+      if ("form-data" === contentDisposition.value && !("name" in contentDisposition.parameters)) {
+        skipBody();
+        return onError(errInvalidDisposition);
+      }
+      let encodedFilename;
+      if ("filename*" in contentDisposition.parameters) {
+        const parts = contentDisposition.parameters["filename*"].split("''");
+        if (parts.length === 2) {
+          encodedFilename = decodeURIComponent(parts[1]);
+        }
+      }
+      state.info = {
+        name: contentDisposition.parameters.name ?? "",
+        filename: encodedFilename ?? contentDisposition.parameters.filename,
+        contentType: contentType.value === "" ? contentDisposition.parameters.filename !== void 0 ? "application/octet-stream" : "text/plain" : contentType.value,
+        contentTypeParameters: contentType.parameters,
+        contentDisposition: contentDisposition.value,
+        contentDispositionParameters: contentDisposition.parameters,
+        headers: result2.headers
+      };
+      state.state = State2.body;
+      state.isFile = isFile(state.info);
+      if (state.isFile) {
+        state.onChunk = onPart(state.info);
+      }
+      if (result2.endPosition < chunk.length) {
+        if (state.isFile) {
+          state.onChunk(chunk.subarray(result2.endPosition));
+        } else {
+          const buf2 = chunk.subarray(result2.endPosition);
+          if ((state.fieldSize += buf2.length) > maxFieldSize) {
+            onError(errMaxFieldSize);
+          }
+          state.fieldChunks.push(buf2);
+        }
+      }
+    } else if (state.isFile) {
+      state.onChunk(chunk);
+    } else {
+      if ((state.fieldSize += chunk.length) > maxFieldSize) {
+        onError(errMaxFieldSize);
+      }
+      state.fieldChunks.push(chunk);
+    }
+  }, constCR);
+  return {
+    write(chunk) {
+      if ((state.totalSize += chunk.length) > maxTotalSize) {
+        return onError(errMaxTotalSize);
+      }
+      return split2.write(chunk);
+    },
+    end() {
+      split2.end();
+      if (state.state === State2.body) {
+        onError(errEndNotReached);
+      }
+      state.state = State2.headers;
+      state.index = 0;
+      state.parts = 0;
+      state.onChunk = noopOnChunk;
+      state.info = void 0;
+      state.totalSize = 0;
+      state.partSize = 0;
+      state.fieldChunks = [];
+      state.fieldSize = 0;
+    }
+  };
+}
+var utf8Decoder = /* @__PURE__ */ new TextDecoder("utf-8");
+function getDecoder(charset) {
+  if (charset === "utf-8" || charset === "utf8" || charset === "") {
+    return utf8Decoder;
+  }
+  try {
+    return new TextDecoder(charset);
+  } catch (error) {
+    return utf8Decoder;
+  }
+}
+function decodeField(info, value) {
+  return getDecoder(info.contentTypeParameters.charset ?? "utf-8").decode(value);
+}
+
+// ../../../node_modules/.bun/multipasta@0.2.7/node_modules/multipasta/dist/esm/index.js
+var make10 = make9;
+var defaultIsFile2 = defaultIsFile;
+var decodeField2 = decodeField;
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/Multipart.js
+var TypeId12 = "~effect/http/Multipart";
+var MultipartErrorTypeId = "~effect/http/Multipart/MultipartError";
+var MultipartErrorReason = class extends Error2 {
+};
+var MultipartError = class _MultipartError extends (/* @__PURE__ */ TaggedError("MultipartError")) {
+  /**
+   * @since 4.0.0
+   */
+  static fromReason(reason, cause) {
+    return new _MultipartError({
+      reason: new MultipartErrorReason({
+        _tag: reason,
+        cause
+      })
+    });
+  }
+  /**
+   * @since 4.0.0
+   */
+  [MultipartErrorTypeId] = MultipartErrorTypeId;
+  /**
+   * @since 4.0.0
+   */
+  get message() {
+    return this.reason._tag;
+  }
+};
+var makeConfig = (headers) => withFiber((fiber) => {
+  const mimeTypes = get(fiber.context, FieldMimeTypes);
+  return succeed3({
+    headers,
+    maxParts: fiber.getRef(MaxParts),
+    maxFieldSize: Number(fiber.getRef(MaxFieldSize)),
+    maxPartSize: map6(fiber.getRef(MaxFileSize), Number),
+    maxTotalSize: map6(fiber.getRef(MaxBodySize), Number),
+    isFile: mimeTypes.length === 0 ? void 0 : (info) => !mimeTypes.some((_) => info.contentType.includes(_)) && defaultIsFile2(info)
+  });
+});
+var makeChannel = (headers) => fromTransform((upstream) => map5(makeConfig(headers), (config) => {
+  let partsBuffer = [];
+  let exit2 = none();
+  const parser = make10({
+    ...config,
+    onField(info, value) {
+      partsBuffer.push(new FieldImpl(info.name, info.contentType, decodeField2(info, value)));
+    },
+    onFile(info) {
+      let chunks = [];
+      let finished = false;
+      const pullChunks = fromPull(succeed3(suspend(function loop() {
+        if (!isReadonlyArrayNonEmpty(chunks)) {
+          return finished ? done() : flatMap(pump, loop);
+        }
+        const chunk = chunks;
+        chunks = [];
+        return succeed3(chunk);
+      })));
+      partsBuffer.push(new FileImpl(info, pullChunks));
+      return function(chunk) {
+        if (chunk === null) {
+          finished = true;
+        } else {
+          chunks.push(chunk);
+        }
+      };
+    },
+    onError(error_) {
+      exit2 = some(fail2(convertError(error_)));
+    },
+    onDone() {
+      exit2 = some(fail2(Done()));
+    }
+  });
+  const pump = upstream.pipe(flatMap((chunk) => {
+    for (let i = 0; i < chunk.length; i++) {
+      parser.write(chunk[i]);
+    }
+    return void_;
+  }), catchCause((cause) => {
+    if (isDoneCause(cause)) {
+      parser.end();
+    } else {
+      exit2 = some(failCause(cause));
+    }
+    return void_;
+  }));
+  return pump.pipe(flatMap(function loop() {
+    if (!isReadonlyArrayNonEmpty(partsBuffer)) {
+      if (isSome(exit2)) {
+        return exit2.value;
+      }
+      return flatMap(pump, loop);
+    }
+    const parts = partsBuffer;
+    partsBuffer = [];
+    return succeed3(parts);
+  }));
+}));
+function convertError(cause) {
+  switch (cause._tag) {
+    case "ReachedLimit": {
+      switch (cause.limit) {
+        case "MaxParts": {
+          return MultipartError.fromReason("TooManyParts", cause);
+        }
+        case "MaxFieldSize": {
+          return MultipartError.fromReason("FieldTooLarge", cause);
+        }
+        case "MaxPartSize": {
+          return MultipartError.fromReason("FileTooLarge", cause);
+        }
+        case "MaxTotalSize": {
+          return MultipartError.fromReason("BodyTooLarge", cause);
+        }
+      }
+    }
+    default: {
+      return MultipartError.fromReason("Parse", cause);
+    }
+  }
+}
+var PartBase = class extends Class {
+  [TypeId12];
+  constructor() {
+    super();
+    this[TypeId12] = TypeId12;
+  }
+};
+var FieldImpl = class extends PartBase {
+  _tag = "Field";
+  key;
+  contentType;
+  value;
+  constructor(key, contentType, value) {
+    super();
+    this.key = key;
+    this.contentType = contentType;
+    this.value = value;
+  }
+  toJSON() {
+    return {
+      _id: "@effect/platform/Multipart/Part",
+      _tag: "Field",
+      key: this.key,
+      contentType: this.contentType,
+      value: this.value
+    };
+  }
+};
+var FileImpl = class extends PartBase {
+  _tag = "File";
+  key;
+  name;
+  contentType;
+  content;
+  contentEffect;
+  constructor(info, channel) {
+    super();
+    this.key = info.name;
+    this.name = info.filename ?? info.name;
+    this.contentType = info.contentType;
+    this.content = fromChannel(channel);
+    this.contentEffect = channel.pipe(collectUint8Array, mapError((cause) => MultipartError.fromReason("InternalError", cause)));
+  }
+  toJSON() {
+    return {
+      _id: "@effect/platform/Multipart/Part",
+      _tag: "File",
+      key: this.key,
+      name: this.name,
+      contentType: this.contentType
+    };
+  }
+};
+var defaultWriteFile = (path, file2) => flatMap(FileSystem.asEffect(), (fs) => mapError(run(file2.content, fs.sink(path)), (cause) => MultipartError.fromReason("InternalError", cause)));
+var collectUint8Array = (self) => runFold(self, constant(new Uint8Array(0)), (accumulator, chunk) => {
+  const totalLength = chunk.reduce((sum, element) => sum + element.length, accumulator.length);
+  const newAccumulator = new Uint8Array(totalLength);
+  newAccumulator.set(accumulator, 0);
+  let offset = accumulator.length;
+  for (const element of chunk) {
+    newAccumulator.set(element, offset);
+    offset += element.length;
+  }
+  return newAccumulator;
+});
+var toPersisted = (stream2, writeFile = defaultWriteFile) => gen(function* () {
+  const fs = yield* FileSystem;
+  const path_ = yield* Path;
+  const dir = yield* fs.makeTempDirectoryScoped();
+  const persisted = /* @__PURE__ */ Object.create(null);
+  yield* runForEach(stream2, (part) => {
+    if (part._tag === "Field") {
+      if (!(part.key in persisted)) {
+        persisted[part.key] = part.value;
+      } else if (typeof persisted[part.key] === "string") {
+        persisted[part.key] = [persisted[part.key], part.value];
+      } else {
+        ;
+        persisted[part.key].push(part.value);
+      }
+      return void_;
+    } else if (part.name === "") {
+      return void_;
+    }
+    const file2 = part;
+    const path = path_.join(dir, path_.basename(file2.name).slice(-128));
+    const filePart = new PersistedFileImpl(file2.key, file2.name, file2.contentType, path);
+    if (Array.isArray(persisted[part.key])) {
+      ;
+      persisted[part.key].push(filePart);
+    } else {
+      persisted[part.key] = [filePart];
+    }
+    return writeFile(path, file2);
+  });
+  return persisted;
+}).pipe(catchTag("PlatformError", (cause) => fail3(MultipartError.fromReason("InternalError", cause))));
+var PersistedFileImpl = class extends PartBase {
+  _tag = "PersistedFile";
+  key;
+  name;
+  contentType;
+  path;
+  constructor(key, name, contentType, path) {
+    super();
+    this.key = key;
+    this.name = name;
+    this.contentType = contentType;
+    this.path = path;
+  }
+  toJSON() {
+    return {
+      _id: "@effect/platform/Multipart/Part",
+      _tag: "PersistedFile",
+      key: this.key,
+      name: this.name,
+      contentType: this.contentType,
+      path: this.path
+    };
+  }
+};
+var limitsServices = (options4) => {
+  const map7 = /* @__PURE__ */ new Map();
+  if (options4.maxParts !== void 0) {
+    map7.set(MaxParts.key, options4.maxParts);
+  }
+  if (options4.maxFieldSize !== void 0) {
+    map7.set(MaxFieldSize.key, Size(options4.maxFieldSize));
+  }
+  if (options4.maxFileSize !== void 0) {
+    map7.set(MaxFileSize.key, map6(options4.maxFileSize, Size));
+  }
+  if (options4.maxTotalSize !== void 0) {
+    map7.set(MaxBodySize.key, map6(options4.maxTotalSize, Size));
+  }
+  if (options4.fieldMimeTypes !== void 0) {
+    map7.set(FieldMimeTypes.key, options4.fieldMimeTypes);
+  }
+  return makeUnsafe(map7);
+};
+var MaxParts = /* @__PURE__ */ Reference("effect/http/Multipart/MaxParts", {
+  defaultValue: () => void 0
+});
+var MaxFieldSize = /* @__PURE__ */ Reference("effect/http/Multipart/MaxFieldSize", {
+  defaultValue: /* @__PURE__ */ constant(/* @__PURE__ */ Size(10 * 1024 * 1024))
+});
+var MaxFileSize = /* @__PURE__ */ Reference("effect/http/Multipart/MaxFileSize", {
+  defaultValue: () => void 0
+});
+var FieldMimeTypes = /* @__PURE__ */ Reference("effect/http/Multipart/FieldMimeTypes", {
+  defaultValue: /* @__PURE__ */ constant(["application/json"])
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpServerRequest.js
+var TypeId13 = "~effect/http/HttpServerRequest";
+var HttpServerRequest = /* @__PURE__ */ Service("effect/http/HttpServerRequest");
+var ParsedSearchParams = class extends (/* @__PURE__ */ Service()("effect/http/ParsedSearchParams")) {
+};
+var schemaCookies = (schema2, options4) => {
+  const parse3 = decodeUnknownEffect(schema2);
+  return flatMap(HttpServerRequest.asEffect(), (req) => parse3(req.cookies, options4));
+};
+var schemaHeaders = (schema2, options4) => {
+  const parse3 = decodeUnknownEffect(schema2);
+  return flatMap(HttpServerRequest.asEffect(), (req) => parse3(req.headers, options4));
+};
+var schemaSearchParams = (schema2, options4) => {
+  const parse3 = decodeUnknownEffect(schema2);
+  return flatMap(ParsedSearchParams.asEffect(), (params) => parse3(params, options4));
+};
+var removeHost = (url) => {
+  if (url[0] === "/") {
+    return url;
+  }
+  const index = url.indexOf("/", url.indexOf("//") + 2);
+  return index === -1 ? "/" : url.slice(index);
+};
+var ServerRequestImpl = class _ServerRequestImpl extends Class {
+  [TypeId13];
+  [TypeId7];
+  source;
+  url;
+  headersOverride;
+  remoteAddressOverride;
+  constructor(source, url, headersOverride, remoteAddressOverride) {
+    super();
+    this[TypeId13] = TypeId13;
+    this[TypeId7] = TypeId7;
+    this.source = source;
+    this.url = url;
+    this.headersOverride = headersOverride;
+    this.remoteAddressOverride = remoteAddressOverride;
+  }
+  toJSON() {
+    return inspect(this, {
+      _id: "HttpServerRequest",
+      method: this.method,
+      url: this.originalUrl
+    });
+  }
+  modify(options4) {
+    return new _ServerRequestImpl(this.source, options4.url ?? this.url, options4.headers ?? this.headersOverride, "remoteAddress" in options4 ? options4.remoteAddress : this.remoteAddressOverride);
+  }
+  get method() {
+    return this.source.method.toUpperCase();
+  }
+  get originalUrl() {
+    return this.source.url;
+  }
+  get remoteAddress() {
+    return this.remoteAddressOverride ?? none();
+  }
+  get headers() {
+    this.headersOverride ??= fromInput(this.source.headers);
+    return this.headersOverride;
+  }
+  cachedCookies;
+  get cookies() {
+    if (this.cachedCookies) {
+      return this.cachedCookies;
+    }
+    return this.cachedCookies = parseHeader(this.headers.cookie ?? "");
+  }
+  get stream() {
+    return this.source.body ? fromReadableStream({
+      evaluate: () => this.source.body,
+      onError: (cause) => new HttpServerError({
+        reason: new RequestParseError({
+          request: this,
+          cause
+        })
+      })
+    }) : fail4(new HttpServerError({
+      reason: new RequestParseError({
+        request: this,
+        description: "can not create stream from empty body"
+      })
+    }));
+  }
+  textEffect;
+  get text() {
+    if (this.textEffect) {
+      return this.textEffect;
+    }
+    this.textEffect = runSync(cached(tryPromise({
+      try: () => this.source.text(),
+      catch: (cause) => new HttpServerError({
+        reason: new RequestParseError({
+          request: this,
+          cause
+        })
+      })
+    })));
+    return this.textEffect;
+  }
+  get json() {
+    return flatMap(this.text, (text3) => try_2({
+      try: () => JSON.parse(text3),
+      catch: (cause) => new HttpServerError({
+        reason: new RequestParseError({
+          request: this,
+          cause
+        })
+      })
+    }));
+  }
+  get urlParamsBody() {
+    return flatMap(this.text, (_) => try_2({
+      try: () => fromInput2(new URLSearchParams(_)),
+      catch: (cause) => new HttpServerError({
+        reason: new RequestParseError({
+          request: this,
+          cause
+        })
+      })
+    }));
+  }
+  multipartEffect;
+  get multipart() {
+    if (this.multipartEffect) {
+      return this.multipartEffect;
+    }
+    this.multipartEffect = runSync(cached(toPersisted(this.multipartStream)));
+    return this.multipartEffect;
+  }
+  get multipartStream() {
+    return pipeThroughChannel(mapError2(this.stream, (cause) => MultipartError.fromReason("InternalError", cause)), makeChannel(this.headers));
+  }
+  arrayBufferEffect;
+  get arrayBuffer() {
+    if (this.arrayBufferEffect) {
+      return this.arrayBufferEffect;
+    }
+    this.arrayBufferEffect = runSync(cached(tryPromise({
+      try: () => this.source.arrayBuffer(),
+      catch: (cause) => new HttpServerError({
+        reason: new RequestParseError({
+          request: this,
+          cause
+        })
+      })
+    })));
+    return this.arrayBufferEffect;
+  }
+  get upgrade() {
+    return fail3(new HttpServerError({
+      reason: new RequestParseError({
+        request: this,
+        description: "Not an upgradeable ServerRequest"
+      })
+    }));
+  }
+};
+var ClientRequestImpl = class _ClientRequestImpl extends Class {
+  [TypeId13];
+  [TypeId7];
+  source;
+  originalUrl;
+  headersOverride;
+  remoteAddressOverride;
+  urlOverride;
+  constructor(source, originalUrl, urlOverride, headersOverride, remoteAddressOverride) {
+    super();
+    this[TypeId13] = TypeId13;
+    this[TypeId7] = TypeId7;
+    this.source = source;
+    this.originalUrl = originalUrl;
+    this.urlOverride = urlOverride;
+    this.headersOverride = headersOverride;
+    this.remoteAddressOverride = remoteAddressOverride;
+  }
+  toJSON() {
+    return inspect(this, {
+      _id: "HttpServerRequest",
+      method: this.method,
+      url: this.originalUrl
+    });
+  }
+  modify(options4) {
+    return new _ClientRequestImpl(this.source, this.originalUrl, options4.url ?? this.url, options4.headers ?? this.headersOverride, "remoteAddress" in options4 ? options4.remoteAddress : this.remoteAddressOverride);
+  }
+  get method() {
+    return this.source.method;
+  }
+  get url() {
+    return this.urlOverride ?? removeHost(this.originalUrl);
+  }
+  get remoteAddress() {
+    return this.remoteAddressOverride ?? none();
+  }
+  get headers() {
+    return this.headersOverride ??= this.source.headers;
+  }
+  cachedCookies;
+  get cookies() {
+    if (this.cachedCookies) {
+      return this.cachedCookies;
+    }
+    return this.cachedCookies = parseHeader(this.headers.cookie ?? "");
+  }
+  get stream() {
+    const body = this.source.body;
+    switch (body._tag) {
+      case "Empty": {
+        return empty4;
+      }
+      case "Uint8Array": {
+        return succeed4(body.body);
+      }
+      case "Stream": {
+        return mapError2(body.stream, (cause) => requestParseError(this, void 0, cause));
+      }
+      case "FormData": {
+        return streamFromReadable(this, new Response(body.formData).body);
+      }
+      case "Raw": {
+        return rawBodyStream(this, body.body);
+      }
+    }
+  }
+  bytesEffect;
+  get bytes() {
+    if (this.bytesEffect) {
+      return this.bytesEffect;
+    }
+    const body = this.source.body;
+    let effect2;
+    switch (body._tag) {
+      case "Empty": {
+        effect2 = succeed3(new Uint8Array(0));
+        break;
+      }
+      case "Uint8Array": {
+        effect2 = succeed3(body.body);
+        break;
+      }
+      case "FormData": {
+        effect2 = bytesFromBodyInit(this, body.formData);
+        break;
+      }
+      case "Stream": {
+        effect2 = mkUint8Array(this.stream);
+        break;
+      }
+      case "Raw": {
+        effect2 = rawBodyBytes(this, body.body);
+        break;
+      }
+    }
+    this.bytesEffect = runSync(cached(effect2));
+    return this.bytesEffect;
+  }
+  get text() {
+    return map5(this.bytes, (bytes) => textDecoder2.decode(bytes));
+  }
+  get json() {
+    return flatMap(this.text, (text3) => try_2({
+      try: () => text3 === "" ? null : JSON.parse(text3),
+      catch: (cause) => requestParseError(this, void 0, cause)
+    }));
+  }
+  get urlParamsBody() {
+    return flatMap(this.text, (_) => try_2({
+      try: () => fromInput2(new URLSearchParams(_)),
+      catch: (cause) => requestParseError(this, void 0, cause)
+    }));
+  }
+  multipartEffect;
+  get multipart() {
+    if (this.multipartEffect) {
+      return this.multipartEffect;
+    }
+    this.multipartEffect = runSync(cached(toPersisted(this.multipartStream)));
+    return this.multipartEffect;
+  }
+  get multipartStream() {
+    const formData2 = this.source.body._tag === "FormData" && this.source.body.formData;
+    if (formData2) {
+      return fromIterable2(formDataToParts(formData2));
+    }
+    return pipeThroughChannel(mapError2(this.stream, (cause) => MultipartError.fromReason("InternalError", cause)), makeChannel(this.headers));
+  }
+  get arrayBuffer() {
+    return map5(this.bytes, (bytes) => bytes.slice().buffer);
+  }
+  get upgrade() {
+    return fail3(requestParseError(this, "Not an upgradeable ServerRequest"));
+  }
+};
+var rawBodyStream = (request, body) => {
+  if (body instanceof Request) {
+    return streamFromReadable(request, body.body);
+  }
+  if (isFormData(body)) {
+    return streamFromReadable(request, new Response(body).body);
+  }
+  if (isReadableStream3(body)) {
+    return streamFromReadable(request, body);
+  }
+  return fail4(requestParseError(request, "Unsupported body type"));
+};
+var rawBodyBytes = (request, body) => {
+  if (body instanceof Blob) {
+    return bytesFromBodyInit(request, body);
+  }
+  if (body instanceof Request) {
+    return tryPromise({
+      try: () => body.arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+      catch: (cause) => requestParseError(request, void 0, cause)
+    });
+  }
+  return fail3(requestParseError(request, "Unsupported body type"));
+};
+var bytesFromBodyInit = (request, body) => tryPromise({
+  try: () => new Response(body).arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+  catch: (cause) => requestParseError(request, void 0, cause)
+});
+var streamFromReadable = (request, body) => body ? fromReadableStream({
+  evaluate: () => body,
+  onError: (cause) => requestParseError(request, void 0, cause)
+}) : empty4;
+var requestParseError = (request, description, cause) => new HttpServerError({
+  reason: new RequestParseError({
+    request,
+    ...description === void 0 ? void 0 : {
+      description
+    },
+    ...cause === void 0 ? void 0 : {
+      cause
+    }
+  })
+});
+var formDataToParts = (formData2) => {
+  const parts = [];
+  for (const [key, value] of formData2.entries()) {
+    parts.push(typeof value === "string" ? new MultipartFieldPart(key, value) : new MultipartFilePart(key, value));
+  }
+  return parts;
+};
+var MultipartFieldPart = class extends Class {
+  [TypeId12];
+  _tag = "Field";
+  contentType = "text/plain";
+  key;
+  value;
+  constructor(key, value) {
+    super();
+    this[TypeId12] = TypeId12;
+    this.key = key;
+    this.value = value;
+  }
+  toJSON() {
+    return {
+      _id: "@effect/platform/Multipart/Part",
+      _tag: "Field",
+      key: this.key,
+      contentType: this.contentType,
+      value: this.value
+    };
+  }
+};
+var MultipartFilePart = class extends Class {
+  [TypeId12];
+  _tag = "File";
+  key;
+  name;
+  contentType;
+  content;
+  contentEffect;
+  constructor(key, file2) {
+    super();
+    this[TypeId12] = TypeId12;
+    this.key = key;
+    this.name = file2.name;
+    this.contentType = file2.type;
+    this.content = fromReadableStream({
+      evaluate: () => file2.stream(),
+      onError: (cause) => MultipartError.fromReason("InternalError", cause)
+    });
+    this.contentEffect = tryPromise({
+      try: () => file2.arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+      catch: (cause) => MultipartError.fromReason("InternalError", cause)
+    });
+  }
+  toJSON() {
+    return {
+      _id: "@effect/platform/Multipart/Part",
+      _tag: "File",
+      key: this.key,
+      name: this.name,
+      contentType: this.contentType
+    };
+  }
+};
+var isReadableStream3 = (u) => typeof ReadableStream !== "undefined" && u instanceof ReadableStream;
+var isFormData = (u) => typeof FormData !== "undefined" && u instanceof FormData;
+var textDecoder2 = /* @__PURE__ */ new TextDecoder();
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/internal/preResponseHandler.js
+var requestPreResponseHandlers = /* @__PURE__ */ new WeakMap();
+var appendPreResponseHandlerUnsafe = (request, handler) => {
+  const prev = requestPreResponseHandlers.get(request.source);
+  const next = prev ? (request2, response) => flatMap(prev(request2, response), (response2) => handler(request2, response2)) : handler;
+  requestPreResponseHandlers.set(request.source, next);
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpMiddleware.js
+var loggerDisabledRequests = /* @__PURE__ */ new WeakSet();
+var withLoggerDisabled = (self) => withFiber((fiber) => {
+  const request = getUnsafe(fiber.context, HttpServerRequest);
+  loggerDisabledRequests.add(request.source);
+  return self;
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpEffect.js
+var appendPreResponseHandler = (handler) => HttpServerRequest.use((request) => {
+  appendPreResponseHandlerUnsafe(request, handler);
+  return void_;
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/http/HttpRouter.js
+var HttpRouter = /* @__PURE__ */ Service("effect/http/HttpRouter");
+var RouteContext = class extends (/* @__PURE__ */ Service()("effect/http/HttpRouter/RouteContext")) {
+};
+var use = (f) => effectDiscard(flatMap(HttpRouter.asEffect(), f));
+var RouteTypeId = "~effect/http/HttpRouter/Route";
+var makeRoute = (options4) => ({
+  ...options4,
+  uninterruptible: options4.uninterruptible ?? false,
+  prefix: typeof options4.prefix === "string" ? some(options4.prefix) : options4.prefix ?? none(),
+  [RouteTypeId]: RouteTypeId
+});
+var route = (method, path, handler, options4) => makeRoute({
+  ...options4,
+  method,
+  path,
+  handler: isHttpServerResponse(handler) ? succeed3(handler) : isEffect(handler) ? handler : flatMap(HttpServerRequest.asEffect(), handler),
+  uninterruptible: options4?.uninterruptible ?? false
+});
+var removeTrailingSlash = (path) => path.endsWith("/") ? path.slice(0, -1) : path;
+var prefixPath = /* @__PURE__ */ dual(2, (self, prefix) => {
+  prefix = removeTrailingSlash(prefix);
+  if (self === "*") return `${prefix}/*`;
+  else if (self === "/") return prefix;
+  return prefix + self;
+});
+var MiddlewareTypeId = "~effect/http/HttpRouter/Middleware";
+var middleware = function() {
+  if (arguments.length === 0) {
+    return makeMiddleware;
+  }
+  return makeMiddleware(arguments[0], arguments[1]);
+};
+var makeMiddleware = (middleware2, options4) => options4?.global ? effectDiscard(gen(function* () {
+  const router = yield* HttpRouter;
+  const fn = isEffect(middleware2) ? yield* middleware2 : middleware2;
+  yield* router.addGlobalMiddleware(fn);
+})) : new MiddlewareImpl(isEffect(middleware2) ? effectContext(map5(middleware2, (fn) => makeUnsafe(/* @__PURE__ */ new Map([[fnContextKey, fn]])))) : succeedContext(makeUnsafe(/* @__PURE__ */ new Map([[fnContextKey, middleware2]]))));
+var middlewareId = 0;
+var fnContextKey = "effect/http/HttpRouter/MiddlewareFn";
+var MiddlewareImpl = class _MiddlewareImpl {
+  [MiddlewareTypeId] = {};
+  layerFn;
+  dependencies;
+  constructor(layerFn, dependencies) {
+    this.layerFn = layerFn;
+    this.dependencies = dependencies;
+    const contextKey = `effect/http/HttpRouter/Middleware-${++middlewareId}`;
+    this.layer = effectContext(gen({
+      self: this
+    }, function* () {
+      const context2 = yield* context();
+      const stack = [context2.mapUnsafe.get(fnContextKey)];
+      if (this.dependencies) {
+        const memoMap = yield* CurrentMemoMap;
+        const scope = get(context2, Scope);
+        const depsContext = yield* buildWithMemoMap(this.dependencies, memoMap, scope);
+        stack.push(...getMiddleware(depsContext));
+      }
+      return makeUnsafe(/* @__PURE__ */ new Map([[contextKey, stack]]));
+    })).pipe(provide(this.layerFn));
+  }
+  layer;
+  combine(other) {
+    return new _MiddlewareImpl(this.layerFn, this.dependencies ? provideMerge(this.dependencies, other.layer) : other.layer);
+  }
+};
+var middlewareCache = /* @__PURE__ */ new WeakMap();
+var getMiddleware = (context2) => {
+  let arr = middlewareCache.get(context2);
+  if (arr) return arr;
+  const topLevel = empty2();
+  let maxLength = 0;
+  for (const [key, value] of context2.mapUnsafe) {
+    if (key.startsWith("effect/http/HttpRouter/Middleware-")) {
+      topLevel.push(value);
+      if (value.length > maxLength) {
+        maxLength = value.length;
+      }
+    }
+  }
+  if (topLevel.length === 0) {
+    arr = [];
+  } else {
+    const middleware2 = /* @__PURE__ */ new Set();
+    for (let i = maxLength - 1; i >= 0; i--) {
+      for (const arr2 of topLevel) {
+        if (i < arr2.length) {
+          middleware2.add(arr2[i]);
+        }
+      }
+    }
+    arr = fromIterable(middleware2).reverse();
+  }
+  middlewareCache.set(context2, arr);
+  return arr;
+};
+var disableLogger = middleware(withLoggerDisabled).layer;
 
 // ../fumadb/src/index.ts
 var import_semver = __toESM(require_semver2(), 1);
@@ -2258,7 +5997,7 @@ function simplifyOrderBy(columns, orderBy) {
     return [col, value];
   });
 }
-function buildFindOptions(table2, { select = true, where, orderBy, join, ...options }) {
+function buildFindOptions(table2, { select = true, where, orderBy, join, ...options4 }) {
   let conditions = where ? buildCondition(table2.columns, where) : void 0;
   if (conditions === true) conditions = void 0;
   if (conditions === false) return false;
@@ -2267,7 +6006,7 @@ function buildFindOptions(table2, { select = true, where, orderBy, join, ...opti
     where: conditions,
     orderBy: simplifyOrderBy(table2.columns, orderBy),
     join: join ? buildJoin(table2, join) : void 0,
-    ...options
+    ...options4
   };
 }
 function buildJoin(table2, fn) {
@@ -2275,10 +6014,10 @@ function buildJoin(table2, fn) {
   const builder = {};
   for (const name in table2.relations) {
     const relation = table2.relations[name];
-    builder[name] = (options = {}) => {
+    builder[name] = (options4 = {}) => {
       compiled.push({
         relation,
-        options: buildFindOptions(relation.table, options)
+        options: buildFindOptions(relation.table, options4)
       });
       delete builder[name];
       return builder;
@@ -2295,12 +6034,12 @@ var mergePolicyCondition = (table2, where, condition) => {
   if (next === false) return false;
   return next;
 };
-var applyReadPolicies = async (table2, where, context) => {
+var applyReadPolicies = async (table2, where, context2) => {
   let nextWhere = where;
   for (const policy of table2.policies) {
     const condition = await policy.onRead?.({
       where: nextWhere,
-      context,
+      context: context2,
       builder: createBuilder(table2.columns)
     });
     const merged = mergePolicyCondition(table2, nextWhere, condition);
@@ -2309,12 +6048,12 @@ var applyReadPolicies = async (table2, where, context) => {
   }
   return nextWhere;
 };
-var applyReadPoliciesToOptions = async (table2, options, context) => {
-  const where = await applyReadPolicies(table2, options.where, context);
+var applyReadPoliciesToOptions = async (table2, options4, context2) => {
+  const where = await applyReadPolicies(table2, options4.where, context2);
   if (where === false) return false;
-  let changed = where !== options.where;
-  const join = options.join ? [] : void 0;
-  for (const entry of options.join ?? []) {
+  let changed = where !== options4.where;
+  const join = options4.join ? [] : void 0;
+  for (const entry of options4.join ?? []) {
     if (entry.options === false) {
       join.push(entry);
       continue;
@@ -2322,7 +6061,7 @@ var applyReadPoliciesToOptions = async (table2, options, context) => {
     const nextOptions = await applyReadPoliciesToOptions(
       entry.relation.table,
       entry.options,
-      context
+      context2
     );
     if (nextOptions === false) {
       join.push({ ...entry, options: false });
@@ -2332,12 +6071,12 @@ var applyReadPoliciesToOptions = async (table2, options, context) => {
     if (nextOptions !== entry.options) changed = true;
     join.push(nextOptions === entry.options ? entry : { ...entry, options: nextOptions });
   }
-  return changed ? { ...options, where, join } : options;
+  return changed ? { ...options4, where, join } : options4;
 };
 var isRecord = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
-var applyDeniedJoinDefaults = (records, options) => {
-  if (!options.join) return;
-  for (const entry of options.join) {
+var applyDeniedJoinDefaults = (records, options4) => {
+  if (!options4.join) return;
+  for (const entry of options4.join) {
     if (entry.options === false) {
       for (const record of records) {
         record[entry.relation.name] = entry.relation.type === "many" ? [] : null;
@@ -2354,19 +6093,19 @@ var applyDeniedJoinDefaults = (records, options) => {
     }
   }
 };
-var runCreatePolicies = async (table2, values, context) => {
+var runCreatePolicies = async (table2, values, context2) => {
   for (const policy of table2.policies) {
-    await policy.onCreate?.({ values, context });
+    await policy.onCreate?.({ values, context: context2 });
   }
 };
-var applyUpdatePolicies = async (table2, where, set, context, operation, create) => {
+var applyUpdatePolicies = async (table2, where, set5, context2, operation, create) => {
   let nextWhere = where;
   for (const policy of table2.policies) {
     const condition = await policy.onUpdate?.({
       where: nextWhere,
-      set,
+      set: set5,
       create,
-      context,
+      context: context2,
       builder: createBuilder(table2.columns),
       operation
     });
@@ -2376,12 +6115,12 @@ var applyUpdatePolicies = async (table2, where, set, context, operation, create)
   }
   return nextWhere;
 };
-var applyDeletePolicies = async (table2, where, context) => {
+var applyDeletePolicies = async (table2, where, context2) => {
   let nextWhere = where;
   for (const policy of table2.policies) {
     const condition = await policy.onDelete?.({
       where: nextWhere,
-      context,
+      context: context2,
       builder: createBuilder(table2.columns)
     });
     const merged = mergePolicyCondition(table2, nextWhere, condition);
@@ -2390,9 +6129,9 @@ var applyDeletePolicies = async (table2, where, context) => {
   }
   return nextWhere;
 };
-function toORM(adapter, options = {}) {
-  const context = options.context ?? adapter.context;
-  const internal = context === adapter.context ? adapter : { ...adapter, context };
+function toORM(adapter, options4 = {}) {
+  const context2 = options4.context ?? adapter.context;
+  const internal = context2 === adapter.context ? adapter : { ...adapter, context: context2 };
   function toTable(name) {
     const table2 = internal.tables[name];
     if (!table2) throw new Error(`[FumaDB] Invalid table name ${String(name)}.`);
@@ -2405,11 +6144,11 @@ function toORM(adapter, options = {}) {
       let conditions = where ? buildCondition(table2.columns, where) : void 0;
       if (conditions === true) conditions = void 0;
       if (conditions === false) return 0;
-      const constrainedWhere = await applyReadPolicies(table2, conditions, context);
+      const constrainedWhere = await applyReadPolicies(table2, conditions, context2);
       if (constrainedWhere === false) return 0;
       return await internal.count(table2, { where: constrainedWhere });
     },
-    async upsert(name, { where, ...options2 }) {
+    async upsert(name, { where, ...options5 }) {
       const table2 = toTable(name);
       const conditions = where ? buildCondition(table2.columns, where) : void 0;
       if (conditions === false) return;
@@ -2417,27 +6156,27 @@ function toORM(adapter, options = {}) {
       compiledWhere = await applyUpdatePolicies(
         table2,
         compiledWhere,
-        options2.update,
-        context,
+        options5.update,
+        context2,
         "upsert",
-        options2.create
+        options5.create
       );
       if (compiledWhere === false) return;
-      await runCreatePolicies(table2, options2.create, context);
+      await runCreatePolicies(table2, options5.create, context2);
       await internal.upsert(table2, {
         where: compiledWhere,
-        ...options2
+        ...options5
       });
     },
     async create(name, values) {
       const table2 = toTable(name);
-      await runCreatePolicies(table2, values, context);
+      await runCreatePolicies(table2, values, context2);
       return await internal.create(table2, values);
     },
     async createMany(name, values) {
       const table2 = toTable(name);
       for (const value of values) {
-        await runCreatePolicies(table2, value, context);
+        await runCreatePolicies(table2, value, context2);
       }
       return await internal.createMany(table2, values);
     },
@@ -2446,31 +6185,31 @@ function toORM(adapter, options = {}) {
       let conditions = where ? buildCondition(table2.columns, where) : void 0;
       if (conditions === true) conditions = void 0;
       if (conditions === false) return;
-      const constrainedWhere = await applyDeletePolicies(table2, conditions, context);
+      const constrainedWhere = await applyDeletePolicies(table2, conditions, context2);
       if (constrainedWhere === false) return;
       await internal.deleteMany(table2, { where: constrainedWhere });
     },
-    async findMany(name, options2 = {}) {
+    async findMany(name, options5 = {}) {
       const table2 = toTable(name);
-      let compiledOptions = buildFindOptions(table2, options2);
+      let compiledOptions = buildFindOptions(table2, options5);
       if (compiledOptions === false) return [];
-      compiledOptions = await applyReadPoliciesToOptions(table2, compiledOptions, context);
+      compiledOptions = await applyReadPoliciesToOptions(table2, compiledOptions, context2);
       if (compiledOptions === false) return [];
       const records = await internal.findMany(table2, compiledOptions);
       applyDeniedJoinDefaults(records, compiledOptions);
       return records;
     },
-    async findFirst(name, options2) {
+    async findFirst(name, options5) {
       const table2 = toTable(name);
-      let compiledOptions = buildFindOptions(table2, options2);
+      let compiledOptions = buildFindOptions(table2, options5);
       if (compiledOptions === false) return null;
-      compiledOptions = await applyReadPoliciesToOptions(table2, compiledOptions, context);
+      compiledOptions = await applyReadPoliciesToOptions(table2, compiledOptions, context2);
       if (compiledOptions === false) return null;
       const record = await internal.findFirst(table2, compiledOptions);
       if (record) applyDeniedJoinDefaults([record], compiledOptions);
       return record;
     },
-    async updateMany(name, { set, where }) {
+    async updateMany(name, { set: set5, where }) {
       const table2 = toTable(name);
       let conditions = where ? buildCondition(table2.columns, where) : void 0;
       if (conditions === true) conditions = void 0;
@@ -2478,16 +6217,16 @@ function toORM(adapter, options = {}) {
       const constrainedWhere = await applyUpdatePolicies(
         table2,
         conditions,
-        set,
-        context,
+        set5,
+        context2,
         "update"
       );
       if (constrainedWhere === false) return;
-      return internal.updateMany(table2, { set, where: constrainedWhere });
+      return internal.updateMany(table2, { set: set5, where: constrainedWhere });
     },
-    async transaction(run) {
+    async transaction(run2) {
       return internal.transaction(
-        (transactionInstance) => run(withQueryContext(transactionInstance, context))
+        (transactionInstance) => run2(withQueryContext(transactionInstance, context2))
       );
     }
   };
@@ -2499,8 +6238,8 @@ function toORM(adapter, options = {}) {
   });
   return query;
 }
-function withQueryContext(db, context) {
-  if (typeof db.withContext === "function") return db.withContext(context);
+function withQueryContext(db, context2) {
+  if (typeof db.withContext === "function") return db.withContext(context2);
   throw new Error(
     "[FumaDB] Cannot apply query context to this query object. If you wrap an AbstractQuery, forward withContext so table policies keep using the wrapper."
   );
@@ -3380,7 +7119,7 @@ function clone(configObject) {
       return q;
     };
   })();
-  function format2(n, i, rm, id) {
+  function format3(n, i, rm, id) {
     var c0, e, ne, len, str;
     if (rm == null) rm = ROUNDING_MODE;
     else intCheck(rm, 0, 8);
@@ -3966,33 +7705,33 @@ function clone(configObject) {
       intCheck(dp, 0, MAX);
       dp++;
     }
-    return format2(this, dp, rm, 1);
+    return format3(this, dp, rm, 1);
   };
   P.toFixed = function(dp, rm) {
     if (dp != null) {
       intCheck(dp, 0, MAX);
       dp = dp + this.e + 1;
     }
-    return format2(this, dp, rm);
+    return format3(this, dp, rm);
   };
-  P.toFormat = function(dp, rm, format3) {
+  P.toFormat = function(dp, rm, format4) {
     var str, x = this;
-    if (format3 == null) {
+    if (format4 == null) {
       if (dp != null && rm && typeof rm == "object") {
-        format3 = rm;
+        format4 = rm;
         rm = null;
       } else if (dp && typeof dp == "object") {
-        format3 = dp;
+        format4 = dp;
         dp = rm = null;
       } else {
-        format3 = FORMAT;
+        format4 = FORMAT;
       }
-    } else if (typeof format3 != "object") {
-      throw Error(bignumberError + "Argument not an object: " + format3);
+    } else if (typeof format4 != "object") {
+      throw Error(bignumberError + "Argument not an object: " + format4);
     }
     str = x.toFixed(dp, rm);
     if (x.c) {
-      var i, arr = str.split("."), g1 = +format3.groupSize, g2 = +format3.secondaryGroupSize, groupSeparator = format3.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
+      var i, arr = str.split("."), g1 = +format4.groupSize, g2 = +format4.secondaryGroupSize, groupSeparator = format4.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
       if (g2) {
         i = g1;
         g1 = g2;
@@ -4006,12 +7745,12 @@ function clone(configObject) {
         if (g2 > 0) intPart += groupSeparator + intDigits.slice(i);
         if (isNeg) intPart = "-" + intPart;
       }
-      str = fractionPart ? intPart + (format3.decimalSeparator || "") + ((g2 = +format3.fractionGroupSize) ? fractionPart.replace(
+      str = fractionPart ? intPart + (format4.decimalSeparator || "") + ((g2 = +format4.fractionGroupSize) ? fractionPart.replace(
         new RegExp("\\d{" + g2 + "}\\B", "g"),
-        "$&" + (format3.fractionGroupSeparator || "")
+        "$&" + (format4.fractionGroupSeparator || "")
       ) : fractionPart) : intPart;
     }
-    return (format3.prefix || "") + str + (format3.suffix || "");
+    return (format4.prefix || "") + str + (format4.suffix || "");
   };
   P.toFraction = function(md) {
     var d, d0, d1, d2, e, exp, n, n0, n1, q, r, s, x = this, xc = x.c;
@@ -4060,7 +7799,7 @@ function clone(configObject) {
   };
   P.toPrecision = function(sd, rm) {
     if (sd != null) intCheck(sd, 1, MAX);
-    return format2(this, sd, rm, 2);
+    return format3(this, sd, rm, 2);
   };
   P.toString = function(b) {
     var str, n = this, s = n.s, e = n.e;
@@ -4124,9 +7863,9 @@ function compare2(x, y) {
   for (i = 0; i < j; i++) if (xc[i] != yc[i]) return xc[i] > yc[i] ^ a ? 1 : -1;
   return k == l ? 0 : k > l ^ a ? 1 : -1;
 }
-function intCheck(n, min, max, name) {
-  if (n < min || n > max || n !== mathfloor(n)) {
-    throw Error(bignumberError + (name || "Argument") + (typeof n == "number" ? n < min || n > max ? " out of range: " : " not an integer: " : " not a primitive number: ") + String(n));
+function intCheck(n, min, max2, name) {
+  if (n < min || n > max2 || n !== mathfloor(n)) {
+    throw Error(bignumberError + (name || "Argument") + (typeof n == "number" ? n < min || n > max2 ? " out of range: " : " not an integer: " : " not a primitive number: ") + String(n));
   }
 }
 function isOdd(n) {
@@ -4184,8 +7923,8 @@ function bufToBigInt(buf2) {
   return value;
 }
 var hash = (input = "") => {
-  const encoder2 = new TextEncoder();
-  return bufToBigInt(sha3_512(encoder2.encode(input))).toString(36).slice(1);
+  const encoder3 = new TextEncoder();
+  return bufToBigInt(sha3_512(encoder3.encode(input))).toString(36).slice(1);
 };
 var alphabet = Array.from(
   { length: 26 },
@@ -4564,19 +8303,19 @@ function table(name, columns) {
     foreignKeys: [],
     policies,
     getUniqueConstraints(level = "all") {
-      const result = [];
+      const result2 = [];
       if (level === "all" || level === "table")
-        result.push(...uniqueConstraints);
+        result2.push(...uniqueConstraints);
       if (level === "all" || level === "column") {
         for (const col of Object.values(this.columns)) {
           if (!col.isUnique) continue;
-          result.push({
+          result2.push({
             name: col.getUniqueConstraintName(),
             columns: [col]
           });
         }
       }
-      return result;
+      return result2;
     },
     getColumnByName(name2, type = "sql") {
       return Object.values(this.columns).find((c) => c.names[type] === name2);
@@ -4805,8 +8544,8 @@ var selectRow = (table2, row, select) => {
   if (select === true) return cloneValue(row);
   return Object.fromEntries(select.map((key) => [key, cloneValue(row[key])]));
 };
-function memoryAdapter(options = {}) {
-  const db = options.db ?? {};
+function memoryAdapter(options4 = {}) {
+  const db = options4.db ?? {};
   return {
     name: "memory",
     createORM(schema2) {
@@ -4867,10 +8606,10 @@ function memoryAdapter(options = {}) {
           const rows = tableRows(db, table2);
           db[table2.ormName] = rows.filter((row) => !matchesCondition(row, v.where));
         },
-        async transaction(run) {
+        async transaction(run2) {
           const snapshot = cloneValue(db);
           try {
-            return await run(orm);
+            return await run2(orm);
           } catch (error) {
             for (const key of Object.keys(db)) delete db[key];
             Object.assign(db, snapshot);
@@ -4923,13 +8662,13 @@ function validateInteger(int) {
     throw new Error("invalid integer part of order key: " + int);
   }
 }
-function getIntegerLength(head) {
-  if (head >= "a" && head <= "z") {
-    return head.charCodeAt(0) - "a".charCodeAt(0) + 2;
-  } else if (head >= "A" && head <= "Z") {
-    return "Z".charCodeAt(0) - head.charCodeAt(0) + 2;
+function getIntegerLength(head4) {
+  if (head4 >= "a" && head4 <= "z") {
+    return head4.charCodeAt(0) - "a".charCodeAt(0) + 2;
+  } else if (head4 >= "A" && head4 <= "Z") {
+    return "Z".charCodeAt(0) - head4.charCodeAt(0) + 2;
   } else {
-    throw new Error("invalid order key head: " + head);
+    throw new Error("invalid order key head: " + head4);
   }
 }
 function getIntegerPart(key) {
@@ -4951,7 +8690,7 @@ function validateOrderKey(key, digits) {
 }
 function incrementInteger(x, digits) {
   validateInteger(x);
-  const [head, ...digs] = x.split("");
+  const [head4, ...digs] = x.split("");
   let carry = true;
   for (let i = digs.length - 1; carry && i >= 0; i--) {
     const d = digits.indexOf(digs[i]) + 1;
@@ -4963,13 +8702,13 @@ function incrementInteger(x, digits) {
     }
   }
   if (carry) {
-    if (head === "Z") {
+    if (head4 === "Z") {
       return "a" + digits[0];
     }
-    if (head === "z") {
+    if (head4 === "z") {
       return null;
     }
-    const h = String.fromCharCode(head.charCodeAt(0) + 1);
+    const h = String.fromCharCode(head4.charCodeAt(0) + 1);
     if (h > "a") {
       digs.push(digits[0]);
     } else {
@@ -4977,12 +8716,12 @@ function incrementInteger(x, digits) {
     }
     return h + digs.join("");
   } else {
-    return head + digs.join("");
+    return head4 + digs.join("");
   }
 }
 function decrementInteger(x, digits) {
   validateInteger(x);
-  const [head, ...digs] = x.split("");
+  const [head4, ...digs] = x.split("");
   let borrow = true;
   for (let i = digs.length - 1; borrow && i >= 0; i--) {
     const d = digits.indexOf(digs[i]) - 1;
@@ -4994,13 +8733,13 @@ function decrementInteger(x, digits) {
     }
   }
   if (borrow) {
-    if (head === "a") {
+    if (head4 === "a") {
       return "Z" + digits.slice(-1);
     }
-    if (head === "A") {
+    if (head4 === "A") {
       return null;
     }
-    const h = String.fromCharCode(head.charCodeAt(0) - 1);
+    const h = String.fromCharCode(head4.charCodeAt(0) - 1);
     if (h < "Z") {
       digs.push(digits.slice(-1));
     } else {
@@ -5008,7 +8747,7 @@ function decrementInteger(x, digits) {
     }
     return h + digs.join("");
   } else {
-    return head + digs.join("");
+    return head4 + digs.join("");
   }
 }
 function generateKeyBetween(a, b, digits = BASE_62_DIGITS) {
@@ -5063,10 +8802,9 @@ function generateKeyBetween(a, b, digits = BASE_62_DIGITS) {
 }
 
 // ../sdk/src/fuma-runtime.ts
-import { Cause, Context, Data, Effect, Exit, Layer, Predicate } from "effect";
-var StorageError = class extends Data.TaggedError("StorageError") {
+var StorageError = class extends Data_exports.TaggedError("StorageError") {
 };
-var UniqueViolationError = class extends Data.TaggedError("UniqueViolationError") {
+var UniqueViolationError = class extends Data_exports.TaggedError("UniqueViolationError") {
 };
 var isUniqueViolation = (cause) => {
   let current = cause;
@@ -5092,7 +8830,7 @@ var causeMessage = (cause) => {
   ) : void 0;
   return typeof message === "string" && message.length > 0 ? message : void 0;
 };
-var isStorageFailure = (error) => Predicate.isTagged(error, "StorageError") || Predicate.isTagged(error, "UniqueViolationError");
+var isStorageFailure = (error) => Predicate_exports.isTagged(error, "StorageError") || Predicate_exports.isTagged(error, "UniqueViolationError");
 var fumaFailureFromCause = (label, cause) => {
   if (isStorageFailure(cause)) return cause;
   if (isUniqueViolation(cause)) return new UniqueViolationError({ model: label });
@@ -5101,11 +8839,11 @@ var fumaFailureFromCause = (label, cause) => {
     cause
   });
 };
-var fumaEffect = (label, run) => Effect.tryPromise({
-  try: run,
+var fumaEffect = (label, run2) => Effect_exports.tryPromise({
+  try: run2,
   catch: (cause) => fumaFailureFromCause(label, cause)
 });
-var activeFumaDbRef = Context.Reference("executor/ActiveFumaDb", {
+var activeFumaDbRef = Context_exports.Reference("executor/ActiveFumaDb", {
   defaultValue: () => null
 });
 var TransactionEffectFailure = class {
@@ -5128,9 +8866,9 @@ var assertAllowedTable = (tables, table2) => {
     cause: void 0
   });
 };
-var makeSafeFumaQuery = (db, options) => {
+var makeSafeFumaQuery = (db, options4) => {
   const table2 = (name) => {
-    assertAllowedTable(options.tables, name);
+    assertAllowedTable(options4.tables, name);
     return name;
   };
   const query = {
@@ -5140,28 +8878,28 @@ var makeSafeFumaQuery = (db, options) => {
     deleteMany: (name, value) => db.deleteMany(table2(name), value),
     findFirst: (name, value) => db.findFirst(table2(name), value),
     findMany: (name, value) => db.findMany(table2(name), value),
-    transaction: (run) => db.transaction((transactionDb) => run(makeSafeFumaQuery(transactionDb, options))),
+    transaction: (run2) => db.transaction((transactionDb) => run2(makeSafeFumaQuery(transactionDb, options4))),
     updateMany: (name, value) => db.updateMany(table2(name), value),
     upsert: (name, value) => db.upsert(table2(name), value)
   };
   return Object.freeze(query);
 };
-var makeFumaClient = (db, options = {}) => {
-  const use = (label, fn) => Effect.flatMap(
-    Effect.service(activeFumaDbRef),
-    (active) => fumaEffect(label, () => fn(makeSafeFumaQuery(active ?? db, options)))
-  ).pipe(Effect.withSpan(`fumadb.${label}`));
-  const transaction = (effect) => Effect.flatMap(Effect.service(activeFumaDbRef), (active) => {
-    if (active) return effect;
-    return Effect.tryPromise({
+var makeFumaClient = (db, options4 = {}) => {
+  const use2 = (label, fn) => Effect_exports.flatMap(
+    Effect_exports.service(activeFumaDbRef),
+    (active) => fumaEffect(label, () => fn(makeSafeFumaQuery(active ?? db, options4)))
+  ).pipe(Effect_exports.withSpan(`fumadb.${label}`));
+  const transaction = (effect2) => Effect_exports.flatMap(Effect_exports.service(activeFumaDbRef), (active) => {
+    if (active) return effect2;
+    return Effect_exports.tryPromise({
       try: () => db.transaction(async (transactionDb) => {
-        const exit = await Effect.runPromiseExit(
-          effect.pipe(Effect.provideService(activeFumaDbRef, transactionDb))
+        const exit2 = await Effect_exports.runPromiseExit(
+          effect2.pipe(Effect_exports.provideService(activeFumaDbRef, transactionDb))
         );
-        if (Exit.isSuccess(exit)) return exit.value;
-        const failure = exit.cause.reasons.find(Cause.isFailReason);
+        if (Exit_exports.isSuccess(exit2)) return exit2.value;
+        const failure = exit2.cause.reasons.find(Cause_exports.isFailReason);
         if (failure) throw new TransactionEffectFailure(failure.error);
-        throw new TransactionEffectDefect(exit.cause);
+        throw new TransactionEffectDefect(exit2.cause);
       }),
       catch: (cause) => {
         if (cause instanceof TransactionEffectFailure) return cause.error;
@@ -5171,34 +8909,33 @@ var makeFumaClient = (db, options = {}) => {
         return fumaFailureFromCause("transaction", cause);
       }
     });
-  }).pipe(Effect.withSpan("fumadb.transaction"));
-  return { use, transaction };
+  }).pipe(Effect_exports.withSpan("fumadb.transaction"));
+  return { use: use2, transaction };
 };
-var FumaClient = class extends Context.Service()("executor/FumaClient") {
-  static layer = (db) => Layer.succeed(this)(makeFumaClient(db));
+var FumaClient = class extends Context_exports.Service()("executor/FumaClient") {
+  static layer = (db) => Layer_exports.succeed(this)(makeFumaClient(db));
 };
 
 // ../sdk/src/blob.ts
-import { Effect as Effect2 } from "effect";
 var nsFor = (partition, pluginId) => `${partition}/${pluginId}`;
 var pluginBlobStore = (store, partitions, pluginId) => {
   const readNamespaces = () => (partitions.user == null ? [partitions.org] : [partitions.user, partitions.org]).map(
     (p) => nsFor(p, pluginId)
   );
   const partitionFor = (owner) => {
-    if (owner === "org") return Effect2.succeed(partitions.org);
+    if (owner === "org") return Effect_exports.succeed(partitions.org);
     if (partitions.user == null) {
-      return Effect2.fail(
+      return Effect_exports.fail(
         new StorageError({
           message: 'Blob write targets owner "user" but the executor has no subject.',
           cause: void 0
         })
       );
     }
-    return Effect2.succeed(partitions.user);
+    return Effect_exports.succeed(partitions.user);
   };
   return {
-    get: (key) => Effect2.gen(function* () {
+    get: (key) => Effect_exports.gen(function* () {
       const namespaces = readNamespaces();
       const hits = yield* store.getMany(namespaces, key);
       if (hits.size === 0) return null;
@@ -5208,15 +8945,15 @@ var pluginBlobStore = (store, partitions, pluginId) => {
       }
       return null;
     }),
-    put: (key, value, options) => Effect2.flatMap(
-      partitionFor(options.owner),
+    put: (key, value, options4) => Effect_exports.flatMap(
+      partitionFor(options4.owner),
       (partition) => store.put(nsFor(partition, pluginId), key, value)
     ),
-    delete: (key, options) => Effect2.flatMap(
-      partitionFor(options.owner),
+    delete: (key, options4) => Effect_exports.flatMap(
+      partitionFor(options4.owner),
       (partition) => store.delete(nsFor(partition, pluginId), key)
     ),
-    has: (key) => store.getMany(readNamespaces(), key).pipe(Effect2.map((hits) => hits.size > 0))
+    has: (key) => store.getMany(readNamespaces(), key).pipe(Effect_exports.map((hits) => hits.size > 0))
   };
 };
 var blobId = (namespace, key) => JSON.stringify([namespace, key]);
@@ -5227,28 +8964,28 @@ var makeFumaBlobStore = (fuma) => ({
     (db) => db.findFirst("blob", {
       where: (b) => b.and(b("namespace", "=", namespace), b("key", "=", key))
     })
-  ).pipe(Effect2.map((row) => row)).pipe(
-    Effect2.map((row) => row?.value ?? null),
-    Effect2.mapError(
+  ).pipe(Effect_exports.map((row) => row)).pipe(
+    Effect_exports.map((row) => row?.value ?? null),
+    Effect_exports.mapError(
       (cause) => new StorageError({ message: "FumaDB blob operation failed", cause })
     )
   ),
-  getMany: (namespaces, key) => namespaces.length === 0 ? Effect2.succeed(/* @__PURE__ */ new Map()) : fuma.use(
+  getMany: (namespaces, key) => namespaces.length === 0 ? Effect_exports.succeed(/* @__PURE__ */ new Map()) : fuma.use(
     "blob.getMany",
     (db) => db.findMany("blob", {
       where: (b) => b.and(b("namespace", "in", [...namespaces]), b("key", "=", key))
     })
-  ).pipe(Effect2.map(toBlobRows)).pipe(
-    Effect2.map((rows) => {
+  ).pipe(Effect_exports.map(toBlobRows)).pipe(
+    Effect_exports.map((rows) => {
       const out = /* @__PURE__ */ new Map();
       for (const row of rows) out.set(row.namespace, row.value);
       return out;
     }),
-    Effect2.mapError(
+    Effect_exports.mapError(
       (cause) => new StorageError({ message: "FumaDB blob operation failed", cause })
     )
   ),
-  put: (namespace, key, value) => Effect2.gen(function* () {
+  put: (namespace, key, value) => Effect_exports.gen(function* () {
     const id = blobId(namespace, key);
     const existing = yield* fuma.use(
       "blob.findForPut",
@@ -5263,7 +9000,7 @@ var makeFumaBlobStore = (fuma) => ({
     }
     yield* fuma.use("blob.create", (db) => db.create("blob", { id, namespace, key, value }));
   }).pipe(
-    Effect2.mapError(
+    Effect_exports.mapError(
       (cause) => new StorageError({ message: "FumaDB blob operation failed", cause })
     )
   ),
@@ -5271,8 +9008,8 @@ var makeFumaBlobStore = (fuma) => ({
     "blob.delete",
     (db) => db.deleteMany("blob", { where: (b) => b("id", "=", blobId(namespace, key)) })
   ).pipe(
-    Effect2.asVoid,
-    Effect2.mapError(
+    Effect_exports.asVoid,
+    Effect_exports.mapError(
       (cause) => new StorageError({ message: "FumaDB blob operation failed", cause })
     )
   ),
@@ -5280,23 +9017,19 @@ var makeFumaBlobStore = (fuma) => ({
     "blob.has",
     (db) => db.count("blob", { where: (b) => b("id", "=", blobId(namespace, key)) })
   ).pipe(
-    Effect2.map((count) => count > 0),
-    Effect2.mapError(
+    Effect_exports.map((count) => count > 0),
+    Effect_exports.mapError(
       (cause) => new StorageError({ message: "FumaDB blob operation failed", cause })
     )
   )
 });
 
-// ../sdk/src/core-tools.ts
-import { Effect as Effect4, Schema as Schema3 } from "effect";
-
 // ../sdk/src/plugin.ts
-import { Effect as Effect3 } from "effect";
 var decodeStaticToolArgs = (schema2, args) => {
-  if (schema2 == null) return Effect3.succeed(args);
-  return Effect3.promise(() => Promise.resolve(schema2["~standard"].validate(args))).pipe(
-    Effect3.flatMap(
-      (result) => "value" in result ? Effect3.succeed(result.value) : Effect3.fail(result)
+  if (schema2 == null) return Effect_exports.succeed(args);
+  return Effect_exports.promise(() => Promise.resolve(schema2["~standard"].validate(args))).pipe(
+    Effect_exports.flatMap(
+      (result2) => "value" in result2 ? Effect_exports.succeed(result2.value) : Effect_exports.fail(result2)
     )
   );
 };
@@ -5307,7 +9040,7 @@ var tool = (input) => ({
   outputSchema: input.outputSchema,
   annotations: input.annotations,
   handler: ({ args, ctx, elicit }) => decodeStaticToolArgs(input.inputSchema, args).pipe(
-    Effect3.flatMap(
+    Effect_exports.flatMap(
       (decoded) => input.execute(
         decoded,
         { ctx, elicit }
@@ -5316,11 +9049,11 @@ var tool = (input) => ({
   )
 });
 function definePlugin(authorFactory) {
-  return (options) => {
+  return (options4) => {
     const {
       storage: storageOverride,
       ...rest
-    } = options ?? {};
+    } = options4 ?? {};
     const hasAuthorOptions = Object.keys(rest).length > 0;
     const spec = authorFactory(hasAuthorOptions ? rest : void 0);
     return {
@@ -5331,7 +9064,6 @@ function definePlugin(authorFactory) {
 }
 
 // ../sdk/src/policies.ts
-import { Match, Schema as Schema2 } from "effect";
 var matchPattern = (pattern, toolId) => {
   if (pattern === "*") return true;
   const patternSegments = pattern.split(".");
@@ -5370,11 +9102,11 @@ var comparePolicyRow = (a, b) => {
   const ib = b.id;
   return ia < ib ? -1 : ia > ib ? 1 : 0;
 };
-var actionRestrictionRank = (action) => Match.value(action).pipe(
-  Match.when("block", () => 3),
-  Match.when("require_approval", () => 2),
-  Match.when("approve", () => 1),
-  Match.exhaustive
+var actionRestrictionRank = (action) => Match_exports.value(action).pipe(
+  Match_exports.when("block", () => 3),
+  Match_exports.when("require_approval", () => 2),
+  Match_exports.when("approve", () => 1),
+  Match_exports.exhaustive
 );
 var moreRestrictive = (current, candidate) => {
   if (!current) return candidate;
@@ -5402,21 +9134,21 @@ var resolveToolPolicy = (toolId, policies, ownerRank) => {
     }
   }
   let selected;
-  for (const match of firstMatchByOwner.values()) {
-    selected = moreRestrictive(selected, match);
+  for (const match4 of firstMatchByOwner.values()) {
+    selected = moreRestrictive(selected, match4);
   }
   return selected;
 };
 var liftPlugin = (defaultRequiresApproval) => defaultRequiresApproval ? { action: "require_approval", source: "plugin-default" } : { action: "approve", source: "plugin-default" };
-var liftUser = (match) => ({
-  action: match.action,
+var liftUser = (match4) => ({
+  action: match4.action,
   source: "user",
-  pattern: match.pattern,
-  policyId: match.policyId
+  pattern: match4.pattern,
+  policyId: match4.policyId
 });
 var resolveEffectivePolicy = (toolId, policies, ownerRank, defaultRequiresApproval) => {
-  const match = resolveToolPolicy(toolId, policies, ownerRank);
-  return match ? liftUser(match) : liftPlugin(defaultRequiresApproval);
+  const match4 = resolveToolPolicy(toolId, policies, ownerRank);
+  return match4 ? liftUser(match4) : liftPlugin(defaultRequiresApproval);
 };
 var rowToToolPolicy = (row) => ({
   id: PolicyId.make(row.id),
@@ -5427,96 +9159,96 @@ var rowToToolPolicy = (row) => ({
   createdAt: row.created_at,
   updatedAt: row.updated_at
 });
-var ToolPolicyActionSchema = Schema2.Literals(["approve", "require_approval", "block"]);
+var ToolPolicyActionSchema = Schema_exports.Literals(["approve", "require_approval", "block"]);
 
 // ../sdk/src/core-tools.ts
-var schemaToStandard = (schema2) => Schema3.toStandardSchemaV1(Schema3.toStandardJSONSchemaV1(schema2));
-var OwnerSchema = Schema3.Literals(["org", "user"]);
-var OAuthGrantSchema = Schema3.Literals(["authorization_code", "client_credentials"]);
-var IntegrationOutput = Schema3.Struct({
-  slug: Schema3.String,
-  description: Schema3.String,
-  kind: Schema3.String,
-  canRemove: Schema3.Boolean,
-  canRefresh: Schema3.Boolean
+var schemaToStandard = (schema2) => Schema_exports.toStandardSchemaV1(Schema_exports.toStandardJSONSchemaV1(schema2));
+var OwnerSchema = Schema_exports.Literals(["org", "user"]);
+var OAuthGrantSchema = Schema_exports.Literals(["authorization_code", "client_credentials"]);
+var IntegrationOutput = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  description: Schema_exports.String,
+  kind: Schema_exports.String,
+  canRemove: Schema_exports.Boolean,
+  canRefresh: Schema_exports.Boolean
 });
-var IntegrationsListOutput = Schema3.Struct({
-  integrations: Schema3.Array(IntegrationOutput)
+var IntegrationsListOutput = Schema_exports.Struct({
+  integrations: Schema_exports.Array(IntegrationOutput)
 });
-var DetectInput = Schema3.Struct({ url: Schema3.String });
-var DetectOutput = Schema3.Struct({
-  results: Schema3.Array(
-    Schema3.Struct({
-      kind: Schema3.String,
-      confidence: Schema3.Literals(["high", "medium", "low"]),
-      endpoint: Schema3.String,
-      name: Schema3.String,
-      slug: Schema3.String
+var DetectInput = Schema_exports.Struct({ url: Schema_exports.String });
+var DetectOutput = Schema_exports.Struct({
+  results: Schema_exports.Array(
+    Schema_exports.Struct({
+      kind: Schema_exports.String,
+      confidence: Schema_exports.Literals(["high", "medium", "low"]),
+      endpoint: Schema_exports.String,
+      name: Schema_exports.String,
+      slug: Schema_exports.String
     })
   )
 });
-var ConnectionOutput = Schema3.Struct({
+var ConnectionOutput = Schema_exports.Struct({
   owner: OwnerSchema,
-  name: Schema3.String,
-  integration: Schema3.String,
-  template: Schema3.String,
-  provider: Schema3.String,
-  address: Schema3.String,
-  identityLabel: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  description: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  expiresAt: Schema3.NullOr(Schema3.Number),
-  oauthClient: Schema3.NullOr(Schema3.String),
-  oauthClientOwner: Schema3.NullOr(OwnerSchema),
-  oauthScope: Schema3.NullOr(Schema3.String)
+  name: Schema_exports.String,
+  integration: Schema_exports.String,
+  template: Schema_exports.String,
+  provider: Schema_exports.String,
+  address: Schema_exports.String,
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  description: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  expiresAt: Schema_exports.NullOr(Schema_exports.Number),
+  oauthClient: Schema_exports.NullOr(Schema_exports.String),
+  oauthClientOwner: Schema_exports.NullOr(OwnerSchema),
+  oauthScope: Schema_exports.NullOr(Schema_exports.String)
 });
-var ConnectionsListInput = Schema3.Struct({
-  integration: Schema3.optional(Schema3.String),
-  owner: Schema3.optional(OwnerSchema),
-  verbose: Schema3.optional(Schema3.Boolean)
+var ConnectionsListInput = Schema_exports.Struct({
+  integration: Schema_exports.optional(Schema_exports.String),
+  owner: Schema_exports.optional(OwnerSchema),
+  verbose: Schema_exports.optional(Schema_exports.Boolean)
 });
-var ConnectionListItem = Schema3.Struct({
+var ConnectionListItem = Schema_exports.Struct({
   owner: OwnerSchema,
-  name: Schema3.String,
-  integration: Schema3.String,
-  template: Schema3.String,
-  provider: Schema3.String,
-  address: Schema3.String,
-  identityLabel: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  description: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  expiresAt: Schema3.NullOr(Schema3.Number),
-  oauthClient: Schema3.NullOr(Schema3.String),
-  oauthClientOwner: Schema3.NullOr(OwnerSchema),
-  oauthScopeCount: Schema3.NullOr(Schema3.Number),
-  oauthScope: Schema3.optional(Schema3.NullOr(Schema3.String))
+  name: Schema_exports.String,
+  integration: Schema_exports.String,
+  template: Schema_exports.String,
+  provider: Schema_exports.String,
+  address: Schema_exports.String,
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  description: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  expiresAt: Schema_exports.NullOr(Schema_exports.Number),
+  oauthClient: Schema_exports.NullOr(Schema_exports.String),
+  oauthClientOwner: Schema_exports.NullOr(OwnerSchema),
+  oauthScopeCount: Schema_exports.NullOr(Schema_exports.Number),
+  oauthScope: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var ConnectionsListOutput = Schema3.Struct({
-  connections: Schema3.Array(ConnectionListItem)
+var ConnectionsListOutput = Schema_exports.Struct({
+  connections: Schema_exports.Array(ConnectionListItem)
 });
-var ConnectionCreateHandoffInput = Schema3.Struct({
-  integration: Schema3.String,
-  owner: Schema3.optional(OwnerSchema),
-  template: Schema3.optional(Schema3.String),
-  label: Schema3.optional(Schema3.String)
+var ConnectionCreateHandoffInput = Schema_exports.Struct({
+  integration: Schema_exports.String,
+  owner: Schema_exports.optional(OwnerSchema),
+  template: Schema_exports.optional(Schema_exports.String),
+  label: Schema_exports.optional(Schema_exports.String)
 });
-var ConnectionCreateHandoffOutput = Schema3.Struct({
-  url: Schema3.String,
-  instructions: Schema3.String
+var ConnectionCreateHandoffOutput = Schema_exports.Struct({
+  url: Schema_exports.String,
+  instructions: Schema_exports.String
 });
-var ConnectionFromInput = Schema3.Struct({
-  provider: Schema3.String,
-  id: Schema3.String
+var ConnectionFromInput = Schema_exports.Struct({
+  provider: Schema_exports.String,
+  id: Schema_exports.String
 });
-var ConnectionInputOriginInput = Schema3.Struct({ from: ConnectionFromInput });
-var ConnectionCreateInput = Schema3.Struct({
+var ConnectionInputOriginInput = Schema_exports.Struct({ from: ConnectionFromInput });
+var ConnectionCreateInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  name: Schema3.String,
-  integration: Schema3.String,
-  template: Schema3.String,
-  identityLabel: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  from: Schema3.optional(ConnectionFromInput),
-  inputs: Schema3.optional(Schema3.Record(Schema3.String, ConnectionInputOriginInput))
+  name: Schema_exports.String,
+  integration: Schema_exports.String,
+  template: Schema_exports.String,
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  from: Schema_exports.optional(ConnectionFromInput),
+  inputs: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, ConnectionInputOriginInput))
 }).check(
-  Schema3.makeFilter((payload) => {
+  Schema_exports.makeFilter((payload) => {
     const originCount = (payload.from === void 0 ? 0 : 1) + (payload.inputs === void 0 ? 0 : 1);
     const isNoAuth = String(payload.template) === String(NO_AUTH_TEMPLATE);
     if (isNoAuth) {
@@ -5532,160 +9264,160 @@ var ConnectionCreateInput = Schema3.Struct({
     return void 0;
   })
 );
-var ConnectionRefInput = Schema3.Struct({
+var ConnectionRefInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  name: Schema3.String,
-  integration: Schema3.String
+  name: Schema_exports.String,
+  integration: Schema_exports.String
 });
-var ToolOutput = Schema3.Struct({
-  address: Schema3.String,
+var ToolOutput = Schema_exports.Struct({
+  address: Schema_exports.String,
   owner: OwnerSchema,
-  integration: Schema3.String,
-  connection: Schema3.String,
-  name: Schema3.String,
-  pluginId: Schema3.String,
-  description: Schema3.String
+  integration: Schema_exports.String,
+  connection: Schema_exports.String,
+  name: Schema_exports.String,
+  pluginId: Schema_exports.String,
+  description: Schema_exports.String
 });
-var ConnectionsRefreshOutput = Schema3.Struct({
-  tools: Schema3.Array(ToolOutput)
+var ConnectionsRefreshOutput = Schema_exports.Struct({
+  tools: Schema_exports.Array(ToolOutput)
 });
-var RemovedOutput = Schema3.Struct({ removed: Schema3.Boolean });
-var CancelledOutput = Schema3.Struct({ cancelled: Schema3.Boolean });
-var ProvidersOutput = Schema3.Struct({
-  providers: Schema3.Array(Schema3.String)
+var RemovedOutput = Schema_exports.Struct({ removed: Schema_exports.Boolean });
+var CancelledOutput = Schema_exports.Struct({ cancelled: Schema_exports.Boolean });
+var ProvidersOutput = Schema_exports.Struct({
+  providers: Schema_exports.Array(Schema_exports.String)
 });
-var ProviderItemsInput = Schema3.Struct({ provider: Schema3.String });
-var ProviderItemsOutput = Schema3.Struct({
-  items: Schema3.Array(Schema3.Struct({ id: Schema3.String, name: Schema3.String }))
+var ProviderItemsInput = Schema_exports.Struct({ provider: Schema_exports.String });
+var ProviderItemsOutput = Schema_exports.Struct({
+  items: Schema_exports.Array(Schema_exports.Struct({ id: Schema_exports.String, name: Schema_exports.String }))
 });
-var PolicyOutput = Schema3.Struct({
-  id: Schema3.String,
+var PolicyOutput = Schema_exports.Struct({
+  id: Schema_exports.String,
   owner: OwnerSchema,
-  pattern: Schema3.String,
-  action: Schema3.String,
-  position: Schema3.String
+  pattern: Schema_exports.String,
+  action: Schema_exports.String,
+  position: Schema_exports.String
 });
-var PoliciesListOutput = Schema3.Struct({
-  policies: Schema3.Array(PolicyOutput)
+var PoliciesListOutput = Schema_exports.Struct({
+  policies: Schema_exports.Array(PolicyOutput)
 });
-var PolicyCreateInput = Schema3.Struct({
+var PolicyCreateInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  pattern: Schema3.String,
+  pattern: Schema_exports.String,
   action: ToolPolicyActionSchema
 });
-var PolicyUpdateInput = Schema3.Struct({
-  id: Schema3.String,
+var PolicyUpdateInput = Schema_exports.Struct({
+  id: Schema_exports.String,
   owner: OwnerSchema,
-  pattern: Schema3.optional(Schema3.String),
-  action: Schema3.optional(ToolPolicyActionSchema)
+  pattern: Schema_exports.optional(Schema_exports.String),
+  action: Schema_exports.optional(ToolPolicyActionSchema)
 });
-var PolicyRemoveInput = Schema3.Struct({
-  id: Schema3.String,
+var PolicyRemoveInput = Schema_exports.Struct({
+  id: Schema_exports.String,
   owner: OwnerSchema
 });
-var OAuthClientOutput = Schema3.Struct({
+var OAuthClientOutput = Schema_exports.Struct({
   owner: OwnerSchema,
-  slug: Schema3.String,
+  slug: Schema_exports.String,
   grant: OAuthGrantSchema,
-  authorizationUrl: Schema3.String,
-  tokenUrl: Schema3.String,
-  resource: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  clientId: Schema3.String,
-  origin: Schema3.Union([
-    Schema3.Struct({ kind: Schema3.Literal("manual") }),
-    Schema3.Struct({
-      kind: Schema3.Literal("dynamic_client_registration"),
-      integration: Schema3.optional(Schema3.NullOr(Schema3.String))
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  clientId: Schema_exports.String,
+  origin: Schema_exports.Union([
+    Schema_exports.Struct({ kind: Schema_exports.Literal("manual") }),
+    Schema_exports.Struct({
+      kind: Schema_exports.Literal("dynamic_client_registration"),
+      integration: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
     })
   ])
 });
-var OAuthClientsListOutput = Schema3.Struct({
-  clients: Schema3.Array(OAuthClientOutput)
+var OAuthClientsListOutput = Schema_exports.Struct({
+  clients: Schema_exports.Array(OAuthClientOutput)
 });
-var OAuthCreateClientInput = Schema3.Struct({
+var OAuthCreateClientInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  slug: Schema3.String,
-  authorizationUrl: Schema3.String,
-  tokenUrl: Schema3.String,
+  slug: Schema_exports.String,
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
   grant: OAuthGrantSchema,
-  clientId: Schema3.String,
-  resource: Schema3.optional(Schema3.NullOr(Schema3.String)),
+  clientId: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
   /** Integration whose connect dialog registered this manual app. Recorded so
    *  the picker can match it by intent (exact) instead of by root domain. */
-  originIntegration: Schema3.optional(Schema3.NullOr(Schema3.String))
+  originIntegration: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var OAuthCreateClientHandoffInput = Schema3.Struct({
-  integration: Schema3.String,
-  owner: Schema3.optional(OwnerSchema),
-  slug: Schema3.optional(Schema3.String),
-  grant: Schema3.optional(OAuthGrantSchema),
-  clientId: Schema3.optional(Schema3.String),
-  authorizationUrl: Schema3.optional(Schema3.String),
-  tokenUrl: Schema3.optional(Schema3.String),
-  resource: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  label: Schema3.optional(Schema3.String)
+var OAuthCreateClientHandoffInput = Schema_exports.Struct({
+  integration: Schema_exports.String,
+  owner: Schema_exports.optional(OwnerSchema),
+  slug: Schema_exports.optional(Schema_exports.String),
+  grant: Schema_exports.optional(OAuthGrantSchema),
+  clientId: Schema_exports.optional(Schema_exports.String),
+  authorizationUrl: Schema_exports.optional(Schema_exports.String),
+  tokenUrl: Schema_exports.optional(Schema_exports.String),
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  label: Schema_exports.optional(Schema_exports.String)
 });
-var OAuthCreateClientHandoffOutput = Schema3.Struct({
-  url: Schema3.String,
-  instructions: Schema3.String
+var OAuthCreateClientHandoffOutput = Schema_exports.Struct({
+  url: Schema_exports.String,
+  instructions: Schema_exports.String
 });
-var OAuthClientOutputRef = Schema3.Struct({
-  client: Schema3.String
+var OAuthClientOutputRef = Schema_exports.Struct({
+  client: Schema_exports.String
 });
-var OAuthRegisterDynamicInput = Schema3.Struct({
+var OAuthRegisterDynamicInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  slug: Schema3.String,
-  issuer: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  registrationEndpoint: Schema3.String,
-  authorizationUrl: Schema3.String,
-  tokenUrl: Schema3.String,
-  resource: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  scopes: Schema3.Array(Schema3.String),
-  tokenEndpointAuthMethodsSupported: Schema3.optional(Schema3.Array(Schema3.String)),
-  clientName: Schema3.optional(Schema3.String),
-  redirectUri: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  originIntegration: Schema3.optional(Schema3.NullOr(Schema3.String))
+  slug: Schema_exports.String,
+  issuer: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  registrationEndpoint: Schema_exports.String,
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  scopes: Schema_exports.Array(Schema_exports.String),
+  tokenEndpointAuthMethodsSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  clientName: Schema_exports.optional(Schema_exports.String),
+  redirectUri: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  originIntegration: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var OAuthRemoveClientInput = Schema3.Struct({
+var OAuthRemoveClientInput = Schema_exports.Struct({
   owner: OwnerSchema,
-  slug: Schema3.String
+  slug: Schema_exports.String
 });
-var OAuthProbeInput = Schema3.Struct({
-  url: Schema3.String
+var OAuthProbeInput = Schema_exports.Struct({
+  url: Schema_exports.String
 });
-var OAuthProbeOutput = Schema3.Struct({
-  issuer: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  authorizationUrl: Schema3.String,
-  tokenUrl: Schema3.String,
-  resource: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  scopesSupported: Schema3.optional(Schema3.Array(Schema3.String)),
-  registrationEndpoint: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  tokenEndpointAuthMethodsSupported: Schema3.optional(Schema3.Array(Schema3.String)),
-  clientIdMetadataDocumentSupported: Schema3.optional(Schema3.Boolean)
+var OAuthProbeOutput = Schema_exports.Struct({
+  issuer: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  scopesSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  registrationEndpoint: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  tokenEndpointAuthMethodsSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  clientIdMetadataDocumentSupported: Schema_exports.optional(Schema_exports.Boolean)
 });
-var OAuthStartInput = Schema3.Struct({
-  client: Schema3.String,
+var OAuthStartInput = Schema_exports.Struct({
+  client: Schema_exports.String,
   clientOwner: OwnerSchema,
   owner: OwnerSchema,
-  name: Schema3.String,
-  integration: Schema3.String,
-  template: Schema3.String,
-  identityLabel: Schema3.optional(Schema3.NullOr(Schema3.String)),
-  redirectUri: Schema3.optional(Schema3.NullOr(Schema3.String))
+  name: Schema_exports.String,
+  integration: Schema_exports.String,
+  template: Schema_exports.String,
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  redirectUri: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var OAuthStartOutput = Schema3.Union([
-  Schema3.Struct({
-    status: Schema3.Literal("connected"),
+var OAuthStartOutput = Schema_exports.Union([
+  Schema_exports.Struct({
+    status: Schema_exports.Literal("connected"),
     connection: ConnectionOutput
   }),
-  Schema3.Struct({
-    status: Schema3.Literal("redirect"),
-    authorizationUrl: Schema3.String,
-    state: Schema3.String
+  Schema_exports.Struct({
+    status: Schema_exports.Literal("redirect"),
+    authorizationUrl: Schema_exports.String,
+    state: Schema_exports.String
   })
 ]);
-var OAuthCancelInput = Schema3.Struct({
-  state: Schema3.String
+var OAuthCancelInput = Schema_exports.Struct({
+  state: Schema_exports.String
 });
 var IntegrationsListOutputStd = schemaToStandard(IntegrationsListOutput);
 var DetectInputStd = schemaToStandard(DetectInput);
@@ -5822,7 +9554,7 @@ var oauthClientCreateHandoffUrl = (webBaseUrl, orgSlug, input) => {
   if (webBaseUrl === void 0 || webBaseUrl.length === 0) return path;
   return new URL(path, webBaseUrl.endsWith("/") ? webBaseUrl : `${webBaseUrl}/`).toString();
 };
-var coreToolsPlugin = definePlugin((options = {}) => ({
+var coreToolsPlugin = definePlugin((options4 = {}) => ({
   id: "core-tools",
   packageName: "@executor-js/sdk/core-tools",
   storage: () => ({}),
@@ -5837,7 +9569,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           name: "integrations.list",
           description: "List integrations in the workspace catalog (slug, description, owning plugin kind). Connections authenticate against these.",
           outputSchema: IntegrationsListOutputStd,
-          execute: (_args, { ctx }) => Effect4.map(ctx.core.integrations.list(), (integrations) => ({
+          execute: (_args, { ctx }) => Effect_exports.map(ctx.core.integrations.list(), (integrations) => ({
             integrations: integrations.map((i) => ({
               slug: String(i.slug),
               description: i.description,
@@ -5852,7 +9584,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           description: "Given a URL, ask every plugin whether it recognizes it, returning best-confidence matches so the UI can pre-fill onboarding for the right plugin.",
           inputSchema: DetectInputStd,
           outputSchema: DetectOutputStd,
-          execute: (input, { ctx }) => Effect4.map(ctx.core.integrations.detect(input.url), (results) => ({
+          execute: (input, { ctx }) => Effect_exports.map(ctx.core.integrations.detect(input.url), (results) => ({
             results: results.map((r) => ({
               kind: r.kind,
               confidence: r.confidence,
@@ -5867,7 +9599,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           description: "List saved connections (the credential for one integration). Never returns the credential value. Optionally filter by integration or owner. OAuth scopes are summarized as `oauthScopeCount` by default; pass `verbose: true` to include the full `oauthScope` grant string per connection.",
           inputSchema: ConnectionsListInputStd,
           outputSchema: ConnectionsListOutputStd,
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.connections.list({
               integration: input.integration === void 0 ? void 0 : IntegrationSlug.make(input.integration),
               owner: input.owner === void 0 ? void 0 : input.owner
@@ -5891,7 +9623,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // wire an attacker-chosen integration or credential, so this is
           // approval-gated (the v1 `sources.configure` carried the same guard).
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.connections.create(createConnectionInputFromTool(input)),
             connectionToOutput
           )
@@ -5902,8 +9634,8 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           inputSchema: ConnectionCreateHandoffInputStd,
           outputSchema: ConnectionCreateHandoffOutputStd,
           execute: (input) => {
-            const url = connectionCreateHandoffUrl(options.webBaseUrl, options.orgSlug, input);
-            return Effect4.succeed({
+            const url = connectionCreateHandoffUrl(options4.webBaseUrl, options4.orgSlug, input);
+            return Effect_exports.succeed({
               url,
               instructions: "Ask the user to open this URL and add the account in the Executor web UI. Do not ask them to paste the credential value into chat. After they finish, call connections.list for the integration to discover the created connection."
             });
@@ -5918,7 +9650,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // prompt-injected code could use to disrupt an integration or force a
           // re-add flow. Approval-gated, matching v1 `sources.remove`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(ctx.connections.remove(connectionRefFromInput(input)), () => ({
+          execute: (input, { ctx }) => Effect_exports.map(ctx.connections.remove(connectionRefFromInput(input)), () => ({
             removed: true
           }))
         }),
@@ -5932,18 +9664,18 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // different tools without confirmation. Approval-gated, matching v1
           // `sources.refresh`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(ctx.connections.refresh(connectionRefFromInput(input)), (tools) => ({
+          execute: (input, { ctx }) => Effect_exports.map(ctx.connections.refresh(connectionRefFromInput(input)), (tools) => ({
             tools: tools.map(toolToOutput)
           }))
         }),
         // removed: tools.list — the cross-connection tool catalog is an
         // executor-surface read, not exposed on PluginCtx.
-        ...options.includeProviders === false ? [] : [
+        ...options4.includeProviders === false ? [] : [
           tool({
             name: "providers.list",
             description: "List registered credential provider keys (the storage backends, not API vendors). Use `providers.items` to browse a backend's entries.",
             outputSchema: ProvidersOutputStd,
-            execute: (_args, { ctx }) => Effect4.map(ctx.providers.list(), (providers2) => ({
+            execute: (_args, { ctx }) => Effect_exports.map(ctx.providers.list(), (providers2) => ({
               providers: providers2.map((p) => String(p))
             }))
           }),
@@ -5952,7 +9684,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
             description: "Browse a credential provider's items for discovery (pick a 1Password / keychain entry). Returns opaque ids and labels, never values.",
             inputSchema: ProviderItemsInputStd,
             outputSchema: ProviderItemsOutputStd,
-            execute: (input, { ctx }) => Effect4.map(ctx.providers.items(ProviderKey.make(input.provider)), (items) => ({
+            execute: (input, { ctx }) => Effect_exports.map(ctx.providers.items(ProviderKey.make(input.provider)), (items) => ({
               items: items.map((i) => ({ id: String(i.id), name: i.name }))
             }))
           })
@@ -5961,7 +9693,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           name: "oauth.clients.list",
           description: "List registered OAuth clients visible to this executor. Returns metadata only; client secrets are never returned.",
           outputSchema: OAuthClientsListOutputStd,
-          execute: (_args, { ctx }) => Effect4.map(ctx.oauth.listClients(), (clients) => ({
+          execute: (_args, { ctx }) => Effect_exports.map(ctx.oauth.listClients(), (clients) => ({
             clients: clients.map((client) => ({
               owner: client.owner,
               slug: String(client.slug),
@@ -5989,7 +9721,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // highest-value gate here; matches v1 `sources.bindings.set`, which
           // guarded credential writes.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.oauth.createClient({
               owner: input.owner,
               slug: OAuthClientSlug.make(input.slug),
@@ -6019,8 +9751,8 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // path (it routes the secret to the human in the browser), so it is
           // deliberately NOT approval-gated, mirroring `connections.createHandoff`.
           execute: (input) => {
-            const url = oauthClientCreateHandoffUrl(options.webBaseUrl, options.orgSlug, input);
-            return Effect4.succeed({
+            const url = oauthClientCreateHandoffUrl(options4.webBaseUrl, options4.orgSlug, input);
+            return Effect_exports.succeed({
               url,
               instructions: "Ask the user to open this URL and register the OAuth app in the Executor web UI, entering the client secret there. Do not ask them to paste the client secret into chat. After they finish, call oauth.clients.list to find the registered client (owner + slug), then oauth.start."
             });
@@ -6035,7 +9767,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // caller-supplied endpoint and persists the minted credentials for
           // later `oauth.start` abuse. Approval-gated. See `oauth.clients.create`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.oauth.registerDynamicClient({
               owner: input.owner,
               slug: OAuthClientSlug.make(input.slug),
@@ -6063,7 +9795,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // attacker-supplied replacement. Approval-gated, matching v1
           // `sources.bindings.remove`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.oauth.removeClient(input.owner, OAuthClientSlug.make(input.slug)),
             () => ({ removed: true })
           )
@@ -6073,15 +9805,15 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           description: "Discover OAuth authorization-server metadata from an issuer or protected-resource URL so client registration can be pre-filled.",
           inputSchema: OAuthProbeInputStd,
           outputSchema: OAuthProbeOutputStd,
-          execute: (input, { ctx }) => Effect4.map(ctx.oauth.probe({ url: input.url }), (result) => ({
-            issuer: result.issuer ?? null,
-            authorizationUrl: result.authorizationUrl,
-            tokenUrl: result.tokenUrl,
-            resource: result.resource ?? null,
-            scopesSupported: result.scopesSupported,
-            registrationEndpoint: result.registrationEndpoint ?? null,
-            tokenEndpointAuthMethodsSupported: result.tokenEndpointAuthMethodsSupported,
-            clientIdMetadataDocumentSupported: result.clientIdMetadataDocumentSupported
+          execute: (input, { ctx }) => Effect_exports.map(ctx.oauth.probe({ url: input.url }), (result2) => ({
+            issuer: result2.issuer ?? null,
+            authorizationUrl: result2.authorizationUrl,
+            tokenUrl: result2.tokenUrl,
+            resource: result2.resource ?? null,
+            scopesSupported: result2.scopesSupported,
+            registrationEndpoint: result2.registrationEndpoint ?? null,
+            tokenEndpointAuthMethodsSupported: result2.tokenEndpointAuthMethodsSupported,
+            clientIdMetadataDocumentSupported: result2.clientIdMetadataDocumentSupported
           }))
         }),
         tool({
@@ -6097,7 +9829,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // authorization-code path already returns a URL the user must visit,
           // but one gate on the whole tool covers the silent path cleanly.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.oauth.start({
               client: OAuthClientSlug.make(input.client),
               clientOwner: input.clientOwner,
@@ -6108,13 +9840,13 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
               identityLabel: input.identityLabel,
               redirectUri: input.redirectUri
             }),
-            (result) => result.status === "connected" ? {
+            (result2) => result2.status === "connected" ? {
               status: "connected",
-              connection: connectionToOutput(result.connection)
+              connection: connectionToOutput(result2.connection)
             } : {
               status: "redirect",
-              authorizationUrl: result.authorizationUrl,
-              state: String(result.state)
+              authorizationUrl: result2.authorizationUrl,
+              state: String(result2.state)
             }
           )
         }),
@@ -6123,13 +9855,13 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           description: "Cancel an in-flight OAuth authorization-code session by state after the user abandons the flow.",
           inputSchema: OAuthCancelInputStd,
           outputSchema: CancelledOutputStd,
-          execute: (input, { ctx }) => Effect4.map(ctx.oauth.cancel(OAuthState.make(input.state)), () => ({ cancelled: true }))
+          execute: (input, { ctx }) => Effect_exports.map(ctx.oauth.cancel(OAuthState.make(input.state)), () => ({ cancelled: true }))
         }),
         tool({
           name: "policies.list",
           description: "List tool policies (approve / require_approval / block) for org and user owners, in evaluation order.",
           outputSchema: PoliciesListOutputStd,
-          execute: (_args, { ctx }) => Effect4.map(ctx.core.policies.list(), (policies) => ({
+          execute: (_args, { ctx }) => Effect_exports.map(ctx.core.policies.list(), (policies) => ({
             policies: policies.map((p) => ({
               id: String(p.id),
               owner: p.owner,
@@ -6149,7 +9881,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // must itself require approval, otherwise prompt-injected code could
           // disable approvals by writing its own bypass policy.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.core.policies.create({
               owner: input.owner,
               pattern: input.pattern,
@@ -6173,7 +9905,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // `approve`, weakening an approval gate just as creation can, so it
           // requires approval too. See `policies.create`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.core.policies.update({
               id: input.id,
               owner: input.owner,
@@ -6198,7 +9930,7 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
           // guardrail, so deletion is also approval-gated. See
           // `policies.create`.
           annotations: { requiresApproval: true },
-          execute: (input, { ctx }) => Effect4.map(
+          execute: (input, { ctx }) => Effect_exports.map(
             ctx.core.policies.remove({
               id: input.id,
               owner: input.owner
@@ -6212,68 +9944,67 @@ var coreToolsPlugin = definePlugin((options = {}) => ({
 }));
 
 // ../sdk/src/health-check.ts
-import { Schema as Schema4 } from "effect";
-var HealthStatus = Schema4.Literals(["healthy", "expired", "degraded", "unknown"]);
-var HealthCheckSpec = Schema4.Struct({
+var HealthStatus = Schema_exports.Literals(["healthy", "expired", "degraded", "unknown"]);
+var HealthCheckSpec = Schema_exports.Struct({
   /** The tool / operation name to invoke (the plugin maps this to its binding). */
-  operation: Schema4.String,
+  operation: Schema_exports.String,
   /** Pinned arguments merged into the probe call. Required for identity
    *  endpoints that take a fixed parameter (e.g. People API `resourceName`). */
-  args: Schema4.optional(Schema4.Record(Schema4.String, Schema4.Unknown)),
+  args: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown)),
   /** Dot-path into the successful response body whose value is shown as the
    *  connection's identity (e.g. `emailAddresses.0.value`, `user.login`). */
-  identityField: Schema4.optional(Schema4.String)
+  identityField: Schema_exports.optional(Schema_exports.String)
 });
-var HealthCheckResponseSample = Schema4.Struct({
-  path: Schema4.String,
-  value: Schema4.String
+var HealthCheckResponseSample = Schema_exports.Struct({
+  path: Schema_exports.String,
+  value: Schema_exports.String
 });
-var HealthCheckResult = Schema4.Struct({
+var HealthCheckResult = Schema_exports.Struct({
   status: HealthStatus,
   /** The HTTP status the probe observed, when the check ran against HTTP. */
-  httpStatus: Schema4.optional(Schema4.Number),
+  httpStatus: Schema_exports.optional(Schema_exports.Number),
   /** Display identity extracted from `identityField`, when present. */
-  identity: Schema4.optional(Schema4.String),
+  identity: Schema_exports.optional(Schema_exports.String),
   /** Epoch ms the check ran. */
-  checkedAt: Schema4.Number,
+  checkedAt: Schema_exports.Number,
   /** Human-readable diagnostic (error message, "no health check configured"). */
-  detail: Schema4.optional(Schema4.String),
+  detail: Schema_exports.optional(Schema_exports.String),
   /** Bounded sample of scalar fields from the response body, for the live
    *  preview ("show me what this operation returns"). */
-  responseSample: Schema4.optional(Schema4.Array(HealthCheckResponseSample))
+  responseSample: Schema_exports.optional(Schema_exports.Array(HealthCheckResponseSample))
 });
-var HealthCheckCandidateParameter = Schema4.Struct({
-  name: Schema4.String,
+var HealthCheckCandidateParameter = Schema_exports.Struct({
+  name: Schema_exports.String,
   /** Where the parameter is carried (e.g. "query", "path", "header"). */
-  location: Schema4.String,
-  required: Schema4.Boolean,
-  description: Schema4.optional(Schema4.String)
+  location: Schema_exports.String,
+  required: Schema_exports.Boolean,
+  description: Schema_exports.optional(Schema_exports.String)
 });
-var HealthCheckResponseField = Schema4.Struct({
-  path: Schema4.String,
-  type: Schema4.String
+var HealthCheckResponseField = Schema_exports.Struct({
+  path: Schema_exports.String,
+  type: Schema_exports.String
 });
-var HealthCheckCandidate = Schema4.Struct({
+var HealthCheckCandidate = Schema_exports.Struct({
   /** The operation / tool name to store as `HealthCheckSpec.operation`. */
-  operation: Schema4.String,
+  operation: Schema_exports.String,
   /** HTTP method, lower-cased ("get", "post", …), for display + ranking. */
-  method: Schema4.String,
+  method: Schema_exports.String,
   /** How many parameters are required to call it (ranking key: fewer is better). */
-  requiredArgCount: Schema4.Number,
+  requiredArgCount: Schema_exports.Number,
   /** True for mutating methods (post/put/patch/delete), ranked last and shown
    *  with a warning, since a health check should be safe to run repeatedly. */
-  destructive: Schema4.Boolean,
+  destructive: Schema_exports.Boolean,
   /** Operation summary / description for display, when known. */
-  summary: Schema4.optional(Schema4.String),
+  summary: Schema_exports.optional(Schema_exports.String),
   /** The operation's parameters, so the editor can offer pinned-arg inputs. */
-  parameters: Schema4.optional(Schema4.Array(HealthCheckCandidateParameter)),
+  parameters: Schema_exports.optional(Schema_exports.Array(HealthCheckCandidateParameter)),
   /** Scalar leaves from the operation's response schema, for the typed identity
    *  picker. Projected via `projectResponseFields`. */
-  responseFields: Schema4.optional(Schema4.Array(HealthCheckResponseField))
+  responseFields: Schema_exports.optional(Schema_exports.Array(HealthCheckResponseField))
 });
-var classifyHttpStatus = (status) => {
-  if (status >= 200 && status < 300) return "healthy";
-  if (status === 401 || status === 403) return "expired";
+var classifyHttpStatus = (status2) => {
+  if (status2 >= 200 && status2 < 300) return "healthy";
+  if (status2 === 401 || status2 === 403) return "expired";
   return "degraded";
 };
 
@@ -6286,27 +10017,27 @@ var unscopedExecutorTables = /* @__PURE__ */ new Set(["blob"]);
 var policyViolation = (message) => {
   throw new StorageError({ message, cause: void 0 });
 };
-var requireContext = (tableName, access, context) => {
-  if (context) return context;
+var requireContext = (tableName, access, context2) => {
+  if (context2) return context2;
   return policyViolation(
     `Storage ${access} on table "${tableName}" is missing executor owner context.`
   );
 };
-var ownerVisibilityCondition = (builder, context) => {
+var ownerVisibilityCondition = (builder, context2) => {
   const orgClause = builder.and(
-    builder("tenant", "=", context.tenant),
+    builder("tenant", "=", context2.tenant),
     builder("owner", "=", "org")
   );
-  if (context.subject == null) return orgClause;
+  if (context2.subject == null) return orgClause;
   const userClause = builder.and(
-    builder("tenant", "=", context.tenant),
+    builder("tenant", "=", context2.tenant),
     builder("owner", "=", "user"),
-    builder("subject", "=", context.subject)
+    builder("subject", "=", context2.subject)
   );
   return builder.or(orgClause, userClause);
 };
-var assertOwnerWritable = (tableName, values, context) => {
-  const ctx = requireContext(tableName, "write", context);
+var assertOwnerWritable = (tableName, values, context2) => {
+  const ctx = requireContext(tableName, "write", context2);
   if (values.tenant !== ctx.tenant) {
     policyViolation(`Storage write on table "${tableName}" is outside the executor tenant.`);
   }
@@ -6328,13 +10059,13 @@ var assertOwnerWritable = (tableName, values, context) => {
     `Storage write on table "${tableName}" has an invalid owner "${String(values.owner)}".`
   );
 };
-var assertOwnerPatch = (tableName, patch, context) => {
-  const ctx = requireContext(tableName, "write", context);
-  if (!patch) return;
-  if (patch.tenant !== void 0 && patch.tenant !== ctx.tenant) {
+var assertOwnerPatch = (tableName, patch4, context2) => {
+  const ctx = requireContext(tableName, "write", context2);
+  if (!patch4) return;
+  if (patch4.tenant !== void 0 && patch4.tenant !== ctx.tenant) {
     policyViolation(`Storage write on table "${tableName}" cannot move a row across tenants.`);
   }
-  if (patch.owner === "user" && (ctx.subject == null || patch.subject !== ctx.subject)) {
+  if (patch4.owner === "user" && (ctx.subject == null || patch4.subject !== ctx.subject)) {
     policyViolation(
       `Storage write on table "${tableName}" cannot move a row outside the bound subject.`
     );
@@ -6361,7 +10092,7 @@ var nullableBigintColumn = (name) => column(name, "bigint").nullable();
 var jsonColumn = (name) => column(name, "json");
 var nullableJsonColumn = (name) => column(name, "json").nullable();
 var dateColumn = (name) => column(name, "timestamp");
-var ownerVisibility = (builder, context) => ownerVisibilityCondition(builder, context);
+var ownerVisibility = (builder, context2) => ownerVisibilityCondition(builder, context2);
 var unscopedExecutorTable = (name, columns) => {
   const out = table(name, {
     ...columns,
@@ -6380,17 +10111,17 @@ var tenantExecutorTable = (name, columns, uniqueKey) => {
   out.unique(`${name}_uidx`, [...uniqueKey]);
   return out.policy({
     name: executorTenantPolicyName,
-    onRead: ({ builder, context }) => builder("tenant", "=", context.tenant),
-    onCreate: ({ values, context }) => {
-      if (values.tenant !== context.tenant) {
+    onRead: ({ builder, context: context2 }) => builder("tenant", "=", context2.tenant),
+    onCreate: ({ values, context: context2 }) => {
+      if (values.tenant !== context2.tenant) {
         throw new StorageError({
           message: `Storage write on table "${name}" is outside the executor tenant.`,
           cause: void 0
         });
       }
     },
-    onUpdate: ({ builder, context }) => builder("tenant", "=", context.tenant),
-    onDelete: ({ builder, context }) => builder("tenant", "=", context.tenant)
+    onUpdate: ({ builder, context: context2 }) => builder("tenant", "=", context2.tenant),
+    onDelete: ({ builder, context: context2 }) => builder("tenant", "=", context2.tenant)
   });
 };
 var ownedExecutorTable = (name, columns, uniqueKey) => {
@@ -6404,14 +10135,14 @@ var ownedExecutorTable = (name, columns, uniqueKey) => {
   out.unique(`${name}_uidx`, [...uniqueKey]);
   return out.policy({
     name: executorOwnerPolicyName,
-    onRead: ({ builder, context }) => ownerVisibility(builder, context),
-    onCreate: ({ values, context }) => assertOwnerWritable(name, values, context),
-    onUpdate: ({ builder, set, create, context }) => {
-      assertOwnerPatch(name, set, context);
-      assertOwnerPatch(name, create, context);
-      return ownerVisibility(builder, context);
+    onRead: ({ builder, context: context2 }) => ownerVisibility(builder, context2),
+    onCreate: ({ values, context: context2 }) => assertOwnerWritable(name, values, context2),
+    onUpdate: ({ builder, set: set5, create, context: context2 }) => {
+      assertOwnerPatch(name, set5, context2);
+      assertOwnerPatch(name, create, context2);
+      return ownerVisibility(builder, context2);
     },
-    onDelete: ({ builder, context }) => ownerVisibility(builder, context)
+    onDelete: ({ builder, context: context2 }) => ownerVisibility(builder, context2)
   });
 };
 var defineTables = (tables) => tables;
@@ -6642,29 +10373,28 @@ var TOOL_POLICY_ACTIONS = [
 var isToolPolicyAction = (value) => typeof value === "string" && TOOL_POLICY_ACTIONS.includes(value);
 
 // ../sdk/src/elicitation.ts
-import { Schema as Schema5 } from "effect";
-var FormElicitation = Schema5.TaggedStruct("FormElicitation", {
-  message: Schema5.String,
+var FormElicitation = Schema_exports.TaggedStruct("FormElicitation", {
+  message: Schema_exports.String,
   /** JSON Schema describing the fields to collect. */
-  requestedSchema: Schema5.Record(Schema5.String, Schema5.Unknown)
+  requestedSchema: Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown)
 });
-var UrlElicitation = Schema5.TaggedStruct("UrlElicitation", {
-  message: Schema5.String,
-  url: Schema5.String,
+var UrlElicitation = Schema_exports.TaggedStruct("UrlElicitation", {
+  message: Schema_exports.String,
+  url: Schema_exports.String,
   /** Unique id so the host can correlate the callback. */
   elicitationId: ElicitationId
 });
-var ElicitationAction = Schema5.Literals(["accept", "decline", "cancel"]);
-var ElicitationResponse = Schema5.Struct({
+var ElicitationAction = Schema_exports.Literals(["accept", "decline", "cancel"]);
+var ElicitationResponse = Schema_exports.Struct({
   action: ElicitationAction,
   /** Present when `action` is "accept" — the data the user provided. */
-  content: Schema5.optional(Schema5.Record(Schema5.String, Schema5.Unknown))
+  content: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown))
 });
-var ElicitationDeclinedError = class extends Schema5.TaggedErrorClass()(
+var ElicitationDeclinedError = class extends Schema_exports.TaggedErrorClass()(
   "ElicitationDeclinedError",
   {
     address: ToolAddress,
-    action: Schema5.Literals(["decline", "cancel"])
+    action: Schema_exports.Literals(["decline", "cancel"])
   }
 ) {
   // Derived message so telemetry (span status, logs) labels the failure
@@ -6675,59 +10405,58 @@ var ElicitationDeclinedError = class extends Schema5.TaggedErrorClass()(
 };
 
 // ../sdk/src/errors.ts
-import { Schema as Schema6 } from "effect";
 var isUserActionableError = (value) => typeof value === "object" && value !== null && "__executorUserActionable" in value && value.__executorUserActionable === true && "userMessage" in value && typeof value.userMessage === "string" && value.userMessage.length > 0 && "code" in value && typeof value.code === "string" && value.code.length > 0;
-var ToolNotFoundError = class extends Schema6.TaggedErrorClass()(
+var ToolNotFoundError = class extends Schema_exports.TaggedErrorClass()(
   "ToolNotFoundError",
   {
     address: ToolAddress,
-    suggestions: Schema6.optional(Schema6.Array(ToolAddress))
+    suggestions: Schema_exports.optional(Schema_exports.Array(ToolAddress))
   }
 ) {
   get message() {
     return `Tool not found: ${this.address}`;
   }
 };
-var ToolInvocationError = class extends Schema6.TaggedErrorClass()(
+var ToolInvocationError = class extends Schema_exports.TaggedErrorClass()(
   "ToolInvocationError",
   {
     address: ToolAddress,
-    message: Schema6.String,
-    cause: Schema6.optional(Schema6.Unknown)
+    message: Schema_exports.String,
+    cause: Schema_exports.optional(Schema_exports.Unknown)
   }
 ) {
 };
-var ToolBlockedError = class extends Schema6.TaggedErrorClass()(
+var ToolBlockedError = class extends Schema_exports.TaggedErrorClass()(
   "ToolBlockedError",
   {
     address: ToolAddress,
-    pattern: Schema6.String
+    pattern: Schema_exports.String
   }
 ) {
   get message() {
     return `Tool blocked by policy "${this.pattern}": ${this.address}`;
   }
 };
-var PluginNotLoadedError = class extends Schema6.TaggedErrorClass()(
+var PluginNotLoadedError = class extends Schema_exports.TaggedErrorClass()(
   "PluginNotLoadedError",
   {
     address: ToolAddress,
-    pluginId: Schema6.String
+    pluginId: Schema_exports.String
   }
 ) {
   get message() {
     return `Plugin "${this.pluginId}" is not loaded for tool: ${this.address}`;
   }
 };
-var NoHandlerError = class extends Schema6.TaggedErrorClass()("NoHandlerError", {
+var NoHandlerError = class extends Schema_exports.TaggedErrorClass()("NoHandlerError", {
   address: ToolAddress,
-  pluginId: Schema6.String
+  pluginId: Schema_exports.String
 }) {
   get message() {
     return `Plugin "${this.pluginId}" has no invokeTool handler for tool: ${this.address}`;
   }
 };
-var IntegrationNotFoundError = class extends Schema6.TaggedErrorClass()(
+var IntegrationNotFoundError = class extends Schema_exports.TaggedErrorClass()(
   "IntegrationNotFoundError",
   { slug: IntegrationSlug }
 ) {
@@ -6735,7 +10464,7 @@ var IntegrationNotFoundError = class extends Schema6.TaggedErrorClass()(
     return `Integration not found: ${this.slug}`;
   }
 };
-var IntegrationAlreadyExistsError = class extends Schema6.TaggedErrorClass()(
+var IntegrationAlreadyExistsError = class extends Schema_exports.TaggedErrorClass()(
   "IntegrationAlreadyExistsError",
   { slug: IntegrationSlug },
   { httpApiStatus: 409 }
@@ -6744,7 +10473,7 @@ var IntegrationAlreadyExistsError = class extends Schema6.TaggedErrorClass()(
     return `Integration already exists: ${this.slug}`;
   }
 };
-var IntegrationRemovalNotAllowedError = class extends Schema6.TaggedErrorClass()(
+var IntegrationRemovalNotAllowedError = class extends Schema_exports.TaggedErrorClass()(
   "IntegrationRemovalNotAllowedError",
   { slug: IntegrationSlug }
 ) {
@@ -6752,7 +10481,7 @@ var IntegrationRemovalNotAllowedError = class extends Schema6.TaggedErrorClass()
     return `Integration cannot be removed (declared statically by a plugin): ${this.slug}`;
   }
 };
-var ConnectionNotFoundError = class extends Schema6.TaggedErrorClass()(
+var ConnectionNotFoundError = class extends Schema_exports.TaggedErrorClass()(
   "ConnectionNotFoundError",
   {
     owner: Owner,
@@ -6764,12 +10493,12 @@ var ConnectionNotFoundError = class extends Schema6.TaggedErrorClass()(
     return `Connection not found: ${this.integration}.${this.owner}.${this.name}`;
   }
 };
-var InvalidConnectionInputError = class extends Schema6.TaggedErrorClass()(
+var InvalidConnectionInputError = class extends Schema_exports.TaggedErrorClass()(
   "InvalidConnectionInputError",
-  { message: Schema6.String }
+  { message: Schema_exports.String }
 ) {
 };
-var CredentialProviderNotRegisteredError = class extends Schema6.TaggedErrorClass()(
+var CredentialProviderNotRegisteredError = class extends Schema_exports.TaggedErrorClass()(
   "CredentialProviderNotRegisteredError",
   { provider: ProviderKey }
 ) {
@@ -6777,28 +10506,23 @@ var CredentialProviderNotRegisteredError = class extends Schema6.TaggedErrorClas
     return `Credential provider not registered: ${this.provider}`;
   }
 };
-var CredentialResolutionError = class extends Schema6.TaggedErrorClass()(
+var CredentialResolutionError = class extends Schema_exports.TaggedErrorClass()(
   "CredentialResolutionError",
   {
     owner: Owner,
     integration: IntegrationSlug,
     name: ConnectionName,
-    message: Schema6.String,
+    message: Schema_exports.String,
     /** True when the stored grant is permanently invalid and the user must
      *  sign in again (RFC 6749 §5.2 invalid_grant and friends). */
-    reauthRequired: Schema6.optional(Schema6.Boolean)
+    reauthRequired: Schema_exports.optional(Schema_exports.Boolean)
   }
 ) {
 };
 
-// ../sdk/src/oauth-service.ts
-import { Duration as Duration2, Effect as Effect8, Option as Option4, Schema as Schema11 } from "effect";
-import { FetchHttpClient as FetchHttpClient2 } from "effect/unstable/http";
-
 // ../sdk/src/oauth-client.ts
-import { Schema as Schema7 } from "effect";
-var OAuthStartError = class extends Schema7.TaggedErrorClass()("OAuthStartError", {
-  message: Schema7.String
+var OAuthStartError = class extends Schema_exports.TaggedErrorClass()("OAuthStartError", {
+  message: Schema_exports.String
 }) {
   __executorUserActionable = true;
   code = "oauth_start_error";
@@ -6806,10 +10530,10 @@ var OAuthStartError = class extends Schema7.TaggedErrorClass()("OAuthStartError"
     return this.message;
   }
 };
-var OAuthCompleteError = class extends Schema7.TaggedErrorClass()("OAuthCompleteError", {
-  message: Schema7.String,
+var OAuthCompleteError = class extends Schema_exports.TaggedErrorClass()("OAuthCompleteError", {
+  message: Schema_exports.String,
   /** True when the auth-code exchange failed in a way the user must restart. */
-  restartRequired: Schema7.optional(Schema7.Boolean)
+  restartRequired: Schema_exports.optional(Schema_exports.Boolean)
 }) {
   __executorUserActionable = true;
   code = "oauth_complete_error";
@@ -6817,8 +10541,8 @@ var OAuthCompleteError = class extends Schema7.TaggedErrorClass()("OAuthComplete
     return this.message;
   }
 };
-var OAuthProbeError = class extends Schema7.TaggedErrorClass()("OAuthProbeError", {
-  message: Schema7.String
+var OAuthProbeError = class extends Schema_exports.TaggedErrorClass()("OAuthProbeError", {
+  message: Schema_exports.String
 }) {
   __executorUserActionable = true;
   code = "oauth_probe_error";
@@ -6826,8 +10550,8 @@ var OAuthProbeError = class extends Schema7.TaggedErrorClass()("OAuthProbeError"
     return this.message;
   }
 };
-var OAuthRegisterDynamicError = class extends Schema7.TaggedErrorClass()("OAuthRegisterDynamicError", {
-  message: Schema7.String
+var OAuthRegisterDynamicError = class extends Schema_exports.TaggedErrorClass()("OAuthRegisterDynamicError", {
+  message: Schema_exports.String
 }) {
   __executorUserActionable = true;
   code = "oauth_register_dynamic_error";
@@ -6835,18 +10559,11 @@ var OAuthRegisterDynamicError = class extends Schema7.TaggedErrorClass()("OAuthR
     return this.message;
   }
 };
-var OAuthSessionNotFoundError = class extends Schema7.TaggedErrorClass()(
+var OAuthSessionNotFoundError = class extends Schema_exports.TaggedErrorClass()(
   "OAuthSessionNotFoundError",
   { state: OAuthState }
 ) {
 };
-
-// ../sdk/src/oauth-discovery.ts
-import { Data as Data3, Duration, Effect as Effect7, Option as Option2, Predicate as Predicate3, Result, Schema as Schema9 } from "effect";
-import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/unstable/http";
-
-// ../sdk/src/oauth-helpers.ts
-import { Data as Data2, Effect as Effect6, Option, Predicate as Predicate2, Schema as Schema8 } from "effect";
 
 // ../../../node_modules/.bun/oauth4webapi@3.8.5/node_modules/oauth4webapi/build/index.js
 var USER_AGENT;
@@ -6877,11 +10594,11 @@ var clockSkew = /* @__PURE__ */ Symbol();
 var clockTolerance = /* @__PURE__ */ Symbol();
 var customFetch = /* @__PURE__ */ Symbol();
 var jweDecrypt = /* @__PURE__ */ Symbol();
-var encoder = new TextEncoder();
+var encoder2 = new TextEncoder();
 var decoder = new TextDecoder();
 function buf(input) {
   if (typeof input === "string") {
-    return encoder.encode(input);
+    return encoder2.encode(input);
   }
   return decoder.decode(input);
 }
@@ -6937,8 +10654,8 @@ function b64u(input) {
 }
 var UnsupportedOperationError = class extends Error {
   code;
-  constructor(message, options) {
-    super(message, options);
+  constructor(message, options4) {
+    super(message, options4);
     this.name = this.constructor.name;
     this.code = UNSUPPORTED_OPERATION;
     Error.captureStackTrace?.(this, this.constructor);
@@ -6946,11 +10663,11 @@ var UnsupportedOperationError = class extends Error {
 };
 var OperationProcessingError = class extends Error {
   code;
-  constructor(message, options) {
-    super(message, options);
+  constructor(message, options4) {
+    super(message, options4);
     this.name = this.constructor.name;
-    if (options?.code) {
-      this.code = options?.code;
+    if (options4?.code) {
+      this.code = options4?.code;
     }
     Error.captureStackTrace?.(this, this.constructor);
   }
@@ -7041,7 +10758,7 @@ function notJson(response, ...types) {
   return OPE(msg, RESPONSE_IS_NOT_JSON, response);
 }
 function assertContentType(response, contentType) {
-  if (getContentType(response) !== contentType) {
+  if (getContentType2(response) !== contentType) {
     throw notJson(response, contentType);
   }
 }
@@ -7137,19 +10854,19 @@ function checkProtocol(url, enforceHttps) {
     throw OPE("only HTTP and HTTPS requests are allowed", REQUEST_PROTOCOL_FORBIDDEN, url);
   }
 }
-function validateEndpoint(value, endpoint, useMtlsAlias, enforceHttps) {
+function validateEndpoint(value, endpoint2, useMtlsAlias, enforceHttps) {
   let url;
   if (typeof value !== "string" || !(url = URLParse(value))) {
-    throw OPE(`authorization server metadata does not contain a valid ${useMtlsAlias ? `"as.mtls_endpoint_aliases.${endpoint}"` : `"as.${endpoint}"`}`, value === void 0 ? MISSING_SERVER_METADATA : INVALID_SERVER_METADATA, { attribute: useMtlsAlias ? `mtls_endpoint_aliases.${endpoint}` : endpoint });
+    throw OPE(`authorization server metadata does not contain a valid ${useMtlsAlias ? `"as.mtls_endpoint_aliases.${endpoint2}"` : `"as.${endpoint2}"`}`, value === void 0 ? MISSING_SERVER_METADATA : INVALID_SERVER_METADATA, { attribute: useMtlsAlias ? `mtls_endpoint_aliases.${endpoint2}` : endpoint2 });
   }
   checkProtocol(url, enforceHttps);
   return url;
 }
-function resolveEndpoint(as, endpoint, useMtlsAlias, enforceHttps) {
-  if (useMtlsAlias && as.mtls_endpoint_aliases && endpoint in as.mtls_endpoint_aliases) {
-    return validateEndpoint(as.mtls_endpoint_aliases[endpoint], endpoint, useMtlsAlias, enforceHttps);
+function resolveEndpoint(as, endpoint2, useMtlsAlias, enforceHttps) {
+  if (useMtlsAlias && as.mtls_endpoint_aliases && endpoint2 in as.mtls_endpoint_aliases) {
+    return validateEndpoint(as.mtls_endpoint_aliases[endpoint2], endpoint2, useMtlsAlias, enforceHttps);
   }
-  return validateEndpoint(as[endpoint], endpoint, useMtlsAlias, enforceHttps);
+  return validateEndpoint(as[endpoint2], endpoint2, useMtlsAlias, enforceHttps);
 }
 var ResponseBodyError = class extends Error {
   cause;
@@ -7158,15 +10875,15 @@ var ResponseBodyError = class extends Error {
   status;
   error_description;
   response;
-  constructor(message, options) {
-    super(message, options);
+  constructor(message, options4) {
+    super(message, options4);
     this.name = this.constructor.name;
     this.code = RESPONSE_BODY_ERROR;
-    this.cause = options.cause;
-    this.error = options.cause.error;
-    this.status = options.response.status;
-    this.error_description = options.cause.error_description;
-    Object.defineProperty(this, "response", { enumerable: false, value: options.response });
+    this.cause = options4.cause;
+    this.error = options4.cause.error;
+    this.status = options4.response.status;
+    this.error_description = options4.cause.error_description;
+    Object.defineProperty(this, "response", { enumerable: false, value: options4.response });
     Error.captureStackTrace?.(this, this.constructor);
   }
 };
@@ -7175,13 +10892,13 @@ var WWWAuthenticateChallengeError = class extends Error {
   code;
   response;
   status;
-  constructor(message, options) {
-    super(message, options);
+  constructor(message, options4) {
+    super(message, options4);
     this.name = this.constructor.name;
     this.code = WWW_AUTHENTICATE_CHALLENGE;
-    this.cause = options.cause;
-    this.status = options.response.status;
-    this.response = options.response;
+    this.cause = options4.cause;
+    this.status = options4.response.status;
+    this.response = options4.response;
     Object.defineProperty(this, "response", { enumerable: false });
     Error.captureStackTrace?.(this, this.constructor);
   }
@@ -7206,12 +10923,12 @@ function parseWwwAuthenticateChallenges(response) {
   const challenges = [];
   let rest = header;
   while (rest) {
-    let match = rest.match(schemeRE);
-    const scheme = match?.["1"].toLowerCase();
+    let match4 = rest.match(schemeRE);
+    const scheme = match4?.["1"].toLowerCase();
     if (!scheme) {
       return void 0;
     }
-    const afterScheme = rest.substring(match[0].length);
+    const afterScheme = rest.substring(match4[0].length);
     if (afterScheme && !afterScheme.match(/^[\s,]/)) {
       return void 0;
     }
@@ -7224,9 +10941,9 @@ function parseWwwAuthenticateChallenges(response) {
       while (rest) {
         let key;
         let value;
-        if (match = rest.match(quotedParamRE)) {
+        if (match4 = rest.match(quotedParamRE)) {
           ;
-          [, key, value, rest] = match;
+          [, key, value, rest] = match4;
           if (value.includes("\\")) {
             try {
               value = JSON.parse(`"${value}"`);
@@ -7236,18 +10953,18 @@ function parseWwwAuthenticateChallenges(response) {
           parameters[key.toLowerCase()] = value;
           continue;
         }
-        if (match = rest.match(unquotedParamRE)) {
+        if (match4 = rest.match(unquotedParamRE)) {
           ;
-          [, key, value, rest] = match;
+          [, key, value, rest] = match4;
           parameters[key.toLowerCase()] = value;
           continue;
         }
-        if (match = rest.match(token68ParamRE)) {
+        if (match4 = rest.match(token68ParamRE)) {
           if (Object.keys(parameters).length) {
             break;
           }
           ;
-          [, token68, rest] = match;
+          [, token68, rest] = match4;
           break;
         }
         return void 0;
@@ -7271,9 +10988,9 @@ async function parseOAuthResponseErrorBody(response) {
     assertReadableResponse(response);
     assertApplicationJson(response);
     try {
-      const json = await response.clone().json();
-      if (isJsonObject(json) && typeof json.error === "string" && json.error.length) {
-        return json;
+      const json2 = await response.clone().json();
+      if (isJsonObject(json2) && typeof json2.error === "string" && json2.error.length) {
+        return json2;
       }
     } catch {
     }
@@ -7299,40 +11016,40 @@ function assertDPoP(option) {
     throw CodedTypeError('"options.DPoP" is not a valid DPoPHandle', ERR_INVALID_ARG_VALUE);
   }
 }
-function getContentType(input) {
+function getContentType2(input) {
   return input.headers.get("content-type")?.split(";")[0];
 }
-async function authenticatedRequest(as, client, clientAuthentication, url, body, headers, options) {
+async function authenticatedRequest(as, client, clientAuthentication, url, body, headers, options4) {
   await clientAuthentication(as, client, body, headers);
   headers.set("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-  return (options?.[customFetch] || fetch)(url.href, {
+  return (options4?.[customFetch] || fetch)(url.href, {
     body,
     headers: Object.fromEntries(headers.entries()),
     method: "POST",
     redirect: "manual",
-    signal: signal(url, options?.signal)
+    signal: signal(url, options4?.signal)
   });
 }
-async function tokenEndpointRequest(as, client, clientAuthentication, grantType, parameters, options) {
-  const url = resolveEndpoint(as, "token_endpoint", client.use_mtls_endpoint_aliases, options?.[allowInsecureRequests] !== true);
+async function tokenEndpointRequest(as, client, clientAuthentication, grantType, parameters, options4) {
+  const url = resolveEndpoint(as, "token_endpoint", client.use_mtls_endpoint_aliases, options4?.[allowInsecureRequests] !== true);
   parameters.set("grant_type", grantType);
-  const headers = prepareHeaders(options?.headers);
+  const headers = prepareHeaders(options4?.headers);
   headers.set("accept", "application/json");
-  if (options?.DPoP !== void 0) {
-    assertDPoP(options.DPoP);
-    await options.DPoP.addProof(url, headers, "POST");
+  if (options4?.DPoP !== void 0) {
+    assertDPoP(options4.DPoP);
+    await options4.DPoP.addProof(url, headers, "POST");
   }
-  const response = await authenticatedRequest(as, client, clientAuthentication, url, parameters, headers, options);
-  options?.DPoP?.cacheNonce(response, url);
+  const response = await authenticatedRequest(as, client, clientAuthentication, url, parameters, headers, options4);
+  options4?.DPoP?.cacheNonce(response, url);
   return response;
 }
-async function refreshTokenGrantRequest(as, client, clientAuthentication, refreshToken, options) {
+async function refreshTokenGrantRequest(as, client, clientAuthentication, refreshToken, options4) {
   assertAs(as);
   assertClient(client);
   assertString(refreshToken, '"refreshToken"');
-  const parameters = new URLSearchParams(options?.additionalParameters);
+  const parameters = new URLSearchParams(options4?.additionalParameters);
   parameters.set("refresh_token", refreshToken);
-  return tokenEndpointRequest(as, client, clientAuthentication, "refresh_token", parameters, options);
+  return tokenEndpointRequest(as, client, clientAuthentication, "refresh_token", parameters, options4);
 }
 var idTokenClaims = /* @__PURE__ */ new WeakMap();
 var jwtRefs = /* @__PURE__ */ new WeakMap();
@@ -7344,32 +11061,32 @@ async function processGenericAccessTokenResponse(as, client, response, additiona
   }
   await checkOAuthBodyError(response, 200, "Token Endpoint");
   assertReadableResponse(response);
-  const json = await getResponseJsonBody(response);
-  assertString(json.access_token, '"response" body "access_token" property', INVALID_RESPONSE, {
-    body: json
+  const json2 = await getResponseJsonBody(response);
+  assertString(json2.access_token, '"response" body "access_token" property', INVALID_RESPONSE, {
+    body: json2
   });
-  assertString(json.token_type, '"response" body "token_type" property', INVALID_RESPONSE, {
-    body: json
+  assertString(json2.token_type, '"response" body "token_type" property', INVALID_RESPONSE, {
+    body: json2
   });
-  json.token_type = json.token_type.toLowerCase();
-  if (json.expires_in !== void 0) {
-    let expiresIn = typeof json.expires_in !== "number" ? parseFloat(json.expires_in) : json.expires_in;
+  json2.token_type = json2.token_type.toLowerCase();
+  if (json2.expires_in !== void 0) {
+    let expiresIn = typeof json2.expires_in !== "number" ? parseFloat(json2.expires_in) : json2.expires_in;
     assertNumber(expiresIn, true, '"response" body "expires_in" property', INVALID_RESPONSE, {
-      body: json
+      body: json2
     });
-    json.expires_in = expiresIn;
+    json2.expires_in = expiresIn;
   }
-  if (json.refresh_token !== void 0) {
-    assertString(json.refresh_token, '"response" body "refresh_token" property', INVALID_RESPONSE, {
-      body: json
+  if (json2.refresh_token !== void 0) {
+    assertString(json2.refresh_token, '"response" body "refresh_token" property', INVALID_RESPONSE, {
+      body: json2
     });
   }
-  if (json.scope !== void 0 && typeof json.scope !== "string") {
-    throw OPE('"response" body "scope" property must be a string', INVALID_RESPONSE, { body: json });
+  if (json2.scope !== void 0 && typeof json2.scope !== "string") {
+    throw OPE('"response" body "scope" property must be a string', INVALID_RESPONSE, { body: json2 });
   }
-  if (json.id_token !== void 0) {
-    assertString(json.id_token, '"response" body "id_token" property', INVALID_RESPONSE, {
-      body: json
+  if (json2.id_token !== void 0) {
+    assertString(json2.id_token, '"response" body "id_token" property', INVALID_RESPONSE, {
+      body: json2
     });
     const requiredClaims = ["aud", "exp", "iat", "iss", "sub"];
     if (client.require_auth_time === true) {
@@ -7382,7 +11099,7 @@ async function processGenericAccessTokenResponse(as, client, response, additiona
     if (additionalRequiredIdTokenClaims?.length) {
       requiredClaims.push(...additionalRequiredIdTokenClaims);
     }
-    const { claims, jwt } = await validateJwt(json.id_token, checkSigningAlgorithm.bind(void 0, client.id_token_signed_response_alg, as.id_token_signing_alg_values_supported, "RS256"), getClockSkew(client), getClockTolerance(client), decryptFn).then(validatePresence.bind(void 0, requiredClaims)).then(validateIssuer.bind(void 0, as)).then(validateAudience.bind(void 0, client.client_id));
+    const { claims, jwt } = await validateJwt(json2.id_token, checkSigningAlgorithm.bind(void 0, client.id_token_signed_response_alg, as.id_token_signing_alg_values_supported, "RS256"), getClockSkew(client), getClockTolerance(client), decryptFn).then(validatePresence.bind(void 0, requiredClaims)).then(validateIssuer.bind(void 0, as)).then(validateAudience.bind(void 0, client.client_id));
     if (Array.isArray(claims.aud) && claims.aud.length !== 1) {
       if (claims.azp === void 0) {
         throw OPE('ID Token "aud" (audience) claim includes additional untrusted audiences', JWT_CLAIM_COMPARISON, { claims, claim: "aud" });
@@ -7395,14 +11112,14 @@ async function processGenericAccessTokenResponse(as, client, response, additiona
       assertNumber(claims.auth_time, true, 'ID Token "auth_time" (authentication time)', INVALID_RESPONSE, { claims });
     }
     jwtRefs.set(response, jwt);
-    idTokenClaims.set(json, claims);
+    idTokenClaims.set(json2, claims);
   }
-  if (recognizedTokenTypes?.[json.token_type] !== void 0) {
-    recognizedTokenTypes[json.token_type](response, json);
-  } else if (json.token_type !== "dpop" && json.token_type !== "bearer") {
-    throw new UnsupportedOperationError("unsupported `token_type` value", { cause: { body: json } });
+  if (recognizedTokenTypes?.[json2.token_type] !== void 0) {
+    recognizedTokenTypes[json2.token_type](response, json2);
+  } else if (json2.token_type !== "dpop" && json2.token_type !== "bearer") {
+    throw new UnsupportedOperationError("unsupported `token_type` value", { cause: { body: json2 } });
   }
-  return json;
+  return json2;
 }
 function checkAuthenticationChallenges(response) {
   let challenges;
@@ -7410,37 +11127,37 @@ function checkAuthenticationChallenges(response) {
     throw new WWWAuthenticateChallengeError("server responded with a challenge in the WWW-Authenticate HTTP Header", { cause: challenges, response });
   }
 }
-async function processRefreshTokenResponse(as, client, response, options) {
-  return processGenericAccessTokenResponse(as, client, response, void 0, options?.[jweDecrypt], options?.recognizedTokenTypes);
+async function processRefreshTokenResponse(as, client, response, options4) {
+  return processGenericAccessTokenResponse(as, client, response, void 0, options4?.[jweDecrypt], options4?.recognizedTokenTypes);
 }
-function validateAudience(expected, result) {
-  if (Array.isArray(result.claims.aud)) {
-    if (!result.claims.aud.includes(expected)) {
+function validateAudience(expected, result2) {
+  if (Array.isArray(result2.claims.aud)) {
+    if (!result2.claims.aud.includes(expected)) {
       throw OPE('unexpected JWT "aud" (audience) claim value', JWT_CLAIM_COMPARISON, {
         expected,
-        claims: result.claims,
+        claims: result2.claims,
         claim: "aud"
       });
     }
-  } else if (result.claims.aud !== expected) {
+  } else if (result2.claims.aud !== expected) {
     throw OPE('unexpected JWT "aud" (audience) claim value', JWT_CLAIM_COMPARISON, {
       expected,
-      claims: result.claims,
+      claims: result2.claims,
       claim: "aud"
     });
   }
-  return result;
+  return result2;
 }
-function validateIssuer(as, result) {
-  const expected = as[_expectedIssuer]?.(result) ?? as.issuer;
-  if (result.claims.iss !== expected) {
+function validateIssuer(as, result2) {
+  const expected = as[_expectedIssuer]?.(result2) ?? as.issuer;
+  if (result2.claims.iss !== expected) {
     throw OPE('unexpected JWT "iss" (issuer) claim value', JWT_CLAIM_COMPARISON, {
       expected,
-      claims: result.claims,
+      claims: result2.claims,
       claim: "iss"
     });
   }
-  return result;
+  return result2;
 }
 var branded = /* @__PURE__ */ new WeakSet();
 var jwtClaimNames = {
@@ -7460,15 +11177,15 @@ var jwtClaimNames = {
   cnf: "confirmation",
   auth_time: "authentication time"
 };
-function validatePresence(required, result) {
+function validatePresence(required, result2) {
   for (const claim of required) {
-    if (result.claims[claim] === void 0) {
+    if (result2.claims[claim] === void 0) {
       throw OPE(`JWT "${claim}" (${jwtClaimNames[claim]}) claim missing`, INVALID_RESPONSE, {
-        claims: result.claims
+        claims: result2.claims
       });
     }
   }
-  return result;
+  return result2;
 }
 var WWW_AUTHENTICATE_CHALLENGE = "OAUTH_WWW_AUTHENTICATE_CHALLENGE";
 var RESPONSE_BODY_ERROR = "OAUTH_RESPONSE_BODY_ERROR";
@@ -7483,22 +11200,22 @@ var JWT_TIMESTAMP_CHECK = "OAUTH_JWT_TIMESTAMP_CHECK_FAILED";
 var JWT_CLAIM_COMPARISON = "OAUTH_JWT_CLAIM_COMPARISON_FAILED";
 var MISSING_SERVER_METADATA = "OAUTH_MISSING_SERVER_METADATA";
 var INVALID_SERVER_METADATA = "OAUTH_INVALID_SERVER_METADATA";
-async function clientCredentialsGrantRequest(as, client, clientAuthentication, parameters, options) {
+async function clientCredentialsGrantRequest(as, client, clientAuthentication, parameters, options4) {
   assertAs(as);
   assertClient(client);
-  return tokenEndpointRequest(as, client, clientAuthentication, "client_credentials", new URLSearchParams(parameters), options);
+  return tokenEndpointRequest(as, client, clientAuthentication, "client_credentials", new URLSearchParams(parameters), options4);
 }
-async function genericTokenEndpointRequest(as, client, clientAuthentication, grantType, parameters, options) {
+async function genericTokenEndpointRequest(as, client, clientAuthentication, grantType, parameters, options4) {
   assertAs(as);
   assertClient(client);
   assertString(grantType, '"grantType"');
-  return tokenEndpointRequest(as, client, clientAuthentication, grantType, new URLSearchParams(parameters), options);
+  return tokenEndpointRequest(as, client, clientAuthentication, grantType, new URLSearchParams(parameters), options4);
 }
-async function processGenericTokenEndpointResponse(as, client, response, options) {
-  return processGenericAccessTokenResponse(as, client, response, void 0, options?.[jweDecrypt], options?.recognizedTokenTypes);
+async function processGenericTokenEndpointResponse(as, client, response, options4) {
+  return processGenericAccessTokenResponse(as, client, response, void 0, options4?.[jweDecrypt], options4?.recognizedTokenTypes);
 }
-async function processClientCredentialsResponse(as, client, response, options) {
-  return processGenericAccessTokenResponse(as, client, response, void 0, options?.[jweDecrypt], options?.recognizedTokenTypes);
+async function processClientCredentialsResponse(as, client, response, options4) {
+  return processGenericAccessTokenResponse(as, client, response, void 0, options4?.[jweDecrypt], options4?.recognizedTokenTypes);
 }
 function assertReadableResponse(response) {
   if (response.bodyUsed) {
@@ -7615,22 +11332,22 @@ function checkSigningAlgorithm(client, issuer, fallback, header) {
   throw OPE('missing client or server configuration to verify used JWT "alg" header parameter', void 0, { client, issuer, fallback });
 }
 async function getResponseJsonBody(response, check = assertApplicationJson) {
-  let json;
+  let json2;
   try {
-    json = await response.json();
+    json2 = await response.json();
   } catch (cause) {
     check(response);
     throw OPE('failed to parse "response" body as JSON', PARSE_ERROR, cause);
   }
-  if (!isJsonObject(json)) {
-    throw OPE('"response" body must be a top level object', INVALID_RESPONSE, { body: json });
+  if (!isJsonObject(json2)) {
+    throw OPE('"response" body must be a top level object', INVALID_RESPONSE, { body: json2 });
   }
-  return json;
+  return json2;
 }
 var _expectedIssuer = /* @__PURE__ */ Symbol();
 
 // ../sdk/src/oauth-helpers.ts
-var OAuth2Error = class extends Data2.TaggedError("OAuth2Error") {
+var OAuth2Error = class extends Data_exports.TaggedError("OAuth2Error") {
 };
 var OAUTH2_REFRESH_SKEW_MS = 6e4;
 var OAUTH2_DEFAULT_TIMEOUT_MS = 2e4;
@@ -7725,7 +11442,7 @@ var rebindTokenEndpointHostToCallbackDomain = (configuredTokenUrl, callbackDomai
   rebound.hostname = targetHost;
   return rebound.toString();
 };
-var isOAuth2Error = Predicate2.isTagged("OAuth2Error");
+var isOAuth2Error = Predicate_exports.isTagged("OAuth2Error");
 var responseFromOAuthErrorCause = (cause) => {
   if (cause instanceof Response) return cause;
   if (typeof cause !== "object" || cause === null) return void 0;
@@ -7742,22 +11459,22 @@ var redactTokenEndpointBody = (body) => body.replaceAll(
   "$1[redacted]"
 );
 var tokenEndpointHttpSummary = async (response) => {
-  const status = `HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""}`;
+  const status2 = `HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""}`;
   const contentType = response.headers.get("content-type");
   const url = response.url ? ` from ${response.url}` : "";
-  const parts = [`${status}${url}`];
+  const parts = [`${status2}${url}`];
   if (contentType) parts.push(`content-type ${contentType}`);
   const preview = await bodyPreviewFromResponse(response);
   if (preview) parts.push(`body: ${preview}`);
   return parts.join("; ");
 };
 var bodyPreviewFromResponse = async (response) => {
-  const text = await Promise.resolve().then(() => response.clone().text()).then(
+  const text3 = await Promise.resolve().then(() => response.clone().text()).then(
     (value) => value.trim(),
     () => ""
   );
-  if (!text) return void 0;
-  const redacted = redactTokenEndpointBody(text.replaceAll(/\s+/g, " "));
+  if (!text3) return void 0;
+  const redacted = redactTokenEndpointBody(text3.replaceAll(/\s+/g, " "));
   return redacted.length > 500 ? `${redacted.slice(0, 500)}...` : redacted;
 };
 var toOAuth2Error = (cause) => {
@@ -7778,12 +11495,12 @@ var toOAuth2Error = (cause) => {
   });
 };
 var toOAuth2ErrorWithHttpSummary = (cause) => {
-  if (isOAuth2Error(cause)) return Effect6.succeed(cause);
+  if (isOAuth2Error(cause)) return Effect_exports.succeed(cause);
   const base = toOAuth2Error(cause);
   const response = responseFromOAuthErrorCause(cause);
-  if (!response) return Effect6.succeed(base);
-  return Effect6.promise(() => tokenEndpointHttpSummary(response)).pipe(
-    Effect6.map(
+  if (!response) return Effect_exports.succeed(base);
+  return Effect_exports.promise(() => tokenEndpointHttpSummary(response)).pipe(
+    Effect_exports.map(
       (summary) => new OAuth2Error({
         message: `${base.message} (${summary})`,
         error: base.error,
@@ -7792,7 +11509,7 @@ var toOAuth2ErrorWithHttpSummary = (cause) => {
     )
   );
 };
-var failOAuth2WithHttpSummary = (cause) => toOAuth2ErrorWithHttpSummary(cause).pipe(Effect6.flatMap((error) => Effect6.fail(error)));
+var failOAuth2WithHttpSummary = (cause) => toOAuth2ErrorWithHttpSummary(cause).pipe(Effect_exports.flatMap((error) => Effect_exports.fail(error)));
 var DEFAULT_CLIENT_AUTH_METHOD = "body";
 var asFromTokenUrl = (tokenUrl, endpointUrlPolicy = {}) => {
   assertSupportedOAuthEndpointUrl(tokenUrl, "Token URL", endpointUrlPolicy);
@@ -7802,25 +11519,25 @@ var asFromTokenUrl = (tokenUrl, endpointUrlPolicy = {}) => {
     token_endpoint: tokenUrl
   };
 };
-var asFromTokenUrlAndIssuer = (tokenUrl, issuerUrl, options = {}) => {
-  const as = asFromTokenUrl(tokenUrl, options.endpointUrlPolicy);
+var asFromTokenUrlAndIssuer = (tokenUrl, issuerUrl, options4 = {}) => {
+  const as = asFromTokenUrl(tokenUrl, options4.endpointUrlPolicy);
   const withIssuer = issuerUrl ? { ...as, issuer: issuerUrl } : as;
-  return options.idTokenSigningAlgValuesSupported ? {
+  return options4.idTokenSigningAlgValuesSupported ? {
     ...withIssuer,
-    id_token_signing_alg_values_supported: [...options.idTokenSigningAlgValuesSupported]
+    id_token_signing_alg_values_supported: [...options4.idTokenSigningAlgValuesSupported]
   } : withIssuer;
 };
 var oauth4webapiRequestOptions = (targetUrl, timeoutMs, endpointUrlPolicy = {}, customFetch2) => {
-  const options = {
+  const options4 = {
     signal: AbortSignal.timeout(timeoutMs ?? OAUTH2_DEFAULT_TIMEOUT_MS)
   };
   if (customFetch2) {
-    options[customFetch] = customFetch2;
+    options4[customFetch] = customFetch2;
   }
   if (isLoopbackHttpUrl(targetUrl) || URL.canParse(targetUrl) && new URL(targetUrl).protocol === "http:" && endpointUrlPolicy.allowHttp === true) {
-    options[allowInsecureRequests] = true;
+    options4[allowInsecureRequests] = true;
   }
-  return options;
+  return options4;
 };
 var pickClientAuth = (clientSecret, method) => {
   if (!clientSecret) return None();
@@ -7833,8 +11550,8 @@ var tokenResponseFrom = (r) => ({
   expires_in: typeof r.expires_in === "number" ? r.expires_in : void 0,
   scope: r.scope
 });
-var JwtClaims = Schema8.Record(Schema8.String, Schema8.Unknown);
-var decodeJwtClaims = Schema8.decodeUnknownOption(Schema8.fromJsonString(JwtClaims));
+var JwtClaims = Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown);
+var decodeJwtClaims = Schema_exports.decodeUnknownOption(Schema_exports.fromJsonString(JwtClaims));
 var stringClaim = (claims, key) => {
   const value = claims[key];
   if (typeof value !== "string") return void 0;
@@ -7851,7 +11568,7 @@ var decodeJwtPayload = (token) => {
     Uint8Array.from(globalThis.atob(padded), (char) => char.charCodeAt(0))
   );
   const decoded = decodeJwtClaims(utf8);
-  return Option.isSome(decoded) ? decoded.value : null;
+  return Option_exports.isSome(decoded) ? decoded.value : null;
 };
 var idTokenIdentityLabel = (idToken) => {
   if (!idToken) return void 0;
@@ -7885,7 +11602,7 @@ var processTokenEndpointResponse = async (as, client, response) => {
   );
   return stripped.idTokenIdentityLabel ? { ...token, idTokenIdentityLabel: stripped.idTokenIdentityLabel } : token;
 };
-var exchangeAuthorizationCode = (input) => Effect6.tryPromise({
+var exchangeAuthorizationCode = (input) => Effect_exports.tryPromise({
   try: async () => {
     const as = asFromTokenUrlAndIssuer(input.tokenUrl, input.issuerUrl, {
       idTokenSigningAlgValuesSupported: input.idTokenSigningAlgValuesSupported,
@@ -7920,8 +11637,8 @@ var exchangeAuthorizationCode = (input) => Effect6.tryPromise({
     return await processTokenEndpointResponse(as, client, response);
   },
   catch: (cause) => cause
-}).pipe(Effect6.catch(failOAuth2WithHttpSummary));
-var exchangeClientCredentials = (input) => Effect6.tryPromise({
+}).pipe(Effect_exports.catch(failOAuth2WithHttpSummary));
+var exchangeClientCredentials = (input) => Effect_exports.tryPromise({
   try: async () => {
     const as = asFromTokenUrl(input.tokenUrl, input.endpointUrlPolicy);
     const client = { client_id: input.clientId };
@@ -7948,12 +11665,12 @@ var exchangeClientCredentials = (input) => Effect6.tryPromise({
         input.fetch
       )
     );
-    const result = await processClientCredentialsResponse(as, client, response);
-    return tokenResponseFrom(result);
+    const result2 = await processClientCredentialsResponse(as, client, response);
+    return tokenResponseFrom(result2);
   },
   catch: (cause) => cause
-}).pipe(Effect6.catch(failOAuth2WithHttpSummary));
-var refreshAccessToken = (input) => Effect6.tryPromise({
+}).pipe(Effect_exports.catch(failOAuth2WithHttpSummary));
+var refreshAccessToken = (input) => Effect_exports.tryPromise({
   try: async () => {
     const as = asFromTokenUrlAndIssuer(input.tokenUrl, input.issuerUrl, {
       idTokenSigningAlgValuesSupported: input.idTokenSigningAlgValuesSupported,
@@ -7987,15 +11704,15 @@ var refreshAccessToken = (input) => Effect6.tryPromise({
         additionalParameters
       }
     );
-    const result = await processRefreshTokenResponse(
+    const result2 = await processRefreshTokenResponse(
       as,
       client,
       (await stripIdToken(response)).response
     );
-    return tokenResponseFrom(result);
+    return tokenResponseFrom(result2);
   },
   catch: (cause) => cause
-}).pipe(Effect6.catch(failOAuth2WithHttpSummary));
+}).pipe(Effect_exports.catch(failOAuth2WithHttpSummary));
 var shouldRefreshToken = (input) => {
   if (input.expiresAt === null) return false;
   const now = input.now ?? Date.now();
@@ -8004,62 +11721,62 @@ var shouldRefreshToken = (input) => {
 };
 
 // ../sdk/src/oauth-discovery.ts
-var OAuthDiscoveryError = class extends Data3.TaggedError("OAuthDiscoveryError") {
+var OAuthDiscoveryError = class extends Data_exports.TaggedError("OAuthDiscoveryError") {
 };
-var StringArray = Schema9.Array(Schema9.String);
-var OAuthProtectedResourceMetadataSchema = Schema9.Struct({
-  resource: Schema9.optional(Schema9.String),
-  authorization_servers: Schema9.optional(StringArray),
-  scopes_supported: Schema9.optional(StringArray),
-  bearer_methods_supported: Schema9.optional(StringArray),
-  resource_documentation: Schema9.optional(Schema9.String)
+var StringArray = Schema_exports.Array(Schema_exports.String);
+var OAuthProtectedResourceMetadataSchema = Schema_exports.Struct({
+  resource: Schema_exports.optional(Schema_exports.String),
+  authorization_servers: Schema_exports.optional(StringArray),
+  scopes_supported: Schema_exports.optional(StringArray),
+  bearer_methods_supported: Schema_exports.optional(StringArray),
+  resource_documentation: Schema_exports.optional(Schema_exports.String)
 }).annotate({ identifier: "OAuthProtectedResourceMetadata" });
-var OAuthAuthorizationServerMetadataSchema = Schema9.Struct({
-  issuer: Schema9.String,
-  authorization_endpoint: Schema9.String,
-  token_endpoint: Schema9.String,
-  registration_endpoint: Schema9.optional(Schema9.String),
-  client_id_metadata_document_supported: Schema9.optional(Schema9.Boolean),
-  scopes_supported: Schema9.optional(StringArray),
-  response_types_supported: Schema9.optional(StringArray),
-  grant_types_supported: Schema9.optional(StringArray),
-  code_challenge_methods_supported: Schema9.optional(StringArray),
-  token_endpoint_auth_methods_supported: Schema9.optional(StringArray),
-  revocation_endpoint: Schema9.optional(Schema9.String),
-  introspection_endpoint: Schema9.optional(Schema9.String),
-  userinfo_endpoint: Schema9.optional(Schema9.String),
-  id_token_signing_alg_values_supported: Schema9.optional(StringArray)
+var OAuthAuthorizationServerMetadataSchema = Schema_exports.Struct({
+  issuer: Schema_exports.String,
+  authorization_endpoint: Schema_exports.String,
+  token_endpoint: Schema_exports.String,
+  registration_endpoint: Schema_exports.optional(Schema_exports.String),
+  client_id_metadata_document_supported: Schema_exports.optional(Schema_exports.Boolean),
+  scopes_supported: Schema_exports.optional(StringArray),
+  response_types_supported: Schema_exports.optional(StringArray),
+  grant_types_supported: Schema_exports.optional(StringArray),
+  code_challenge_methods_supported: Schema_exports.optional(StringArray),
+  token_endpoint_auth_methods_supported: Schema_exports.optional(StringArray),
+  revocation_endpoint: Schema_exports.optional(Schema_exports.String),
+  introspection_endpoint: Schema_exports.optional(Schema_exports.String),
+  userinfo_endpoint: Schema_exports.optional(Schema_exports.String),
+  id_token_signing_alg_values_supported: Schema_exports.optional(StringArray)
 }).annotate({ identifier: "OAuthAuthorizationServerMetadata" });
-var OAuthClientInformationSchema = Schema9.Struct({
-  client_id: Schema9.String,
-  client_secret: Schema9.optional(Schema9.String),
-  client_id_issued_at: Schema9.optional(Schema9.Number),
-  client_secret_expires_at: Schema9.optional(Schema9.Number),
-  registration_access_token: Schema9.optional(Schema9.String),
-  registration_client_uri: Schema9.optional(Schema9.String),
-  token_endpoint_auth_method: Schema9.optional(Schema9.String),
-  grant_types: Schema9.optional(StringArray),
-  response_types: Schema9.optional(StringArray),
-  redirect_uris: Schema9.optional(StringArray),
-  client_name: Schema9.optional(Schema9.String),
-  scope: Schema9.optional(Schema9.String)
+var OAuthClientInformationSchema = Schema_exports.Struct({
+  client_id: Schema_exports.String,
+  client_secret: Schema_exports.optional(Schema_exports.String),
+  client_id_issued_at: Schema_exports.optional(Schema_exports.Number),
+  client_secret_expires_at: Schema_exports.optional(Schema_exports.Number),
+  registration_access_token: Schema_exports.optional(Schema_exports.String),
+  registration_client_uri: Schema_exports.optional(Schema_exports.String),
+  token_endpoint_auth_method: Schema_exports.optional(Schema_exports.String),
+  grant_types: Schema_exports.optional(StringArray),
+  response_types: Schema_exports.optional(StringArray),
+  redirect_uris: Schema_exports.optional(StringArray),
+  client_name: Schema_exports.optional(Schema_exports.String),
+  scope: Schema_exports.optional(Schema_exports.String)
 }).annotate({ identifier: "OAuthClientInformation" });
-var decodeResourceMetadataJson = Schema9.decodeUnknownEffect(
-  Schema9.fromJsonString(OAuthProtectedResourceMetadataSchema)
+var decodeResourceMetadataJson = Schema_exports.decodeUnknownEffect(
+  Schema_exports.fromJsonString(OAuthProtectedResourceMetadataSchema)
 );
-var decodeAuthServerMetadata = Schema9.decodeUnknownEffect(OAuthAuthorizationServerMetadataSchema);
-var decodeClientInformationJson = Schema9.decodeUnknownEffect(
-  Schema9.fromJsonString(OAuthClientInformationSchema)
+var decodeAuthServerMetadata = Schema_exports.decodeUnknownEffect(OAuthAuthorizationServerMetadataSchema);
+var decodeClientInformationJson = Schema_exports.decodeUnknownEffect(
+  Schema_exports.fromJsonString(OAuthClientInformationSchema)
 );
 var MCP_PROTOCOL_VERSION_HEADER = "mcp-protocol-version";
-var validateEndpointUrl = (value, label, policy = {}) => Effect7.try({
+var validateEndpointUrl = (value, label, policy = {}) => Effect_exports.try({
   try: () => assertSupportedOAuthEndpointUrl(value, label, policy),
   catch: (cause) => new OAuthDiscoveryError({
     message: `${label} must use https: or loopback http:`,
     cause
   })
 });
-var validateAuthorizationServerMetadata = (metadata, policy = {}) => Effect7.gen(function* () {
+var validateAuthorizationServerMetadata = (metadata, policy = {}) => Effect_exports.gen(function* () {
   yield* validateEndpointUrl(metadata.issuer, "issuer", policy);
   yield* validateEndpointUrl(metadata.authorization_endpoint, "authorization_endpoint", policy);
   yield* validateEndpointUrl(metadata.token_endpoint, "token_endpoint", policy);
@@ -8067,30 +11784,30 @@ var validateAuthorizationServerMetadata = (metadata, policy = {}) => Effect7.gen
     yield* validateEndpointUrl(metadata.registration_endpoint, "registration_endpoint", policy);
   }
 });
-var provideHttpClient = (effect, options) => effect.pipe(Effect7.provide(options.httpClientLayer ?? FetchHttpClient.layer));
-var executeText = (request, options, errorMessage) => provideHttpClient(
-  Effect7.gen(function* () {
-    const client = yield* HttpClient.HttpClient;
+var provideHttpClient = (effect2, options4) => effect2.pipe(Effect_exports.provide(options4.httpClientLayer ?? FetchHttpClient_exports.layer));
+var executeText = (request, options4, errorMessage) => provideHttpClient(
+  Effect_exports.gen(function* () {
+    const client = yield* HttpClient_exports.HttpClient;
     const response = yield* client.execute(request).pipe(
-      Effect7.timeoutOrElse({
-        duration: Duration.millis(options.timeoutMs ?? OAUTH2_DEFAULT_TIMEOUT_MS),
-        orElse: () => Effect7.fail(
+      Effect_exports.timeoutOrElse({
+        duration: Duration_exports.millis(options4.timeoutMs ?? OAUTH2_DEFAULT_TIMEOUT_MS),
+        orElse: () => Effect_exports.fail(
           new OAuthDiscoveryError({
             message: errorMessage,
             cause: "timeout"
           })
         )
       }),
-      Effect7.mapError(
-        (cause) => Predicate3.isTagged(cause, "OAuthDiscoveryError") ? cause : new OAuthDiscoveryError({
+      Effect_exports.mapError(
+        (cause) => Predicate_exports.isTagged(cause, "OAuthDiscoveryError") ? cause : new OAuthDiscoveryError({
           message: errorMessage,
           cause
         })
       )
     );
     const body = yield* response.text.pipe(
-      Effect7.catch(() => Effect7.succeed("")),
-      Effect7.mapError(
+      Effect_exports.catch(() => Effect_exports.succeed("")),
+      Effect_exports.mapError(
         (cause) => new OAuthDiscoveryError({
           message: `${errorMessage}: response body could not be read`,
           status: response.status,
@@ -8100,7 +11817,7 @@ var executeText = (request, options, errorMessage) => provideHttpClient(
     );
     return { status: response.status, body };
   }),
-  options
+  options4
 );
 var buildResourceMetadataUrls = (resourceUrl) => {
   const url = new URL(resourceUrl);
@@ -8121,36 +11838,36 @@ var withResourceQueryParams = (url, queryParams) => {
   }
   return parsed.toString();
 };
-var discoverProtectedResourceMetadata = (resourceUrl, options = {}) => Effect7.gen(function* () {
+var discoverProtectedResourceMetadata = (resourceUrl, options4 = {}) => Effect_exports.gen(function* () {
   for (const url of buildResourceMetadataUrls(resourceUrl)) {
-    const requestUrl = withResourceQueryParams(url, options.resourceQueryParams);
-    let request = HttpClientRequest.get(requestUrl).pipe(
-      HttpClientRequest.setHeader("accept", "application/json")
+    const requestUrl = withResourceQueryParams(url, options4.resourceQueryParams);
+    let request = HttpClientRequest_exports.get(requestUrl).pipe(
+      HttpClientRequest_exports.setHeader("accept", "application/json")
     );
-    for (const [name, value] of Object.entries(options.resourceHeaders ?? {})) {
-      request = HttpClientRequest.setHeader(request, name, value);
+    for (const [name, value] of Object.entries(options4.resourceHeaders ?? {})) {
+      request = HttpClientRequest_exports.setHeader(request, name, value);
     }
-    if (options.mcpProtocolVersion) {
-      request = HttpClientRequest.setHeader(
+    if (options4.mcpProtocolVersion) {
+      request = HttpClientRequest_exports.setHeader(
         request,
         MCP_PROTOCOL_VERSION_HEADER,
-        options.mcpProtocolVersion
+        options4.mcpProtocolVersion
       );
     }
-    const result = yield* executeText(
+    const result2 = yield* executeText(
       request,
-      options,
+      options4,
       `Failed to fetch protected resource metadata from ${url}`
     );
-    if (result.status === 404 || result.status === 405 || result.body.length === 0) continue;
-    if (result.status < 200 || result.status >= 300) {
+    if (result2.status === 404 || result2.status === 405 || result2.body.length === 0) continue;
+    if (result2.status < 200 || result2.status >= 300) {
       return yield* new OAuthDiscoveryError({
-        message: `Protected resource metadata returned status ${result.status}`,
-        status: result.status
+        message: `Protected resource metadata returned status ${result2.status}`,
+        status: result2.status
       });
     }
-    const metadata = yield* decodeResourceMetadataJson(result.body).pipe(
-      Effect7.mapError(
+    const metadata = yield* decodeResourceMetadataJson(result2.body).pipe(
+      Effect_exports.mapError(
         (err) => new OAuthDiscoveryError({
           message: "Protected resource metadata is malformed",
           cause: err
@@ -8165,72 +11882,72 @@ var wellKnownUrlFor = (issuerOrigin2, algorithm, issuerPath) => {
   const suffix = algorithm === "oauth2" ? "oauth-authorization-server" : "openid-configuration";
   return issuerPath && issuerPath !== "/" ? `${issuerOrigin2}/.well-known/${suffix}${issuerPath}` : `${issuerOrigin2}/.well-known/${suffix}`;
 };
-var discoverAuthorizationServerMetadata = (issuer, options = {}) => Effect7.gen(function* () {
-  yield* validateEndpointUrl(issuer, "issuer", options.endpointUrlPolicy);
+var discoverAuthorizationServerMetadata = (issuer, options4 = {}) => Effect_exports.gen(function* () {
+  yield* validateEndpointUrl(issuer, "issuer", options4.endpointUrlPolicy);
   const issuerUrl = new URL(issuer);
   const issuerOrigin2 = `${issuerUrl.protocol}//${issuerUrl.host}`;
   const issuerPath = issuerUrl.pathname.replace(/\/+$/, "");
   for (const algorithm of ["oauth2", "oidc"]) {
     const metadataUrl = wellKnownUrlFor(issuerOrigin2, algorithm, issuerPath);
-    let request = HttpClientRequest.get(metadataUrl).pipe(
-      HttpClientRequest.setHeader("accept", "application/json")
+    let request = HttpClientRequest_exports.get(metadataUrl).pipe(
+      HttpClientRequest_exports.setHeader("accept", "application/json")
     );
-    if (options.mcpProtocolVersion) {
-      request = HttpClientRequest.setHeader(
+    if (options4.mcpProtocolVersion) {
+      request = HttpClientRequest_exports.setHeader(
         request,
         MCP_PROTOCOL_VERSION_HEADER,
-        options.mcpProtocolVersion
+        options4.mcpProtocolVersion
       );
     }
-    const result = yield* executeText(
+    const result2 = yield* executeText(
       request,
-      options,
+      options4,
       `Discovery (${algorithm}) failed for ${issuer}`
     ).pipe(
-      Effect7.map((response2) => {
+      Effect_exports.map((response2) => {
         if (response2.status === 404 || response2.status === 405) return null;
         return response2;
       }),
       // If one algorithm fails mid-roundtrip (network, parse, issuer
       // mismatch) we still want to try the other before giving up.
-      Effect7.result
+      Effect_exports.result
     );
-    if (Result.isFailure(result)) continue;
-    const response = result.success;
+    if (Result_exports.isFailure(result2)) continue;
+    const response = result2.success;
     if (response === null) continue;
     if (response.status < 200 || response.status >= 300) continue;
-    const raw = yield* Schema9.decodeUnknownEffect(Schema9.fromJsonString(Schema9.Unknown))(
+    const raw2 = yield* Schema_exports.decodeUnknownEffect(Schema_exports.fromJsonString(Schema_exports.Unknown))(
       response.body
     ).pipe(
-      Effect7.mapError(
+      Effect_exports.mapError(
         (err) => new OAuthDiscoveryError({
           message: "Authorization server metadata is malformed",
           cause: err
         })
       )
     );
-    const metadata = yield* decodeAuthServerMetadata(raw).pipe(
-      Effect7.mapError(
+    const metadata = yield* decodeAuthServerMetadata(raw2).pipe(
+      Effect_exports.mapError(
         (err) => new OAuthDiscoveryError({
           message: "Authorization server metadata is malformed",
           cause: err
         })
       )
     );
-    yield* validateAuthorizationServerMetadata(metadata, options.endpointUrlPolicy);
+    yield* validateAuthorizationServerMetadata(metadata, options4.endpointUrlPolicy);
     return { metadataUrl, metadata };
   }
   return null;
 });
-var DcrErrorBody = class extends Data3.TaggedError("DcrErrorBody") {
+var DcrErrorBody = class extends Data_exports.TaggedError("DcrErrorBody") {
 };
-var DcrTransport = class extends Data3.TaggedError("DcrTransport") {
+var DcrTransport = class extends Data_exports.TaggedError("DcrTransport") {
 };
-var DcrErrorBodyJson = Schema9.Struct({
-  error: Schema9.String,
-  error_description: Schema9.optional(Schema9.String)
+var DcrErrorBodyJson = Schema_exports.Struct({
+  error: Schema_exports.String,
+  error_description: Schema_exports.optional(Schema_exports.String)
 });
-var decodeDcrErrorBodyJson = Schema9.decodeUnknownOption(Schema9.fromJsonString(DcrErrorBodyJson));
+var decodeDcrErrorBodyJson = Schema_exports.decodeUnknownOption(Schema_exports.fromJsonString(DcrErrorBodyJson));
 var buildDcrBody = (m) => {
   const body = { redirect_uris: [...m.redirect_uris] };
   if (m.client_name !== void 0) body.client_name = m.client_name;
@@ -8249,36 +11966,36 @@ var buildDcrBody = (m) => {
   if (m.extra) for (const [k, v] of Object.entries(m.extra)) body[k] = v;
   return body;
 };
-var interpretDcrFailure = (status, text) => {
-  if (status >= 400 && status < 500) {
-    const body = text ? decodeDcrErrorBodyJson(text) : null;
-    return Option2.match(body ?? Option2.none(), {
+var interpretDcrFailure = (status2, text3) => {
+  if (status2 >= 400 && status2 < 500) {
+    const body = text3 ? decodeDcrErrorBodyJson(text3) : null;
+    return Option_exports.match(body ?? Option_exports.none(), {
       onNone: () => new DcrTransport({
-        detail: `Dynamic Client Registration endpoint returned status ${status}${text ? ` \u2014 ${text.slice(0, 200)}` : ""}`,
-        status
+        detail: `Dynamic Client Registration endpoint returned status ${status2}${text3 ? ` \u2014 ${text3.slice(0, 200)}` : ""}`,
+        status: status2
       }),
       onSome: (parsed) => parsed.error.length > 0 ? new DcrErrorBody({
-        status,
+        status: status2,
         error: parsed.error,
         error_description: parsed.error_description
       }) : new DcrTransport({
-        detail: `Dynamic Client Registration endpoint returned status ${status}${text ? ` \u2014 ${text.slice(0, 200)}` : ""}`,
-        status
+        detail: `Dynamic Client Registration endpoint returned status ${status2}${text3 ? ` \u2014 ${text3.slice(0, 200)}` : ""}`,
+        status: status2
       })
     });
   }
   return new DcrTransport({
-    detail: `Dynamic Client Registration endpoint returned status ${status}${text ? ` \u2014 ${text.slice(0, 200)}` : ""}`,
-    status
+    detail: `Dynamic Client Registration endpoint returned status ${status2}${text3 ? ` \u2014 ${text3.slice(0, 200)}` : ""}`,
+    status: status2
   });
 };
-var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
+var registerDynamicClient = (input, options4 = {}) => Effect_exports.gen(function* () {
   yield* validateEndpointUrl(
     input.registrationEndpoint,
     "registration_endpoint",
-    options.endpointUrlPolicy
+    options4.endpointUrlPolicy
   ).pipe(
-    Effect7.mapError(
+    Effect_exports.mapError(
       (cause) => new DcrTransport({
         detail: "registration_endpoint must use https: or loopback http:",
         cause
@@ -8292,18 +12009,18 @@ var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
   if (input.initialAccessToken) {
     headers.authorization = `Bearer ${input.initialAccessToken}`;
   }
-  let request = HttpClientRequest.post(input.registrationEndpoint).pipe(
-    HttpClientRequest.bodyJsonUnsafe(buildDcrBody(input.metadata))
+  let request = HttpClientRequest_exports.post(input.registrationEndpoint).pipe(
+    HttpClientRequest_exports.bodyJsonUnsafe(buildDcrBody(input.metadata))
   );
   for (const [name, value] of Object.entries(headers)) {
-    request = HttpClientRequest.setHeader(request, name, value);
+    request = HttpClientRequest_exports.setHeader(request, name, value);
   }
   const response = yield* executeText(
     request,
-    options,
+    options4,
     "Dynamic Client Registration request failed"
   ).pipe(
-    Effect7.mapError(
+    Effect_exports.mapError(
       (cause) => new DcrTransport({
         detail: "Dynamic Client Registration request failed",
         cause
@@ -8314,7 +12031,7 @@ var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
     return yield* interpretDcrFailure(response.status, response.body);
   }
   return yield* decodeClientInformationJson(response.body).pipe(
-    Effect7.mapError(
+    Effect_exports.mapError(
       (err) => new OAuthDiscoveryError({
         message: "Dynamic Client Registration response is malformed",
         cause: err
@@ -8322,8 +12039,8 @@ var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
     )
   );
 }).pipe(
-  Effect7.catchTags({
-    DcrErrorBody: (err) => Effect7.fail(
+  Effect_exports.catchTags({
+    DcrErrorBody: (err) => Effect_exports.fail(
       new OAuthDiscoveryError({
         message: `Dynamic Client Registration failed: ${err.error}${err.error_description ? ` \u2014 ${err.error_description}` : ""}`,
         status: err.status,
@@ -8332,7 +12049,7 @@ var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
         cause: err
       })
     ),
-    DcrTransport: (err) => Effect7.fail(
+    DcrTransport: (err) => Effect_exports.fail(
       new OAuthDiscoveryError({
         message: `Dynamic Client Registration failed: ${err.detail}`,
         status: err.status,
@@ -8343,19 +12060,18 @@ var registerDynamicClient = (input, options = {}) => Effect7.gen(function* () {
 );
 
 // ../sdk/src/oauth.ts
-import { Encoding, Option as Option3, Result as Result2, Schema as Schema10 } from "effect";
 var OAUTH2_SESSION_TTL_MS = 15 * 60 * 1e3;
-var OAuthCallbackStateSchema = Schema10.Struct({
-  state: Schema10.String,
-  orgSlug: Schema10.String
+var OAuthCallbackStateSchema = Schema_exports.Struct({
+  state: Schema_exports.String,
+  orgSlug: Schema_exports.String
 });
-var OAuthCallbackStateFromJson = Schema10.fromJsonString(OAuthCallbackStateSchema);
-var decodeOAuthCallbackStateJson = Schema10.decodeUnknownOption(OAuthCallbackStateFromJson);
-var encodeOAuthCallbackStateJson = Schema10.encodeSync(OAuthCallbackStateFromJson);
+var OAuthCallbackStateFromJson = Schema_exports.fromJsonString(OAuthCallbackStateSchema);
+var decodeOAuthCallbackStateJson = Schema_exports.decodeUnknownOption(OAuthCallbackStateFromJson);
+var encodeOAuthCallbackStateJson = Schema_exports.encodeSync(OAuthCallbackStateFromJson);
 var encodeOAuthCallbackState = (input) => {
   const orgSlug = input.orgSlug?.trim();
   if (!orgSlug) return input.state;
-  return Encoding.encodeBase64Url(encodeOAuthCallbackStateJson({ state: input.state, orgSlug }));
+  return Encoding_exports.encodeBase64Url(encodeOAuthCallbackStateJson({ state: input.state, orgSlug }));
 };
 
 // ../../../node_modules/.bun/tldts-core@7.0.28/node_modules/tldts-core/dist/es6/src/options.js
@@ -8451,8 +12167,8 @@ var missingGrantedOAuthScopes = (requestedScopes, recordedScope) => {
   const granted = normalizedOAuthScopeSet(recordedScope?.split(/\s+/).filter(Boolean) ?? []);
   const seen = /* @__PURE__ */ new Set();
   const out = [];
-  for (const raw of requestedScopes) {
-    const trimmed = raw.trim();
+  for (const raw2 of requestedScopes) {
+    const trimmed = raw2.trim();
     if (isMetaOAuthScope(trimmed)) continue;
     const scope = canonicalOAuthScope(trimmed);
     if (scope.length === 0 || informationalOAuthScopes.has(scope) || seen.has(scope)) continue;
@@ -8461,15 +12177,15 @@ var missingGrantedOAuthScopes = (requestedScopes, recordedScope) => {
   }
   return out;
 };
-var decodeJsonPayload = Schema11.decodeUnknownOption(Schema11.UnknownFromJsonString);
+var decodeJsonPayload = Schema_exports.decodeUnknownOption(Schema_exports.UnknownFromJsonString);
 var requestedScopesFromPayload = (payload) => {
-  const decoded = typeof payload === "string" ? decodeJsonPayload(payload).pipe(Option4.getOrElse(() => payload)) : payload;
+  const decoded = typeof payload === "string" ? decodeJsonPayload(payload).pipe(Option_exports.getOrElse(() => payload)) : payload;
   if (decoded === null || typeof decoded !== "object") return null;
   const value = decoded.requestedScopes;
   return Array.isArray(value) ? value.filter((s) => typeof s === "string") : null;
 };
 var clientOwnerFromPayload = (payload) => {
-  const decoded = typeof payload === "string" ? decodeJsonPayload(payload).pipe(Option4.getOrElse(() => payload)) : payload;
+  const decoded = typeof payload === "string" ? decodeJsonPayload(payload).pipe(Option_exports.getOrElse(() => payload)) : payload;
   if (decoded === null || typeof decoded !== "object") return null;
   const value = decoded.clientOwner;
   return value === "user" || value === "org" ? value : null;
@@ -8478,8 +12194,8 @@ var parseGrant = (grant) => grant === "client_credentials" || grant === "authori
 var canonicalDcrIssuer = (issuer, registrationEndpoint) => {
   const discovered = canonicalIssuerUrl(issuer);
   if (discovered !== null) return discovered;
-  const endpoint = parseUrl(registrationEndpoint);
-  return endpoint === null ? null : endpoint.origin;
+  const endpoint2 = parseUrl(registrationEndpoint);
+  return endpoint2 === null ? null : endpoint2.origin;
 };
 var issuerOrigin = (issuer) => parseUrl(issuer)?.origin ?? null;
 var issuerIsOriginOnly = (issuer) => issuerOrigin(issuer) === issuer;
@@ -8535,14 +12251,14 @@ var isWellKnownOAuthMetadataUrl = (value) => {
   const path = new URL(value.trim()).pathname.toLowerCase();
   return path.includes("/.well-known/oauth-authorization-server") || path.includes("/.well-known/openid-configuration") || path.includes("/.well-known/oauth-protected-resource");
 };
-var validateSupportedEndpoint = (value, label, endpointUrlPolicy) => Effect8.try({
+var validateSupportedEndpoint = (value, label, endpointUrlPolicy) => Effect_exports.try({
   try: () => assertSupportedOAuthEndpointUrl(value, label, endpointUrlPolicy),
   catch: (cause) => new StorageError({
     message: `Invalid OAuth client endpoint configuration: ${label} must use https: or loopback http:.`,
     cause
   })
-}).pipe(Effect8.asVoid);
-var validateClientEndpoints = (input, endpointUrlPolicy) => Effect8.gen(function* () {
+}).pipe(Effect_exports.asVoid);
+var validateClientEndpoints = (input, endpointUrlPolicy) => Effect_exports.gen(function* () {
   yield* validateSupportedEndpoint(input.tokenUrl, "token_url", endpointUrlPolicy);
   if (input.resource != null && input.resource.trim().length > 0) {
     yield* validateSupportedEndpoint(input.resource, "resource", endpointUrlPolicy);
@@ -8567,27 +12283,27 @@ var validateClientEndpoints = (input, endpointUrlPolicy) => Effect8.gen(function
   }
 });
 var makeOAuthService = (deps) => {
-  const httpClientLayer = deps.httpClientLayer ?? FetchHttpClient2.layer;
-  const fetch2 = deps.fetch;
+  const httpClientLayer = deps.httpClientLayer ?? FetchHttpClient_exports.layer;
+  const fetch3 = deps.fetch;
   const redirectUri = deps.redirectUri;
   const discoveryOptions = { endpointUrlPolicy: deps.endpointUrlPolicy };
-  const filterAuthorizationCodeScopes = (client, requestedScopes) => Effect8.gen(function* () {
+  const filterAuthorizationCodeScopes = (client, requestedScopes) => Effect_exports.gen(function* () {
     if (requestedScopes.length === 0) return requestedScopes;
     const resource = client.resource ? yield* discoverProtectedResourceMetadata(client.resource, discoveryOptions).pipe(
-      Effect8.catch(() => Effect8.succeed(null)),
-      Effect8.provide(httpClientLayer)
+      Effect_exports.catch(() => Effect_exports.succeed(null)),
+      Effect_exports.provide(httpClientLayer)
     ) : null;
     const issuer = resource?.metadata.authorization_servers?.[0] ?? new URL(client.authorizationUrl).origin;
     const as = yield* discoverAuthorizationServerMetadata(issuer, discoveryOptions).pipe(
-      Effect8.catch(() => Effect8.succeed(null)),
-      Effect8.provide(httpClientLayer)
+      Effect_exports.catch(() => Effect_exports.succeed(null)),
+      Effect_exports.provide(httpClientLayer)
     );
     return intersectScopes(requestedScopes, as?.metadata.scopes_supported);
-  }).pipe(Effect8.catch(() => Effect8.succeed(requestedScopes)));
+  }).pipe(Effect_exports.catch(() => Effect_exports.succeed(requestedScopes)));
   const MAX_DISCOVERY_AUTH_SERVERS = 3;
   const MAX_DISCOVERED_SCOPES = 100;
   const capScopes = (scopes) => dedupeScopes(scopes).slice(0, MAX_DISCOVERED_SCOPES);
-  const discoverScopesForResource = (resource) => Effect8.gen(function* () {
+  const discoverScopesForResource = (resource) => Effect_exports.gen(function* () {
     if (resource == null) {
       return yield* new OAuthDiscoveryError({
         message: "Cannot discover OAuth scopes: the client has no resource configured"
@@ -8607,7 +12323,7 @@ var makeOAuthService = (deps) => {
       const authServer = yield* discoverAuthorizationServerMetadata(
         issuer,
         discoveryOptions2
-      ).pipe(Effect8.catchTag("OAuthDiscoveryError", () => Effect8.succeed(null)));
+      ).pipe(Effect_exports.catchTag("OAuthDiscoveryError", () => Effect_exports.succeed(null)));
       const scopes = authServer?.metadata.scopes_supported;
       if (scopes !== void 0) return capScopes(scopes);
     }
@@ -8616,9 +12332,9 @@ var makeOAuthService = (deps) => {
     // Bound the whole sequence (PRM + up to MAX_DISCOVERY_AUTH_SERVERS AS
     // fetches, each with its own request timeout). 30s is larger than a single
     // request timeout so it bounds the sequence, not a slow-but-valid request.
-    Effect8.timeoutOrElse({
-      duration: Duration2.seconds(30),
-      orElse: () => Effect8.fail(
+    Effect_exports.timeoutOrElse({
+      duration: Duration_exports.seconds(30),
+      orElse: () => Effect_exports.fail(
         new OAuthDiscoveryError({
           message: "OAuth scope discovery timed out",
           cause: "timeout"
@@ -8626,9 +12342,9 @@ var makeOAuthService = (deps) => {
       )
     })
   );
-  const createClient = (input) => Effect8.gen(function* () {
+  const createClient = (input) => Effect_exports.gen(function* () {
     yield* validateClientEndpoints(input, deps.endpointUrlPolicy);
-    const keys = yield* Effect8.try({
+    const keys = yield* Effect_exports.try({
       try: () => deps.ownedKeys(input.owner),
       catch: (cause) => new StorageError({
         message: "Cannot write oauth_client for owner without a subject",
@@ -8653,7 +12369,7 @@ var makeOAuthService = (deps) => {
       (db) => looseDb(db).deleteMany("oauth_client", {
         where: (b) => b.and(b("owner", "=", input.owner), b("slug", "=", String(input.slug)))
       })
-    ).pipe(Effect8.catch(() => Effect8.void));
+    ).pipe(Effect_exports.catch(() => Effect_exports.void));
     yield* deps.fuma.use(
       "oauth_client.create",
       (db) => looseDb(db).create("oauth_client", {
@@ -8679,16 +12395,16 @@ var makeOAuthService = (deps) => {
     );
     return input.slug;
   });
-  const removeClient = (owner, slug) => Effect8.gen(function* () {
+  const removeClient = (owner, slug) => Effect_exports.gen(function* () {
     yield* deps.fuma.use(
       "oauth_client.delete",
       (db) => looseDb(db).deleteMany("oauth_client", {
         where: (b) => b.and(b("owner", "=", owner), b("slug", "=", String(slug)))
       })
-    ).pipe(Effect8.asVoid);
+    ).pipe(Effect_exports.asVoid);
     const provider = deps.defaultWritableProvider();
     if (provider?.delete) {
-      yield* provider.delete(ProviderItemId.make(clientSecretItemId(owner, slug))).pipe(Effect8.catch(() => Effect8.void));
+      yield* provider.delete(ProviderItemId.make(clientSecretItemId(owner, slug))).pipe(Effect_exports.catch(() => Effect_exports.void));
     }
   });
   const pickDcrAuthMethod = (advertised) => !advertised || advertised.length === 0 || advertised.includes("none") ? "none" : "client_secret_post";
@@ -8710,7 +12426,7 @@ var makeOAuthService = (deps) => {
       where: (b) => b("owner", "=", owner)
     })
   ).pipe(
-    Effect8.map((rows) => {
+    Effect_exports.map((rows) => {
       const matches = rows.flatMap(
         (row) => {
           if (parseOAuthClientOrigin(row).kind !== "dynamic_client_registration") return [];
@@ -8731,7 +12447,7 @@ var makeOAuthService = (deps) => {
       ).map(({ slug, resource }) => ({ slug, resource }));
     })
   );
-  const decideDcrClientReuse = (input, issuer) => Effect8.gen(function* () {
+  const decideDcrClientReuse = (input, issuer) => Effect_exports.gen(function* () {
     const candidates = yield* dcrCandidatesForIssuer(input.owner, issuer);
     const resource = input.resource ?? null;
     if (resource !== null) {
@@ -8751,7 +12467,7 @@ var makeOAuthService = (deps) => {
     const slug = uniqueDcrSlug(dcrClientSlug(issuer, null, input.slug), takenSlugs);
     return { existingSlug: null, registrationSlug: slug };
   });
-  const registerDynamicClient2 = (input) => Effect8.gen(function* () {
+  const registerDynamicClient2 = (input) => Effect_exports.gen(function* () {
     const issuer = canonicalDcrIssuer(input.issuer, input.registrationEndpoint);
     const reuse = yield* decideDcrClientReuse(input, issuer);
     if (reuse.existingSlug !== null) return reuse.existingSlug;
@@ -8777,7 +12493,7 @@ var makeOAuthService = (deps) => {
       },
       { httpClientLayer, endpointUrlPolicy: deps.endpointUrlPolicy }
     ).pipe(
-      Effect8.mapError((cause) => {
+      Effect_exports.mapError((cause) => {
         const rawMessage = cause.message;
         const message = cause.error === "invalid_redirect_uri" && !isLoopbackHttpUrl(flowRedirectUri) ? `Automatic OAuth setup failed: this server only approves loopback redirect URLs (http://localhost or http://127.0.0.1) for automatic registration, but Executor is using ${flowRedirectUri}. Register an OAuth app manually with that redirect URL approved by the server, or run Executor on http://localhost.` : `Dynamic Client Registration failed: ${rawMessage}`;
         return new OAuthRegisterDynamicError({ message });
@@ -8801,18 +12517,18 @@ var makeOAuthService = (deps) => {
     return slug;
   });
   const listClients = () => deps.fuma.use("oauth_client.findMany", (db) => looseDb(db).findMany("oauth_client", {})).pipe(
-    Effect8.flatMap(
-      (rows) => Effect8.forEach(rows, (row) => {
+    Effect_exports.flatMap(
+      (rows) => Effect_exports.forEach(rows, (row) => {
         const grant = parseGrant(row.grant);
         if (grant === null) {
-          return Effect8.fail(
+          return Effect_exports.fail(
             new StorageError({
               message: `oauth_client ${String(row.slug)} has an unknown grant: ${String(row.grant)}`,
               cause: void 0
             })
           );
         }
-        return Effect8.succeed({
+        return Effect_exports.succeed({
           owner: String(row.owner),
           slug: OAuthClientSlug.make(String(row.slug)),
           grant,
@@ -8831,18 +12547,18 @@ var makeOAuthService = (deps) => {
       where: (b) => b.and(b("owner", "=", owner), b("slug", "=", String(slug)))
     })
   ).pipe(
-    Effect8.flatMap((row) => {
-      if (!row) return Effect8.succeed(null);
+    Effect_exports.flatMap((row) => {
+      if (!row) return Effect_exports.succeed(null);
       const grant = parseGrant(row.grant);
       if (grant === null) {
-        return Effect8.fail(
+        return Effect_exports.fail(
           new StorageError({
             message: `oauth_client ${String(slug)} has an unknown grant: ${String(row.grant)}`,
             cause: void 0
           })
         );
       }
-      return Effect8.gen(function* () {
+      return Effect_exports.gen(function* () {
         let clientSecret = "";
         if (row.client_secret_item_id != null) {
           const provider = deps.defaultWritableProvider();
@@ -8862,8 +12578,8 @@ var makeOAuthService = (deps) => {
       });
     })
   );
-  const start = (input) => Effect8.gen(function* () {
-    const keys = yield* Effect8.try({
+  const start = (input) => Effect_exports.gen(function* () {
+    const keys = yield* Effect_exports.try({
       try: () => deps.ownedKeys(input.owner),
       catch: (cause) => new StorageError({
         message: "Cannot start OAuth flow for owner without a subject",
@@ -8882,7 +12598,7 @@ var makeOAuthService = (deps) => {
       });
     }
     const scopePolicy = yield* deps.resolveOAuthScopePolicy(input.integration, input.template).pipe(
-      Effect8.mapError(
+      Effect_exports.mapError(
         (cause) => new OAuthStartError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: StorageFailure carries a typed `message` field
           message: `Failed to resolve OAuth scope policy: ${cause.message}`
@@ -8890,7 +12606,7 @@ var makeOAuthService = (deps) => {
       )
     );
     const requestedScopes = scopePolicy.kind === "discover" ? yield* discoverScopesForResource(client.resource).pipe(
-      Effect8.mapError(
+      Effect_exports.mapError(
         (cause) => new OAuthStartError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuthDiscoveryError carries a typed `message` field
           message: `Failed to discover OAuth scopes: ${cause.message}`
@@ -8905,9 +12621,9 @@ var makeOAuthService = (deps) => {
         scopes: requestedScopes,
         resource: client.resource ?? void 0,
         endpointUrlPolicy: deps.endpointUrlPolicy,
-        fetch: fetch2
+        fetch: fetch3
       }).pipe(
-        Effect8.mapError(
+        Effect_exports.mapError(
           (cause) => new OAuthStartError({
             // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuth2Error carries a typed `message` field
             message: `OAuth client-credentials exchange failed: ${cause.message}`
@@ -8923,7 +12639,7 @@ var makeOAuthService = (deps) => {
         // client_credentials has no callback, so no regional rebind applies.
         null
       ).pipe(
-        Effect8.mapError(
+        Effect_exports.mapError(
           (cause) => new OAuthStartError({
             // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: StorageFailure carries a typed `message` field
             message: `Failed to mint OAuth connection: ${cause.message}`
@@ -8940,7 +12656,7 @@ var makeOAuthService = (deps) => {
     }
     const authorizationRequestedScopes = scopePolicy.kind === "discover" ? requestedScopes : yield* filterAuthorizationCodeScopes(client, requestedScopes);
     const verifier = createPkceCodeVerifier();
-    const challenge = yield* Effect8.promise(() => createPkceCodeChallenge(verifier));
+    const challenge = yield* Effect_exports.promise(() => createPkceCodeChallenge(verifier));
     const state = OAuthState.make(createOAuthState());
     const providerState = encodeOAuthCallbackState({
       state: String(state),
@@ -8975,7 +12691,7 @@ var makeOAuthService = (deps) => {
         created_at: now
       })
     );
-    const authorizationUrl = yield* Effect8.try({
+    const authorizationUrl = yield* Effect_exports.try({
       try: () => buildAuthorizationUrl({
         authorizationUrl: client.authorizationUrl,
         clientId: client.clientId,
@@ -8997,7 +12713,7 @@ var makeOAuthService = (deps) => {
     });
     return { status: "redirect", authorizationUrl, state };
   });
-  const complete = (input) => Effect8.gen(function* () {
+  const complete = (input) => Effect_exports.gen(function* () {
     const sessionRow = yield* deps.fuma.use(
       "oauth_session.findFirst",
       (db) => looseDb(db).findFirst("oauth_session", {
@@ -9057,9 +12773,9 @@ var makeOAuthService = (deps) => {
       code: input.code,
       resource: client.resource ?? void 0,
       endpointUrlPolicy: deps.endpointUrlPolicy,
-      fetch: fetch2
+      fetch: fetch3
     }).pipe(
-      Effect8.mapError(
+      Effect_exports.mapError(
         (cause) => new OAuthCompleteError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuth2Error carries a typed `message` field
           message: `OAuth code exchange failed: ${cause.message}`,
@@ -9085,7 +12801,7 @@ var makeOAuthService = (deps) => {
       // client's configured one, so refresh redeems against the same region.
       tokenUrl === client.tokenUrl ? null : tokenUrl
     ).pipe(
-      Effect8.mapError(
+      Effect_exports.mapError(
         (cause) => new OAuthCompleteError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: StorageFailure carries a typed `message` field
           message: `Failed to mint OAuth connection: ${cause.message}`,
@@ -9096,7 +12812,7 @@ var makeOAuthService = (deps) => {
     yield* deleteSession(input.state);
     return connection;
   });
-  const mintFromToken = (target, client, token, requestedScopes, clientOwner, oauthTokenUrl) => Effect8.gen(function* () {
+  const mintFromToken = (target, client, token, requestedScopes, clientOwner, oauthTokenUrl) => Effect_exports.gen(function* () {
     const provider = deps.defaultWritableProvider();
     if (!provider || !provider.set) {
       return yield* new StorageError({
@@ -9138,16 +12854,16 @@ var makeOAuthService = (deps) => {
     (db) => looseDb(db).deleteMany("oauth_session", {
       where: (b) => b("state", "=", String(state))
     })
-  ).pipe(Effect8.asVoid);
+  ).pipe(Effect_exports.asVoid);
   const cancel = (state) => deleteSession(state);
-  const probe = (input) => Effect8.gen(function* () {
-    const options = { endpointUrlPolicy: deps.endpointUrlPolicy };
-    const resource = yield* discoverProtectedResourceMetadata(input.url, options).pipe(
-      Effect8.catch(() => Effect8.succeed(null))
+  const probe = (input) => Effect_exports.gen(function* () {
+    const options4 = { endpointUrlPolicy: deps.endpointUrlPolicy };
+    const resource = yield* discoverProtectedResourceMetadata(input.url, options4).pipe(
+      Effect_exports.catch(() => Effect_exports.succeed(null))
     );
     const issuerCandidate = resource?.metadata.authorization_servers?.[0] ?? input.url;
-    const as = yield* discoverAuthorizationServerMetadata(issuerCandidate, options).pipe(
-      Effect8.mapError(
+    const as = yield* discoverAuthorizationServerMetadata(issuerCandidate, options4).pipe(
+      Effect_exports.mapError(
         (cause) => new OAuthProbeError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuthDiscoveryError carries a typed `message` field
           message: `OAuth discovery failed: ${cause.message}`
@@ -9175,7 +12891,7 @@ var makeOAuthService = (deps) => {
       tokenEndpointAuthMethodsSupported: as.metadata.token_endpoint_auth_methods_supported,
       clientIdMetadataDocumentSupported: as.metadata.client_id_metadata_document_supported === true
     };
-  }).pipe(Effect8.provide(httpClientLayer));
+  }).pipe(Effect_exports.provide(httpClientLayer));
   return {
     createClient,
     removeClient,
@@ -9189,34 +12905,32 @@ var makeOAuthService = (deps) => {
 };
 
 // ../sdk/src/plugin-storage.ts
-import "effect";
 var pluginStorageId = (input) => JSON.stringify([input.pluginId, input.collection, input.key]);
 
 // ../sdk/src/types.ts
-import { Schema as Schema12 } from "effect";
-var ToolSchemaView = Schema12.Struct({
+var ToolSchemaView = Schema_exports.Struct({
   address: ToolAddress,
-  name: Schema12.optional(Schema12.String),
-  description: Schema12.optional(Schema12.String),
-  inputSchema: Schema12.optional(Schema12.Unknown),
-  outputSchema: Schema12.optional(Schema12.Unknown),
-  schemaDefinitions: Schema12.optional(Schema12.Record(Schema12.String, Schema12.Unknown)),
-  inputTypeScript: Schema12.optional(Schema12.String),
-  outputTypeScript: Schema12.optional(Schema12.String),
-  typeScriptDefinitions: Schema12.optional(Schema12.Record(Schema12.String, Schema12.String))
+  name: Schema_exports.optional(Schema_exports.String),
+  description: Schema_exports.optional(Schema_exports.String),
+  inputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  outputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  schemaDefinitions: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown)),
+  inputTypeScript: Schema_exports.optional(Schema_exports.String),
+  outputTypeScript: Schema_exports.optional(Schema_exports.String),
+  typeScriptDefinitions: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String))
 });
-var IntegrationDetectionResult = Schema12.Struct({
+var IntegrationDetectionResult = Schema_exports.Struct({
   /** Plugin id that recognized the URL (e.g. "openapi", "graphql"). */
-  kind: Schema12.String,
+  kind: Schema_exports.String,
   /** Confidence tier — UI uses this to pick a winner when multiple plugins
    *  claim a URL. */
-  confidence: Schema12.Literals(["high", "medium", "low"]),
+  confidence: Schema_exports.Literals(["high", "medium", "low"]),
   /** The (possibly normalized) endpoint the plugin will use. */
-  endpoint: Schema12.String,
+  endpoint: Schema_exports.String,
   /** Human-readable name suggestion, typically derived from spec title or URL. */
-  name: Schema12.String,
+  name: Schema_exports.String,
   /** Slug suggestion — the plugin's recommendation for the integration slug. */
-  slug: Schema12.String
+  slug: Schema_exports.String
 });
 
 // ../sdk/src/schema-refs.ts
@@ -9243,13 +12957,13 @@ var normalizeRefs = (node) => {
     return obj;
   }
   let changed = false;
-  const result = {};
+  const result2 = {};
   for (const [k, v] of Object.entries(obj)) {
     const n = normalizeRefs(v);
     if (n !== v) changed = true;
-    result[k] = n;
+    result2[k] = n;
   }
-  return changed ? result : obj;
+  return changed ? result2 : obj;
 };
 var hoistDefinitions = (schema2) => {
   if (schema2 == null || typeof schema2 !== "object") {
@@ -9307,20 +13021,19 @@ var collectReferencedDefinitions = (roots, defs) => {
 };
 
 // ../sdk/src/vendor/json-schema-to-typescript/compat.ts
-import { Struct } from "effect";
 var isPlainObject = (value) => {
   if (value === null || typeof value !== "object") return false;
   const prototype = Object.getPrototypeOf(value);
   return prototype === Object.prototype || prototype === null;
 };
 var cloneDeep = (value) => structuredClone(value);
-var merge = (target, ...sources) => {
+var merge4 = (target, ...sources) => {
   const output = target;
   for (const source of sources) {
     if (!source) continue;
     for (const [key, value] of Object.entries(source)) {
       const current = output[key];
-      output[key] = isPlainObject(current) && isPlainObject(value) ? merge({ ...current }, value) : cloneDeep(value);
+      output[key] = isPlainObject(current) && isPlainObject(value) ? merge4({ ...current }, value) : cloneDeep(value);
     }
   }
   return target;
@@ -9341,24 +13054,24 @@ var memoize = (fn) => {
     return value;
   });
 };
-var omit = (object, ...keys) => Struct.omit(object, keys);
+var omit2 = (object, ...keys) => Struct_exports.omit(object, keys);
 var uniqBy = (items, iteratee) => {
   const seen = /* @__PURE__ */ new Set();
-  const result = [];
+  const result2 = [];
   for (const item of items) {
     const key = iteratee(item);
     if (seen.has(key)) continue;
     seen.add(key);
-    result.push(item);
+    result2.push(item);
   }
-  return result;
+  return result2;
 };
 var deburr = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 var upperFirst = (value) => value.length === 0 ? value : value[0].toUpperCase() + value.slice(1);
 
 // ../sdk/src/vendor/json-schema-to-typescript/formatter.ts
-function format(code, options) {
-  void options;
+function format2(code, options4) {
+  void options4;
   return code;
 }
 
@@ -9443,17 +13156,17 @@ var BLACKLISTED_KEYS = /* @__PURE__ */ new Set([
   "oneOf",
   "not"
 ]);
-function traverseObjectKeys(obj, callback, processed) {
+function traverseObjectKeys(obj, callback2, processed) {
   Object.keys(obj).forEach((k) => {
     if (obj[k] && typeof obj[k] === "object" && !Array.isArray(obj[k])) {
-      traverse(obj[k], callback, processed, k);
+      traverse(obj[k], callback2, processed, k);
     }
   });
 }
-function traverseArray(arr, callback, processed) {
-  arr.forEach((s, k) => traverse(s, callback, processed, k.toString()));
+function traverseArray(arr, callback2, processed) {
+  arr.forEach((s, k) => traverse(s, callback2, processed, k.toString()));
 }
-function traverseIntersection(schema2, callback, processed) {
+function traverseIntersection(schema2, callback2, processed) {
   if (typeof schema2 !== "object" || !schema2) {
     return;
   }
@@ -9463,65 +13176,65 @@ function traverseIntersection(schema2, callback, processed) {
     return;
   }
   if (Array.isArray(intersection.allOf)) {
-    traverseArray(intersection.allOf, callback, processed);
+    traverseArray(intersection.allOf, callback2, processed);
   }
 }
-function traverse(schema2, callback, processed = /* @__PURE__ */ new Set(), key) {
+function traverse(schema2, callback2, processed = /* @__PURE__ */ new Set(), key) {
   if (processed.has(schema2)) {
     return;
   }
   processed.add(schema2);
-  callback(schema2, key ?? null);
+  callback2(schema2, key ?? null);
   if (schema2.anyOf) {
-    traverseArray(schema2.anyOf, callback, processed);
+    traverseArray(schema2.anyOf, callback2, processed);
   }
   if (schema2.allOf) {
-    traverseArray(schema2.allOf, callback, processed);
+    traverseArray(schema2.allOf, callback2, processed);
   }
   if (schema2.oneOf) {
-    traverseArray(schema2.oneOf, callback, processed);
+    traverseArray(schema2.oneOf, callback2, processed);
   }
   if (schema2.properties) {
-    traverseObjectKeys(schema2.properties, callback, processed);
+    traverseObjectKeys(schema2.properties, callback2, processed);
   }
   if (schema2.patternProperties) {
-    traverseObjectKeys(schema2.patternProperties, callback, processed);
+    traverseObjectKeys(schema2.patternProperties, callback2, processed);
   }
   if (schema2.additionalProperties && typeof schema2.additionalProperties === "object") {
-    traverse(schema2.additionalProperties, callback, processed);
+    traverse(schema2.additionalProperties, callback2, processed);
   }
   if (schema2.items) {
     const { items } = schema2;
     if (Array.isArray(items)) {
-      traverseArray(items, callback, processed);
+      traverseArray(items, callback2, processed);
     } else {
-      traverse(items, callback, processed);
+      traverse(items, callback2, processed);
     }
   }
   if (schema2.additionalItems && typeof schema2.additionalItems === "object") {
-    traverse(schema2.additionalItems, callback, processed);
+    traverse(schema2.additionalItems, callback2, processed);
   }
   if (schema2.dependencies) {
     if (Array.isArray(schema2.dependencies)) {
-      traverseArray(schema2.dependencies, callback, processed);
+      traverseArray(schema2.dependencies, callback2, processed);
     } else {
-      traverseObjectKeys(schema2.dependencies, callback, processed);
+      traverseObjectKeys(schema2.dependencies, callback2, processed);
     }
   }
   if (schema2.definitions) {
-    traverseObjectKeys(schema2.definitions, callback, processed);
+    traverseObjectKeys(schema2.definitions, callback2, processed);
   }
   if (schema2.$defs) {
-    traverseObjectKeys(schema2.$defs, callback, processed);
+    traverseObjectKeys(schema2.$defs, callback2, processed);
   }
   if (schema2.not) {
-    traverse(schema2.not, callback, processed);
+    traverse(schema2.not, callback2, processed);
   }
-  traverseIntersection(schema2, callback, processed);
+  traverseIntersection(schema2, callback2, processed);
   Object.keys(schema2).filter((key2) => !BLACKLISTED_KEYS.has(key2)).forEach((key2) => {
     const child = schema2[key2];
     if (child && typeof child === "object") {
-      traverseObjectKeys(child, callback, processed);
+      traverseObjectKeys(child, callback2, processed);
     }
   });
 }
@@ -9534,7 +13247,7 @@ function stripExtension(filename) {
 function toSafeString(string) {
   return upperFirst(
     // remove accents, umlauts, ... by their basic latin letters
-    deburr(string).replace(/(^\s*[^a-zA-Z_$])|([^a-zA-Z_$\d])/g, " ").replace(/^_[a-z]/g, (match) => match.toUpperCase()).replace(/_[a-z]/g, (match) => match.substr(1, match.length).toUpperCase()).replace(/([\d$]+[a-zA-Z])/g, (match) => match.toUpperCase()).replace(/\s+([a-zA-Z])/g, (match) => match.toUpperCase().trim()).replace(/\s/g, "")
+    deburr(string).replace(/(^\s*[^a-zA-Z_$])|([^a-zA-Z_$\d])/g, " ").replace(/^_[a-z]/g, (match4) => match4.toUpperCase()).replace(/_[a-z]/g, (match4) => match4.substr(1, match4.length).toUpperCase()).replace(/([\d$]+[a-zA-Z])/g, (match4) => match4.toUpperCase()).replace(/\s+([a-zA-Z])/g, (match4) => match4.toUpperCase().trim()).replace(/\s/g, "")
   );
 }
 function generateName(from, usedNames) {
@@ -9641,15 +13354,15 @@ function isSchemaLike(schema2) {
 }
 
 // ../sdk/src/vendor/json-schema-to-typescript/generator.ts
-function generate(ast, options = DEFAULT_OPTIONS2) {
+function generate(ast, options4 = DEFAULT_OPTIONS2) {
   return [
-    options.bannerComment,
-    declareNamedTypes(ast, options, ast.standaloneName),
-    declareNamedInterfaces(ast, options, ast.standaloneName),
-    declareEnums(ast, options)
+    options4.bannerComment,
+    declareNamedTypes(ast, options4, ast.standaloneName),
+    declareNamedInterfaces(ast, options4, ast.standaloneName),
+    declareEnums(ast, options4)
   ].filter(Boolean).join("\n\n") + "\n";
 }
-function declareEnums(ast, options, processed = /* @__PURE__ */ new Set()) {
+function declareEnums(ast, options4, processed = /* @__PURE__ */ new Set()) {
   if (processed.has(ast)) {
     return "";
   }
@@ -9657,28 +13370,28 @@ function declareEnums(ast, options, processed = /* @__PURE__ */ new Set()) {
   let type = "";
   switch (ast.type) {
     case "ENUM":
-      return generateStandaloneEnum(ast, options) + "\n";
+      return generateStandaloneEnum(ast, options4) + "\n";
     case "ARRAY":
-      return declareEnums(ast.params, options, processed);
+      return declareEnums(ast.params, options4, processed);
     case "UNION":
     case "INTERSECTION":
-      return ast.params.reduce((prev, ast2) => prev + declareEnums(ast2, options, processed), "");
+      return ast.params.reduce((prev, ast2) => prev + declareEnums(ast2, options4, processed), "");
     case "TUPLE":
-      type = ast.params.reduce((prev, ast2) => prev + declareEnums(ast2, options, processed), "");
+      type = ast.params.reduce((prev, ast2) => prev + declareEnums(ast2, options4, processed), "");
       if (ast.spreadParam) {
-        type += declareEnums(ast.spreadParam, options, processed);
+        type += declareEnums(ast.spreadParam, options4, processed);
       }
       return type;
     case "INTERFACE":
       return getSuperTypesAndParams(ast).reduce(
-        (prev, ast2) => prev + declareEnums(ast2, options, processed),
+        (prev, ast2) => prev + declareEnums(ast2, options4, processed),
         ""
       );
     default:
       return "";
   }
 }
-function declareNamedInterfaces(ast, options, rootASTName, processed = /* @__PURE__ */ new Set()) {
+function declareNamedInterfaces(ast, options4, rootASTName, processed = /* @__PURE__ */ new Set()) {
   if (processed.has(ast)) {
     return "";
   }
@@ -9686,20 +13399,20 @@ function declareNamedInterfaces(ast, options, rootASTName, processed = /* @__PUR
   let type = "";
   switch (ast.type) {
     case "ARRAY":
-      type = declareNamedInterfaces(ast.params, options, rootASTName, processed);
+      type = declareNamedInterfaces(ast.params, options4, rootASTName, processed);
       break;
     case "INTERFACE":
       type = [
-        hasStandaloneName(ast) && (ast.standaloneName === rootASTName || options.declareExternallyReferenced) && generateStandaloneInterface(ast, options),
-        getSuperTypesAndParams(ast).map((ast2) => declareNamedInterfaces(ast2, options, rootASTName, processed)).filter(Boolean).join("\n")
+        hasStandaloneName(ast) && (ast.standaloneName === rootASTName || options4.declareExternallyReferenced) && generateStandaloneInterface(ast, options4),
+        getSuperTypesAndParams(ast).map((ast2) => declareNamedInterfaces(ast2, options4, rootASTName, processed)).filter(Boolean).join("\n")
       ].filter(Boolean).join("\n");
       break;
     case "INTERSECTION":
     case "TUPLE":
     case "UNION":
-      type = ast.params.map((_) => declareNamedInterfaces(_, options, rootASTName, processed)).filter(Boolean).join("\n");
+      type = ast.params.map((_) => declareNamedInterfaces(_, options4, rootASTName, processed)).filter(Boolean).join("\n");
       if (ast.type === "TUPLE" && ast.spreadParam) {
-        type += declareNamedInterfaces(ast.spreadParam, options, rootASTName, processed);
+        type += declareNamedInterfaces(ast.spreadParam, options4, rootASTName, processed);
       }
       break;
     default:
@@ -9707,7 +13420,7 @@ function declareNamedInterfaces(ast, options, rootASTName, processed = /* @__PUR
   }
   return type;
 }
-function declareNamedTypes(ast, options, rootASTName, processed = /* @__PURE__ */ new Set()) {
+function declareNamedTypes(ast, options4, rootASTName, processed = /* @__PURE__ */ new Set()) {
   if (processed.has(ast)) {
     return "";
   }
@@ -9715,39 +13428,39 @@ function declareNamedTypes(ast, options, rootASTName, processed = /* @__PURE__ *
   switch (ast.type) {
     case "ARRAY":
       return [
-        declareNamedTypes(ast.params, options, rootASTName, processed),
-        hasStandaloneName(ast) ? generateStandaloneType(ast, options) : void 0
+        declareNamedTypes(ast.params, options4, rootASTName, processed),
+        hasStandaloneName(ast) ? generateStandaloneType(ast, options4) : void 0
       ].filter(Boolean).join("\n");
     case "ENUM":
       return "";
     case "INTERFACE":
       return getSuperTypesAndParams(ast).map(
-        (ast2) => (ast2.standaloneName === rootASTName || options.declareExternallyReferenced) && declareNamedTypes(ast2, options, rootASTName, processed)
+        (ast2) => (ast2.standaloneName === rootASTName || options4.declareExternallyReferenced) && declareNamedTypes(ast2, options4, rootASTName, processed)
       ).filter(Boolean).join("\n");
     case "INTERSECTION":
     case "TUPLE":
     case "UNION":
       return [
-        hasStandaloneName(ast) ? generateStandaloneType(ast, options) : void 0,
-        ast.params.map((ast2) => declareNamedTypes(ast2, options, rootASTName, processed)).filter(Boolean).join("\n"),
-        "spreadParam" in ast && ast.spreadParam ? declareNamedTypes(ast.spreadParam, options, rootASTName, processed) : void 0
+        hasStandaloneName(ast) ? generateStandaloneType(ast, options4) : void 0,
+        ast.params.map((ast2) => declareNamedTypes(ast2, options4, rootASTName, processed)).filter(Boolean).join("\n"),
+        "spreadParam" in ast && ast.spreadParam ? declareNamedTypes(ast.spreadParam, options4, rootASTName, processed) : void 0
       ].filter(Boolean).join("\n");
     default:
       if (hasStandaloneName(ast)) {
-        return generateStandaloneType(ast, options);
+        return generateStandaloneType(ast, options4);
       }
       return "";
   }
 }
-function generateTypeUnmemoized(ast, options) {
-  const type = generateRawType(ast, options);
-  if (options.strictIndexSignatures && ast.keyName === "[k: string]") {
+function generateTypeUnmemoized(ast, options4) {
+  const type = generateRawType(ast, options4);
+  if (options4.strictIndexSignatures && ast.keyName === "[k: string]") {
     return `${type} | undefined`;
   }
   return type;
 }
 var generateType = memoize(generateTypeUnmemoized);
-function generateRawType(ast, options) {
+function generateRawType(ast, options4) {
   if (hasStandaloneName(ast)) {
     return toSafeString(ast.standaloneName);
   }
@@ -9756,15 +13469,15 @@ function generateRawType(ast, options) {
       return "any";
     case "ARRAY":
       return (() => {
-        const type = generateType(ast.params, options);
+        const type = generateType(ast.params, options4);
         return type.endsWith('"') ? "(" + type + ")[]" : type + "[]";
       })();
     case "BOOLEAN":
       return "boolean";
     case "INTERFACE":
-      return generateInterface(ast, options);
+      return generateInterface(ast, options4);
     case "INTERSECTION":
-      return generateSetOperation(ast, options);
+      return generateSetOperation(ast, options4);
     case "LITERAL":
       return JSON.stringify(ast.params);
     case "NEVER":
@@ -9787,17 +13500,17 @@ function generateRawType(ast, options) {
         const astParams = [...ast.params];
         if (minItems > 0 && minItems > astParams.length && ast.spreadParam === void 0) {
           if (maxItems < 0) {
-            spreadParam = options.unknownAny ? T_UNKNOWN : T_ANY;
+            spreadParam = options4.unknownAny ? T_UNKNOWN : T_ANY;
           }
         }
         if (maxItems > astParams.length && ast.spreadParam === void 0) {
           for (let i = astParams.length; i < maxItems; i += 1) {
-            astParams.push(options.unknownAny ? T_UNKNOWN : T_ANY);
+            astParams.push(options4.unknownAny ? T_UNKNOWN : T_ANY);
           }
         }
         function addSpreadParam(params) {
           if (spreadParam) {
-            const spread = "...(" + generateType(spreadParam, options) + ")[]";
+            const spread = "...(" + generateType(spreadParam, options4) + ")[]";
             params.push(spread);
           }
           return params;
@@ -9805,7 +13518,7 @@ function generateRawType(ast, options) {
         function paramsToString(params) {
           return "[" + params.join(", ") + "]";
         }
-        const paramsList = astParams.map((param) => generateType(param, options));
+        const paramsList = astParams.map((param) => generateType(param, options4));
         if (paramsList.length > minItems) {
           const cumulativeParamsList = paramsList.slice(0, minItems);
           const typesToUnion = [];
@@ -9826,22 +13539,22 @@ function generateRawType(ast, options) {
         return paramsToString(addSpreadParam(paramsList));
       })();
     case "UNION":
-      return generateSetOperation(ast, options);
+      return generateSetOperation(ast, options4);
     case "UNKNOWN":
       return "unknown";
     case "CUSTOM_TYPE":
       return ast.params;
   }
 }
-function generateSetOperation(ast, options) {
-  const members = ast.params.map((_) => generateType(_, options));
+function generateSetOperation(ast, options4) {
+  const members = ast.params.map((_) => generateType(_, options4));
   const separator = ast.type === "UNION" ? "|" : "&";
   return members.length === 1 ? members[0] : "(" + members.join(" " + separator + " ") + ")";
 }
-function generateInterface(ast, options) {
+function generateInterface(ast, options4) {
   return `{
 ` + ast.params.filter((_) => !_.isPatternProperty && !_.isUnreachableDefinition).map(
-    ({ isRequired, keyName, ast: ast2 }) => [isRequired, keyName, ast2, generateType(ast2, options)]
+    ({ isRequired, keyName, ast: ast2 }) => [isRequired, keyName, ast2, generateType(ast2, options4)]
   ).map(
     ([isRequired, keyName, ast2, type]) => (hasComment(ast2) && !ast2.standaloneName ? generateComment(ast2.comment, ast2.deprecated) + "\n" : "") + escapeKeyName(keyName) + (isRequired ? "" : "?") + ": " + type
   ).join("\n") + "\n}";
@@ -9857,20 +13570,20 @@ function generateComment(comment, deprecated) {
   commentLines.push(" */");
   return commentLines.join("\n");
 }
-function generateStandaloneEnum(ast, options) {
+function generateStandaloneEnum(ast, options4) {
   const containsSpecialCharacters = (key) => /[^a-zA-Z0-9_]/.test(key);
-  return (hasComment(ast) ? generateComment(ast.comment, ast.deprecated) + "\n" : "") + "export " + (options.enableConstEnums ? "const " : "") + `enum ${toSafeString(ast.standaloneName)} {
+  return (hasComment(ast) ? generateComment(ast.comment, ast.deprecated) + "\n" : "") + "export " + (options4.enableConstEnums ? "const " : "") + `enum ${toSafeString(ast.standaloneName)} {
 ` + ast.params.map(
-    ({ ast: ast2, keyName }) => (containsSpecialCharacters(keyName) ? `"${keyName}"` : keyName) + " = " + generateType(ast2, options)
+    ({ ast: ast2, keyName }) => (containsSpecialCharacters(keyName) ? `"${keyName}"` : keyName) + " = " + generateType(ast2, options4)
   ).join(",\n") + "\n}";
 }
-function generateStandaloneInterface(ast, options) {
-  return (hasComment(ast) ? generateComment(ast.comment, ast.deprecated) + "\n" : "") + `export interface ${toSafeString(ast.standaloneName)} ` + (ast.superTypes.length > 0 ? `extends ${ast.superTypes.map((superType) => toSafeString(superType.standaloneName)).join(", ")} ` : "") + generateInterface(ast, options);
+function generateStandaloneInterface(ast, options4) {
+  return (hasComment(ast) ? generateComment(ast.comment, ast.deprecated) + "\n" : "") + `export interface ${toSafeString(ast.standaloneName)} ` + (ast.superTypes.length > 0 ? `extends ${ast.superTypes.map((superType) => toSafeString(superType.standaloneName)).join(", ")} ` : "") + generateInterface(ast, options4);
 }
-function generateStandaloneType(ast, options) {
+function generateStandaloneType(ast, options4) {
   return (hasComment(ast) ? generateComment(ast.comment) + "\n" : "") + `export type ${toSafeString(ast.standaloneName)} = ${generateType(
-    omit(ast, "standaloneName"),
-    options
+    omit2(ast, "standaloneName"),
+    options4
   )}`;
 }
 function escapeKeyName(keyName) {
@@ -10090,9 +13803,9 @@ rules2.set("Transform `required`=false to `required`=[]", (schema2) => {
     schema2.required = [];
   }
 });
-rules2.set("Default additionalProperties", (schema2, _, options) => {
+rules2.set("Default additionalProperties", (schema2, _, options4) => {
   if (isObjectType(schema2) && !("additionalProperties" in schema2) && schema2.patternProperties === void 0) {
-    schema2.additionalProperties = options.additionalProperties;
+    schema2.additionalProperties = options4.additionalProperties;
   }
 });
 rules2.set("Transform id to $id", (schema2, fileName) => {
@@ -10146,19 +13859,19 @@ rules2.set("Add JSDoc comments for minItems and maxItems", (schema2) => {
     schema2.description = appendToDescription(schema2.description, ...commentsToAppend);
   }
 });
-rules2.set("Optionally remove maxItems and minItems", (schema2, _fileName, options) => {
+rules2.set("Optionally remove maxItems and minItems", (schema2, _fileName, options4) => {
   if (!isArrayType(schema2)) {
     return;
   }
-  if ("minItems" in schema2 && options.ignoreMinAndMaxItems) {
+  if ("minItems" in schema2 && options4.ignoreMinAndMaxItems) {
     delete schema2.minItems;
   }
-  if ("maxItems" in schema2 && (options.ignoreMinAndMaxItems || options.maxItems === -1)) {
+  if ("maxItems" in schema2 && (options4.ignoreMinAndMaxItems || options4.maxItems === -1)) {
     delete schema2.maxItems;
   }
 });
-rules2.set("Normalize schema.minItems", (schema2, _fileName, options) => {
-  if (options.ignoreMinAndMaxItems) {
+rules2.set("Normalize schema.minItems", (schema2, _fileName, options4) => {
+  if (options4.ignoreMinAndMaxItems) {
     return;
   }
   if (!isArrayType(schema2)) {
@@ -10169,21 +13882,21 @@ rules2.set("Normalize schema.minItems", (schema2, _fileName, options) => {
 });
 rules2.set(
   "Remove maxItems if it is big enough to likely cause OOMs",
-  (schema2, _fileName, options) => {
-    if (options.ignoreMinAndMaxItems || options.maxItems === -1) {
+  (schema2, _fileName, options4) => {
+    if (options4.ignoreMinAndMaxItems || options4.maxItems === -1) {
       return;
     }
     if (!isArrayType(schema2)) {
       return;
     }
     const { maxItems, minItems } = schema2;
-    if (maxItems !== void 0 && maxItems - minItems > options.maxItems) {
+    if (maxItems !== void 0 && maxItems - minItems > options4.maxItems) {
       delete schema2.maxItems;
     }
   }
 );
-rules2.set("Normalize schema.items", (schema2, _fileName, options) => {
-  if (options.ignoreMinAndMaxItems) {
+rules2.set("Normalize schema.items", (schema2, _fileName, options4) => {
+  if (options4.ignoreMinAndMaxItems) {
     return;
   }
   const { maxItems, minItems } = schema2;
@@ -10235,8 +13948,8 @@ rules2.set("Transform const to singleton enum", (schema2) => {
     delete schema2.const;
   }
 });
-rules2.set("Add tsEnumNames to enum types", (schema2, _, options) => {
-  if (isEnumTypeWithoutTsEnumNames(schema2) && options.inferStringEnumKeysFromValues) {
+rules2.set("Add tsEnumNames to enum types", (schema2, _, options4) => {
+  if (isEnumTypeWithoutTsEnumNames(schema2) && options4.inferStringEnumKeysFromValues) {
     schema2.tsEnumNames = schema2.enum?.map(String);
   }
 });
@@ -10245,15 +13958,15 @@ rules2.set("Pre-calculate schema types and intersections", (schema2) => {
     applySchemaTyping(schema2);
   }
 });
-function normalize(rootSchema, dereferencedPaths, filename, options) {
+function normalize(rootSchema, dereferencedPaths, filename, options4) {
   rules2.forEach(
-    (rule) => traverse(rootSchema, (schema2, key) => rule(schema2, filename, options, key, dereferencedPaths))
+    (rule) => traverse(rootSchema, (schema2, key) => rule(schema2, filename, options4, key, dereferencedPaths))
   );
   return rootSchema;
 }
 
 // ../sdk/src/vendor/json-schema-to-typescript/optimizer.ts
-function optimize(ast, options, processed = /* @__PURE__ */ new Set()) {
+function optimize(ast, options4, processed = /* @__PURE__ */ new Set()) {
   if (processed.has(ast)) {
     return ast;
   }
@@ -10261,18 +13974,18 @@ function optimize(ast, options, processed = /* @__PURE__ */ new Set()) {
   switch (ast.type) {
     case "ARRAY":
       return Object.assign(ast, {
-        params: optimize(ast.params, options, processed)
+        params: optimize(ast.params, options4, processed)
       });
     case "INTERFACE":
       return Object.assign(ast, {
         params: ast.params.map(
-          (_) => Object.assign(_, { ast: optimize(_.ast, options, processed) })
+          (_) => Object.assign(_, { ast: optimize(_.ast, options4, processed) })
         )
       });
     case "INTERSECTION":
     case "UNION":
       const optimizedAST = Object.assign(ast, {
-        params: ast.params.map((_) => optimize(_, options, processed))
+        params: ast.params.map((_) => optimize(_, options4, processed))
       });
       if (optimizedAST.params.some((_) => _.type === "ANY")) {
         return T_ANY;
@@ -10281,18 +13994,18 @@ function optimize(ast, options, processed = /* @__PURE__ */ new Set()) {
         return T_UNKNOWN;
       }
       if (optimizedAST.params.every((_) => {
-        const a = generateType(omitStandaloneName(_), options);
-        const b = generateType(omitStandaloneName(optimizedAST.params[0]), options);
+        const a = generateType(omitStandaloneName(_), options4);
+        const b = generateType(omitStandaloneName(optimizedAST.params[0]), options4);
         return a === b;
       }) && optimizedAST.params.some((_) => _.standaloneName !== void 0)) {
         optimizedAST.params = optimizedAST.params.filter((_) => _.standaloneName !== void 0);
       }
-      const params = uniqBy(optimizedAST.params, (_) => generateType(_, options));
+      const params = uniqBy(optimizedAST.params, (_) => generateType(_, options4));
       if (params.length !== optimizedAST.params.length) {
         optimizedAST.params = params;
       }
       return Object.assign(optimizedAST, {
-        params: optimizedAST.params.map((_) => optimize(_, options, processed))
+        params: optimizedAST.params.map((_) => optimize(_, options4, processed))
       });
     default:
       return ast;
@@ -10308,10 +14021,10 @@ function omitStandaloneName(ast) {
 }
 
 // ../sdk/src/vendor/json-schema-to-typescript/parser.ts
-function parse(schema2, options, keyName, processed = /* @__PURE__ */ new Map(), usedNames = /* @__PURE__ */ new Set()) {
+function parse2(schema2, options4, keyName, processed = /* @__PURE__ */ new Map(), usedNames = /* @__PURE__ */ new Set()) {
   if (isPrimitive(schema2)) {
     if (isBoolean(schema2)) {
-      return parseBooleanSchema(schema2, keyName, options);
+      return parseBooleanSchema(schema2, keyName, options4);
     }
     return parseLiteral(schema2, keyName);
   }
@@ -10322,14 +14035,14 @@ function parse(schema2, options, keyName, processed = /* @__PURE__ */ new Map(),
     const ast = parseAsTypeWithCache(
       intersection,
       "ALL_OF",
-      options,
+      options4,
       keyName,
       processed,
       usedNames
     );
     types.forEach((type) => {
       ast.params.push(
-        parseAsTypeWithCache(normalizedSchema, type, options, keyName, processed, usedNames)
+        parseAsTypeWithCache(normalizedSchema, type, options4, keyName, processed, usedNames)
       );
     });
     return ast;
@@ -10339,7 +14052,7 @@ function parse(schema2, options, keyName, processed = /* @__PURE__ */ new Map(),
     const ast = parseAsTypeWithCache(
       normalizedSchema,
       type,
-      options,
+      options4,
       keyName,
       processed,
       usedNames
@@ -10348,7 +14061,7 @@ function parse(schema2, options, keyName, processed = /* @__PURE__ */ new Map(),
   }
   throw new ReferenceError("Expected intersection schema. Please file an issue on GitHub.");
 }
-function parseAsTypeWithCache(schema2, type, options, keyName, processed = /* @__PURE__ */ new Map(), usedNames = /* @__PURE__ */ new Set()) {
+function parseAsTypeWithCache(schema2, type, options4, keyName, processed = /* @__PURE__ */ new Map(), usedNames = /* @__PURE__ */ new Set()) {
   let cachedTypeMap = processed.get(schema2);
   if (!cachedTypeMap) {
     cachedTypeMap = /* @__PURE__ */ new Map();
@@ -10360,13 +14073,13 @@ function parseAsTypeWithCache(schema2, type, options, keyName, processed = /* @_
   }
   const ast = {};
   cachedTypeMap.set(type, ast);
-  return Object.assign(ast, parseNonLiteral(schema2, type, options, keyName, processed, usedNames));
+  return Object.assign(ast, parseNonLiteral(schema2, type, options4, keyName, processed, usedNames));
 }
-function parseBooleanSchema(schema2, keyName, options) {
+function parseBooleanSchema(schema2, keyName, options4) {
   if (schema2) {
     return {
       keyName,
-      type: options.unknownAny ? "UNKNOWN" : "ANY"
+      type: options4.unknownAny ? "UNKNOWN" : "ANY"
     };
   }
   return {
@@ -10381,7 +14094,7 @@ function parseLiteral(schema2, keyName) {
     type: "LITERAL"
   };
 }
-function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) {
+function parseNonLiteral(schema2, type, options4, keyName, processed, usedNames) {
   const definitions = getDefinitionsMemoized(getRootSchema(schema2));
   const keyNameFromDefinition = findKey(definitions, (_) => _ === schema2);
   switch (type) {
@@ -10390,25 +14103,25 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
-        params: schema2.allOf.map((_) => parse(_, options, void 0, processed, usedNames)),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
+        params: schema2.allOf.map((_) => parse2(_, options4, void 0, processed, usedNames)),
         type: "INTERSECTION"
       };
     case "ANY":
       return {
-        ...options.unknownAny ? T_UNKNOWN : T_ANY,
+        ...options4.unknownAny ? T_UNKNOWN : T_ANY,
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options)
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4)
       };
     case "ANY_OF":
       return {
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
-        params: schema2.anyOf.map((_) => parse(_, options, void 0, processed, usedNames)),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
+        params: schema2.anyOf.map((_) => parse2(_, options4, void 0, processed, usedNames)),
         type: "UNION"
       };
     case "BOOLEAN":
@@ -10416,7 +14129,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "BOOLEAN"
       };
     case "CUSTOM_TYPE":
@@ -10425,7 +14138,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         deprecated: schema2.deprecated,
         keyName,
         params: schema2.tsType,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "CUSTOM_TYPE"
       };
     case "NAMED_ENUM":
@@ -10437,7 +14150,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
           schema2,
           keyNameFromDefinition ?? keyName,
           usedNames,
-          options
+          options4
         ),
         params: schema2.enum.map((_, n) => ({
           ast: parseLiteral(_, void 0),
@@ -10446,13 +14159,13 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         type: "ENUM"
       };
     case "NAMED_SCHEMA":
-      return newInterface(schema2, options, processed, usedNames, keyName);
+      return newInterface(schema2, options4, processed, usedNames, keyName);
     case "NEVER":
       return {
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "NEVER"
       };
     case "NULL":
@@ -10460,7 +14173,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "NULL"
       };
     case "NUMBER":
@@ -10468,14 +14181,14 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "NUMBER"
       };
     case "OBJECT":
       return {
         comment: schema2.description,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "OBJECT",
         deprecated: schema2.deprecated
       };
@@ -10484,8 +14197,8 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
-        params: schema2.oneOf.map((_) => parse(_, options, void 0, processed, usedNames)),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
+        params: schema2.oneOf.map((_) => parse2(_, options4, void 0, processed, usedNames)),
         type: "UNION"
       };
     case "REFERENCE":
@@ -10495,7 +14208,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "STRING"
       };
     case "TYPED_ARRAY":
@@ -10508,16 +14221,16 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
           keyName,
           maxItems: maxItems2,
           minItems: minItems2,
-          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
-          params: schema2.items.map((_) => parse(_, options, void 0, processed, usedNames)),
+          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
+          params: schema2.items.map((_) => parse2(_, options4, void 0, processed, usedNames)),
           type: "TUPLE"
         };
         if (schema2.additionalItems === true) {
-          arrayType.spreadParam = options.unknownAny ? T_UNKNOWN : T_ANY;
+          arrayType.spreadParam = options4.unknownAny ? T_UNKNOWN : T_ANY;
         } else if (schema2.additionalItems) {
-          arrayType.spreadParam = parse(
+          arrayType.spreadParam = parse2(
             schema2.additionalItems,
-            options,
+            options4,
             void 0,
             processed,
             usedNames
@@ -10529,10 +14242,10 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
           comment: schema2.description,
           deprecated: schema2.deprecated,
           keyName,
-          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
-          params: parse(
+          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
+          params: parse2(
             schema2.items,
-            options,
+            options4,
             `{keyNameFromDefinition}Items`,
             processed,
             usedNames
@@ -10545,12 +14258,12 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         params: schema2.type.map((type2) => {
-          const member = { ...omit(schema2, "$id", "description", "title"), type: type2 };
+          const member = { ...omit2(schema2, "$id", "description", "title"), type: type2 };
           maybeStripDefault(member);
           applySchemaTyping(member);
-          return parse(member, options, void 0, processed, usedNames);
+          return parse2(member, options4, void 0, processed, usedNames);
         }),
         type: "UNION"
       };
@@ -10559,14 +14272,14 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         comment: schema2.description,
         deprecated: schema2.deprecated,
         keyName,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         params: schema2.enum.map((_) => parseLiteral(_, void 0)),
         type: "UNION"
       };
     case "UNNAMED_SCHEMA":
       return newInterface(
         schema2,
-        options,
+        options4,
         processed,
         usedNames,
         keyName,
@@ -10575,7 +14288,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
     case "UNTYPED_ARRAY":
       const minItems = schema2.minItems;
       const maxItems = typeof schema2.maxItems === "number" ? schema2.maxItems : -1;
-      const params = options.unknownAny ? T_UNKNOWN : T_ANY;
+      const params = options4.unknownAny ? T_UNKNOWN : T_ANY;
       if (minItems > 0 || maxItems >= 0) {
         return {
           comment: schema2.description,
@@ -10587,7 +14300,7 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
           params: Array(Math.max(maxItems, minItems) || 0).fill(params),
           // if there is no maximum, then add a spread item to collect the rest
           spreadParam: maxItems >= 0 ? void 0 : params,
-          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+          standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
           type: "TUPLE"
         };
       }
@@ -10596,42 +14309,42 @@ function parseNonLiteral(schema2, type, options, keyName, processed, usedNames) 
         deprecated: schema2.deprecated,
         keyName,
         params,
-        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options),
+        standaloneName: standaloneName(schema2, keyNameFromDefinition, usedNames, options4),
         type: "ARRAY"
       };
   }
 }
-function standaloneName(schema2, keyNameFromDefinition, usedNames, options) {
-  const name = options.customName?.(schema2, keyNameFromDefinition) || schema2.title || schema2.$id || keyNameFromDefinition;
+function standaloneName(schema2, keyNameFromDefinition, usedNames, options4) {
+  const name = options4.customName?.(schema2, keyNameFromDefinition) || schema2.title || schema2.$id || keyNameFromDefinition;
   if (name) {
     return generateName(name, usedNames);
   }
 }
-function newInterface(schema2, options, processed, usedNames, keyName, keyNameFromDefinition) {
-  const name = standaloneName(schema2, keyNameFromDefinition, usedNames, options);
+function newInterface(schema2, options4, processed, usedNames, keyName, keyNameFromDefinition) {
+  const name = standaloneName(schema2, keyNameFromDefinition, usedNames, options4);
   return {
     comment: schema2.description,
     deprecated: schema2.deprecated,
     keyName,
-    params: parseSchema(schema2, options, processed, usedNames, name),
+    params: parseSchema(schema2, options4, processed, usedNames, name),
     standaloneName: name,
-    superTypes: parseSuperTypes(schema2, options, processed, usedNames),
+    superTypes: parseSuperTypes(schema2, options4, processed, usedNames),
     type: "INTERFACE"
   };
 }
-function parseSuperTypes(schema2, options, processed, usedNames) {
+function parseSuperTypes(schema2, options4, processed, usedNames) {
   const superTypes = schema2.extends;
   if (!superTypes) {
     return [];
   }
   return superTypes.map(
-    (_) => parse(_, options, void 0, processed, usedNames)
+    (_) => parse2(_, options4, void 0, processed, usedNames)
   );
 }
-function parseSchema(schema2, options, processed, usedNames, parentSchemaName) {
+function parseSchema(schema2, options4, processed, usedNames, parentSchemaName) {
   const required = new Set(schema2.required ?? []);
   let asts = Object.entries(schema2.properties ?? {}).map(([key, value]) => ({
-    ast: parse(value, options, key, processed, usedNames),
+    ast: parse2(value, options4, key, processed, usedNames),
     isPatternProperty: false,
     isRequired: required.has(key),
     isUnreachableDefinition: false,
@@ -10642,7 +14355,7 @@ function parseSchema(schema2, options, processed, usedNames, parentSchemaName) {
     singlePatternProperty = !schema2.additionalProperties && Object.keys(schema2.patternProperties).length === 1;
     asts = asts.concat(
       Object.entries(schema2.patternProperties).map(([key, value]) => {
-        const ast = parse(value, options, key, processed, usedNames);
+        const ast = parse2(value, options4, key, processed, usedNames);
         const comment = `This interface was referenced by \`${parentSchemaName}\`'s JSON-Schema definition
 via the \`patternProperty\` "${key.replace("*/", "*\\/")}".`;
         ast.comment = ast.comment ? `${ast.comment}
@@ -10658,10 +14371,10 @@ ${comment}` : comment;
       })
     );
   }
-  if (options.unreachableDefinitions) {
+  if (options4.unreachableDefinitions) {
     asts = asts.concat(
       Object.entries(schema2.$defs ?? {}).map(([key, value]) => {
-        const ast = parse(value, options, key, processed, usedNames);
+        const ast = parse2(value, options4, key, processed, usedNames);
         const comment = `This interface was referenced by \`${parentSchemaName}\`'s JSON-Schema
 via the \`definition\` "${key}".`;
         ast.comment = ast.comment ? `${ast.comment}
@@ -10684,7 +14397,7 @@ ${comment}` : comment;
         return asts;
       }
       return asts.concat({
-        ast: options.unknownAny ? T_UNKNOWN_ADDITIONAL_PROPERTIES : T_ANY_ADDITIONAL_PROPERTIES,
+        ast: options4.unknownAny ? T_UNKNOWN_ADDITIONAL_PROPERTIES : T_ANY_ADDITIONAL_PROPERTIES,
         isPatternProperty: false,
         isRequired: true,
         isUnreachableDefinition: false,
@@ -10696,7 +14409,7 @@ ${comment}` : comment;
     // defined via index signatures are already optional
     default:
       return asts.concat({
-        ast: parse(schema2.additionalProperties, options, "[k: string]", processed, usedNames),
+        ast: parse2(schema2.additionalProperties, options4, "[k: string]", processed, usedNames),
         isPatternProperty: false,
         isRequired: true,
         isUnreachableDefinition: false,
@@ -10704,7 +14417,7 @@ ${comment}` : comment;
       });
   }
 }
-function getDefinitions(schema2, isSchema = true, processed = /* @__PURE__ */ new Set()) {
+function getDefinitions(schema2, isSchema2 = true, processed = /* @__PURE__ */ new Set()) {
   if (processed.has(schema2)) {
     return {};
   }
@@ -10720,7 +14433,7 @@ function getDefinitions(schema2, isSchema = true, processed = /* @__PURE__ */ ne
   }
   if (isPlainObject(schema2)) {
     return {
-      ...isSchema && hasDefinitions(schema2) ? schema2.$defs : {},
+      ...isSchema2 && hasDefinitions(schema2) ? schema2.$defs : {},
       ...Object.keys(schema2).reduce(
         (prev, cur) => ({
           ...prev,
@@ -10774,12 +14487,12 @@ var dereferenceNode = (root, node, pointer, dereferencedPaths, refCache, seenCac
   if (!isObject(node)) return node;
   if (typeof node.$ref === "string") {
     const ref = normalizeLocalRef(node.$ref);
-    const cached = refCache.get(ref);
-    if (cached) {
-      if (isObject(cached)) {
-        dereferencedPaths.set(cached, ref);
+    const cached2 = refCache.get(ref);
+    if (cached2) {
+      if (isObject(cached2)) {
+        dereferencedPaths.set(cached2, ref);
       }
-      return cached;
+      return cached2;
     }
     const target = resolvePointer(root, ref);
     if (!isObject(target)) return target;
@@ -10950,9 +14663,9 @@ var DEFAULT_OPTIONS2 = {
   unreachableDefinitions: false,
   unknownAny: true
 };
-function compile(schema2, name, options = {}) {
-  validateOptions(options);
-  const _options = merge({}, DEFAULT_OPTIONS2, options);
+function compile(schema2, name, options4 = {}) {
+  validateOptions(options4);
+  const _options = merge4({}, DEFAULT_OPTIONS2, options4);
   const _schema = cloneDeep(schema2);
   const { dereferencedPaths, dereferencedSchema } = dereference(_schema);
   const linked = link(dereferencedSchema);
@@ -10961,10 +14674,10 @@ function compile(schema2, name, options = {}) {
     throw new ValidationError(errors.join("\n"));
   }
   const normalized = normalize(linked, dereferencedPaths, name, _options);
-  const parsed = parse(normalized, _options);
+  const parsed = parse2(normalized, _options);
   const optimized = optimize(parsed, _options);
   const generated = generate(optimized, _options);
-  const formatted = format(generated, _options);
+  const formatted = format2(generated, _options);
   return formatted;
 }
 var ValidationError = class extends Error {
@@ -11108,14 +14821,14 @@ var buildWrappedObjectSchema = (properties, defs) => {
   }
   return wrappedSchema;
 };
-var compilerOptionsFrom = (options) => ({
+var compilerOptionsFrom = (options4) => ({
   ...DEFAULT_COMPILER_OPTIONS,
-  ...options.compilerOptions,
+  ...options4.compilerOptions,
   bannerComment: "",
   format: false,
   style: {
     ...DEFAULT_COMPILER_OPTIONS.style,
-    ...options.compilerOptions?.style
+    ...options4.compilerOptions?.style
   }
 });
 var emptyScanState = () => ({
@@ -11254,9 +14967,9 @@ var findTypeAliasEnd = (source, start) => {
 var parseGeneratedDeclarations = (source) => {
   const declarations = [];
   const pattern = /export\s+(interface|type)\s+([A-Za-z_$][A-Za-z0-9_$]*)/g;
-  for (let match = pattern.exec(source); match; match = pattern.exec(source)) {
-    const kind = match[1];
-    const name = match[2] ?? "";
+  for (let match4 = pattern.exec(source); match4; match4 = pattern.exec(source)) {
+    const kind = match4[1];
+    const name = match4[2] ?? "";
     if (!IDENTIFIER_PATTERN.test(name)) {
       continue;
     }
@@ -11535,32 +15248,31 @@ var connectionIdentifier = (input, fallback = "connection") => {
 };
 
 // ../sdk/src/tool-result.ts
-import { Effect as Effect10, Schema as Schema13 } from "effect";
-var ToolErrorSchema = Schema13.Struct({
-  code: Schema13.String,
-  message: Schema13.String,
-  status: Schema13.optional(Schema13.Number),
-  details: Schema13.optional(Schema13.Unknown),
-  retryable: Schema13.optional(Schema13.Boolean)
+var ToolErrorSchema = Schema_exports.Struct({
+  code: Schema_exports.String,
+  message: Schema_exports.String,
+  status: Schema_exports.optional(Schema_exports.Number),
+  details: Schema_exports.optional(Schema_exports.Unknown),
+  retryable: Schema_exports.optional(Schema_exports.Boolean)
 });
-var ToolHttpMetaSchema = Schema13.Struct({
-  status: Schema13.Number,
-  headers: Schema13.Record(Schema13.String, Schema13.String)
+var ToolHttpMetaSchema = Schema_exports.Struct({
+  status: Schema_exports.Number,
+  headers: Schema_exports.Record(Schema_exports.String, Schema_exports.String)
 });
-var ToolFileSchema = Schema13.TaggedStruct("ToolFile", {
-  name: Schema13.optional(Schema13.String),
-  mimeType: Schema13.String,
-  encoding: Schema13.Literal("base64"),
-  data: Schema13.String.annotate({
+var ToolFileSchema = Schema_exports.TaggedStruct("ToolFile", {
+  name: Schema_exports.optional(Schema_exports.String),
+  mimeType: Schema_exports.String,
+  encoding: Schema_exports.Literal("base64"),
+  data: Schema_exports.String.annotate({
     description: "Base64-encoded file bytes.",
     contentEncoding: "base64"
   }),
-  byteLength: Schema13.Int.annotate({
+  byteLength: Schema_exports.Int.annotate({
     description: "Raw file size in bytes before base64 encoding."
   })
 });
-var ToolFileJsonSchema = Schema13.toJsonSchemaDocument(ToolFileSchema).schema;
-var matchesToolFileSchema = Schema13.is(ToolFileSchema);
+var ToolFileJsonSchema = Schema_exports.toJsonSchemaDocument(ToolFileSchema).schema;
+var matchesToolFileSchema = Schema_exports.is(ToolFileSchema);
 var isToolFile = (value) => matchesToolFileSchema(value);
 var ToolResult = {
   ok: (data, meta) => ({
@@ -11570,32 +15282,32 @@ var ToolResult = {
   }),
   fail: (error) => ({ ok: false, error })
 };
-var ToolResultSchema = Schema13.Union([
-  Schema13.Struct({
-    ok: Schema13.Literal(true),
-    data: Schema13.Unknown,
-    http: Schema13.optional(ToolHttpMetaSchema)
+var ToolResultSchema = Schema_exports.Union([
+  Schema_exports.Struct({
+    ok: Schema_exports.Literal(true),
+    data: Schema_exports.Unknown,
+    http: Schema_exports.optional(ToolHttpMetaSchema)
   }),
-  Schema13.Struct({ ok: Schema13.Literal(false), error: ToolErrorSchema })
+  Schema_exports.Struct({ ok: Schema_exports.Literal(false), error: ToolErrorSchema })
 ]);
-var isUnknownToolResult = Schema13.is(ToolResultSchema);
+var isUnknownToolResult = Schema_exports.is(ToolResultSchema);
 var isToolResult = (value) => isUnknownToolResult(value);
 var annotateToolResultOutcome = (value) => {
   if (isToolResult(value) && !value.ok) {
-    return Effect10.annotateCurrentSpan({
+    return Effect_exports.annotateCurrentSpan({
       "executor.tool.outcome": "fail",
       "executor.tool.error_code": value.error.code,
       ...value.error.status != null ? { "executor.tool.error_status": value.error.status } : {}
     });
   }
-  return Effect10.annotateCurrentSpan({ "executor.tool.outcome": "ok" });
+  return Effect_exports.annotateCurrentSpan({ "executor.tool.outcome": "ok" });
 };
 
 // ../sdk/src/executor.ts
 var PLUGIN_STORAGE_DELETE_KEY_BATCH_SIZE = 90;
 var PLUGIN_STORAGE_CREATE_ROW_BATCH_SIZE = 90;
 var MAX_APPROVAL_ARGUMENT_PREVIEW_CHARS = 4e3;
-var acceptAllHandler = () => Effect11.succeed(ElicitationResponse.make({ action: "accept" }));
+var acceptAllHandler = () => Effect_exports.succeed(ElicitationResponse.make({ action: "accept" }));
 var resolveElicitationHandler = (onElicitation) => onElicitation === "accept-all" ? acceptAllHandler : onElicitation;
 var ADDRESS_PREFIX = "tools";
 var isOwner = (value) => value === "org" || value === "user";
@@ -11657,11 +15369,11 @@ var createDefaultMemoryDb = (tables) => {
   const db = factory.client(memoryAdapter()).orm(version);
   return { db };
 };
-var decodeJsonFromString = Schema14.decodeUnknownOption(Schema14.UnknownFromJsonString);
+var decodeJsonFromString = Schema_exports.decodeUnknownOption(Schema_exports.UnknownFromJsonString);
 var decodeJsonColumn = (value) => {
   if (value === null || value === void 0) return void 0;
   if (typeof value !== "string") return value;
-  return decodeJsonFromString(value).pipe(Option5.getOrElse(() => value));
+  return decodeJsonFromString(value).pipe(Option_exports.getOrElse(() => value));
 };
 var rowToIntegration = (row, authMethods = [], display) => ({
   slug: IntegrationSlug.make(row.slug),
@@ -11681,8 +15393,8 @@ var rowToIntegrationRecord = (row, authMethods = []) => ({
   ...rowToIntegration(row, authMethods),
   config: decodeJsonColumn(row.config)
 });
-var decodeLastHealth = Schema14.decodeUnknownOption(HealthCheckResult);
-var decodeHealthCheckSpec = Schema14.decodeUnknownOption(HealthCheckSpec);
+var decodeLastHealth = Schema_exports.decodeUnknownOption(HealthCheckResult);
+var decodeHealthCheckSpec = Schema_exports.decodeUnknownOption(HealthCheckSpec);
 var missingOAuthScopesFromProviderState = (value) => {
   const decoded = decodeJsonColumn(value);
   if (decoded == null || typeof decoded !== "object" || Array.isArray(decoded)) return [];
@@ -11707,7 +15419,7 @@ var rowToConnection = (row) => {
     oauthClientOwner: row.oauth_client_owner == null ? null : String(row.oauth_client_owner),
     oauthScope: row.oauth_scope == null ? null : String(row.oauth_scope),
     missingOAuthScopes: missingOAuthScopesFromProviderState(row.provider_state),
-    lastHealth: Option5.getOrNull(decodeLastHealth(row.last_health))
+    lastHealth: Option_exports.getOrNull(decodeLastHealth(row.last_health))
   };
 };
 var PRIMARY_INPUT_VARIABLE = "token";
@@ -11731,7 +15443,7 @@ var connectionItemIds = (row) => {
   if (decoded == null || typeof decoded !== "object") return {};
   return decoded;
 };
-var rowToTool = (row, annotations) => {
+var rowToTool = (row, annotations2) => {
   const owner = row.owner;
   const integration = IntegrationSlug.make(row.integration);
   const connection = ConnectionName.make(row.connection);
@@ -11746,32 +15458,32 @@ var rowToTool = (row, annotations) => {
     description: row.description,
     inputSchema: decodeJsonColumn(row.input_schema),
     outputSchema: decodeJsonColumn(row.output_schema),
-    annotations: annotations ?? decodeJsonColumn(row.annotations)
+    annotations: annotations2 ?? decodeJsonColumn(row.annotations)
   };
 };
 var asLooseStorageDb = (db) => db;
 var makeCoreDb = (fuma) => ({
-  count: (tableName, options) => fuma.use(`${tableName}.count`, (db) => asLooseStorageDb(db).count(tableName, options)),
+  count: (tableName, options4) => fuma.use(`${tableName}.count`, (db) => asLooseStorageDb(db).count(tableName, options4)),
   create: (tableName, row) => fuma.use(
     `${tableName}.create`,
     (db) => asLooseStorageDb(db).create(tableName, row)
   ),
-  createMany: (tableName, rows) => rows.length === 0 ? Effect11.void : fuma.use(`${tableName}.createMany`, (db) => asLooseStorageDb(db).createMany(tableName, rows)).pipe(Effect11.asVoid),
-  deleteMany: (tableName, options = {}) => fuma.use(
+  createMany: (tableName, rows) => rows.length === 0 ? Effect_exports.void : fuma.use(`${tableName}.createMany`, (db) => asLooseStorageDb(db).createMany(tableName, rows)).pipe(Effect_exports.asVoid),
+  deleteMany: (tableName, options4 = {}) => fuma.use(
     `${tableName}.deleteMany`,
-    (db) => asLooseStorageDb(db).deleteMany(tableName, options)
+    (db) => asLooseStorageDb(db).deleteMany(tableName, options4)
   ),
-  findFirst: (tableName, options) => fuma.use(
+  findFirst: (tableName, options4) => fuma.use(
     `${tableName}.findFirst`,
-    (db) => asLooseStorageDb(db).findFirst(tableName, options)
+    (db) => asLooseStorageDb(db).findFirst(tableName, options4)
   ),
-  findMany: (tableName, options = {}) => fuma.use(
+  findMany: (tableName, options4 = {}) => fuma.use(
     `${tableName}.findMany`,
-    (db) => asLooseStorageDb(db).findMany(tableName, options)
+    (db) => asLooseStorageDb(db).findMany(tableName, options4)
   ),
-  updateMany: (tableName, options) => fuma.use(
+  updateMany: (tableName, options4) => fuma.use(
     `${tableName}.updateMany`,
-    (db) => asLooseStorageDb(db).updateMany(tableName, options)
+    (db) => asLooseStorageDb(db).updateMany(tableName, options4)
   )
 });
 var pluginStorageEntryFromRow = (row) => ({
@@ -11850,8 +15562,8 @@ var matchesWhereOperator = (operator, value, operand) => {
   if (operator === "lte") return comparePluginStorageValues(value, operand) <= 0;
   return false;
 };
-var matchesWhereOperators = (value, filter) => {
-  for (const [operator, operand] of Object.entries(filter)) {
+var matchesWhereOperators = (value, filter2) => {
+  for (const [operator, operand] of Object.entries(filter2)) {
     if (!matchesWhereOperator(operator, value, operand)) return false;
   }
   return true;
@@ -11898,13 +15610,13 @@ var makePluginStorageFacade = (input) => {
     return l - r || left.key.localeCompare(right.key);
   });
   const getVisible = (collection, key) => input.core.findMany("plugin_storage", { where: whereFor(collection, key) }).pipe(
-    Effect11.map((rows) => sortByOwnerPrecedence(rows)[0] ?? null),
-    Effect11.map((row) => row ? pluginStorageEntryFromRow(row) : null)
+    Effect_exports.map((rows) => sortByOwnerPrecedence(rows)[0] ?? null),
+    Effect_exports.map((row) => row ? pluginStorageEntryFromRow(row) : null)
   );
   const getForOwnerImpl = (owner, collection, key) => input.core.findFirst("plugin_storage", {
     where: whereOwner(owner, collection, key)
-  }).pipe(Effect11.map((row) => row ? pluginStorageEntryFromRow(row) : null));
-  const putImpl = (owner, collection, key, data) => Effect11.gen(function* () {
+  }).pipe(Effect_exports.map((row) => row ? pluginStorageEntryFromRow(row) : null));
+  const putImpl = (owner, collection, key, data) => Effect_exports.gen(function* () {
     const os = ownerSubject(owner);
     if (!os) {
       return yield* new StorageError({
@@ -11940,7 +15652,7 @@ var makePluginStorageFacade = (input) => {
     });
     return pluginStorageEntryFromRow(created);
   });
-  const removeImpl = (owner, collection, key) => Effect11.gen(function* () {
+  const removeImpl = (owner, collection, key) => Effect_exports.gen(function* () {
     const os = ownerSubject(owner);
     if (!os) {
       return yield* new StorageError({
@@ -11964,7 +15676,7 @@ var makePluginStorageFacade = (input) => {
     }
     return grouped;
   };
-  const deleteManyImpl = (owner, subject, entries) => Effect11.gen(function* () {
+  const deleteManyImpl = (owner, subject, entries) => Effect_exports.gen(function* () {
     for (const [collection, keys] of keysByCollection(entries)) {
       const uniqueKeys = [...keys];
       for (let offset = 0; offset < uniqueKeys.length; offset += PLUGIN_STORAGE_DELETE_KEY_BATCH_SIZE) {
@@ -11981,7 +15693,7 @@ var makePluginStorageFacade = (input) => {
       }
     }
   });
-  const putManyImpl = (owner, entries) => Effect11.gen(function* () {
+  const putManyImpl = (owner, entries) => Effect_exports.gen(function* () {
     const os = ownerSubject(owner);
     if (!os) {
       return yield* new StorageError({
@@ -12024,7 +15736,7 @@ var makePluginStorageFacade = (input) => {
       );
     }
   });
-  const removeManyImpl = (owner, entries) => Effect11.gen(function* () {
+  const removeManyImpl = (owner, entries) => Effect_exports.gen(function* () {
     const os = ownerSubject(owner);
     if (!os) {
       return yield* new StorageError({
@@ -12034,7 +15746,7 @@ var makePluginStorageFacade = (input) => {
     }
     yield* deleteManyImpl(owner, os.subject, entries);
   });
-  const queryCollection = (definition, queryInput) => Effect11.gen(function* () {
+  const queryCollection = (definition, queryInput) => Effect_exports.gen(function* () {
     const validationError = pluginStorageQueryValidationError(
       definition,
       queryInput
@@ -12080,12 +15792,12 @@ var makePluginStorageFacade = (input) => {
         storageInput.data
       ),
       query: (storageInput) => queryCollection(definition, storageInput),
-      count: (storageInput) => queryCollection(definition, storageInput).pipe(Effect11.map((rows) => rows.length)),
+      count: (storageInput) => queryCollection(definition, storageInput).pipe(Effect_exports.map((rows) => rows.length)),
       remove: (storageInput) => removeImpl(storageInput.owner, definition.name, storageInput.key)
     }),
     get: (storageInput) => getVisible(storageInput.collection, storageInput.key),
     getForOwner: (storageInput) => getForOwnerImpl(storageInput.owner, storageInput.collection, storageInput.key),
-    list: (storageInput) => Effect11.gen(function* () {
+    list: (storageInput) => Effect_exports.gen(function* () {
       const rows = yield* input.core.findMany("plugin_storage", {
         where: whereFor(storageInput.collection)
       });
@@ -12100,8 +15812,8 @@ var makePluginStorageFacade = (input) => {
   };
 };
 var approvalArgumentPreview = (args) => {
-  const text = JSON.stringify(args ?? {}, null, 2) ?? "null";
-  return text.length > MAX_APPROVAL_ARGUMENT_PREVIEW_CHARS ? `${text.slice(0, MAX_APPROVAL_ARGUMENT_PREVIEW_CHARS)}...` : text;
+  const text3 = JSON.stringify(args ?? {}, null, 2) ?? "null";
+  return text3.length > MAX_APPROVAL_ARGUMENT_PREVIEW_CHARS ? `${text3.slice(0, MAX_APPROVAL_ARGUMENT_PREVIEW_CHARS)}...` : text3;
 };
 var EXECUTOR_INTEGRATION_ID = "executor";
 var EXECUTOR_INTEGRATION = {
@@ -12118,15 +15830,15 @@ var staticToolSchemaRoot = (schema2, side) => {
   if (!schema2) return void 0;
   const standard = isReadonlyRecord(schema2) ? schema2["~standard"] : void 0;
   if (!isReadonlyRecord(standard)) return schema2;
-  const jsonSchema = standard["jsonSchema"];
-  if (!isReadonlyRecord(jsonSchema)) return schema2;
-  const materialize = jsonSchema[side];
-  return typeof materialize === "function" ? materialize({ target: "draft-07" }) : jsonSchema;
+  const jsonSchema2 = standard["jsonSchema"];
+  if (!isReadonlyRecord(jsonSchema2)) return schema2;
+  const materialize = jsonSchema2[side];
+  return typeof materialize === "function" ? materialize({ target: "draft-07" }) : jsonSchema2;
 };
-var createExecutor = (config) => Effect11.gen(function* () {
+var createExecutor = (config) => Effect_exports.gen(function* () {
   const defaultPlugins = () => {
-    const empty = [];
-    return empty;
+    const empty11 = [];
+    return empty11;
   };
   const { plugins: userPlugins = defaultPlugins() } = config;
   const tenant = String(config.tenant);
@@ -12145,12 +15857,12 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     return { tenant, owner, subject };
   };
-  const requireUserSubject = (owner) => owner === "user" && subject == null ? Effect11.fail(
+  const requireUserSubject = (owner) => owner === "user" && subject == null ? Effect_exports.fail(
     new StorageError({
       message: `Cannot target owner "user": executor has no subject.`,
       cause: void 0
     })
-  ) : Effect11.void;
+  ) : Effect_exports.void;
   const plugins = config.coreTools ? [
     coreToolsPlugin({
       webBaseUrl: config.coreTools.webBaseUrl,
@@ -12159,19 +15871,19 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }),
     ...userPlugins
   ] : userPlugins;
-  const tables = yield* Effect11.try({
+  const tables = yield* Effect_exports.try({
     try: () => collectTables(),
     catch: (cause) => storageFailureFromUnknown("Failed to collect executor tables", cause)
   });
-  const dbInput = yield* Effect11.suspend(() => {
-    if (!config.db) return Effect11.succeed(createDefaultMemoryDb(tables));
-    if (typeof config.db !== "function") return Effect11.succeed(config.db);
+  const dbInput = yield* Effect_exports.suspend(() => {
+    if (!config.db) return Effect_exports.succeed(createDefaultMemoryDb(tables));
+    if (typeof config.db !== "function") return Effect_exports.succeed(config.db);
     const out = config.db({ tables });
-    return Effect11.isEffect(out) ? out : Effect11.succeed(out);
+    return Effect_exports.isEffect(out) ? out : Effect_exports.succeed(out);
   });
   const rootDbUntyped = "db" in dbInput ? dbInput.db : dbInput;
   const closeDb = "db" in dbInput ? dbInput.close : void 0;
-  yield* Effect11.try({
+  yield* Effect_exports.try({
     try: () => {
       validateExecutorDbTables(tables, rootDbUntyped.internal.tables);
       validateExecutorOwnerPolicyTables(rootDbUntyped.internal.tables);
@@ -12183,7 +15895,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
   const fuma = makeFumaClient(rootDb);
   const core = makeCoreDb(fuma);
   const blobs = config.blobs ?? makeFumaBlobStore(fuma);
-  const transaction = (effect) => fuma.transaction(effect);
+  const transaction = (effect2) => fuma.transaction(effect2);
   const staticTools = /* @__PURE__ */ new Map();
   const runtimes = /* @__PURE__ */ new Map();
   let activeToolPolicyProvider = null;
@@ -12223,7 +15935,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
   const registerCredentialProvider = (provider, sourceLabel) => {
     const key = String(provider.key);
     if (credentialProviders.has(key)) {
-      return Effect11.fail(
+      return Effect_exports.fail(
         new StorageError({
           message: `Duplicate credential provider key: ${key} (from ${sourceLabel})`,
           cause: void 0
@@ -12232,7 +15944,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     credentialProviders.set(key, provider);
     credentialProviderOrder.push(key);
-    return Effect11.void;
+    return Effect_exports.void;
   };
   for (const provider of config.providers ?? []) {
     yield* registerCredentialProvider(provider, "config");
@@ -12261,7 +15973,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
   const loadOAuthClientRow = (owner, slug) => core.findFirst("oauth_client", {
     where: (b) => b.and(byOwner(owner)(b), b("slug", "=", slug))
   });
-  const performTokenRefresh = (row, provider) => Effect11.gen(function* () {
+  const performTokenRefresh = (row, provider) => Effect_exports.gen(function* () {
     const owner = row.owner;
     const reauth = (message) => new CredentialResolutionError({
       owner,
@@ -12291,14 +16003,14 @@ var createExecutor = (config) => Effect11.gen(function* () {
       // problem, so do NOT map invalid_grant → reauth. Surface as a
       // StorageError; the in-flight gate clears on settle, so the next
       // invoke retries (handles transient AS/network blips).
-      Effect11.mapError(
+      Effect_exports.mapError(
         (cause) => new StorageError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuth2Error carries a typed `message`
           message: `Client-credentials token request failed: ${cause.message}`,
           cause
         })
       )
-    ) : yield* Effect11.gen(function* () {
+    ) : yield* Effect_exports.gen(function* () {
       if (!row.refresh_item_id) {
         return yield* reauth("No refresh token is stored for this connection.");
       }
@@ -12318,7 +16030,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
         endpointUrlPolicy: config.oauthEndpointUrlPolicy,
         fetch: config.fetch
       }).pipe(
-        Effect11.mapError(
+        Effect_exports.mapError(
           (cause) => cause.error === "invalid_grant" ? reauth(
             // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: OAuth2Error carries a typed `message`
             `OAuth token refresh was rejected (invalid_grant): ${cause.message}`
@@ -12338,18 +16050,18 @@ var createExecutor = (config) => Effect11.gen(function* () {
       }
     }
     const nextExpiresAt = typeof token.expires_in === "number" ? Date.now() + token.expires_in * 1e3 : null;
-    const set = {
+    const set5 = {
       expires_at: nextExpiresAt,
       updated_at: /* @__PURE__ */ new Date()
     };
-    if (token.scope !== void 0) set.oauth_scope = token.scope;
+    if (token.scope !== void 0) set5.oauth_scope = token.scope;
     yield* core.updateMany("connection", {
       where: (b) => b.and(
         byOwner(owner)(b),
         b("integration", "=", String(row.integration)),
         b("name", "=", String(row.name))
       ),
-      set
+      set: set5
     });
     return token.access_token;
   });
@@ -12359,20 +16071,20 @@ var createExecutor = (config) => Effect11.gen(function* () {
     // token; parallel grants would race on a consumed token — v1's refresh
     // deferred-map). The gate is cleared once the refresh settles so a later
     // expiry can refresh again.
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const key = connectionKey(row);
       const existing = refreshInFlight.get(key);
       if (existing) return yield* existing;
-      const memoized = yield* Effect11.cached(performTokenRefresh(row, provider));
+      const memoized = yield* Effect_exports.cached(performTokenRefresh(row, provider));
       const gated = memoized.pipe(
-        Effect11.ensuring(Effect11.sync(() => refreshInFlight.delete(key)))
+        Effect_exports.ensuring(Effect_exports.sync(() => refreshInFlight.delete(key)))
       );
       const winner = refreshInFlight.get(key) ?? gated;
       if (winner === gated) refreshInFlight.set(key, gated);
       return yield* winner;
     })
   );
-  const resolveConnectionValues = (row) => Effect11.gen(function* () {
+  const resolveConnectionValues = (row) => Effect_exports.gen(function* () {
     const provider = credentialProviders.get(row.provider);
     if (!provider) {
       return yield* new CredentialProviderNotRegisteredError({
@@ -12392,9 +16104,9 @@ var createExecutor = (config) => Effect11.gen(function* () {
   }).pipe(
     // CredentialProviderNotRegisteredError is part of CredentialResolution
     // for ctx.connections.resolveValue's StorageFailure channel — fold it.
-    Effect11.catchTag(
+    Effect_exports.catchTag(
       "CredentialProviderNotRegisteredError",
-      (err) => Effect11.fail(
+      (err) => Effect_exports.fail(
         new StorageError({
           message: `Credential provider "${err.provider}" is not registered.`,
           cause: err
@@ -12403,12 +16115,12 @@ var createExecutor = (config) => Effect11.gen(function* () {
     )
   );
   const resolveConnectionValue = (row) => resolveConnectionValues(row).pipe(
-    Effect11.map((values) => values[PRIMARY_INPUT_VARIABLE] ?? null)
+    Effect_exports.map((values) => values[PRIMARY_INPUT_VARIABLE] ?? null)
   );
-  const foldResolutionFailure = (effect) => effect.pipe(
-    Effect11.catchTag(
+  const foldResolutionFailure = (effect2) => effect2.pipe(
+    Effect_exports.catchTag(
       "CredentialResolutionError",
-      (err) => Effect11.fail(
+      (err) => Effect_exports.fail(
         new StorageError({
           // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: CredentialResolutionError carries a typed `message` field
           message: err.message,
@@ -12418,14 +16130,14 @@ var createExecutor = (config) => Effect11.gen(function* () {
     )
   );
   const resolveConnectionValueByRef = (ref) => foldResolutionFailure(
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const row = yield* findConnectionRow(ref);
       if (!row) return null;
       return yield* resolveConnectionValue(row);
     })
   );
   const resolveConnectionValuesByRef = (ref) => foldResolutionFailure(
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const row = yield* findConnectionRow(ref);
       if (!row) return {};
       return yield* resolveConnectionValues(row);
@@ -12460,13 +16172,13 @@ var createExecutor = (config) => Effect11.gen(function* () {
       return {};
     }
   };
-  const describeHealthCheckForRow = (row) => Option5.getOrNull(decodeHealthCheckSpec(row.health_check));
-  const foldPluginFailure = (effect, message) => effect.pipe(
-    Effect11.catch(
-      (cause) => isStorageFailure(cause) ? Effect11.fail(cause) : Effect11.fail(new StorageError({ message, cause }))
+  const describeHealthCheckForRow = (row) => Option_exports.getOrNull(decodeHealthCheckSpec(row.health_check));
+  const foldPluginFailure = (effect2, message) => effect2.pipe(
+    Effect_exports.catch(
+      (cause) => isStorageFailure(cause) ? Effect_exports.fail(cause) : Effect_exports.fail(new StorageError({ message, cause }))
     )
   );
-  const integrationsList = () => Effect11.gen(function* () {
+  const integrationsList = () => Effect_exports.gen(function* () {
     const rows = yield* core.findMany("integration", {});
     const staticIntegrationList = staticIntegrations().map(staticDeclToIntegration);
     const dbIntegrations = rows.map(
@@ -12484,7 +16196,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       )
     ];
   });
-  const integrationsGet = (slug) => Effect11.gen(function* () {
+  const integrationsGet = (slug) => Effect_exports.gen(function* () {
     const staticIntegration = staticIntegrations().find(
       (integration) => integration.id === String(slug)
     );
@@ -12493,12 +16205,12 @@ var createExecutor = (config) => Effect11.gen(function* () {
     return row ? rowToIntegration(row, describeAuthMethodsForRow(row), describeDisplayForRow(row)) : null;
   });
   const integrationsGetRecord = (slug) => findIntegrationRow(slug).pipe(
-    Effect11.map(
+    Effect_exports.map(
       (row) => row ? rowToIntegrationRecord(row, describeAuthMethodsForRow(row)) : null
     )
   );
   const integrationsRegister = (pluginId, input) => transaction(
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const now = /* @__PURE__ */ new Date();
       const existing = yield* findIntegrationRow(input.slug);
       const config2 = input.config === void 0 ? null : input.config;
@@ -12531,27 +16243,27 @@ var createExecutor = (config) => Effect11.gen(function* () {
       });
     })
   );
-  const integrationsUpdate = (slug, patch) => Effect11.gen(function* () {
+  const integrationsUpdate = (slug, patch4) => Effect_exports.gen(function* () {
     const now = /* @__PURE__ */ new Date();
-    const set = { updated_at: now };
-    if (patch.name !== void 0) set.name = patch.name;
-    if (patch.description !== void 0) set.description = patch.description;
-    if (patch.config !== void 0) {
-      set.config = patch.config;
-      set.config_revised_at = now.getTime();
+    const set5 = { updated_at: now };
+    if (patch4.name !== void 0) set5.name = patch4.name;
+    if (patch4.description !== void 0) set5.description = patch4.description;
+    if (patch4.config !== void 0) {
+      set5.config = patch4.config;
+      set5.config_revised_at = now.getTime();
     }
     yield* core.updateMany("integration", {
       where: (b) => b("slug", "=", String(slug)),
-      set
+      set: set5
     });
   });
-  const integrationsUpdatePublic = (slug, patch) => Effect11.gen(function* () {
+  const integrationsUpdatePublic = (slug, patch4) => Effect_exports.gen(function* () {
     const existing = yield* findIntegrationRow(slug);
     if (!existing) return yield* new IntegrationNotFoundError({ slug });
-    yield* integrationsUpdate(slug, patch);
+    yield* integrationsUpdate(slug, patch4);
   });
   const integrationsRemove = (slug) => transaction(
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const existing = yield* findIntegrationRow(slug);
       if (!existing) return;
       if (!existing.can_remove) {
@@ -12563,7 +16275,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
           ctx: runtime.ctx,
           integration: rowToIntegrationRecord(existing, describeAuthMethodsForRow(existing))
         }).pipe(
-          Effect11.mapError(
+          Effect_exports.mapError(
             (cause) => pluginStorageFailure(existing.plugin_id, "removeIntegration", cause)
           )
         );
@@ -12577,21 +16289,21 @@ var createExecutor = (config) => Effect11.gen(function* () {
       });
     })
   );
-  const integrationsDetect = (url) => Effect11.gen(function* () {
+  const integrationsDetect = (url) => Effect_exports.gen(function* () {
     const results = [];
     for (const runtime of runtimes.values()) {
       if (!runtime.plugin.detect) continue;
-      const result = yield* runtime.plugin.detect({ ctx: runtime.ctx, url }).pipe(
-        Effect11.mapError((cause) => pluginStorageFailure(runtime.plugin.id, "detect", cause))
+      const result2 = yield* runtime.plugin.detect({ ctx: runtime.ctx, url }).pipe(
+        Effect_exports.mapError((cause) => pluginStorageFailure(runtime.plugin.id, "detect", cause))
       );
-      if (result) results.push(result);
+      if (result2) results.push(result2);
     }
     return results;
   });
   const integrationHealthCheckGet = (slug) => findIntegrationRow(slug).pipe(
-    Effect11.map((row) => row ? describeHealthCheckForRow(row) : null)
+    Effect_exports.map((row) => row ? describeHealthCheckForRow(row) : null)
   );
-  const integrationHealthCheckCandidates = (slug) => Effect11.gen(function* () {
+  const integrationHealthCheckCandidates = (slug) => Effect_exports.gen(function* () {
     const row = yield* findIntegrationRow(slug);
     if (!row) return yield* new IntegrationNotFoundError({ slug });
     const runtime = runtimes.get(row.plugin_id);
@@ -12603,7 +16315,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       `Listing health-check candidates for "${slug}" failed.`
     );
   });
-  const integrationSetHealthCheck = (slug, spec) => Effect11.gen(function* () {
+  const integrationSetHealthCheck = (slug, spec) => Effect_exports.gen(function* () {
     const row = yield* findIntegrationRow(slug);
     if (!row) return yield* new IntegrationNotFoundError({ slug });
     yield* core.updateMany("integration", {
@@ -12617,10 +16329,10 @@ var createExecutor = (config) => Effect11.gen(function* () {
     checkedAt: Date.now(),
     detail: `${toolSyncHealthDetailPrefix}: ${reason}`
   });
-  const syncHealthReason = (result) => result.incompleteReason ?? "plugin returned an incomplete tool catalog";
-  const produceConnectionTools = (integrationRow, ref, mode = "explicit") => Effect11.gen(function* () {
+  const syncHealthReason = (result2) => result2.incompleteReason ?? "plugin returned an incomplete tool catalog";
+  const produceConnectionTools = (integrationRow, ref, mode = "explicit") => Effect_exports.gen(function* () {
     const runtime = runtimes.get(integrationRow.plugin_id);
-    const keys = yield* Effect11.try({
+    const keys = yield* Effect_exports.try({
       try: () => ownedKeys(ref.owner),
       catch: (cause) => storageFailureFromUnknown("invalid owner", cause)
     });
@@ -12637,7 +16349,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     );
     const isToolSyncHealth = (health) => health?.detail?.startsWith(toolSyncHealthDetailPrefix) === true;
     const syncedSet = (row) => {
-      const health = row ? Option5.getOrNull(decodeLastHealth(row.last_health)) : null;
+      const health = row ? Option_exports.getOrNull(decodeLastHealth(row.last_health)) : null;
       return isToolSyncHealth(health) ? { tools_synced_at: Date.now(), last_health: null, updated_at: /* @__PURE__ */ new Date() } : { tools_synced_at: Date.now() };
     };
     const stampSynced = (row) => core.updateMany("connection", {
@@ -12655,7 +16367,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     const existingRow = yield* findConnectionRow(ref);
     if (existingRow && existingRow.oauth_client == null && existingRow.template !== String(NO_AUTH_TEMPLATE) && Object.keys(connectionItemIds(existingRow)).length === 0) {
       yield* transaction(
-        Effect11.gen(function* () {
+        Effect_exports.gen(function* () {
           yield* core.deleteMany("tool", { where });
           yield* core.deleteMany("definition", { where });
           yield* stampSynced(existingRow);
@@ -12665,7 +16377,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     if (!runtime?.plugin.resolveTools) {
       yield* transaction(
-        Effect11.gen(function* () {
+        Effect_exports.gen(function* () {
           yield* core.deleteMany("tool", { where });
           yield* core.deleteMany("definition", { where });
           yield* stampSynced(existingRow);
@@ -12673,7 +16385,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       );
       return [];
     }
-    const result = yield* runtime.plugin.resolveTools({
+    const result2 = yield* runtime.plugin.resolveTools({
       ctx: runtime.ctx,
       integration: rowToIntegration(integrationRow),
       config: decodeJsonColumn(integrationRow.config),
@@ -12684,14 +16396,14 @@ var createExecutor = (config) => Effect11.gen(function* () {
       getValue: () => resolveConnectionValueByRef(ref),
       getValues: () => resolveConnectionValuesByRef(ref)
     }).pipe(
-      Effect11.mapError(
+      Effect_exports.mapError(
         (cause) => pluginStorageFailure(integrationRow.plugin_id, "resolveTools", cause)
       )
     );
-    if (result.incomplete === true) {
-      const reason = syncHealthReason(result);
+    if (result2.incomplete === true) {
+      const reason = syncHealthReason(result2);
       yield* stampSyncedWithHealth(reason);
-      yield* Effect11.logWarning("executor tool sync preserved catalog", {
+      yield* Effect_exports.logWarning("executor tool sync preserved catalog", {
         reason,
         integration: String(ref.integration),
         connection: String(ref.name)
@@ -12699,12 +16411,12 @@ var createExecutor = (config) => Effect11.gen(function* () {
       const keptRows = yield* core.findMany("tool", { where });
       return keptRows.map((row) => rowToTool(row));
     }
-    if (mode === "background" && runtime.plugin.remoteToolCatalog === true && result.tools.length === 0) {
+    if (mode === "background" && runtime.plugin.remoteToolCatalog === true && result2.tools.length === 0) {
       const keptRows = yield* core.findMany("tool", { where });
       if (keptRows.length > 0) {
         const reason = "background tool sync produced an authoritative empty catalog for a connection with existing tools";
         yield* stampSyncedWithHealth(reason);
-        yield* Effect11.logWarning("executor tool sync preserved nonzero catalog", {
+        yield* Effect_exports.logWarning("executor tool sync preserved nonzero catalog", {
           reason,
           integration: String(ref.integration),
           connection: String(ref.name),
@@ -12714,7 +16426,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       }
     }
     const now = /* @__PURE__ */ new Date();
-    const toolRows = result.tools.map((tool2) => ({
+    const toolRows = result2.tools.map((tool2) => ({
       tenant: keys.tenant,
       owner: keys.owner,
       subject: keys.subject,
@@ -12729,7 +16441,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       created_at: now,
       updated_at: now
     }));
-    const definitionRows = Object.entries(result.definitions ?? {}).map(([name, schema2]) => ({
+    const definitionRows = Object.entries(result2.definitions ?? {}).map(([name, schema2]) => ({
       tenant: keys.tenant,
       owner: keys.owner,
       subject: keys.subject,
@@ -12741,7 +16453,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       created_at: now
     }));
     yield* transaction(
-      Effect11.gen(function* () {
+      Effect_exports.gen(function* () {
         yield* core.deleteMany("tool", { where });
         yield* core.deleteMany("definition", { where });
         yield* core.createMany("tool", toolRows);
@@ -12749,7 +16461,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
         yield* stampSynced(existingRow);
       })
     );
-    return result.tools.map(
+    return result2.tools.map(
       (tool2) => rowToTool(
         {
           tenant: keys.tenant,
@@ -12770,7 +16482,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       )
     );
   });
-  const connectionsCreate = (input) => Effect11.gen(function* () {
+  const connectionsCreate = (input) => Effect_exports.gen(function* () {
     const name = connectionIdentifier(String(input.name));
     if (input.owner === "user" && subject == null) {
       return yield* new InvalidConnectionInputError({
@@ -12835,19 +16547,19 @@ var createExecutor = (config) => Effect11.gen(function* () {
         itemIds[i.variable] = itemId;
       }
     }
-    const keys = yield* Effect11.try({
+    const keys = yield* Effect_exports.try({
       try: () => ownedKeys(input.owner),
       catch: (cause) => storageFailureFromUnknown("invalid owner", cause)
     });
     const now = /* @__PURE__ */ new Date();
     yield* transaction(
-      Effect11.gen(function* () {
+      Effect_exports.gen(function* () {
         const existing = yield* findConnectionRow({
           owner: input.owner,
           integration: input.integration,
           name
         });
-        const set = {
+        const set5 = {
           template: String(input.template),
           provider: providerKey,
           item_ids: itemIds,
@@ -12864,7 +16576,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
               b("integration", "=", String(input.integration)),
               b("name", "=", String(name))
             ),
-            set
+            set: set5
           });
         } else {
           yield* core.create("connection", {
@@ -12895,7 +16607,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       name
     };
     yield* produceConnectionTools(integrationRow, ref).pipe(
-      Effect11.catchTag("IntegrationNotFoundError", () => Effect11.succeed([]))
+      Effect_exports.catchTag("IntegrationNotFoundError", () => Effect_exports.succeed([]))
     );
     const row = yield* findConnectionRow(ref);
     return row ? rowToConnection(row) : rowToConnection({
@@ -12918,7 +16630,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       updated_at: now
     });
   });
-  const mintOAuthConnection = (input) => Effect11.gen(function* () {
+  const mintOAuthConnection = (input) => Effect_exports.gen(function* () {
     const name = connectionIdentifier(String(input.name));
     yield* requireUserSubject(input.owner);
     const integrationRow = yield* findIntegrationRow(input.integration);
@@ -12928,7 +16640,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
         cause: void 0
       });
     }
-    const keys = yield* Effect11.try({
+    const keys = yield* Effect_exports.try({
       try: () => ownedKeys(input.owner),
       catch: (cause) => storageFailureFromUnknown("invalid owner", cause)
     });
@@ -12939,9 +16651,9 @@ var createExecutor = (config) => Effect11.gen(function* () {
       name
     };
     yield* transaction(
-      Effect11.gen(function* () {
+      Effect_exports.gen(function* () {
         const existing = yield* findConnectionRow(ref);
-        const set = {
+        const set5 = {
           template: String(input.template),
           provider: input.provider,
           item_ids: { [PRIMARY_INPUT_VARIABLE]: input.itemId },
@@ -12962,7 +16674,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
               b("integration", "=", String(input.integration)),
               b("name", "=", String(name))
             ),
-            set
+            set: set5
           });
         } else {
           yield* core.create("connection", {
@@ -12992,7 +16704,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       })
     );
     yield* produceConnectionTools(integrationRow, ref).pipe(
-      Effect11.catchTag("IntegrationNotFoundError", () => Effect11.succeed([]))
+      Effect_exports.catchTag("IntegrationNotFoundError", () => Effect_exports.succeed([]))
     );
     const row = yield* findConnectionRow(ref);
     return row ? rowToConnection(row) : rowToConnection({
@@ -13017,11 +16729,11 @@ var createExecutor = (config) => Effect11.gen(function* () {
       updated_at: now
     });
   });
-  const connectionsList = (filter) => Effect11.gen(function* () {
+  const connectionsList = (filter2) => Effect_exports.gen(function* () {
     const rows = yield* core.findMany("connection", {
       where: (b) => b.and(
-        filter?.integration === void 0 ? true : b("integration", "=", String(filter.integration)),
-        filter?.owner === void 0 ? true : b("owner", "=", filter.owner)
+        filter2?.integration === void 0 ? true : b("integration", "=", String(filter2.integration)),
+        filter2?.owner === void 0 ? true : b("owner", "=", filter2.owner)
       )
     });
     const connections = rows.map(rowToConnection);
@@ -13036,8 +16748,8 @@ var createExecutor = (config) => Effect11.gen(function* () {
       )
     );
   });
-  const connectionsGet = (ref) => findConnectionRow(ref).pipe(Effect11.map((row) => row ? rowToConnection(row) : null));
-  const connectionsUpdate = (ref, input) => Effect11.gen(function* () {
+  const connectionsGet = (ref) => findConnectionRow(ref).pipe(Effect_exports.map((row) => row ? rowToConnection(row) : null));
+  const connectionsUpdate = (ref, input) => Effect_exports.gen(function* () {
     const row = yield* findConnectionRow(ref);
     if (!row) {
       return yield* new ConnectionNotFoundError({
@@ -13046,22 +16758,22 @@ var createExecutor = (config) => Effect11.gen(function* () {
         name: ref.name
       });
     }
-    const set = { updated_at: /* @__PURE__ */ new Date() };
-    if (input.description !== void 0) set.description = input.description;
-    if (input.identityLabel !== void 0) set.identity_label = input.identityLabel;
+    const set5 = { updated_at: /* @__PURE__ */ new Date() };
+    if (input.description !== void 0) set5.description = input.description;
+    if (input.identityLabel !== void 0) set5.identity_label = input.identityLabel;
     yield* core.updateMany("connection", {
       where: (b) => b.and(
         byOwner(ref.owner)(b),
         b("integration", "=", String(ref.integration)),
         b("name", "=", String(ref.name))
       ),
-      set
+      set: set5
     });
     const updated = yield* findConnectionRow(ref);
     return rowToConnection(updated ?? row);
   });
   const connectionsRemove = (ref) => transaction(
-    Effect11.gen(function* () {
+    Effect_exports.gen(function* () {
       const row = yield* findConnectionRow(ref);
       if (!row) {
         return yield* new ConnectionNotFoundError({
@@ -13078,7 +16790,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
           integration: ref.integration,
           connection: ref
         }).pipe(
-          Effect11.mapError(
+          Effect_exports.mapError(
             (cause) => pluginStorageFailure(integrationRow.plugin_id, "removeConnection", cause)
           )
         );
@@ -13099,7 +16811,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       });
     })
   );
-  const connectionsRefresh = (ref) => Effect11.gen(function* () {
+  const connectionsRefresh = (ref) => Effect_exports.gen(function* () {
     const row = yield* findConnectionRow(ref);
     if (!row) {
       return yield* new ConnectionNotFoundError({
@@ -13115,20 +16827,20 @@ var createExecutor = (config) => Effect11.gen(function* () {
     return yield* produceConnectionTools(integrationRow, ref);
   });
   const unknownHealth = () => ({ status: "unknown", checkedAt: Date.now() });
-  const persistHealthResult = (ref, result) => core.updateMany("connection", {
+  const persistHealthResult = (ref, result2) => core.updateMany("connection", {
     where: (b) => b.and(
       b("owner", "=", String(ref.owner)),
       b("integration", "=", String(ref.integration)),
       b("name", "=", String(ref.name))
     ),
-    set: { last_health: result, updated_at: /* @__PURE__ */ new Date() }
-  }).pipe(Effect11.ignore);
-  const healthFromCredentialResolutionError = (err) => err.reauthRequired === true ? Effect11.succeed({
+    set: { last_health: result2, updated_at: /* @__PURE__ */ new Date() }
+  }).pipe(Effect_exports.ignore);
+  const healthFromCredentialResolutionError = (err) => err.reauthRequired === true ? Effect_exports.succeed({
     status: "expired",
     checkedAt: Date.now(),
     // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: CredentialResolutionError carries a typed `message` field
     detail: err.message
-  }) : Effect11.fail(
+  }) : Effect_exports.fail(
     new StorageError({
       // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: CredentialResolutionError carries a typed `message` field
       message: err.message,
@@ -13147,17 +16859,17 @@ var createExecutor = (config) => Effect11.gen(function* () {
     detail: failure.message
   };
   const oauthCredentialHealthWithoutProbe = (row) => resolveConnectionValues(row).pipe(
-    Effect11.as({
+    Effect_exports.as({
       status: "healthy",
       checkedAt: Date.now(),
       detail: "Credential resolved (no probe configured)."
     }),
-    Effect11.catchTag(
+    Effect_exports.catchTag(
       "CredentialResolutionError",
-      (failure) => Effect11.succeed(healthFromCredentialResolutionFailure(failure))
+      (failure) => Effect_exports.succeed(healthFromCredentialResolutionFailure(failure))
     )
   );
-  const resolveInFlightValues = (input) => Effect11.gen(function* () {
+  const resolveInFlightValues = (input) => Effect_exports.gen(function* () {
     const out = {};
     for (const { variable, origin } of normalizeConnectionInputs(input)) {
       if ("value" in origin) {
@@ -13175,7 +16887,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     return out;
   });
-  const connectionCheckHealth = (ref, options) => Effect11.gen(function* () {
+  const connectionCheckHealth = (ref, options4) => Effect_exports.gen(function* () {
     const connectionRow = yield* findConnectionRow(ref);
     if (!connectionRow) {
       return yield* new ConnectionNotFoundError({
@@ -13184,9 +16896,9 @@ var createExecutor = (config) => Effect11.gen(function* () {
         name: ref.name
       });
     }
-    if (options?.ifStaleMs !== void 0) {
-      const cached = Option5.getOrNull(decodeLastHealth(connectionRow.last_health));
-      if (cached && Date.now() - cached.checkedAt < options.ifStaleMs) return cached;
+    if (options4?.ifStaleMs !== void 0) {
+      const cached2 = Option_exports.getOrNull(decodeLastHealth(connectionRow.last_health));
+      if (cached2 && Date.now() - cached2.checkedAt < options4.ifStaleMs) return cached2;
     }
     const integrationRow = yield* findIntegrationRow(ref.integration);
     if (!integrationRow) {
@@ -13197,11 +16909,11 @@ var createExecutor = (config) => Effect11.gen(function* () {
     if (!runtime || !check) return unknownHealth();
     const spec = describeHealthCheckForRow(integrationRow) ?? void 0;
     if (spec === void 0 && connectionRow.oauth_client != null) {
-      const result2 = yield* oauthCredentialHealthWithoutProbe(connectionRow);
-      yield* persistHealthResult(ref, result2);
-      return result2;
+      const result3 = yield* oauthCredentialHealthWithoutProbe(connectionRow);
+      yield* persistHealthResult(ref, result3);
+      return result3;
     }
-    const result = yield* Effect11.gen(function* () {
+    const result2 = yield* Effect_exports.gen(function* () {
       const values = yield* resolveConnectionValues(connectionRow);
       const record = rowToIntegrationRecord(
         integrationRow,
@@ -13220,11 +16932,11 @@ var createExecutor = (config) => Effect11.gen(function* () {
         check({ ctx: runtime.ctx, integration: record, credential, spec }),
         `Health check for connection "${ref.name}" failed.`
       );
-    }).pipe(Effect11.catchTag("CredentialResolutionError", healthFromCredentialResolutionError));
-    yield* persistHealthResult(ref, result);
-    return result;
+    }).pipe(Effect_exports.catchTag("CredentialResolutionError", healthFromCredentialResolutionError));
+    yield* persistHealthResult(ref, result2);
+    return result2;
   });
-  const connectionValidate = (input) => Effect11.gen(function* () {
+  const connectionValidate = (input) => Effect_exports.gen(function* () {
     const integrationRow = yield* findIntegrationRow(input.integration);
     if (!integrationRow) {
       return yield* new IntegrationNotFoundError({ slug: input.integration });
@@ -13288,19 +17000,19 @@ var createExecutor = (config) => Effect11.gen(function* () {
     // Batched per-operation resolver: fetch all policy + connection state
     // once, then resolve every tool in this operation against that
     // snapshot. Avoids the per-tool resolve N+1 on the list surface.
-    activeToolPolicyProvider.prepare ? activeToolPolicyProvider.prepare().pipe(Effect11.map((resolve) => ({ kind: "prepared", resolve }))) : activeToolPolicyProvider.resolve ? Effect11.succeed({
+    activeToolPolicyProvider.prepare ? activeToolPolicyProvider.prepare().pipe(Effect_exports.map((resolve) => ({ kind: "prepared", resolve }))) : activeToolPolicyProvider.resolve ? Effect_exports.succeed({
       kind: "provider",
       provider: activeToolPolicyProvider,
       rules: null
     }) : activeToolPolicyProvider.list().pipe(
-      Effect11.map((rules4) => ({
+      Effect_exports.map((rules4) => ({
         kind: "provider",
         provider: activeToolPolicyProvider,
         rules: rules4
       }))
     )
-  ) : core.findMany("tool_policy", {}).pipe(Effect11.map((rows) => ({ kind: "global", rows })));
-  const resolvePolicyFromRuleSet = (toolId, ruleSet, defaultRequiresApproval) => ruleSet.kind === "prepared" ? Effect11.succeed(ruleSet.resolve({ toolId, defaultRequiresApproval })) : ruleSet.kind === "provider" ? ruleSet.provider.resolve ? ruleSet.provider.resolve({ toolId, defaultRequiresApproval }) : Effect11.succeed(resolveProviderPolicyFromRules(toolId, ruleSet.rules ?? [])) : Effect11.succeed(
+  ) : core.findMany("tool_policy", {}).pipe(Effect_exports.map((rows) => ({ kind: "global", rows })));
+  const resolvePolicyFromRuleSet = (toolId, ruleSet, defaultRequiresApproval) => ruleSet.kind === "prepared" ? Effect_exports.succeed(ruleSet.resolve({ toolId, defaultRequiresApproval })) : ruleSet.kind === "provider" ? ruleSet.provider.resolve ? ruleSet.provider.resolve({ toolId, defaultRequiresApproval }) : Effect_exports.succeed(resolveProviderPolicyFromRules(toolId, ruleSet.rules ?? [])) : Effect_exports.succeed(
     resolveEffectivePolicy(
       toolId,
       ruleSet.rows,
@@ -13308,20 +17020,20 @@ var createExecutor = (config) => Effect11.gen(function* () {
       defaultRequiresApproval
     )
   );
-  const matchesToolFilter = (tool2, filter) => {
-    if (!filter) return true;
-    if (filter.integration !== void 0 && tool2.integration !== filter.integration) return false;
-    if (filter.owner !== void 0 && tool2.owner !== filter.owner) return false;
-    if (filter.connection !== void 0 && tool2.connection !== filter.connection) return false;
-    if (filter.query !== void 0) {
-      const q = filter.query.toLowerCase();
+  const matchesToolFilter = (tool2, filter2) => {
+    if (!filter2) return true;
+    if (filter2.integration !== void 0 && tool2.integration !== filter2.integration) return false;
+    if (filter2.owner !== void 0 && tool2.owner !== filter2.owner) return false;
+    if (filter2.connection !== void 0 && tool2.connection !== filter2.connection) return false;
+    if (filter2.query !== void 0) {
+      const q = filter2.query.toLowerCase();
       const hay = `${tool2.name} ${tool2.description}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
   };
   const toolsSyncTtlMs = config.toolsSyncTtlMs === void 0 ? DEFAULT_TOOLS_SYNC_TTL_MS : config.toolsSyncTtlMs;
-  const syncStaleConnectionTools = Effect11.gen(function* () {
+  const syncStaleConnectionTools = Effect_exports.gen(function* () {
     const integrations = yield* core.findMany("integration", {});
     if (integrations.length === 0) return;
     const integrationBySlug = new Map(integrations.map((row) => [row.slug, row]));
@@ -13330,7 +17042,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     );
     const cutoff = toolsSyncTtlMs == null || !anyRemoteCatalog ? null : Date.now() - toolsSyncTtlMs;
     const latestRevision = integrations.reduce(
-      (max, row) => row.config_revised_at == null ? max : Math.max(max ?? Number(row.config_revised_at), Number(row.config_revised_at)),
+      (max2, row) => row.config_revised_at == null ? max2 : Math.max(max2 ?? Number(row.config_revised_at), Number(row.config_revised_at)),
       null
     );
     const staleBefore = cutoff === null && latestRevision === null ? null : Math.max(cutoff ?? Number.MIN_SAFE_INTEGER, latestRevision ?? Number.MIN_SAFE_INTEGER);
@@ -13357,8 +17069,8 @@ var createExecutor = (config) => Effect11.gen(function* () {
         },
         "background"
       ).pipe(
-        Effect11.catch(() => Effect11.succeed([])),
-        Effect11.withSpan("executor.tools.sync_stale", {
+        Effect_exports.catch(() => Effect_exports.succeed([])),
+        Effect_exports.withSpan("executor.tools.sync_stale", {
           attributes: {
             "executor.integration": connection.integration,
             "executor.connection": connection.name
@@ -13367,22 +17079,22 @@ var createExecutor = (config) => Effect11.gen(function* () {
       );
     }
   });
-  const toolsList = (filter) => Effect11.gen(function* () {
+  const toolsList = (filter2) => Effect_exports.gen(function* () {
     yield* syncStaleConnectionTools;
     const rows = yield* core.findMany("tool", {
       where: (b) => b.and(
-        filter?.integration === void 0 ? true : b("integration", "=", String(filter.integration)),
-        filter?.owner === void 0 ? true : b("owner", "=", filter.owner),
-        filter?.connection === void 0 ? true : b("connection", "=", String(filter.connection))
+        filter2?.integration === void 0 ? true : b("integration", "=", String(filter2.integration)),
+        filter2?.owner === void 0 ? true : b("owner", "=", filter2.owner),
+        filter2?.connection === void 0 ? true : b("connection", "=", String(filter2.connection))
       ),
       select: TOOL_INVOCATION_COLUMNS
     });
-    const includeBlocked = filter?.includeBlocked ?? false;
+    const includeBlocked = filter2?.includeBlocked ?? false;
     const policyRules = yield* listActivePolicyRuleSet();
     const tools = [];
     for (const row of rows) {
       const tool2 = rowToTool(row);
-      if (!matchesToolFilter(tool2, filter)) continue;
+      if (!matchesToolFilter(tool2, filter2)) continue;
       if (!includeBlocked) {
         const effective = yield* resolvePolicyFromRuleSet(
           normalizedPolicyId(tool2),
@@ -13395,7 +17107,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     for (const entry of staticTools.values()) {
       const tool2 = staticToolToTool(entry);
-      if (!matchesToolFilter(tool2, filter)) continue;
+      if (!matchesToolFilter(tool2, filter2)) continue;
       if (!includeBlocked) {
         const effective = yield* resolvePolicyFromRuleSet(
           normalizedPolicyId(tool2),
@@ -13408,7 +17120,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     }
     return tools;
   });
-  const toolSchema = (address) => Effect11.gen(function* () {
+  const toolSchema = (address) => Effect_exports.gen(function* () {
     const policyRules = yield* listActivePolicyRuleSet();
     const staticEntry = staticTools.get(String(address));
     if (staticEntry) {
@@ -13419,23 +17131,23 @@ var createExecutor = (config) => Effect11.gen(function* () {
         tool3.annotations?.requiresApproval
       );
       if (effective2.action === "block") return null;
-      const preview2 = yield* Effect11.tryPromise({
+      const preview2 = yield* Effect_exports.tryPromise({
         try: () => buildToolTypeScriptPreview({
           inputSchema: tool3.inputSchema,
           outputSchema: tool3.outputSchema,
           defs: /* @__PURE__ */ new Map()
         }),
         catch: (cause) => storageFailureFromUnknown("Failed to build static tool TypeScript preview", cause)
-      }).pipe(Effect11.option);
+      }).pipe(Effect_exports.option);
       return ToolSchemaView.make({
         address,
         name: tool3.name,
         description: tool3.description,
         inputSchema: tool3.inputSchema,
         outputSchema: tool3.outputSchema,
-        inputTypeScript: Option5.getOrUndefined(preview2)?.inputTypeScript,
-        outputTypeScript: Option5.getOrUndefined(preview2)?.outputTypeScript,
-        typeScriptDefinitions: Option5.getOrUndefined(preview2)?.typeScriptDefinitions
+        inputTypeScript: Option_exports.getOrUndefined(preview2)?.inputTypeScript,
+        outputTypeScript: Option_exports.getOrUndefined(preview2)?.outputTypeScript,
+        typeScriptDefinitions: Option_exports.getOrUndefined(preview2)?.typeScriptDefinitions
       });
     }
     const parsed = parseToolAddress(String(address));
@@ -13463,7 +17175,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       inputSchema: tool2.inputSchema,
       outputSchema: tool2.outputSchema
     }).pipe(
-      Effect11.mapError(
+      Effect_exports.mapError(
         (cause) => pluginStorageFailure(row.plugin_id, "projectToolSchema", cause)
       )
     ) : null;
@@ -13479,14 +17191,14 @@ var createExecutor = (config) => Effect11.gen(function* () {
     const defs = /* @__PURE__ */ new Map();
     for (const def of definitionRows) defs.set(def.name, decodeJsonColumn(def.schema));
     const referenced = collectReferencedDefinitions([inputSchema, outputSchema], defs);
-    const preview = yield* Effect11.tryPromise({
+    const preview = yield* Effect_exports.tryPromise({
       try: () => buildToolTypeScriptPreview({
         inputSchema,
         outputSchema,
         defs
       }),
       catch: (cause) => storageFailureFromUnknown("Failed to build tool TypeScript preview", cause)
-    }).pipe(Effect11.option);
+    }).pipe(Effect_exports.option);
     const view = preview;
     return ToolSchemaView.make({
       address,
@@ -13495,30 +17207,30 @@ var createExecutor = (config) => Effect11.gen(function* () {
       inputSchema,
       outputSchema,
       schemaDefinitions: Object.keys(referenced).length > 0 ? referenced : void 0,
-      inputTypeScript: Option5.getOrUndefined(view)?.inputTypeScript,
-      outputTypeScript: Option5.getOrUndefined(view)?.outputTypeScript,
-      typeScriptDefinitions: Option5.getOrUndefined(view)?.typeScriptDefinitions
+      inputTypeScript: Option_exports.getOrUndefined(view)?.inputTypeScript,
+      outputTypeScript: Option_exports.getOrUndefined(view)?.outputTypeScript,
+      typeScriptDefinitions: Option_exports.getOrUndefined(view)?.typeScriptDefinitions
     });
   });
-  const providersList = () => Effect11.sync(() => credentialProviderOrder.map((key) => ProviderKey.make(key)));
-  const providersItems = (key) => Effect11.gen(function* () {
+  const providersList = () => Effect_exports.sync(() => credentialProviderOrder.map((key) => ProviderKey.make(key)));
+  const providersItems = (key) => Effect_exports.gen(function* () {
     const provider = credentialProviders.get(String(key));
     if (!provider || !provider.list) return [];
     return yield* provider.list();
   });
-  const providersGet = (key, id) => Effect11.gen(function* () {
+  const providersGet = (key, id) => Effect_exports.gen(function* () {
     const provider = credentialProviders.get(String(key));
     if (!provider) return null;
     return yield* provider.get(id);
   });
-  const providersHas = (key, id) => Effect11.gen(function* () {
+  const providersHas = (key, id) => Effect_exports.gen(function* () {
     const provider = credentialProviders.get(String(key));
     if (!provider) return false;
     if (provider.has) return yield* provider.has(id);
     const value = yield* provider.get(id);
     return value !== null;
   });
-  const providersSetDefault = (id, value) => Effect11.gen(function* () {
+  const providersSetDefault = (id, value) => Effect_exports.gen(function* () {
     const provider = defaultWritableProvider();
     if (!provider || !provider.set) {
       return yield* new CredentialProviderNotRegisteredError({
@@ -13528,7 +17240,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     yield* provider.set(id, value);
     return provider.key;
   });
-  const providersRemove = (key, id) => Effect11.gen(function* () {
+  const providersRemove = (key, id) => Effect_exports.gen(function* () {
     const provider = credentialProviders.get(String(key));
     if (!provider || !provider.delete) return;
     yield* provider.delete(id);
@@ -13536,11 +17248,11 @@ var createExecutor = (config) => Effect11.gen(function* () {
   const ownerRankForRow = (row) => row.owner === "user" ? 0 : 1;
   const normalizedPolicyId = (tool2) => tool2.static ? String(tool2.address) : `${tool2.integration}.${tool2.owner}.${tool2.connection}.${tool2.name}`;
   const policiesList = () => core.findMany("tool_policy", {}).pipe(
-    Effect11.map(
+    Effect_exports.map(
       (rows) => [...rows].sort((a, b) => ownerRankForRow(a) - ownerRankForRow(b) || comparePolicyRow(a, b)).map(rowToToolPolicy)
     )
   );
-  const policiesCreate = (input) => Effect11.gen(function* () {
+  const policiesCreate = (input) => Effect_exports.gen(function* () {
     if (!isValidPattern(input.pattern)) {
       return yield* new StorageError({
         message: `Invalid tool policy pattern: ${input.pattern}`,
@@ -13554,7 +17266,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
       });
     }
     yield* requireUserSubject(input.owner);
-    const keys = yield* Effect11.try({
+    const keys = yield* Effect_exports.try({
       try: () => ownedKeys(input.owner),
       catch: (cause) => storageFailureFromUnknown("invalid owner", cause)
     });
@@ -13580,7 +17292,7 @@ var createExecutor = (config) => Effect11.gen(function* () {
     });
     return rowToToolPolicy(created);
   });
-  const policiesUpdate = (input) => Effect11.gen(function* () {
+  const policiesUpdate = (input) => Effect_exports.gen(function* () {
     if (input.pattern !== void 0 && !isValidPattern(input.pattern)) {
       return yield* new StorageError({
         message: `Invalid tool policy pattern: ${input.pattern}`,
@@ -13595,18 +17307,18 @@ var createExecutor = (config) => Effect11.gen(function* () {
         cause: void 0
       });
     }
-    const set = { updated_at: /* @__PURE__ */ new Date() };
-    if (input.pattern !== void 0) set.pattern = input.pattern;
-    if (input.action !== void 0) set.action = input.action;
-    if (input.position !== void 0) set.position = input.position;
-    yield* core.updateMany("tool_policy", { where, set });
+    const set5 = { updated_at: /* @__PURE__ */ new Date() };
+    if (input.pattern !== void 0) set5.pattern = input.pattern;
+    if (input.action !== void 0) set5.action = input.action;
+    if (input.position !== void 0) set5.position = input.position;
+    yield* core.updateMany("tool_policy", { where, set: set5 });
     const updated = yield* core.findFirst("tool_policy", { where });
-    return rowToToolPolicy(updated ?? { ...existing, ...set });
+    return rowToToolPolicy(updated ?? { ...existing, ...set5 });
   });
   const policiesRemove = (input) => core.deleteMany("tool_policy", {
     where: (b) => b.and(byOwner(input.owner)(b), b("id", "=", input.id))
   });
-  const policiesResolve = (address) => Effect11.gen(function* () {
+  const policiesResolve = (address) => Effect_exports.gen(function* () {
     const parsed = parseToolAddress(String(address));
     const policyRows = yield* core.findMany("tool_policy", {});
     const toolId = parsed ? `${parsed.integration}.${parsed.owner}.${parsed.connection}.${parsed.tool}` : String(address);
@@ -13621,16 +17333,16 @@ var createExecutor = (config) => Effect11.gen(function* () {
         )
       });
       if (row) {
-        const annotations = decodeJsonColumn(row.annotations);
-        requiresApproval = annotations?.requiresApproval;
+        const annotations2 = decodeJsonColumn(row.annotations);
+        requiresApproval = annotations2?.requiresApproval;
       }
     }
     return resolveEffectivePolicy(toolId, policyRows, ownerRankForRow, requiresApproval);
   });
   const defaultElicitationHandler = resolveElicitationHandler(config.onElicitation);
-  const pickHandler = (options) => options?.onElicitation ? resolveElicitationHandler(options.onElicitation) : defaultElicitationHandler;
+  const pickHandler = (options4) => options4?.onElicitation ? resolveElicitationHandler(options4.onElicitation) : defaultElicitationHandler;
   const buildElicit = (address, args, handler) => {
-    return (request) => Effect11.gen(function* () {
+    return (request) => Effect_exports.gen(function* () {
       const response = yield* handler({
         address,
         args,
@@ -13645,14 +17357,14 @@ var createExecutor = (config) => Effect11.gen(function* () {
       return response;
     });
   };
-  const approvalRequired = (annotations, policy) => {
+  const approvalRequired = (annotations2, policy) => {
     if (policy.action === "approve") return false;
-    return policy.action === "require_approval" || annotations?.requiresApproval === true;
+    return policy.action === "require_approval" || annotations2?.requiresApproval === true;
   };
-  const enforceApproval = (annotations, address, args, policy, handler) => Effect11.gen(function* () {
-    if (!approvalRequired(annotations, policy)) return;
+  const enforceApproval = (annotations2, address, args, policy, handler) => Effect_exports.gen(function* () {
+    if (!approvalRequired(annotations2, policy)) return;
     const policyForcesApproval = policy.action === "require_approval";
-    const message = annotations?.approvalDescription ? annotations.approvalDescription : policyForcesApproval && policy.pattern ? `Approve ${address}? (matched policy: ${policy.pattern})` : `Approve ${address}?`;
+    const message = annotations2?.approvalDescription ? annotations2.approvalDescription : policyForcesApproval && policy.pattern ? `Approve ${address}? (matched policy: ${policy.pattern})` : `Approve ${address}?`;
     const request = FormElicitation.make({
       message: `${message}
 
@@ -13693,20 +17405,20 @@ ${approvalArgumentPreview(args)}`,
     limit: TOOL_SUGGESTION_LIMIT,
     select: TOOL_INVOCATION_COLUMNS
   });
-  const execute = (address, args, options) => {
-    const handler = pickHandler(options);
-    return Effect11.gen(function* () {
+  const execute2 = (address, args, options4) => {
+    const handler = pickHandler(options4);
+    return Effect_exports.gen(function* () {
       const formatInvocationCauseMessage = (cause) => {
         if (cause instanceof Error && cause.message.length > 0) return cause.message;
         if (typeof cause === "object" && cause !== null) {
-          const tag = cause._tag;
-          if (typeof tag === "string") return tag;
-          return Inspectable.toStringUnknown(cause, 0);
+          const tag2 = cause._tag;
+          if (typeof tag2 === "string") return tag2;
+          return Inspectable_exports.toStringUnknown(cause, 0);
         }
         return String(cause);
       };
-      const wrapInvocationError = (effect) => effect.pipe(
-        Effect11.mapError(
+      const wrapInvocationError = (effect2) => effect2.pipe(
+        Effect_exports.mapError(
           (cause) => new ToolInvocationError({
             address,
             message: formatInvocationCauseMessage(cause),
@@ -13760,11 +17472,11 @@ ${approvalArgumentPreview(args)}`,
       }
       const toolForPolicy = rowToTool(row);
       const policyRules = yield* listActivePolicyRuleSet();
-      const annotations = decodeJsonColumn(row.annotations);
+      const annotations2 = decodeJsonColumn(row.annotations);
       const policy = yield* resolvePolicyFromRuleSet(
         normalizedPolicyId(toolForPolicy),
         policyRules,
-        annotations?.requiresApproval
+        annotations2?.requiresApproval
       );
       if (policy.action === "block") {
         return yield* new ToolBlockedError({
@@ -13797,15 +17509,15 @@ ${approvalArgumentPreview(args)}`,
           name: parsed.connection
         });
       }
-      let resolvedAnnotations = annotations;
+      let resolvedAnnotations = annotations2;
       if (policy.action !== "approve" && runtime.plugin.resolveAnnotations) {
-        const map = yield* runtime.plugin.resolveAnnotations({
+        const map7 = yield* runtime.plugin.resolveAnnotations({
           ctx: runtime.ctx,
           integration: parsed.integration,
           connection: parsed.connection,
           toolRows: [row]
         }).pipe(wrapInvocationError);
-        resolvedAnnotations = map[String(parsed.tool)] ?? annotations;
+        resolvedAnnotations = map7[String(parsed.tool)] ?? annotations2;
       }
       if (approvalRequired(resolvedAnnotations, policy) && runtime.plugin.validateToolArgs) {
         yield* runtime.plugin.validateToolArgs({ ctx: runtime.ctx, toolRow: row, args }).pipe(wrapInvocationError);
@@ -13829,7 +17541,7 @@ ${approvalArgumentPreview(args)}`,
           credential,
           args,
           elicit: buildElicit(address, args, handler),
-          invokeOptions: options
+          invokeOptions: options4
         })
       );
     }).pipe(
@@ -13838,8 +17550,8 @@ ${approvalArgumentPreview(args)}`,
       // spans. Stamp the outcome + error code so telemetry can distinguish
       // "tool ran fine" from "user hit an upstream error / auth wall"
       // without parsing response bodies.
-      Effect11.tap(annotateToolResultOutcome),
-      Effect11.withSpan("executor.tool.execute", {
+      Effect_exports.tap(annotateToolResultOutcome),
+      Effect_exports.withSpan("executor.tool.execute", {
         attributes: {
           "mcp.tool.name": String(address),
           "executor.tenant": tenant,
@@ -13864,7 +17576,7 @@ ${approvalArgumentPreview(args)}`,
     // off that method (MCP exposes `discoveryUrl`), so core needs no plugin-id
     // knowledge.
     resolveOAuthScopePolicy: (integration, template) => findIntegrationRow(integration).pipe(
-      Effect11.map((row) => {
+      Effect_exports.map((row) => {
         const methods = row ? describeAuthMethodsForRow(row) : [];
         const selected = methods.find((m) => m.template === String(template)) ?? (methods.length === 1 ? methods[0] : void 0);
         const oauth2 = selected?.kind === "oauth" ? selected.oauth : void 0;
@@ -13910,18 +17622,18 @@ ${approvalArgumentPreview(args)}`,
       owner: ownerBinding,
       storage,
       pluginStorage,
-      httpClientLayer: config.httpClientLayer ?? FetchHttpClient3.layer,
+      httpClientLayer: config.httpClientLayer ?? FetchHttpClient_exports.layer,
       core: {
         integrations: {
           register: (input) => integrationsRegister(plugin.id, input),
-          update: (slug, patch) => integrationsUpdate(slug, patch),
+          update: (slug, patch4) => integrationsUpdate(slug, patch4),
           list: () => integrationsList(),
           get: (slug) => integrationsGetRecord(slug),
           remove: (slug) => integrationsRemove(slug),
           setHealthCheck: (slug, spec) => integrationSetHealthCheck(slug, spec).pipe(
             // Fold not-found: a plugin declaring a default on a row it
             // never registered is a no-op, not a storage failure.
-            Effect11.catchTag("IntegrationNotFoundError", () => Effect11.void)
+            Effect_exports.catchTag("IntegrationNotFoundError", () => Effect_exports.void)
           ),
           detect: (url) => integrationsDetect(url),
           configureSchemas: () => Array.from(runtimes.values()).map(
@@ -13930,7 +17642,7 @@ ${approvalArgumentPreview(args)}`,
               type: plugin2.integrationConfigure.type,
               schema: void 0
             } : void 0
-          ).filter(Predicate4.isNotUndefined),
+          ).filter(Predicate_exports.isNotUndefined),
           presets: () => Array.from(runtimes.values()).flatMap(
             ({ plugin: plugin2 }) => (plugin2.integrationPresets ?? []).map((preset) => ({
               ...preset,
@@ -13947,7 +17659,7 @@ ${approvalArgumentPreview(args)}`,
       },
       connections: {
         create: (input) => connectionsCreate(input),
-        list: (filter) => connectionsList(filter),
+        list: (filter2) => connectionsList(filter2),
         get: (ref) => connectionsGet(ref),
         update: (ref, input) => connectionsUpdate(ref, input),
         remove: (ref) => connectionsRemove(ref),
@@ -13964,12 +17676,12 @@ ${approvalArgumentPreview(args)}`,
         remove: (key, id) => providersRemove(key, id)
       },
       oauth,
-      execute: (address, args, options) => execute(address, args, options),
-      transaction: (effect) => transaction(effect)
+      execute: (address, args, options4) => execute2(address, args, options4),
+      transaction: (effect2) => transaction(effect2)
     };
     if (plugin.toolPolicyProvider) {
       const rawProvider = plugin.toolPolicyProvider(ctx);
-      const provider = Effect11.isEffect(rawProvider) ? yield* rawProvider : rawProvider;
+      const provider = Effect_exports.isEffect(rawProvider) ? yield* rawProvider : rawProvider;
       if (provider) {
         if (activeToolPolicyProvider) {
           return yield* new StorageError({
@@ -14007,31 +17719,31 @@ ${approvalArgumentPreview(args)}`,
     }
     runtimes.set(plugin.id, { plugin, storage, ctx });
     if (plugin.credentialProviders) {
-      const raw = typeof plugin.credentialProviders === "function" ? plugin.credentialProviders(ctx) : plugin.credentialProviders;
-      const providers2 = Effect11.isEffect(raw) ? yield* raw.pipe(
-        Effect11.mapError(
+      const raw2 = typeof plugin.credentialProviders === "function" ? plugin.credentialProviders(ctx) : plugin.credentialProviders;
+      const providers2 = Effect_exports.isEffect(raw2) ? yield* raw2.pipe(
+        Effect_exports.mapError(
           (cause) => pluginStorageFailure(plugin.id, "credentialProviders", cause)
         )
-      ) : raw;
+      ) : raw2;
       for (const provider of providers2) {
         yield* registerCredentialProvider(provider, `plugin ${plugin.id}`);
       }
     }
   }
-  const close = () => Effect11.gen(function* () {
+  const close = () => Effect_exports.gen(function* () {
     for (const runtime of runtimes.values()) {
       if (runtime.plugin.close) {
         yield* runtime.plugin.close().pipe(
-          Effect11.mapError((cause) => pluginStorageFailure(runtime.plugin.id, "close", cause))
+          Effect_exports.mapError((cause) => pluginStorageFailure(runtime.plugin.id, "close", cause))
         );
       }
     }
     if (closeDb) {
       const out = closeDb();
-      if (Effect11.isEffect(out)) {
+      if (Effect_exports.isEffect(out)) {
         yield* out;
       } else if (out instanceof Promise) {
-        yield* Effect11.tryPromise({
+        yield* Effect_exports.tryPromise({
           try: () => out,
           catch: (cause) => new StorageError({
             message: "Executor database close failed",
@@ -14080,7 +17792,7 @@ ${approvalArgumentPreview(args)}`,
       remove: policiesRemove,
       resolve: policiesResolve
     },
-    execute,
+    execute: execute2,
     close
   };
   const toExecutor = (value) => value;
@@ -14090,17 +17802,1666 @@ ${approvalArgumentPreview(args)}`,
 // ../sdk/src/config.ts
 var defineExecutorConfig = (config) => config;
 
-// ../sdk/src/index.ts
-import { Context as Context2, Effect as Effect15, Layer as Layer5, Schema as Schema18, Data as Data5, Option as Option8 } from "effect";
-import {
-  HttpApi,
-  HttpApiBuilder,
-  HttpApiClient,
-  HttpApiEndpoint,
-  HttpApiGroup,
-  HttpApiMiddleware,
-  HttpApiSchema
-} from "effect/unstable/httpapi";
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApi.js
+var HttpApi_exports = {};
+__export(HttpApi_exports, {
+  AdditionalSchemas: () => AdditionalSchemas,
+  isHttpApi: () => isHttpApi,
+  make: () => make12,
+  reflect: () => reflect
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiEndpoint.js
+var HttpApiEndpoint_exports = {};
+__export(HttpApiEndpoint_exports, {
+  delete: () => del3,
+  get: () => get6,
+  getErrorSchemas: () => getErrorSchemas,
+  getPayloadSchemas: () => getPayloadSchemas,
+  getSuccessSchemas: () => getSuccessSchemas,
+  head: () => head3,
+  isHttpApiEndpoint: () => isHttpApiEndpoint,
+  make: () => make11,
+  options: () => options3,
+  patch: () => patch3,
+  post: () => post3,
+  put: () => put3
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiSchema.js
+var HttpApiSchema_exports = {};
+__export(HttpApiSchema_exports, {
+  Accepted: () => Accepted,
+  Created: () => Created,
+  Empty: () => Empty2,
+  MultipartStreamTypeId: () => MultipartStreamTypeId,
+  MultipartTypeId: () => MultipartTypeId,
+  NoContent: () => NoContent,
+  asFormUrlEncoded: () => asFormUrlEncoded,
+  asJson: () => asJson,
+  asMultipart: () => asMultipart,
+  asMultipartStream: () => asMultipartStream,
+  asNoContent: () => asNoContent,
+  asText: () => asText,
+  asUint8Array: () => asUint8Array,
+  getPayloadEncoding: () => getPayloadEncoding,
+  getResponseEncoding: () => getResponseEncoding,
+  getStatusError: () => getStatusError,
+  getStatusSuccess: () => getStatusSuccess,
+  isNoContent: () => isNoContent,
+  status: () => status
+});
+var statusCodeByLiteral = {
+  Continue: 100,
+  SwitchingProtocols: 101,
+  Processing: 102,
+  EarlyHints: 103,
+  OK: 200,
+  Ok: 200,
+  Created: 201,
+  Accepted: 202,
+  NonAuthoritativeInformation: 203,
+  NoContent: 204,
+  ResetContent: 205,
+  PartialContent: 206,
+  MultiStatus: 207,
+  AlreadyReported: 208,
+  ImUsed: 226,
+  MultipleChoices: 300,
+  MovedPermanently: 301,
+  Found: 302,
+  SeeOther: 303,
+  NotModified: 304,
+  TemporaryRedirect: 307,
+  PermanentRedirect: 308,
+  BadRequest: 400,
+  Unauthorized: 401,
+  PaymentRequired: 402,
+  Forbidden: 403,
+  NotFound: 404,
+  MethodNotAllowed: 405,
+  NotAcceptable: 406,
+  ProxyAuthenticationRequired: 407,
+  RequestTimeout: 408,
+  Conflict: 409,
+  Gone: 410,
+  LengthRequired: 411,
+  PreconditionFailed: 412,
+  PayloadTooLarge: 413,
+  UriTooLong: 414,
+  UnsupportedMediaType: 415,
+  RangeNotSatisfiable: 416,
+  ExpectationFailed: 417,
+  ImATeapot: 418,
+  MisdirectedRequest: 421,
+  UnprocessableEntity: 422,
+  Locked: 423,
+  FailedDependency: 424,
+  TooEarly: 425,
+  UpgradeRequired: 426,
+  PreconditionRequired: 428,
+  TooManyRequests: 429,
+  RequestHeaderFieldsTooLarge: 431,
+  UnavailableForLegalReasons: 451,
+  InternalServerError: 500,
+  NotImplemented: 501,
+  BadGateway: 502,
+  ServiceUnavailable: 503,
+  GatewayTimeout: 504,
+  HttpVersionNotSupported: 505,
+  VariantAlsoNegotiates: 506,
+  InsufficientStorage: 507,
+  LoopDetected: 508,
+  NotExtended: 510,
+  NetworkAuthenticationRequired: 511
+};
+function status(code) {
+  const statusCode = typeof code === "string" ? statusCodeByLiteral[code] : code;
+  return (self) => {
+    return self.annotate({
+      httpApiStatus: statusCode
+    });
+  };
+}
+var Empty2 = (code) => Void.pipe(status(code));
+var NoContent = /* @__PURE__ */ Empty2(204);
+var Created = /* @__PURE__ */ Empty2(201);
+var Accepted = /* @__PURE__ */ Empty2(202);
+function asNoContent(options4) {
+  return (self) => {
+    return Void.pipe(decodeTo(toType(self), transform({
+      decode: options4.decode,
+      encode: constVoid
+    })));
+  };
+}
+var MultipartTypeId = "~effect/httpapi/HttpApiSchema/Multipart";
+function asMultipart(options4) {
+  return (self) => self.pipe(brand(MultipartTypeId)).annotate({
+    "~httpApiEncoding": {
+      _tag: "Multipart",
+      mode: "buffered",
+      contentType: defaultContentType2("Multipart"),
+      limits: options4
+    }
+  });
+}
+var MultipartStreamTypeId = "~effect/httpapi/HttpApiSchema/MultipartStream";
+function asMultipartStream(options4) {
+  return (self) => self.pipe(brand(MultipartStreamTypeId)).annotate({
+    "~httpApiEncoding": {
+      _tag: "Multipart",
+      mode: "stream",
+      contentType: defaultContentType2("Multipart"),
+      limits: options4
+    }
+  });
+}
+function asNonMultipartEncoding(self, options4) {
+  return self.annotate({
+    "~httpApiEncoding": {
+      _tag: options4._tag,
+      contentType: options4.contentType ?? defaultContentType2(options4._tag)
+    }
+  });
+}
+function defaultContentType2(_tag) {
+  switch (_tag) {
+    case "Multipart":
+      return "multipart/form-data";
+    case "Json":
+      return "application/json";
+    case "FormUrlEncoded":
+      return "application/x-www-form-urlencoded";
+    case "Uint8Array":
+      return "application/octet-stream";
+    case "Text":
+      return "text/plain";
+  }
+}
+function asJson(options4) {
+  return (self) => asNonMultipartEncoding(self, {
+    _tag: "Json",
+    ...options4
+  });
+}
+function asFormUrlEncoded(options4) {
+  return (self) => asNonMultipartEncoding(self, {
+    _tag: "FormUrlEncoded",
+    ...options4
+  });
+}
+function asText(options4) {
+  return (self) => asNonMultipartEncoding(self, {
+    _tag: "Text",
+    ...options4
+  });
+}
+function asUint8Array(options4) {
+  return (self) => asNonMultipartEncoding(self, {
+    _tag: "Uint8Array",
+    ...options4
+  });
+}
+var isNoContent = (ast) => {
+  if (isVoid(ast)) return true;
+  const encoded = toEncoded(ast);
+  if (isVoid(encoded)) return true;
+  const target = ast.encoding?.[0].to;
+  if (target === void 0) return false;
+  return isVoid(target);
+};
+var resolveHttpApiEncoding = /* @__PURE__ */ resolveAt("~httpApiEncoding");
+var resolveHttpApiStatus = /* @__PURE__ */ resolveAt("httpApiStatus");
+var defaultJsonEncoding = {
+  _tag: "Json",
+  contentType: "application/json"
+};
+var defaultUrlEncodedEncoding = {
+  _tag: "FormUrlEncoded",
+  contentType: "application/x-www-form-urlencoded"
+};
+function getEncoding(ast) {
+  return resolveHttpApiEncoding(ast) ?? defaultJsonEncoding;
+}
+function getPayloadEncoding(ast, method) {
+  const encoding = resolveHttpApiEncoding(ast);
+  if (encoding) return encoding;
+  return hasBody(method) ? defaultJsonEncoding : defaultUrlEncodedEncoding;
+}
+function getResponseEncoding(ast) {
+  const out = getEncoding(ast);
+  if (out._tag === "Multipart") {
+    throw new Error("Multipart is not supported in response");
+  }
+  return out;
+}
+function getStatusSuccess(self) {
+  return resolveHttpApiStatus(self) ?? 200;
+}
+function getStatusError(self) {
+  return resolveHttpApiStatus(self) ?? 500;
+}
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiEndpoint.js
+var TypeId14 = "~effect/httpapi/HttpApiEndpoint";
+var isHttpApiEndpoint = (u) => hasProperty(u, TypeId14);
+function getPayloadSchemas(endpoint2) {
+  const result2 = [];
+  for (const {
+    schemas
+  } of endpoint2.payload.values()) {
+    result2.push(...schemas);
+  }
+  return result2;
+}
+function getSuccessSchemas(endpoint2) {
+  const schemas = Array.from(endpoint2.success);
+  return isArrayNonEmpty(schemas) ? schemas : [NoContent];
+}
+function getErrorSchemas(endpoint2) {
+  const schemas = new Set(endpoint2.error);
+  for (const middleware2 of endpoint2.middlewares) {
+    const key = middleware2;
+    for (const schema2 of key.error) {
+      schemas.add(schema2);
+    }
+  }
+  return Array.from(schemas);
+}
+var Proto8 = {
+  [TypeId14]: TypeId14,
+  pipe() {
+    return pipeArguments(this, arguments);
+  },
+  prefix(prefix) {
+    return makeProto({
+      ...this,
+      path: prefixPath(this.path, prefix)
+    });
+  },
+  middleware(middleware2) {
+    return makeProto({
+      ...this,
+      middlewares: /* @__PURE__ */ new Set([...this.middlewares, middleware2])
+    });
+  },
+  annotate(key, value) {
+    return makeProto({
+      ...this,
+      annotations: add(this.annotations, key, value)
+    });
+  },
+  annotateMerge(annotations2) {
+    return makeProto({
+      ...this,
+      annotations: merge(this.annotations, annotations2)
+    });
+  }
+};
+function makeProto(options4) {
+  return Object.assign(Object.create(Proto8), options4);
+}
+var make11 = (method) => (name, path, options4) => {
+  const disableCodecs = options4?.disableCodecs ?? false;
+  const transformStringTree = disableCodecs ? identity : toCodecStringTree;
+  return makeProto({
+    name,
+    path,
+    method,
+    params: ensureStruct(options4?.params, transformStringTree),
+    query: ensureStruct(options4?.query, transformStringTree),
+    headers: ensureStruct(options4?.headers, transformStringTree),
+    payload: getPayload(options4?.payload, method, disableCodecs),
+    success: getResponse(options4?.success, disableCodecs),
+    error: getResponse(options4?.error, disableCodecs),
+    annotations: empty3(),
+    middlewares: /* @__PURE__ */ new Set()
+  });
+};
+function ensureStruct(params, transform4) {
+  if (params === void 0) return void 0;
+  if (isSchema(params)) return transform4(params);
+  return transform4(Struct(params));
+}
+function getPayload(payload, method, disableCodecs) {
+  const result2 = /* @__PURE__ */ new Map();
+  if (payload === void 0) return result2;
+  const schemas = Array.isArray(payload) ? payload : isSchema(payload) ? [payload] : [Struct(payload).pipe(asFormUrlEncoded())];
+  const transform4 = disableCodecs ? identity : transformPayload;
+  for (const schema2 of schemas) {
+    const encoding = getPayloadEncoding(schema2.ast, method);
+    const existing = result2.get(encoding.contentType);
+    if (existing) {
+      if (existing.encoding._tag !== encoding._tag) {
+        throw new Error(`Multiple payload encodings for content-type: ${encoding.contentType}`);
+      }
+      if (existing.encoding._tag === "Multipart") {
+        throw new Error(`Multiple multipart payloads for content-type: ${encoding.contentType}`);
+      }
+      existing.schemas.push(transform4(schema2, method));
+    } else {
+      result2.set(encoding.contentType, {
+        encoding,
+        schemas: [transform4(schema2, method)]
+      });
+    }
+  }
+  return result2;
+}
+function getResponse(success, disableCodecs) {
+  if (success === void 0) return /* @__PURE__ */ new Set();
+  const arr = ensure(success);
+  return new Set(disableCodecs ? arr : arr.map(transformResponse2));
+}
+function transformResponse2(schema2) {
+  const encoding = getResponseEncoding(schema2.ast);
+  switch (encoding._tag) {
+    case "Json":
+      return toCodecJson(schema2);
+    case "FormUrlEncoded":
+      return toCodecStringTree(schema2);
+    case "Text":
+    case "Uint8Array":
+      return schema2;
+  }
+}
+function transformPayload(schema2, method) {
+  const encoding = getPayloadEncoding(schema2.ast, method);
+  switch (encoding._tag) {
+    case "Json":
+      return toCodecJson(schema2);
+    case "FormUrlEncoded":
+      return toCodecStringTree(schema2);
+    case "Text":
+    case "Uint8Array":
+    case "Multipart":
+      return schema2;
+  }
+}
+var get6 = /* @__PURE__ */ make11("GET");
+var post3 = /* @__PURE__ */ make11("POST");
+var put3 = /* @__PURE__ */ make11("PUT");
+var patch3 = /* @__PURE__ */ make11("PATCH");
+var del3 = /* @__PURE__ */ make11("DELETE");
+var head3 = /* @__PURE__ */ make11("HEAD");
+var options3 = /* @__PURE__ */ make11("OPTIONS");
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApi.js
+var TypeId15 = "~effect/httpapi/HttpApi";
+var isHttpApi = (u) => hasProperty(u, TypeId15);
+var Proto9 = {
+  [TypeId15]: TypeId15,
+  pipe() {
+    return pipeArguments(this, arguments);
+  },
+  add(...toAdd) {
+    const groups = {
+      ...this.groups
+    };
+    for (const group2 of toAdd) {
+      groups[group2.identifier] = group2;
+    }
+    return makeProto2({
+      identifier: this.identifier,
+      groups,
+      annotations: this.annotations
+    });
+  },
+  addHttpApi(api) {
+    const newGroups = {
+      ...this.groups
+    };
+    for (const key in api.groups) {
+      const newGroup = api.groups[key];
+      newGroup.annotations = merge(api.annotations, newGroup.annotations);
+      newGroups[key] = newGroup;
+    }
+    return makeProto2({
+      identifier: this.identifier,
+      groups: newGroups,
+      annotations: this.annotations
+    });
+  },
+  prefix(prefix) {
+    return makeProto2({
+      identifier: this.identifier,
+      groups: map3(this.groups, (group2) => group2.prefix(prefix)),
+      annotations: this.annotations
+    });
+  },
+  middleware(tag2) {
+    return makeProto2({
+      identifier: this.identifier,
+      groups: map3(this.groups, (group2) => group2.middleware(tag2)),
+      annotations: this.annotations
+    });
+  },
+  annotate(key, value) {
+    return makeProto2({
+      identifier: this.identifier,
+      groups: this.groups,
+      annotations: add(this.annotations, key, value)
+    });
+  },
+  annotateMerge(annotations2) {
+    return makeProto2({
+      identifier: this.identifier,
+      groups: this.groups,
+      annotations: merge(this.annotations, annotations2)
+    });
+  }
+};
+var makeProto2 = (options4) => {
+  function HttpApi() {
+  }
+  Object.setPrototypeOf(HttpApi, Proto9);
+  HttpApi.groups = options4.groups;
+  HttpApi.annotations = options4.annotations;
+  return HttpApi;
+};
+var make12 = (identifier) => makeProto2({
+  identifier,
+  groups: /* @__PURE__ */ new Map(),
+  annotations: empty3()
+});
+var reflect = (self, options4) => {
+  const groups = Object.values(self.groups);
+  for (const group2 of groups) {
+    const groupAnnotations = merge(self.annotations, group2.annotations);
+    options4.onGroup({
+      group: group2,
+      mergedAnnotations: groupAnnotations
+    });
+    const endpoints = Object.values(group2.endpoints);
+    for (const endpoint2 of endpoints) {
+      if (options4.predicate && !options4.predicate({
+        endpoint: endpoint2,
+        group: group2
+      })) continue;
+      options4.onEndpoint({
+        group: group2,
+        endpoint: endpoint2,
+        middleware: endpoint2.middlewares,
+        mergedAnnotations: merge(groupAnnotations, endpoint2.annotations),
+        successes: extractResponseContent(getSuccessSchemas(endpoint2), getStatusSuccess),
+        errors: extractResponseContent(getErrorSchemas(endpoint2), getStatusError)
+      });
+    }
+  }
+};
+var extractResponseContent = (schemas, getStatus) => {
+  const map7 = /* @__PURE__ */ new Map();
+  schemas.forEach(add2);
+  return map7;
+  function add2(schema2) {
+    const ast = schema2.ast;
+    const status2 = getStatus(ast);
+    const schemas2 = map7.get(status2);
+    if (schemas2 === void 0) {
+      map7.set(status2, [schema2]);
+    } else {
+      schemas2.push(schema2);
+    }
+  }
+};
+var AdditionalSchemas = class extends (/* @__PURE__ */ Service()("effect/httpapi/HttpApi/AdditionalSchemas")) {
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiBuilder.js
+var HttpApiBuilder_exports = {};
+__export(HttpApiBuilder_exports, {
+  HandlersTypeId: () => HandlersTypeId,
+  endpoint: () => endpoint,
+  group: () => group,
+  layer: () => layer2,
+  securityDecode: () => securityDecode,
+  securitySetCookie: () => securitySetCookie
+});
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiError.js
+var badRequestResponse = /* @__PURE__ */ empty10({
+  status: 400
+});
+var unauthorizedResponse = /* @__PURE__ */ empty10({
+  status: 401
+});
+var forbiddenResponse = /* @__PURE__ */ empty10({
+  status: 403
+});
+var notFoundResponse = /* @__PURE__ */ empty10({
+  status: 404
+});
+var methodNotAllowedResponse = /* @__PURE__ */ empty10({
+  status: 405
+});
+var notAcceptableResponse = /* @__PURE__ */ empty10({
+  status: 406
+});
+var requestTimeoutResponse = /* @__PURE__ */ empty10({
+  status: 408
+});
+var conflictResponse = /* @__PURE__ */ empty10({
+  status: 409
+});
+var goneResponse = /* @__PURE__ */ empty10({
+  status: 410
+});
+var internalServerErrorResponse = /* @__PURE__ */ empty10({
+  status: 500
+});
+var notImplementedResponse = /* @__PURE__ */ empty10({
+  status: 501
+});
+var serviceUnavailableResponse = /* @__PURE__ */ empty10({
+  status: 503
+});
+var BadRequest = class _BadRequest extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/BadRequest")({
+  _tag: /* @__PURE__ */ tag("BadRequest")
+}, {
+  description: "BadRequest",
+  httpApiStatus: 400
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(badRequestResponse);
+  }
+  static singleton = /* @__PURE__ */ new _BadRequest();
+};
+var Unauthorized = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/Unauthorized")({
+  _tag: /* @__PURE__ */ tag("Unauthorized")
+}, {
+  description: "Unauthorized",
+  httpApiStatus: 401
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(unauthorizedResponse);
+  }
+};
+var Forbidden2 = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/Forbidden")({
+  _tag: /* @__PURE__ */ tag("Forbidden")
+}, {
+  description: "Forbidden",
+  httpApiStatus: 403
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(forbiddenResponse);
+  }
+};
+var NotFound = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/NotFound")({
+  _tag: /* @__PURE__ */ tag("NotFound")
+}, {
+  description: "NotFound",
+  httpApiStatus: 404
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(notFoundResponse);
+  }
+};
+var MethodNotAllowed = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/MethodNotAllowed")({
+  _tag: /* @__PURE__ */ tag("MethodNotAllowed")
+}, {
+  description: "MethodNotAllowed",
+  httpApiStatus: 405
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(methodNotAllowedResponse);
+  }
+};
+var NotAcceptable = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/NotAcceptable")({
+  _tag: /* @__PURE__ */ tag("NotAcceptable")
+}, {
+  description: "NotAcceptable",
+  httpApiStatus: 406
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(notAcceptableResponse);
+  }
+};
+var RequestTimeout = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/RequestTimeout")({
+  _tag: /* @__PURE__ */ tag("RequestTimeout")
+}, {
+  description: "RequestTimeout",
+  httpApiStatus: 408
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(requestTimeoutResponse);
+  }
+};
+var Conflict = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/Conflict")({
+  _tag: /* @__PURE__ */ tag("Conflict")
+}, {
+  description: "Conflict",
+  httpApiStatus: 409
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(conflictResponse);
+  }
+};
+var Gone = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/Gone")({
+  _tag: /* @__PURE__ */ tag("Gone")
+}, {
+  description: "Gone",
+  httpApiStatus: 410
+})) {
+  [ignore] = true;
+  [symbol3]() {
+    return succeed3(goneResponse);
+  }
+};
+var InternalServerError = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/InternalServerError")({
+  _tag: /* @__PURE__ */ tag("InternalServerError")
+}, {
+  description: "InternalServerError",
+  httpApiStatus: 500
+})) {
+  [symbol3]() {
+    return succeed3(internalServerErrorResponse);
+  }
+};
+var NotImplemented = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/NotImplemented")({
+  _tag: /* @__PURE__ */ tag("NotImplemented")
+}, {
+  description: "NotImplemented",
+  httpApiStatus: 501
+})) {
+  [symbol3]() {
+    return succeed3(notImplementedResponse);
+  }
+};
+var ServiceUnavailable = class extends (/* @__PURE__ */ ErrorClass("effect/HttpApiError/ServiceUnavailable")({
+  _tag: /* @__PURE__ */ tag("ServiceUnavailable")
+}, {
+  description: "ServiceUnavailable",
+  httpApiStatus: 503
+})) {
+  [symbol3]() {
+    return succeed3(serviceUnavailableResponse);
+  }
+};
+var HttpApiSchemaErrorTypeId = "~effect/httpapi/HttpApiError/HttpApiSchemaError";
+var HttpApiSchemaError = class _HttpApiSchemaError extends (/* @__PURE__ */ TaggedClass("HttpApiSchemaError")) {
+  [HttpApiSchemaErrorTypeId] = HttpApiSchemaErrorTypeId;
+  static is(u) {
+    return hasProperty(u, HttpApiSchemaErrorTypeId);
+  }
+  static wrap(kind, effect2) {
+    return mapError(effect2, (error) => new _HttpApiSchemaError({
+      kind,
+      cause: error
+    }));
+  }
+  name = "HttpApiSchemaError";
+  message = this.kind;
+  [symbol3]() {
+    return succeed3(badRequestResponse);
+  }
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiMiddleware.js
+var HttpApiMiddleware_exports = {};
+__export(HttpApiMiddleware_exports, {
+  Service: () => Service2,
+  isSecurity: () => isSecurity,
+  layerClient: () => layerClient,
+  layerSchemaErrorTransform: () => layerSchemaErrorTransform
+});
+var TypeId16 = "~effect/httpapi/HttpApiMiddleware";
+var SecurityTypeId = "~effect/httpapi/HttpApiMiddleware/Security";
+var isSecurity = (u) => hasProperty(u, SecurityTypeId);
+var Service2 = () => (id, options4) => {
+  const Err = globalThis.Error;
+  const limit = Err.stackTraceLimit;
+  Err.stackTraceLimit = 2;
+  const creationError = new Err();
+  Err.stackTraceLimit = limit;
+  class Service3 extends Service()(id) {
+  }
+  const self = Service3;
+  Object.defineProperty(Service3, "stack", {
+    get() {
+      return creationError.stack;
+    }
+  });
+  self[TypeId16] = TypeId16;
+  self.error = getError(options4?.error);
+  self.requiredForClient = options4?.requiredForClient ?? false;
+  if (options4?.security !== void 0) {
+    if (Object.keys(options4.security).length === 0) {
+      throw new Error("HttpApiMiddleware.Service: security object must not be empty");
+    }
+    self[SecurityTypeId] = SecurityTypeId;
+    self.security = options4.security;
+  }
+  return self;
+};
+function getError(error) {
+  if (error === void 0) return /* @__PURE__ */ new Set();
+  return new Set(Array.isArray(error) ? error : [error]);
+}
+var layerSchemaErrorTransform = (service, transform4) => succeed2(service, (httpEffect, options4) => catch_(httpEffect, (e) => HttpApiSchemaError.is(e) ? transform4(e, options4) : fail3(e)));
+var layerClient = (tag2, service) => effectContext(gen(function* () {
+  const services = (yield* context()).pipe(omit(Scope));
+  const middleware2 = isEffect(service) ? yield* service : service;
+  return makeUnsafe(/* @__PURE__ */ new Map([[`${tag2.key}/Client`, (options4) => updateContext(middleware2(options4), (requestContext) => merge(services, requestContext))]]));
+}));
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/OpenApi.js
+var OpenApi_exports = {};
+__export(OpenApi_exports, {
+  Deprecated: () => Deprecated,
+  Description: () => Description,
+  Exclude: () => Exclude,
+  ExternalDocs: () => ExternalDocs,
+  Format: () => Format,
+  Identifier: () => Identifier,
+  License: () => License,
+  Override: () => Override,
+  Servers: () => Servers,
+  Summary: () => Summary,
+  Title: () => Title,
+  Transform: () => Transform,
+  Version: () => Version,
+  annotations: () => annotations,
+  fromApi: () => fromApi
+});
+var Identifier = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Identifier")) {
+};
+var Title = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Title")) {
+};
+var Version = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Version")) {
+};
+var Description = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Description")) {
+};
+var License = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/License")) {
+};
+var ExternalDocs = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/ExternalDocs")) {
+};
+var Servers = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Servers")) {
+};
+var Format = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Format")) {
+};
+var Summary = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Summary")) {
+};
+var Deprecated = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Deprecated")) {
+};
+var Override = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Override")) {
+};
+var Exclude = /* @__PURE__ */ Reference("effect/httpapi/OpenApi/Exclude", {
+  defaultValue: constFalse
+});
+var Transform = class extends (/* @__PURE__ */ Service()("effect/httpapi/OpenApi/Transform")) {
+};
+var servicesPartial = (tags) => {
+  const entries = Object.entries(tags);
+  return (options4) => {
+    let context2 = empty3();
+    for (const [key, tag2] of entries) {
+      if (options4[key] !== void 0) {
+        context2 = add(context2, tag2, options4[key]);
+      }
+    }
+    return context2;
+  };
+};
+var annotations = /* @__PURE__ */ servicesPartial({
+  identifier: Identifier,
+  title: Title,
+  version: Version,
+  description: Description,
+  license: License,
+  summary: Summary,
+  deprecated: Deprecated,
+  externalDocs: ExternalDocs,
+  servers: Servers,
+  format: Format,
+  override: Override,
+  exclude: Exclude,
+  transform: Transform
+});
+var apiCache = /* @__PURE__ */ new WeakMap();
+function processAnnotation(ctx, annotation, f) {
+  const o = getOption(ctx, annotation);
+  if (isSome(o)) {
+    f(o.value);
+  }
+}
+function fromApi(api) {
+  const cached2 = apiCache.get(api);
+  if (cached2 !== void 0) {
+    return cached2;
+  }
+  let spec = {
+    openapi: "3.1.0",
+    info: {
+      title: "Api",
+      version: "0.0.1"
+    },
+    paths: {},
+    components: {
+      schemas: {},
+      securitySchemes: {}
+    },
+    security: [],
+    tags: []
+  };
+  const pathOps = [];
+  processAnnotation(api.annotations, Title, (title) => {
+    spec.info.title = title;
+  });
+  processAnnotation(api.annotations, Version, (version) => {
+    spec.info.version = version;
+  });
+  processAnnotation(api.annotations, Description, (description) => {
+    spec.info.description = description;
+  });
+  processAnnotation(api.annotations, License, (license) => {
+    spec.info.license = license;
+  });
+  processAnnotation(api.annotations, Summary, (summary) => {
+    spec.info.summary = summary;
+  });
+  processAnnotation(api.annotations, Servers, (servers) => {
+    spec.servers = [...servers];
+  });
+  reflect(api, {
+    onGroup({
+      group: group2
+    }) {
+      if (get(group2.annotations, Exclude)) {
+        return;
+      }
+      let tag2 = {
+        name: getOrElse(group2.annotations, Title, () => group2.identifier)
+      };
+      processAnnotation(group2.annotations, Description, (description) => {
+        tag2.description = description;
+      });
+      processAnnotation(group2.annotations, ExternalDocs, (externalDocs) => {
+        tag2.externalDocs = externalDocs;
+      });
+      processAnnotation(group2.annotations, Override, (override) => {
+        Object.assign(tag2, override);
+      });
+      processAnnotation(group2.annotations, Transform, (transformFn) => {
+        tag2 = transformFn(tag2);
+      });
+      spec.tags.push(tag2);
+    },
+    onEndpoint({
+      endpoint: endpoint2,
+      group: group2,
+      mergedAnnotations,
+      middleware: middleware2
+    }) {
+      if (get(mergedAnnotations, Exclude)) {
+        return;
+      }
+      let op = {
+        tags: [getOrElse(group2.annotations, Title, () => group2.identifier)],
+        operationId: getOrElse(endpoint2.annotations, Identifier, () => group2.topLevel ? endpoint2.name : `${group2.identifier}.${endpoint2.name}`),
+        parameters: [],
+        security: [],
+        responses: {}
+      };
+      const path = endpoint2.path.replace(/:(\w+)\??/g, "{$1}");
+      const method = endpoint2.method.toLowerCase();
+      function processRequestBodies(payloadMap) {
+        if (payloadMap.size > 0) {
+          const c = {};
+          let hasContent = false;
+          payloadMap.forEach(({
+            encoding,
+            schemas
+          }, contentType) => {
+            const filtered = schemas.filter((s) => !isNoContent(s.ast));
+            if (filtered.length === 0) return;
+            hasContent = true;
+            const asts = filtered.map(getAST);
+            const ast = asts.length === 1 ? asts[0] : new Union(asts, "anyOf");
+            pathOps.push({
+              _tag: "schema",
+              ast: toEncodingAST(ast, encoding._tag),
+              path: ["paths", path, method, "requestBody", "content", contentType, "schema"]
+            });
+            c[contentType] = {
+              schema: {}
+            };
+          });
+          if (hasContent) {
+            op.requestBody = {
+              content: c,
+              required: true
+            };
+          }
+        }
+      }
+      function processResponseBodies(bodies, defaultDescription) {
+        for (const [status2, {
+          content,
+          descriptions
+        }] of bodies) {
+          const description = descriptions.size > 0 ? Array.from(descriptions).join(" | ") : defaultDescription();
+          op.responses[status2] = {
+            description
+          };
+          if (content !== void 0) {
+            content.forEach((map7, encoding) => {
+              map7.forEach((schemas, contentType) => {
+                const asts = Array.from(schemas, getAST);
+                const ast = asts.length === 1 ? asts[0] : new Union(asts, "anyOf");
+                pathOps.push({
+                  _tag: "schema",
+                  ast: toEncodingAST(ast, encoding),
+                  path: ["paths", path, method, "responses", String(status2), "content", contentType, "schema"]
+                });
+                op.responses[status2].content ??= {};
+                op.responses[status2].content[contentType] = {
+                  schema: {}
+                };
+              });
+            });
+          }
+        }
+      }
+      function processParameters(schema2, i) {
+        if (schema2) {
+          const ast = getLastEncoding(schema2.ast);
+          if (isObjects(ast)) {
+            for (const ps of ast.propertySignatures) {
+              op.parameters.push({
+                name: String(ps.name),
+                in: i,
+                schema: {},
+                required: i === "path" || !isOptional(ps.type)
+              });
+              pathOps.push({
+                _tag: "parameter",
+                ast: ps.type,
+                path: ["paths", path, method, "parameters", String(op.parameters.length - 1), "schema"]
+              });
+            }
+          }
+        }
+      }
+      processAnnotation(endpoint2.annotations, Description, (description) => {
+        op.description = description;
+      });
+      processAnnotation(endpoint2.annotations, Summary, (summary) => {
+        op.summary = summary;
+      });
+      processAnnotation(endpoint2.annotations, Deprecated, (deprecated) => {
+        op.deprecated = deprecated;
+      });
+      processAnnotation(endpoint2.annotations, ExternalDocs, (externalDocs) => {
+        op.externalDocs = externalDocs;
+      });
+      middleware2.forEach((middleware3) => {
+        if (!isSecurity(middleware3)) {
+          return;
+        }
+        for (const [name, security] of Object.entries(middleware3.security)) {
+          processHttpApiSecurity(name, security);
+          op.security.push({
+            [name]: []
+          });
+        }
+      });
+      function processHttpApiSecurity(name, security) {
+        if (spec.components.securitySchemes[name] !== void 0) {
+          return;
+        }
+        spec.components.securitySchemes[name] = makeSecurityScheme(security);
+      }
+      const hasBody2 = hasBody(endpoint2.method);
+      if (hasBody2) {
+        processRequestBodies(endpoint2.payload);
+      }
+      processParameters(endpoint2.params, "path");
+      if (!hasBody2 && endpoint2.payload.size === 1) {
+        const entry = endpoint2.payload.values().next().value;
+        processParameters(entry.schemas[0], "query");
+      }
+      processParameters(endpoint2.headers, "header");
+      processParameters(endpoint2.query, "query");
+      processResponseBodies(extractResponseBodies(getSuccessSchemas(endpoint2), getStatusSuccess, resolveDescriptionOrIdentifier), () => "Success");
+      processResponseBodies(extractResponseBodies(getErrorSchemas(endpoint2), getStatusError, resolveDescriptionOrIdentifier), () => "Error");
+      if (!spec.paths[path]) {
+        spec.paths[path] = {};
+      }
+      processAnnotation(endpoint2.annotations, Override, (override) => {
+        Object.assign(op, override);
+      });
+      processAnnotation(endpoint2.annotations, Transform, (transformFn) => {
+        op = transformFn(op);
+      });
+      spec.paths[path][method] = op;
+    }
+  });
+  processAnnotation(api.annotations, AdditionalSchemas, (componentSchemas) => {
+    componentSchemas.forEach((componentSchema) => {
+      const identifier = resolveIdentifier(componentSchema.ast);
+      if (identifier !== void 0) {
+        if (identifier in spec.components.schemas) {
+          throw new globalThis.Error(`Duplicate component schema identifier: ${identifier}`);
+        }
+        spec.components.schemas[identifier] = {};
+        pathOps.push({
+          _tag: "schema",
+          ast: componentSchema.ast,
+          path: ["components", "schemas", identifier]
+        });
+      }
+    });
+  });
+  function escapePath(path) {
+    return "/" + path.map(escapeToken).join("/");
+  }
+  if (isArrayNonEmpty(pathOps)) {
+    const multiDocument = fromASTs(map4(pathOps, (op) => op.ast));
+    const jsonSchemaMultiDocument = toMultiDocumentOpenApi3_1(toJsonSchemaMultiDocument(multiDocument));
+    const patchOps = pathOps.map((op, i) => {
+      const oppath = escapePath(op.path);
+      const value = jsonSchemaMultiDocument.schemas[i];
+      return {
+        op: "replace",
+        path: oppath,
+        value
+      };
+    });
+    Object.entries(jsonSchemaMultiDocument.definitions).forEach(([name, definition]) => {
+      patchOps.push({
+        op: "add",
+        path: escapePath(["components", "schemas", name]),
+        value: definition
+      });
+    });
+    spec = apply(patchOps, spec);
+  }
+  Object.keys(spec.components.schemas).forEach((key) => {
+    if (!VALID_OPEN_API_COMPONENTS_SCHEMAS_KEY_REGEXP.test(key)) {
+      throw new globalThis.Error(`Invalid component schema key: ${key}`);
+    }
+  });
+  processAnnotation(api.annotations, Override, (override) => {
+    Object.assign(spec, override);
+  });
+  processAnnotation(api.annotations, Transform, (transformFn) => {
+    spec = transformFn(spec);
+  });
+  apiCache.set(api, spec);
+  return spec;
+}
+function extractResponseBodies(schemas, getStatus, getDescription) {
+  const map7 = /* @__PURE__ */ new Map();
+  schemas.forEach(process2);
+  return map7;
+  function process2(schema2) {
+    const ast = schema2.ast;
+    const status2 = getStatus(ast);
+    if (isNoContent(ast)) {
+      addNoContent(status2, getDescription(schema2.ast) ?? "<No Content>");
+    } else {
+      addContent(schema2, status2, getResponseEncoding(ast));
+    }
+  }
+  function addNoContent(status2, description) {
+    const statusMap = map7.get(status2);
+    if (statusMap === void 0) {
+      map7.set(status2, {
+        descriptions: /* @__PURE__ */ new Set([description]),
+        content: void 0
+      });
+    } else {
+      if (description !== void 0) {
+        statusMap.descriptions.add(description);
+      }
+    }
+  }
+  function addContent(schema2, status2, encoding) {
+    const description = getDescription(schema2.ast);
+    const statusMap = map7.get(status2);
+    const {
+      _tag,
+      contentType
+    } = encoding;
+    if (statusMap === void 0) {
+      map7.set(status2, {
+        descriptions: new Set(description !== void 0 ? [description] : []),
+        content: /* @__PURE__ */ new Map([[_tag, /* @__PURE__ */ new Map([[contentType, /* @__PURE__ */ new Set([schema2])]])]])
+      });
+    } else {
+      if (statusMap.content !== void 0) {
+        if (description !== void 0) {
+          statusMap.descriptions.add(description);
+        }
+        const contentTypeMap = statusMap.content.get(_tag);
+        if (contentTypeMap === void 0) {
+          statusMap.content.set(_tag, /* @__PURE__ */ new Map([[contentType, /* @__PURE__ */ new Set([schema2])]]));
+        } else {
+          const set5 = contentTypeMap.get(contentType);
+          if (set5 === void 0) {
+            contentTypeMap.set(contentType, /* @__PURE__ */ new Set([schema2]));
+          } else {
+            set5.add(schema2);
+          }
+        }
+      }
+    }
+  }
+}
+function resolveDescriptionOrIdentifier(ast) {
+  return resolveDescription(ast) ?? resolveIdentifier(ast);
+}
+var Uint8ArrayEncoding = /* @__PURE__ */ String2.annotate({
+  format: "binary"
+});
+function toEncodingAST(ast, _tag) {
+  switch (_tag) {
+    case "Uint8Array":
+      return Uint8ArrayEncoding.ast;
+    case "Text":
+      return String2.ast;
+    case "FormUrlEncoded":
+    case "Json":
+      return ast;
+    case "Multipart":
+      return persistedFileToBinaryEncoding(ast);
+  }
+}
+function persistedFileToBinaryEncoding(ast) {
+  if (isDeclaration(ast) && ast.annotations?.typeConstructor?._tag === "effect/http/PersistedFile") {
+    return Uint8ArrayEncoding.ast;
+  }
+  if (typeof ast?.recur === "function") {
+    return ast.recur(persistedFileToBinaryEncoding);
+  }
+  return ast;
+}
+var makeSecurityScheme = (security) => {
+  const meta = {};
+  processAnnotation(security.annotations, Description, (description) => {
+    meta.description = description;
+  });
+  switch (security._tag) {
+    case "Basic": {
+      return {
+        ...meta,
+        type: "http",
+        scheme: "basic"
+      };
+    }
+    case "Bearer": {
+      const format3 = getOption(security.annotations, Format).pipe(map((format4) => ({
+        bearerFormat: format4
+      })), getOrUndefined);
+      return {
+        ...meta,
+        type: "http",
+        scheme: "bearer",
+        ...format3
+      };
+    }
+    case "ApiKey": {
+      return {
+        ...meta,
+        type: "apiKey",
+        name: security.key,
+        in: security.in
+      };
+    }
+  }
+};
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiBuilder.js
+var layer2 = (api, options4) => use(fnUntraced(function* (router) {
+  const services = yield* context();
+  const routes = [];
+  const availableGroups = Array.from(services.mapUnsafe.keys()).filter((key) => key.startsWith("effect/httpapi/HttpApiGroup/"));
+  for (const group2 of Object.values(api.groups)) {
+    const groupRoutes = services.mapUnsafe.get(group2.key);
+    if (groupRoutes === void 0) {
+      const available = availableGroups.length === 0 ? "none" : availableGroups.join(", ");
+      return yield* die(`HttpApiGroup "${group2.identifier}" not found (key: "${group2.key}"). Did you forget to provide HttpApiBuilder.group(api, "${group2.identifier}", ...)? Available groups: ${available}`);
+    }
+    routes.push(...groupRoutes);
+  }
+  yield* router.addAll(routes);
+  if (options4?.openapiPath) {
+    const spec = fromApi(api);
+    yield* router.add("GET", options4.openapiPath, succeed3(jsonUnsafe2(spec)));
+  }
+}));
+var group = (api, groupName, build2) => effectContext(gen(function* () {
+  const services = (yield* context()).pipe(omit(Scope));
+  const group2 = api.groups[groupName];
+  const result2 = build2(makeHandlers(group2));
+  const handlers = isEffect(result2) ? yield* result2 : result2;
+  const routes = [];
+  for (const item of handlers.handlers) {
+    routes.push(handlerToRoute(group2, item, services));
+  }
+  return makeUnsafe(/* @__PURE__ */ new Map([[group2.key, routes]]));
+}));
+var HandlersTypeId = /* @__PURE__ */ Symbol.for("@effect/platform/HttpApiBuilder/Handlers");
+var endpoint = (api, groupName, endpointName, handler) => contextWith((context2) => {
+  const group2 = api.groups[groupName];
+  const endpoint2 = group2.endpoints[endpointName];
+  return succeed3(handlerToHttpEffect(group2, endpoint2, omit(Scope)(context2), handler, false));
+});
+var securityDecode = (self) => {
+  switch (self._tag) {
+    case "Bearer": {
+      return map5(HttpServerRequest.asEffect(), (request) => make2((request.headers.authorization ?? "").slice(bearerLen)));
+    }
+    case "ApiKey": {
+      const key = self.in === "header" ? self.key.toLowerCase() : self.key;
+      const schema2 = Struct({
+        [key]: String2
+      });
+      const decode = self.in === "query" ? schemaSearchParams(schema2) : self.in === "cookie" ? schemaCookies(schema2) : schemaHeaders(schema2);
+      return match2(decode, {
+        onFailure: () => make2(""),
+        onSuccess: (match4) => make2(match4[key])
+      });
+    }
+    case "Basic": {
+      const empty11 = {
+        username: "",
+        password: make2("")
+      };
+      return HttpServerRequest.asEffect().pipe(flatMap((request) => decodeBase64String((request.headers.authorization ?? "").slice(basicLen)).asEffect()), match2({
+        onFailure: () => empty11,
+        onSuccess: (header) => {
+          const parts = header.split(":");
+          if (parts.length !== 2) {
+            return empty11;
+          }
+          return {
+            username: parts[0],
+            password: make2(parts[1])
+          };
+        }
+      }));
+    }
+  }
+};
+var securitySetCookie = (self, value, options4) => appendPreResponseHandler((_req, response) => orDie(setCookie(response, self.key, stringOrRedacted(value), {
+  secure: true,
+  httpOnly: true,
+  ...options4
+})));
+var bearerLen = `Bearer `.length;
+var basicLen = `Basic `.length;
+var HandlersProto = {
+  [HandlersTypeId]: {
+    _Endpoints: identity
+  },
+  pipe() {
+    return pipeArguments(this, arguments);
+  },
+  handle(name, handler, options4) {
+    const endpoint2 = this.group.endpoints[name];
+    this.handlers.add({
+      endpoint: endpoint2,
+      handler,
+      isRaw: false,
+      uninterruptible: options4?.uninterruptible ?? false
+    });
+    return this;
+  },
+  handleRaw(name, handler, options4) {
+    const endpoint2 = this.group.endpoints[name];
+    this.handlers.add({
+      endpoint: endpoint2,
+      handler,
+      isRaw: true,
+      uninterruptible: options4?.uninterruptible ?? false
+    });
+    return this;
+  }
+};
+var makeHandlers = (group2) => {
+  const self = Object.create(HandlersProto);
+  self.group = group2;
+  self.handlers = /* @__PURE__ */ new Set();
+  return self;
+};
+function buildPayloadDecoders(payloadMap) {
+  const result2 = /* @__PURE__ */ new Map();
+  payloadMap.forEach(({
+    encoding,
+    schemas
+  }, contentType) => {
+    const decode = decodeUnknownEffect(Union2(schemas));
+    if (encoding._tag === "Multipart") {
+      result2.set(contentType, {
+        _tag: "Multipart",
+        mode: encoding.mode,
+        limits: encoding.limits,
+        decode
+      });
+    } else {
+      result2.set(contentType, {
+        _tag: encoding._tag,
+        decode
+      });
+    }
+  });
+  return result2;
+}
+function decodePayload(payloadBy, httpRequest, query) {
+  const hasBody2 = hasBody(httpRequest.method);
+  const contentType = hasBody2 ? getRequestMediaType(httpRequest) : "application/x-www-form-urlencoded";
+  const existing = payloadBy.get(contentType);
+  if (!existing) {
+    return text2(`Unsupported content-type: ${contentType}`, {
+      status: 415
+    });
+  }
+  const {
+    _tag,
+    decode
+  } = existing;
+  switch (_tag) {
+    case "Multipart": {
+      if (existing.mode === "buffered") {
+        return flatMap(orDie(match3(existing.limits, {
+          onUndefined: () => httpRequest.multipart,
+          onDefined: (limits) => provideContext(httpRequest.multipart, limitsServices(limits))
+        })), decode);
+      }
+      return succeed3(match3(existing.limits, {
+        onUndefined: () => httpRequest.multipartStream,
+        onDefined: (limits) => provideContext2(httpRequest.multipartStream, limitsServices(limits))
+      }));
+    }
+    case "Json":
+      return flatMap(orDie(httpRequest.json), decode);
+    case "Text":
+      return flatMap(orDie(httpRequest.text), decode);
+    case "FormUrlEncoded": {
+      const source = hasBody2 ? map5(orDie(httpRequest.urlParamsBody), toRecord) : succeed3(query);
+      return flatMap(source, decode);
+    }
+    case "Uint8Array":
+      return flatMap(map5(orDie(httpRequest.arrayBuffer), (buffer) => new Uint8Array(buffer)), decode);
+  }
+}
+function handlerToHttpEffect(group2, endpoint2, context2, handler, isRaw) {
+  const encodeSuccess = encodeUnknownEffect2(makeSuccessSchema(endpoint2));
+  const encodeError = encodeUnknownEffect2(makeErrorSchema(endpoint2));
+  const decodeParams = map6(endpoint2.params, decodeUnknownEffect);
+  const decodeHeaders = map6(endpoint2.headers, decodeUnknownEffect);
+  const decodeQuery = map6(endpoint2.query, decodeUnknownEffect);
+  const shouldParsePayload = endpoint2.payload.size > 0 && !isRaw;
+  const payloadBy = shouldParsePayload ? buildPayloadDecoders(endpoint2.payload) : void 0;
+  return applyMiddleware(group2, endpoint2, context2, gen(function* () {
+    const fiber = getCurrent();
+    const context3 = fiber.context;
+    const httpRequest = getUnsafe(context3, HttpServerRequest);
+    const routeContext = getUnsafe(context3, RouteContext);
+    const query = getUnsafe(context3, ParsedSearchParams);
+    const request = {
+      request: httpRequest,
+      endpoint: endpoint2,
+      group: group2
+    };
+    if (decodeParams) {
+      request.params = yield* HttpApiSchemaError.wrap("Params", decodeParams(routeContext.params));
+    }
+    if (decodeHeaders) {
+      request.headers = yield* HttpApiSchemaError.wrap("Headers", decodeHeaders(httpRequest.headers));
+    }
+    if (decodeQuery) {
+      request.query = yield* HttpApiSchemaError.wrap("Query", decodeQuery(query));
+    }
+    if (payloadBy) {
+      const result2 = decodePayload(payloadBy, httpRequest, query);
+      if (isHttpServerResponse(result2)) {
+        return result2;
+      }
+      if (result2 !== void 0) {
+        request.payload = yield* HttpApiSchemaError.wrap("Payload", result2);
+      }
+    }
+    const response = yield* handler(request);
+    return isHttpServerResponse(response) ? response : yield* HttpApiSchemaError.wrap("Body", encodeSuccess(response));
+  })).pipe(withErrorReporting, catch_((error) => {
+    if (HttpApiSchemaError.is(error)) return die(error);
+    return orDie(encodeError(error));
+  }), provideContext(context2));
+}
+function handlerToRoute(group2, handler, context2) {
+  const endpoint2 = handler.endpoint;
+  return route(endpoint2.method, endpoint2.path, handlerToHttpEffect(group2, endpoint2, context2, handler.handler, handler.isRaw), {
+    uninterruptible: handler.uninterruptible
+  });
+}
+var getRequestContentType = (request) => request.headers["content-type"] ? request.headers["content-type"].toLowerCase().trim() : "application/json";
+var getRequestMediaType = (request) => {
+  const contentType = getRequestContentType(request);
+  const index = contentType.indexOf(";");
+  return index === -1 ? contentType : contentType.slice(0, index).trim();
+};
+var applyMiddleware = (group2, endpoint2, context2, handler) => {
+  const options4 = {
+    group: group2,
+    endpoint: endpoint2
+  };
+  for (const key_ of endpoint2.middlewares) {
+    const key = key_;
+    const service = getUnsafe(context2, key);
+    const apply2 = isSecurity(key) ? makeSecurityMiddleware(key, service) : service;
+    handler = apply2(handler, options4);
+  }
+  return handler;
+};
+var securityMiddlewareCache = /* @__PURE__ */ new WeakMap();
+var makeSecurityMiddleware = (key, service) => {
+  const cached2 = securityMiddlewareCache.get(service);
+  if (cached2 !== void 0) {
+    return cached2;
+  }
+  const entries = Object.entries(key.security).map(([securityKey, security]) => ({
+    decode: securityDecode(security),
+    middleware: service[securityKey]
+  }));
+  if (entries.length === 0) {
+    return identity;
+  }
+  const middleware2 = fnUntraced(function* (handler, options4) {
+    let lastResult;
+    for (let i = 0; i < entries.length; i++) {
+      const {
+        decode,
+        middleware: middleware3
+      } = entries[i];
+      const result2 = yield* result(flatMap(decode, (credential) => middleware3(handler, {
+        credential,
+        endpoint: options4.endpoint,
+        group: options4.group
+      })));
+      if (isFailure(result2)) {
+        lastResult = result2;
+        continue;
+      }
+      return result2.success;
+    }
+    return yield* lastResult.asEffect();
+  });
+  securityMiddlewareCache.set(service, middleware2);
+  return middleware2;
+};
+var $HttpServerResponse = /* @__PURE__ */ declare(isHttpServerResponse);
+var toResponseSuccessSchema = /* @__PURE__ */ toResponseSchema(getStatusSuccess);
+var toResponseErrorSchema = /* @__PURE__ */ toResponseSchema(getStatusError);
+function makeSuccessSchema(endpoint2) {
+  const schemas = getSuccessSchemas(endpoint2).map(toResponseSuccessSchema);
+  return schemas.length === 1 ? schemas[0] : Union2(schemas);
+}
+function makeErrorSchema(endpoint2) {
+  const schemas = getErrorSchemas(endpoint2).map(toResponseErrorSchema);
+  if (schemas.length === 0) return Never;
+  return schemas.length === 1 ? schemas[0] : Union2(schemas);
+}
+function toResponseSchema(getStatus) {
+  const cache = /* @__PURE__ */ new WeakMap();
+  return (schema2) => {
+    const cached2 = cache.get(schema2.ast);
+    if (cached2 !== void 0) {
+      return cached2;
+    }
+    const responseSchema = $HttpServerResponse.pipe(decodeTo(schema2, getResponseTransformation(getStatus, schema2)));
+    cache.set(responseSchema.ast, responseSchema);
+    return responseSchema;
+  };
+}
+function getResponseTransformation(getStatus, schema2) {
+  const ast = schema2.ast;
+  const encode = getResponseEncode(getStatus(ast), getResponseEncoding(ast), isNoContent(ast));
+  return transformOrFail({
+    decode: (res) => fail3(new Forbidden(some(res), {
+      message: "Encode only schema"
+    })),
+    encode
+  });
+}
+function getResponseEncode(status2, encoding, isNoContent2) {
+  switch (encoding._tag) {
+    case "Json": {
+      return (e) => {
+        if (e === void 0 || isNoContent2) {
+          return succeed3(empty10({
+            status: status2
+          }));
+        }
+        try {
+          const s = JSON.stringify(e);
+          return succeed3(text2(s, {
+            status: status2,
+            contentType: encoding.contentType
+          }));
+        } catch (error) {
+          return fail3(new InvalidValue(some(e), {
+            message: globalThis.String(error)
+          }));
+        }
+      };
+    }
+    case "Text":
+      return (e) => succeed3(text2(e, {
+        status: status2,
+        contentType: encoding.contentType
+      }));
+    case "Uint8Array":
+      return (e) => succeed3(uint8Array2(e, {
+        status: status2,
+        contentType: encoding.contentType
+      }));
+    case "FormUrlEncoded":
+      return (e) => succeed3(urlParams2(e, {
+        status: status2
+      }).pipe(setHeader2("content-type", encoding.contentType)));
+  }
+}
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/unstable/httpapi/HttpApiGroup.js
+var HttpApiGroup_exports = {};
+__export(HttpApiGroup_exports, {
+  isHttpApiGroup: () => isHttpApiGroup,
+  make: () => make13
+});
+var TypeId17 = "~effect/httpapi/HttpApiGroup";
+var isHttpApiGroup = (u) => hasProperty(u, TypeId17);
+var Proto10 = {
+  [TypeId17]: TypeId17,
+  add(...toAdd) {
+    const endpoints = {
+      ...this.endpoints
+    };
+    for (const endpoint2 of toAdd) {
+      endpoints[endpoint2.name] = endpoint2;
+    }
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints,
+      annotations: this.annotations
+    });
+  },
+  prefix(prefix) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: map3(this.endpoints, (endpoint2) => endpoint2.prefix(prefix)),
+      annotations: this.annotations
+    });
+  },
+  middleware(middleware2) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: map3(this.endpoints, (endpoint2) => endpoint2.middleware(middleware2)),
+      annotations: this.annotations
+    });
+  },
+  annotateMerge(annotations2) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: this.endpoints,
+      annotations: merge(this.annotations, annotations2)
+    });
+  },
+  annotate(annotation, value) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: this.endpoints,
+      annotations: add(this.annotations, annotation, value)
+    });
+  },
+  annotateEndpointsMerge(annotations2) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: map3(this.endpoints, (endpoint2) => endpoint2.annotateMerge(annotations2)),
+      annotations: this.annotations
+    });
+  },
+  annotateEndpoints(annotation, value) {
+    return makeProto3({
+      identifier: this.identifier,
+      topLevel: this.topLevel,
+      endpoints: map3(this.endpoints, (endpoint2) => endpoint2.annotate(annotation, value)),
+      annotations: this.annotations
+    });
+  },
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+};
+var makeProto3 = (options4) => {
+  function HttpApiGroup() {
+  }
+  Object.setPrototypeOf(HttpApiGroup, Proto10);
+  HttpApiGroup.key = `effect/httpapi/HttpApiGroup/${options4.identifier}`;
+  return Object.assign(HttpApiGroup, options4);
+};
+var make13 = (identifier, options4) => makeProto3({
+  identifier,
+  topLevel: options4?.topLevel ?? false,
+  endpoints: empty(),
+  annotations: empty3()
+});
 
 // ../sdk/src/integration.ts
 var shortId = () => Math.random().toString(36).slice(2, 8);
@@ -14110,96 +19471,89 @@ var freshCustomAuthSlug = (taken) => {
   return candidate;
 };
 var mergeAuthTemplates = (existing, incoming) => {
-  const result = existing.map((entry) => entry);
-  const taken = new Set(result.map((entry) => String(entry.slug)));
+  const result2 = existing.map((entry) => entry);
+  const taken = new Set(result2.map((entry) => String(entry.slug)));
   for (const entry of incoming) {
     const rawSlug = entry.slug;
     const requested = typeof rawSlug === "string" ? rawSlug.trim() : "";
-    const existingIndex = result.findIndex((current) => String(current.slug) === requested);
+    const existingIndex = result2.findIndex((current) => String(current.slug) === requested);
     if (requested.length > 0 && existingIndex >= 0) {
-      result[existingIndex] = entry;
+      result2[existingIndex] = entry;
       continue;
     }
     const slug = requested.length > 0 && !taken.has(requested) ? requested : freshCustomAuthSlug(taken);
     taken.add(slug);
-    result.push({ ...entry, slug });
+    result2.push({ ...entry, slug });
   }
-  return result;
+  return result2;
 };
 
 // ../sdk/src/server-connection.ts
-import { Option as Option6, Schema as Schema15 } from "effect";
-var ExecutorServerAuthJson = Schema15.Union([
-  Schema15.Struct({
-    kind: Schema15.Literal("basic"),
-    username: Schema15.optional(Schema15.String),
-    password: Schema15.String
+var ExecutorServerAuthJson = Schema_exports.Union([
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("basic"),
+    username: Schema_exports.optional(Schema_exports.String),
+    password: Schema_exports.String
   }),
-  Schema15.Struct({
-    kind: Schema15.Literal("bearer"),
-    token: Schema15.String
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("bearer"),
+    token: Schema_exports.String
   }),
-  Schema15.Struct({
-    kind: Schema15.Literal("oauth"),
-    accessToken: Schema15.String,
-    refreshToken: Schema15.optional(Schema15.String),
-    expiresAt: Schema15.optional(Schema15.Number),
-    tokenEndpoint: Schema15.optional(Schema15.String),
-    clientId: Schema15.optional(Schema15.String)
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("oauth"),
+    accessToken: Schema_exports.String,
+    refreshToken: Schema_exports.optional(Schema_exports.String),
+    expiresAt: Schema_exports.optional(Schema_exports.Number),
+    tokenEndpoint: Schema_exports.optional(Schema_exports.String),
+    clientId: Schema_exports.optional(Schema_exports.String)
   })
 ]);
-var ExecutorServerConnectionJson = Schema15.Struct({
-  kind: Schema15.optional(Schema15.Literals(["http", "desktop-sidecar"])),
-  key: Schema15.optional(Schema15.String),
-  origin: Schema15.String,
-  apiBaseUrl: Schema15.optional(Schema15.String),
-  displayName: Schema15.optional(Schema15.String),
-  auth: Schema15.optional(ExecutorServerAuthJson)
+var ExecutorServerConnectionJson = Schema_exports.Struct({
+  kind: Schema_exports.optional(Schema_exports.Literals(["http", "desktop-sidecar"])),
+  key: Schema_exports.optional(Schema_exports.String),
+  origin: Schema_exports.String,
+  apiBaseUrl: Schema_exports.optional(Schema_exports.String),
+  displayName: Schema_exports.optional(Schema_exports.String),
+  auth: Schema_exports.optional(ExecutorServerAuthJson)
 });
-var ExecutorLocalServerManifestJson = Schema15.Struct({
-  version: Schema15.Literal(1),
-  kind: Schema15.Literals(["cli-daemon", "desktop-sidecar", "foreground"]),
-  pid: Schema15.Number,
-  startedAt: Schema15.String,
-  dataDir: Schema15.String,
-  scopeDir: Schema15.NullOr(Schema15.String),
+var ExecutorLocalServerManifestJson = Schema_exports.Struct({
+  version: Schema_exports.Literal(1),
+  kind: Schema_exports.Literals(["cli-daemon", "desktop-sidecar", "foreground"]),
+  pid: Schema_exports.Number,
+  startedAt: Schema_exports.String,
+  dataDir: Schema_exports.String,
+  scopeDir: Schema_exports.NullOr(Schema_exports.String),
   connection: ExecutorServerConnectionJson,
-  owner: Schema15.Struct({
-    client: Schema15.Literals(["cli", "desktop"]),
-    version: Schema15.NullOr(Schema15.String),
-    executablePath: Schema15.NullOr(Schema15.String)
+  owner: Schema_exports.Struct({
+    client: Schema_exports.Literals(["cli", "desktop"]),
+    version: Schema_exports.NullOr(Schema_exports.String),
+    executablePath: Schema_exports.NullOr(Schema_exports.String)
   })
 });
-var decodeUnknownJsonOption = Schema15.decodeUnknownOption(Schema15.UnknownFromJsonString);
-var decodeExecutorLocalServerManifestJson = Schema15.decodeUnknownOption(
+var decodeUnknownJsonOption = Schema_exports.decodeUnknownOption(Schema_exports.UnknownFromJsonString);
+var decodeExecutorLocalServerManifestJson = Schema_exports.decodeUnknownOption(
   ExecutorLocalServerManifestJson
 );
 
 // ../sdk/src/api-errors.ts
-import { Schema as Schema16 } from "effect";
-var InternalError = class extends Schema16.TaggedErrorClass()(
+var InternalError2 = class extends Schema_exports.TaggedErrorClass()(
   "InternalError",
   {
     /** Opaque correlation id for backend lookup (Sentry event id, log line, etc.). */
-    traceId: Schema16.String
+    traceId: Schema_exports.String
   },
   { httpApiStatus: 500 }
 ) {
 };
 
 // ../sdk/src/sqlite-data-migrations.ts
-import { Data as Data4, Effect as Effect12 } from "effect";
-var DataMigrationError = class extends Data4.TaggedError("DataMigrationError") {
+var DataMigrationError = class extends Data_exports.TaggedError("DataMigrationError") {
 };
-var DuplicateDataMigrationError = class extends Data4.TaggedError("DuplicateDataMigrationError") {
+var DuplicateDataMigrationError = class extends Data_exports.TaggedError("DuplicateDataMigrationError") {
 };
 
 // ../sdk/src/sqlite-config-blob-migration.ts
-import { Effect as Effect13, Option as Option7, Schema as Schema17 } from "effect";
-var decodeJsonOption = Schema17.decodeUnknownOption(Schema17.UnknownFromJsonString);
-
-// ../sdk/src/sqlite-oauth-client-gc-migration.ts
-import { Effect as Effect14 } from "effect";
+var decodeJsonOption = Schema_exports.decodeUnknownOption(Schema_exports.UnknownFromJsonString);
 
 // ../sdk/src/auth-tool-failure.ts
 var authRecovery = (input) => ({
@@ -14228,6 +19582,15 @@ var authToolFailure = (input) => {
 };
 
 export {
+  HttpClientRequest_exports,
+  HttpClient_exports,
+  HttpApiSchema_exports,
+  HttpApiEndpoint_exports,
+  HttpApi_exports,
+  HttpApiMiddleware_exports,
+  OpenApi_exports,
+  HttpApiBuilder_exports,
+  HttpApiGroup_exports,
   StorageError,
   IntegrationSlug,
   AuthTemplateSlug,
@@ -14269,6 +19632,7 @@ export {
   OAuthSessionNotFoundError,
   tool,
   definePlugin,
+  FetchHttpClient_exports,
   isToolFile,
   ToolResult,
   isToolResult,
@@ -14277,6 +19641,6 @@ export {
   collectTables,
   createExecutor,
   defineExecutorConfig,
-  InternalError,
+  InternalError2 as InternalError,
   authToolFailure
 };

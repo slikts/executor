@@ -12,7 +12,7 @@ export default defineConfig({
   dts: { resolve: true },
   sourcemap: false,
   clean: true,
-  // Bundle all @executor-js internals; externalize peer deps
-  external: [/^effect/, /^@effect\//, /^@modelcontextprotocol\//, /^quickjs-emscripten/, /^@jitl\//],
-  noExternal: [/^@executor-js\//, /^@cfworker\//, /^zod/],
+  // Bundle everything including effect (version-specific unstable subpaths)
+  external: [/^@modelcontextprotocol\//, /^quickjs-emscripten/, /^@jitl\//],
+  noExternal: [/^@executor-js\//, /^@cfworker\//, /^zod/, /^effect/, /^@effect\//],
 });

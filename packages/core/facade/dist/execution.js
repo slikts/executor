@@ -2,20 +2,26 @@ import {
   createExecutionEngine,
   recoverExecutionBody,
   stripTypeScript
-} from "./chunk-SF3PL65Y.js";
-import "./chunk-QEPUABPQ.js";
+} from "./chunk-57RSGHHS.js";
+import "./chunk-PODQSLKX.js";
+import {
+  TaggedError,
+  context,
+  gen,
+  runPromiseWith,
+  tryPromise,
+  withSpan
+} from "./chunk-RDRLBN2D.js";
 import "./chunk-4VNS5WPM.js";
 
 // ../../kernel/runtime-quickjs/src/index.ts
-import * as Data from "effect/Data";
-import * as Effect from "effect/Effect";
 import {
   getQuickJS,
   shouldInterruptAfterDeadline
 } from "quickjs-emscripten";
 var preloadedModule = null;
 var resolveQuickJS = () => preloadedModule ? Promise.resolve(preloadedModule) : getQuickJS();
-var QuickJsExecutionError = class extends Data.TaggedError("QuickJsExecutionError") {
+var QuickJsExecutionError = class extends TaggedError("QuickJsExecutionError") {
 };
 var DEFAULT_TIMEOUT_MS = 5 * 6e4;
 var DEFAULT_MEMORY_LIMIT_BYTES = 64 * 1024 * 1024;
@@ -340,15 +346,15 @@ var evaluateInQuickJs = async (options, code, toolInvoker, runPromise) => {
     runtime.dispose();
   }
 };
-var runInQuickJs = (options, code, toolInvoker) => Effect.gen(function* () {
-  const context2 = yield* Effect.context();
-  const runPromise = Effect.runPromiseWith(context2);
-  return yield* Effect.tryPromise({
+var runInQuickJs = (options, code, toolInvoker) => gen(function* () {
+  const context2 = yield* context();
+  const runPromise = runPromiseWith(context2);
+  return yield* tryPromise({
     try: () => evaluateInQuickJs(options, code, toolInvoker, runPromise),
     catch: (cause) => new QuickJsExecutionError({ message: String(cause) })
   });
 }).pipe(
-  Effect.withSpan("executor.code.exec.quickjs", {
+  withSpan("executor.code.exec.quickjs", {
     attributes: { "executor.runtime": "quickjs" }
   })
 );

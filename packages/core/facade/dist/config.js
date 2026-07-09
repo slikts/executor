@@ -1,95 +1,94 @@
+import {
+  Effect_exports,
+  Schema_exports
+} from "./chunk-RDRLBN2D.js";
 import "./chunk-4VNS5WPM.js";
 
 // ../config/src/schema.ts
-import { Schema } from "effect";
-var ConfigHeaderValue = Schema.Union([
-  Schema.String,
-  Schema.Struct({
-    value: Schema.String,
-    prefix: Schema.optional(Schema.String)
+var ConfigHeaderValue = Schema_exports.Union([
+  Schema_exports.String,
+  Schema_exports.Struct({
+    value: Schema_exports.String,
+    prefix: Schema_exports.optional(Schema_exports.String)
   })
 ]);
-var ConfigHeaders = Schema.Record(Schema.String, ConfigHeaderValue);
-var OpenApiIntegrationConfig = Schema.Struct({
-  kind: Schema.Literal("openapi"),
-  spec: Schema.String,
-  baseUrl: Schema.optional(Schema.String),
-  namespace: Schema.optional(Schema.String),
-  headers: Schema.optional(ConfigHeaders)
+var ConfigHeaders = Schema_exports.Record(Schema_exports.String, ConfigHeaderValue);
+var OpenApiIntegrationConfig = Schema_exports.Struct({
+  kind: Schema_exports.Literal("openapi"),
+  spec: Schema_exports.String,
+  baseUrl: Schema_exports.optional(Schema_exports.String),
+  namespace: Schema_exports.optional(Schema_exports.String),
+  headers: Schema_exports.optional(ConfigHeaders)
 });
-var GraphqlIntegrationConfig = Schema.Struct({
-  kind: Schema.Literal("graphql"),
-  endpoint: Schema.String,
-  introspectionJson: Schema.optional(Schema.NullOr(Schema.String)),
-  namespace: Schema.optional(Schema.String),
-  headers: Schema.optional(ConfigHeaders)
+var GraphqlIntegrationConfig = Schema_exports.Struct({
+  kind: Schema_exports.Literal("graphql"),
+  endpoint: Schema_exports.String,
+  introspectionJson: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  namespace: Schema_exports.optional(Schema_exports.String),
+  headers: Schema_exports.optional(ConfigHeaders)
 });
-var StringMap = Schema.Record(Schema.String, Schema.String);
-var McpAuthConfig = Schema.Union([
-  Schema.Struct({ kind: Schema.Literal("none") }),
-  Schema.Struct({
-    kind: Schema.Literal("header"),
-    headerName: Schema.String,
-    secret: Schema.String,
-    prefix: Schema.optional(Schema.String)
+var StringMap = Schema_exports.Record(Schema_exports.String, Schema_exports.String);
+var McpAuthConfig = Schema_exports.Union([
+  Schema_exports.Struct({ kind: Schema_exports.Literal("none") }),
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("header"),
+    headerName: Schema_exports.String,
+    secret: Schema_exports.String,
+    prefix: Schema_exports.optional(Schema_exports.String)
   }),
-  Schema.Struct({
-    kind: Schema.Literal("oauth2"),
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("oauth2"),
     /** Stable id of the SDK Connection holding access + refresh token
      *  material. The connection names its owner explicitly (org or user),
      *  so the id resolves to exactly one connection — no scope stack, no
      *  per-user shadowing. Core resolves its value (refreshing oauth
      *  tokens) at execute time via the connection's provider. */
-    connectionId: Schema.String
+    connectionId: Schema_exports.String
   })
 ]);
-var McpRemoteIntegrationConfig = Schema.Struct({
-  kind: Schema.Literal("mcp"),
-  transport: Schema.Literal("remote"),
-  name: Schema.String,
-  endpoint: Schema.String,
-  remoteTransport: Schema.optional(Schema.Literals(["streamable-http", "sse", "auto"])),
-  namespace: Schema.optional(Schema.String),
-  queryParams: Schema.optional(ConfigHeaders),
-  headers: Schema.optional(ConfigHeaders),
-  auth: Schema.optional(McpAuthConfig)
+var McpRemoteIntegrationConfig = Schema_exports.Struct({
+  kind: Schema_exports.Literal("mcp"),
+  transport: Schema_exports.Literal("remote"),
+  name: Schema_exports.String,
+  endpoint: Schema_exports.String,
+  remoteTransport: Schema_exports.optional(Schema_exports.Literals(["streamable-http", "sse", "auto"])),
+  namespace: Schema_exports.optional(Schema_exports.String),
+  queryParams: Schema_exports.optional(ConfigHeaders),
+  headers: Schema_exports.optional(ConfigHeaders),
+  auth: Schema_exports.optional(McpAuthConfig)
 });
-var McpStdioIntegrationConfig = Schema.Struct({
-  kind: Schema.Literal("mcp"),
-  transport: Schema.Literal("stdio"),
-  name: Schema.String,
-  command: Schema.String,
-  args: Schema.optional(Schema.Array(Schema.String)),
-  env: Schema.optional(StringMap),
-  cwd: Schema.optional(Schema.String),
-  namespace: Schema.optional(Schema.String)
+var McpStdioIntegrationConfig = Schema_exports.Struct({
+  kind: Schema_exports.Literal("mcp"),
+  transport: Schema_exports.Literal("stdio"),
+  name: Schema_exports.String,
+  command: Schema_exports.String,
+  args: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  env: Schema_exports.optional(StringMap),
+  cwd: Schema_exports.optional(Schema_exports.String),
+  namespace: Schema_exports.optional(Schema_exports.String)
 });
-var IntegrationConfig = Schema.Union([
+var IntegrationConfig = Schema_exports.Union([
   OpenApiIntegrationConfig,
   GraphqlIntegrationConfig,
   McpRemoteIntegrationConfig,
   McpStdioIntegrationConfig
 ]);
-var SecretMetadata = Schema.Struct({
-  name: Schema.String,
-  provider: Schema.optional(Schema.String),
-  purpose: Schema.optional(Schema.String)
+var SecretMetadata = Schema_exports.Struct({
+  name: Schema_exports.String,
+  provider: Schema_exports.optional(Schema_exports.String),
+  purpose: Schema_exports.optional(Schema_exports.String)
 });
-var PluginConfig = Schema.Struct({
-  package: Schema.String,
-  options: Schema.optional(Schema.Record(Schema.String, Schema.Unknown))
+var PluginConfig = Schema_exports.Struct({
+  package: Schema_exports.String,
+  options: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown))
 });
-var ExecutorFileConfig = Schema.Struct({
-  $schema: Schema.optional(Schema.String),
-  name: Schema.optional(Schema.String),
-  plugins: Schema.optional(Schema.Array(PluginConfig)),
-  integrations: Schema.optional(Schema.Array(IntegrationConfig)),
-  secrets: Schema.optional(Schema.Record(Schema.String, SecretMetadata))
+var ExecutorFileConfig = Schema_exports.Struct({
+  $schema: Schema_exports.optional(Schema_exports.String),
+  name: Schema_exports.optional(Schema_exports.String),
+  plugins: Schema_exports.optional(Schema_exports.Array(PluginConfig)),
+  integrations: Schema_exports.optional(Schema_exports.Array(IntegrationConfig)),
+  secrets: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, SecretMetadata))
 });
-
-// ../config/src/load.ts
-import { Effect, Schema as Schema2 } from "effect";
-import { FileSystem } from "effect";
 
 // ../../../node_modules/.bun/jsonc-parser@3.3.1/node_modules/jsonc-parser/lib/esm/impl/scanner.js
 function createScanner(text, ignoreTrivia = false) {
@@ -988,11 +987,11 @@ function printParseErrorCode(code) {
 }
 
 // ../config/src/load.ts
-var ConfigParseError = class extends Schema2.TaggedErrorClass()(
+var ConfigParseError = class extends Schema_exports.TaggedErrorClass()(
   "ConfigParseError",
   {
-    path: Schema2.String,
-    message: Schema2.String
+    path: Schema_exports.String,
+    message: Schema_exports.String
   }
 ) {
 };
@@ -1002,17 +1001,16 @@ import { createRequire } from "module";
 import { dirname, isAbsolute, resolve as resolvePath } from "path";
 import { pathToFileURL } from "url";
 import * as fs from "fs";
-import { Effect as Effect2, Schema as Schema3 } from "effect";
-var LoadPluginsError = class extends Schema3.TaggedErrorClass()(
+var LoadPluginsError = class extends Schema_exports.TaggedErrorClass()(
   "LoadPluginsError",
   {
-    message: Schema3.String,
-    cause: Schema3.optional(Schema3.Unknown)
+    message: Schema_exports.String,
+    cause: Schema_exports.optional(Schema_exports.Unknown)
   }
 ) {
 };
-var loadPluginsFromJsonc = async (options) => Effect2.runPromise(loadPluginsFromJsoncEffect(options));
-var loadPluginsFromJsoncEffect = (options) => Effect2.gen(function* () {
+var loadPluginsFromJsonc = async (options) => Effect_exports.runPromise(loadPluginsFromJsoncEffect(options));
+var loadPluginsFromJsoncEffect = (options) => Effect_exports.gen(function* () {
   const { path, deps } = options;
   if (!fs.existsSync(path)) return null;
   const raw = fs.readFileSync(path, "utf8");
@@ -1024,8 +1022,8 @@ var loadPluginsFromJsoncEffect = (options) => Effect2.gen(function* () {
       message: `[load-plugins] failed to parse ${path}: ${msg}`
     });
   }
-  const config = yield* Schema3.decodeUnknownEffect(ExecutorFileConfig)(parsed).pipe(
-    Effect2.mapError(
+  const config = yield* Schema_exports.decodeUnknownEffect(ExecutorFileConfig)(parsed).pipe(
+    Effect_exports.mapError(
       (error) => new LoadPluginsError({
         message: `[load-plugins] failed to decode ${path}: ${error.issue.toString()}`,
         cause: error
@@ -1034,7 +1032,7 @@ var loadPluginsFromJsoncEffect = (options) => Effect2.gen(function* () {
   );
   const entries = config.plugins ?? null;
   if (!entries || entries.length === 0) return null;
-  const { createJiti } = yield* Effect2.tryPromise({
+  const { createJiti } = yield* Effect_exports.tryPromise({
     try: () => import("./jiti-MP7AKXPS.js"),
     catch: (cause) => new LoadPluginsError({
       message: `[load-plugins] failed to import jiti.`,
@@ -1050,14 +1048,14 @@ var loadPluginsFromJsoncEffect = (options) => Effect2.gen(function* () {
   const loaded = [];
   for (const entry of entries) {
     const serverEntry = `${entry.package}/server`;
-    const resolved = yield* Effect2.try({
+    const resolved = yield* Effect_exports.try({
       try: () => require2.resolve(serverEntry),
       catch: (cause) => new LoadPluginsError({
         message: `[load-plugins] cannot resolve "${serverEntry}" from ${fromDir}. Is "${entry.package}" installed and does it export "./server"?`,
         cause
       })
     });
-    const mod = yield* Effect2.tryPromise({
+    const mod = yield* Effect_exports.tryPromise({
       try: () => jiti.import(resolved),
       catch: (cause) => new LoadPluginsError({
         message: `[load-plugins] failed to import "${serverEntry}" from ${resolved}.`,
@@ -1075,13 +1073,6 @@ var loadPluginsFromJsoncEffect = (options) => Effect2.gen(function* () {
   }
   return loaded;
 });
-
-// ../config/src/write.ts
-import { Effect as Effect3 } from "effect";
-import { FileSystem as FileSystem2 } from "effect";
-
-// ../config/src/sink.ts
-import { Effect as Effect4 } from "effect";
 export {
   loadPluginsFromJsonc
 };

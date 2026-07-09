@@ -8,10 +8,19 @@ import {
   ConnectionNotFoundError,
   CredentialProviderNotRegisteredError,
   ElicitationId,
+  FetchHttpClient_exports,
   FormElicitation,
   HealthCheckCandidate,
   HealthCheckResult,
   HealthCheckSpec,
+  HttpApiBuilder_exports,
+  HttpApiEndpoint_exports,
+  HttpApiGroup_exports,
+  HttpApiMiddleware_exports,
+  HttpApiSchema_exports,
+  HttpApi_exports,
+  HttpClientRequest_exports,
+  HttpClient_exports,
   IntegrationAlreadyExistsError,
   IntegrationDetectionResult,
   IntegrationNotFoundError,
@@ -26,6 +35,7 @@ import {
   OAuthSessionNotFoundError,
   OAuthStartError,
   OAuthState,
+  OpenApi_exports,
   Owner,
   PolicyId,
   ProviderItemId,
@@ -43,38 +53,50 @@ import {
   definePlugin,
   mergeAuthTemplates,
   tool
-} from "./chunk-QEPUABPQ.js";
+} from "./chunk-PODQSLKX.js";
+import {
+  Cause_exports,
+  Context_exports,
+  Data_exports,
+  Duration_exports,
+  Effect_exports,
+  Exit_exports,
+  Layer_exports,
+  Option_exports,
+  Predicate_exports,
+  Result_exports,
+  Schema_exports,
+  Stream_exports
+} from "./chunk-RDRLBN2D.js";
 import "./chunk-4VNS5WPM.js";
 
 // ../../plugins/mcp/src/sdk/plugin.ts
-import { Effect as Effect6, Option as Option7, Result, Schema as Schema10 } from "effect";
 import { CallToolResultSchema } from "@modelcontextprotocol/sdk/types.js";
 
 // ../sdk/src/http-auth/auth-method.ts
-import { Schema } from "effect";
 var TOKEN_VARIABLE = "token";
-var AuthCarrier = Schema.Literals(["header", "query"]);
-var AuthPlacement = Schema.Struct({
+var AuthCarrier = Schema_exports.Literals(["header", "query"]);
+var AuthPlacement = Schema_exports.Struct({
   carrier: AuthCarrier,
   /** Header name (e.g. `Authorization`) or query-param name (e.g. `token`). */
-  name: Schema.String,
+  name: Schema_exports.String,
   /** Literal prepended to the credential value, e.g. `Bearer `. */
-  prefix: Schema.optional(Schema.String),
+  prefix: Schema_exports.optional(Schema_exports.String),
   /** The credential input this placement renders from. Absent ⇒ `token`. */
-  variable: Schema.optional(Schema.String),
+  variable: Schema_exports.optional(Schema_exports.String),
   /** Render this exact value instead of a credential. */
-  literal: Schema.optional(Schema.String)
+  literal: Schema_exports.optional(Schema_exports.String)
 });
-var ApiKeyAuthMethod = Schema.Struct({
-  slug: Schema.String,
-  kind: Schema.Literal("apikey"),
+var ApiKeyAuthMethod = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  kind: Schema_exports.Literal("apikey"),
   /** Display label; derived from the first placement when absent. */
-  label: Schema.optional(Schema.String),
-  placements: Schema.Array(AuthPlacement)
+  label: Schema_exports.optional(Schema_exports.String),
+  placements: Schema_exports.Array(AuthPlacement)
 });
-var NoneAuthMethod = Schema.Struct({
-  slug: Schema.String,
-  kind: Schema.Literal("none")
+var NoneAuthMethod = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  kind: Schema_exports.Literal("none")
 });
 var renderPlacementValue = (placement, values) => {
   if (placement.literal !== void 0) return placement.literal;
@@ -140,16 +162,15 @@ var describeNoneAuthMethod = (slug) => ({
 });
 
 // ../sdk/src/http-auth/authoring.ts
-import { Schema as Schema2 } from "effect";
-var VariablePart = Schema2.Struct({
-  type: Schema2.Literal("variable"),
-  name: Schema2.String
+var VariablePart = Schema_exports.Struct({
+  type: Schema_exports.Literal("variable"),
+  name: Schema_exports.String
 });
 var isVariablePart = (part) => typeof part !== "string";
-var AuthTemplateValue = Schema2.Union([
-  Schema2.String,
-  Schema2.Array(Schema2.Union([Schema2.String, VariablePart])).check(
-    Schema2.makeFilter((parts) => {
+var AuthTemplateValue = Schema_exports.Union([
+  Schema_exports.String,
+  Schema_exports.Array(Schema_exports.Union([Schema_exports.String, VariablePart])).check(
+    Schema_exports.makeFilter((parts) => {
       const variableIndexes = parts.flatMap((part, index) => isVariablePart(part) ? [index] : []);
       if (variableIndexes.length > 1 || variableIndexes.length === 1 && variableIndexes[0] !== parts.length - 1) {
         return "a template value renders at most ONE variable, as the FINAL part \u2014 split extra variables/suffixes into separate header or query entries";
@@ -158,12 +179,12 @@ var AuthTemplateValue = Schema2.Union([
     })
   )
 ]);
-var ApiKeyAuthTemplate = Schema2.Struct({
-  slug: Schema2.optional(Schema2.String),
-  type: Schema2.Literal("apiKey"),
-  label: Schema2.optional(Schema2.String),
-  headers: Schema2.optional(Schema2.Record(Schema2.String, AuthTemplateValue)),
-  queryParams: Schema2.optional(Schema2.Record(Schema2.String, AuthTemplateValue))
+var ApiKeyAuthTemplate = Schema_exports.Struct({
+  slug: Schema_exports.optional(Schema_exports.String),
+  type: Schema_exports.Literal("apiKey"),
+  label: Schema_exports.optional(Schema_exports.String),
+  headers: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, AuthTemplateValue)),
+  queryParams: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, AuthTemplateValue))
 });
 var placementFromValue = (carrier, name, value) => {
   if (typeof value === "string") return { carrier, name, literal: value };
@@ -197,78 +218,73 @@ var apiKeyMethodFromAuthTemplate = (template) => {
 var isApiKeyAuthTemplate = (input) => input.type === "apiKey";
 
 // ../sdk/src/http-auth/legacy.ts
-import { Schema as Schema3 } from "effect";
-var LegacyVariablePart = Schema3.Struct({
-  type: Schema3.Literal("variable"),
-  name: Schema3.String
+var LegacyVariablePart = Schema_exports.Struct({
+  type: Schema_exports.Literal("variable"),
+  name: Schema_exports.String
 });
-var LegacyTemplateValue = Schema3.Union([
-  Schema3.String,
-  Schema3.Array(Schema3.Union([Schema3.String, LegacyVariablePart]))
+var LegacyTemplateValue = Schema_exports.Union([
+  Schema_exports.String,
+  Schema_exports.Array(Schema_exports.Union([Schema_exports.String, LegacyVariablePart]))
 ]);
-var LegacyApiKeyTemplate = Schema3.Struct({
-  slug: Schema3.String,
-  type: Schema3.Literal("apiKey"),
-  headers: Schema3.optional(Schema3.Record(Schema3.String, LegacyTemplateValue)),
-  queryParams: Schema3.optional(Schema3.Record(Schema3.String, LegacyTemplateValue))
+var LegacyApiKeyTemplate = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  type: Schema_exports.Literal("apiKey"),
+  headers: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, LegacyTemplateValue)),
+  queryParams: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, LegacyTemplateValue))
 });
-var decodeLegacyApiKeyTemplate = Schema3.decodeUnknownOption(LegacyApiKeyTemplate);
+var decodeLegacyApiKeyTemplate = Schema_exports.decodeUnknownOption(LegacyApiKeyTemplate);
 
 // ../../plugins/mcp/src/sdk/connection.ts
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { CfWorkerJsonSchemaValidator } from "@modelcontextprotocol/sdk/validation/cfworker";
-import { Effect, Predicate, Stream } from "effect";
-import { HttpClient, HttpClientRequest } from "effect/unstable/http";
 
 // ../../plugins/mcp/src/sdk/errors.ts
-import { Data, Schema as Schema4 } from "effect";
-var McpConnectionError = class extends Schema4.TaggedErrorClass()(
+var McpConnectionError = class extends Schema_exports.TaggedErrorClass()(
   "McpConnectionError",
   {
-    transport: Schema4.String,
-    message: Schema4.String,
+    transport: Schema_exports.String,
+    message: Schema_exports.String,
     /** HTTP status the handshake observed (e.g. 401 on an auth wall), when the
      *  transport surfaced one. Structural, so the liveness classifier and the
      *  auto-transport fallback never string-match the message. */
-    httpStatus: Schema4.optional(Schema4.Number)
+    httpStatus: Schema_exports.optional(Schema_exports.Number)
   },
   { httpApiStatus: 400 }
 ) {
 };
-var McpToolDiscoveryError = class extends Schema4.TaggedErrorClass()(
+var McpToolDiscoveryError = class extends Schema_exports.TaggedErrorClass()(
   "McpToolDiscoveryError",
   {
-    stage: Schema4.Literals(["connect", "list_tools"]),
-    message: Schema4.String,
+    stage: Schema_exports.Literals(["connect", "list_tools"]),
+    message: Schema_exports.String,
     /** HTTP status from the underlying connect failure, when known. */
-    httpStatus: Schema4.optional(Schema4.Number)
+    httpStatus: Schema_exports.optional(Schema_exports.Number)
   },
   { httpApiStatus: 400 }
 ) {
 };
-var McpInvocationError = class extends Data.TaggedError("McpInvocationError") {
+var McpInvocationError = class extends Data_exports.TaggedError("McpInvocationError") {
 };
-var McpOAuthReauthorizationRequired = class extends Data.TaggedError(
+var McpOAuthReauthorizationRequired = class extends Data_exports.TaggedError(
   "McpOAuthReauthorizationRequired"
 ) {
 };
-var McpOAuthError = class extends Schema4.TaggedErrorClass()(
+var McpOAuthError = class extends Schema_exports.TaggedErrorClass()(
   "McpOAuthError",
   {
-    message: Schema4.String
+    message: Schema_exports.String
   },
   { httpApiStatus: 400 }
 ) {
 };
 
 // ../../plugins/mcp/src/sdk/http-status.ts
-import { Option, Schema as Schema5 } from "effect";
 import { StreamableHTTPError } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-var SsePostErrorCause = Schema5.Struct({ message: Schema5.String });
-var decodeSsePostErrorCause = Schema5.decodeUnknownOption(SsePostErrorCause);
-var statusFromSsePostError = (cause) => Option.match(decodeSsePostErrorCause(cause), {
+var SsePostErrorCause = Schema_exports.Struct({ message: Schema_exports.String });
+var decodeSsePostErrorCause = Schema_exports.decodeUnknownOption(SsePostErrorCause);
+var statusFromSsePostError = (cause) => Option_exports.match(decodeSsePostErrorCause(cause), {
   onNone: () => void 0,
   onSome: ({ message }) => {
     const match = /^Error POSTing to endpoint \(HTTP ([1-5][0-9]{2})\):/.exec(message);
@@ -309,21 +325,21 @@ var recordFromHeaders = (headers) => Object.fromEntries(headers.entries());
 var applyBody = async (request, headers, body) => {
   if (body == null) return request;
   const contentType = headers.get("content-type") ?? void 0;
-  if (typeof body === "string") return HttpClientRequest.bodyText(request, body, contentType);
+  if (typeof body === "string") return HttpClientRequest_exports.bodyText(request, body, contentType);
   if (body instanceof URLSearchParams) {
-    return HttpClientRequest.bodyText(
+    return HttpClientRequest_exports.bodyText(
       request,
       body.toString(),
       contentType ?? "application/x-www-form-urlencoded;charset=UTF-8"
     );
   }
   if (body instanceof Uint8Array)
-    return HttpClientRequest.bodyUint8Array(request, body, contentType);
+    return HttpClientRequest_exports.bodyUint8Array(request, body, contentType);
   if (body instanceof ArrayBuffer) {
-    return HttpClientRequest.bodyUint8Array(request, new Uint8Array(body), contentType);
+    return HttpClientRequest_exports.bodyUint8Array(request, new Uint8Array(body), contentType);
   }
   const bytes = new Uint8Array(await new Response(body).arrayBuffer());
-  return HttpClientRequest.bodyUint8Array(request, bytes, contentType);
+  return HttpClientRequest_exports.bodyUint8Array(request, bytes, contentType);
 };
 var abortError = (signal) => {
   if (signal.reason !== void 0) return signal.reason;
@@ -334,24 +350,24 @@ var abortError = (signal) => {
 var fetchFromHttpClientLayer = (httpClientLayer) => {
   const execute = async (url, init) => {
     const headers = headersFrom(init?.headers);
-    const requestWithoutBody = HttpClientRequest.make(httpMethodFrom(init?.method))(url, {
+    const requestWithoutBody = HttpClientRequest_exports.make(httpMethodFrom(init?.method))(url, {
       headers: recordFromHeaders(headers)
     });
     const request = await applyBody(requestWithoutBody, headers, init?.body);
-    const effect = Effect.gen(function* () {
-      const client = yield* HttpClient.HttpClient;
+    const effect = Effect_exports.gen(function* () {
+      const client = yield* HttpClient_exports.HttpClient;
       const response = yield* client.execute(request);
       const responseHeaders = new Headers();
       for (const [key, value] of Object.entries(response.headers)) {
         if (value !== void 0) responseHeaders.set(key, value);
       }
-      const body = response.status === 204 || response.status === 205 || response.status === 304 ? null : Stream.toReadableStream(response.stream);
+      const body = response.status === 204 || response.status === 205 || response.status === 304 ? null : Stream_exports.toReadableStream(response.stream);
       return new Response(body, {
         status: response.status,
         headers: responseHeaders
       });
-    }).pipe(Effect.provide(httpClientLayer));
-    const promise = Effect.runPromise(effect);
+    }).pipe(Effect_exports.provide(httpClientLayer));
+    const promise = Effect_exports.runPromise(effect);
     if (!init?.signal) return promise;
     if (init.signal.aborted) return Promise.reject(abortError(init.signal));
     const aborted = new Promise((_, reject) => {
@@ -375,7 +391,7 @@ var connectionFromClient = (client) => ({
   close: () => client.close()
 });
 var connectionFailure = (transport, message, cause) => {
-  if (Predicate.isTagged(cause, "McpOAuthReauthorizationRequired")) {
+  if (Predicate_exports.isTagged(cause, "McpOAuthReauthorizationRequired")) {
     return new McpOAuthReauthorizationRequired({ message: "MCP OAuth re-authorization required" });
   }
   const status = httpStatusFromCause(cause);
@@ -385,14 +401,14 @@ var connectionFailure = (transport, message, cause) => {
     ...status === void 0 ? {} : { httpStatus: status }
   });
 };
-var connectClient = (input) => Effect.gen(function* () {
+var connectClient = (input) => Effect_exports.gen(function* () {
   const client = createClient();
   const transportInstance = input.createTransport();
-  yield* Effect.tryPromise({
+  yield* Effect_exports.tryPromise({
     try: () => client.connect(transportInstance),
     catch: (cause) => connectionFailure(input.transport, `Failed connecting via ${input.transport}`, cause)
   }).pipe(
-    Effect.withSpan("plugin.mcp.connection.handshake", {
+    Effect_exports.withSpan("plugin.mcp.connection.handshake", {
       attributes: { "plugin.mcp.transport": input.transport }
     })
   );
@@ -402,15 +418,15 @@ var createMcpConnector = (input) => {
   if (input.transport === "stdio") {
     const command = input.command.trim();
     if (!command) {
-      return Effect.fail(
+      return Effect_exports.fail(
         new McpConnectionError({
           transport: "stdio",
           message: "MCP stdio transport requires a command"
         })
       );
     }
-    return Effect.gen(function* () {
-      const { createStdioTransport } = yield* Effect.tryPromise({
+    return Effect_exports.gen(function* () {
+      const { createStdioTransport } = yield* Effect_exports.tryPromise({
         try: () => import("./stdio-connector-AMG3IGMD.js"),
         catch: () => new McpConnectionError({
           transport: "stdio",
@@ -452,47 +468,40 @@ var createMcpConnector = (input) => {
   if (remoteTransport === "streamable-http") return connectStreamableHttp;
   if (remoteTransport === "sse") return connectSse;
   return connectStreamableHttp.pipe(
-    Effect.catch((error) => {
-      if (Predicate.isTagged(error, "McpOAuthReauthorizationRequired")) return Effect.fail(error);
-      if (error.httpStatus === 401 || error.httpStatus === 403) return Effect.fail(error);
+    Effect_exports.catch((error) => {
+      if (Predicate_exports.isTagged(error, "McpOAuthReauthorizationRequired")) return Effect_exports.fail(error);
+      if (error.httpStatus === 401 || error.httpStatus === 403) return Effect_exports.fail(error);
       return connectSse;
     })
   );
 };
 
-// ../../plugins/mcp/src/sdk/discover.ts
-import { Duration, Effect as Effect3, Option as Option4, Predicate as Predicate2 } from "effect";
-
-// ../../plugins/mcp/src/sdk/manifest.ts
-import { Option as Option3, Schema as Schema7 } from "effect";
-
 // ../../plugins/mcp/src/sdk/types.ts
-import { Effect as Effect2, Option as Option2, Schema as Schema6 } from "effect";
-var McpRemoteTransport = Schema6.Literals(["streamable-http", "sse", "auto"]);
-var McpTransport = Schema6.Literals(["streamable-http", "sse", "stdio", "auto"]);
-var McpOAuthMethod = Schema6.Struct({
-  slug: Schema6.String,
-  kind: Schema6.Literal("oauth2")
+var McpRemoteTransport = Schema_exports.Literals(["streamable-http", "sse", "auto"]);
+var McpTransport = Schema_exports.Literals(["streamable-http", "sse", "stdio", "auto"]);
+var McpOAuthMethod = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  kind: Schema_exports.Literal("oauth2")
 });
-var McpStdioEnvMethod = Schema6.Struct({
-  slug: Schema6.String,
-  kind: Schema6.Literal("stdio_env"),
-  vars: Schema6.Array(Schema6.String)
+var McpStdioEnvMethod = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  kind: Schema_exports.Literal("stdio_env"),
+  vars: Schema_exports.Array(Schema_exports.String)
 });
-var McpAuthMethod = Schema6.Union([
+var McpAuthMethod = Schema_exports.Union([
   NoneAuthMethod,
   ApiKeyAuthMethod,
   McpOAuthMethod,
   McpStdioEnvMethod
 ]);
-var McpAuthShorthand = Schema6.Union([
-  Schema6.Struct({ kind: Schema6.Literal("none") }),
-  Schema6.Struct({
-    kind: Schema6.Literal("header"),
-    headerName: Schema6.String,
-    prefix: Schema6.optional(Schema6.String)
+var McpAuthShorthand = Schema_exports.Union([
+  Schema_exports.Struct({ kind: Schema_exports.Literal("none") }),
+  Schema_exports.Struct({
+    kind: Schema_exports.Literal("header"),
+    headerName: Schema_exports.String,
+    prefix: Schema_exports.optional(Schema_exports.String)
   }),
-  Schema6.Struct({ kind: Schema6.Literal("oauth2") })
+  Schema_exports.Struct({ kind: Schema_exports.Literal("oauth2") })
 ]);
 var mcpAuthMethodFromShorthand = (auth) => {
   if (auth.kind === "header") {
@@ -510,9 +519,9 @@ var mcpAuthMethodFromShorthand = (auth) => {
   }
   return { slug: auth.kind, kind: auth.kind };
 };
-var McpAuthMethodInput = Schema6.Union([
-  Schema6.Struct({ slug: Schema6.optional(Schema6.String), kind: Schema6.Literal("none") }),
-  Schema6.Struct({ slug: Schema6.optional(Schema6.String), kind: Schema6.Literal("oauth2") }),
+var McpAuthMethodInput = Schema_exports.Union([
+  Schema_exports.Struct({ slug: Schema_exports.optional(Schema_exports.String), kind: Schema_exports.Literal("none") }),
+  Schema_exports.Struct({ slug: Schema_exports.optional(Schema_exports.String), kind: Schema_exports.Literal("oauth2") }),
   // Credential methods are authored request-shaped — the ONE apikey input
   // dialect: `{ type: "apiKey", headers: { Authorization: ["Bearer ",
   // variable("token")] }, queryParams: { … } }`. Stored configs and the
@@ -534,92 +543,92 @@ var normalizeMcpAuthMethods = (methods) => normalizeAuthMethodSlugs(
   expandMcpAuthMethodInputs(methods),
   defaultMcpAuthSlug
 );
-var StringMap = Schema6.Record(Schema6.String, Schema6.String);
-var McpRemoteIntegrationConfig = Schema6.Struct({
-  transport: Schema6.Literal("remote"),
+var StringMap = Schema_exports.Record(Schema_exports.String, Schema_exports.String);
+var McpRemoteIntegrationConfig = Schema_exports.Struct({
+  transport: Schema_exports.Literal("remote"),
   /** The MCP server endpoint URL */
-  endpoint: Schema6.String,
+  endpoint: Schema_exports.String,
   /** Transport preference for this remote server */
   remoteTransport: McpRemoteTransport.pipe(
-    Schema6.optionalKey,
-    Schema6.withConstructorDefault(Effect2.succeed("auto"))
+    Schema_exports.optionalKey,
+    Schema_exports.withConstructorDefault(Effect_exports.succeed("auto"))
   ),
   /** Static query params appended to the endpoint URL (non-credential) */
-  queryParams: Schema6.optional(StringMap),
+  queryParams: Schema_exports.optional(StringMap),
   /** Static headers sent on every request (non-credential) */
-  headers: Schema6.optional(StringMap),
+  headers: Schema_exports.optional(StringMap),
   /** Declared auth methods — how a connection's values are rendered onto
    *  requests. A connection's `template` picks one by slug. */
-  authenticationTemplate: Schema6.Array(McpAuthMethod)
+  authenticationTemplate: Schema_exports.Array(McpAuthMethod)
 });
-var McpStdioIntegrationConfig = Schema6.Struct({
-  transport: Schema6.Literal("stdio"),
+var McpStdioIntegrationConfig = Schema_exports.Struct({
+  transport: Schema_exports.Literal("stdio"),
   /** The command to run */
-  command: Schema6.String,
+  command: Schema_exports.String,
   /** Arguments to the command */
-  args: Schema6.optional(Schema6.Array(Schema6.String)),
+  args: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
   /** Static, non-credential environment variables injected verbatim into the
    *  subprocess. Secret env (API keys / tokens) is NOT stored here — it is
    *  declared as a `stdio_env` method in `authenticationTemplate` and its
    *  values live on the connection. Optional + legacy: pre-revamp stdio
    *  integrations stored their (then-plaintext) env here, so it stays
    *  decodable. */
-  env: Schema6.optional(StringMap),
+  env: Schema_exports.optional(StringMap),
   /** Working directory */
-  cwd: Schema6.optional(Schema6.String),
+  cwd: Schema_exports.optional(Schema_exports.String),
   /** Declared auth methods — a single `stdio_env` method naming the secret env
    *  vars, or `none`. A connection's `template` picks one by slug, exactly as
    *  for remote servers. Optional so pre-revamp stdio configs (which had no
    *  methods) still decode; absence is treated as no declared secret env. */
-  authenticationTemplate: Schema6.optional(Schema6.Array(McpAuthMethod))
+  authenticationTemplate: Schema_exports.optional(Schema_exports.Array(McpAuthMethod))
 });
-var McpIntegrationConfig = Schema6.Union([
+var McpIntegrationConfig = Schema_exports.Union([
   McpRemoteIntegrationConfig,
   McpStdioIntegrationConfig
 ]);
-var decodeIntegrationConfig = Schema6.decodeUnknownOption(McpIntegrationConfig);
-var parseMcpIntegrationConfig = (config) => Option2.getOrNull(decodeIntegrationConfig(config));
-var McpToolAnnotations = Schema6.Struct({
-  title: Schema6.optional(Schema6.String),
-  readOnlyHint: Schema6.optional(Schema6.Boolean),
-  destructiveHint: Schema6.optional(Schema6.Boolean),
-  idempotentHint: Schema6.optional(Schema6.Boolean),
-  openWorldHint: Schema6.optional(Schema6.Boolean)
+var decodeIntegrationConfig = Schema_exports.decodeUnknownOption(McpIntegrationConfig);
+var parseMcpIntegrationConfig = (config) => Option_exports.getOrNull(decodeIntegrationConfig(config));
+var McpToolAnnotations = Schema_exports.Struct({
+  title: Schema_exports.optional(Schema_exports.String),
+  readOnlyHint: Schema_exports.optional(Schema_exports.Boolean),
+  destructiveHint: Schema_exports.optional(Schema_exports.Boolean),
+  idempotentHint: Schema_exports.optional(Schema_exports.Boolean),
+  openWorldHint: Schema_exports.optional(Schema_exports.Boolean)
 });
-var McpToolBinding = Schema6.Struct({
+var McpToolBinding = Schema_exports.Struct({
   /** Sanitized, address-safe tool name (the `<tool>` address segment). */
-  toolId: Schema6.String,
+  toolId: Schema_exports.String,
   /** The real MCP tool name as advertised by the server. */
-  toolName: Schema6.String,
-  description: Schema6.NullOr(Schema6.String),
-  inputSchema: Schema6.optional(Schema6.Unknown),
-  outputSchema: Schema6.optional(Schema6.Unknown),
-  annotations: Schema6.optional(McpToolAnnotations)
+  toolName: Schema_exports.String,
+  description: Schema_exports.NullOr(Schema_exports.String),
+  inputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  outputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  annotations: Schema_exports.optional(McpToolAnnotations)
 });
 
 // ../../plugins/mcp/src/sdk/manifest.ts
-var ListedTool = Schema7.Struct({
-  name: Schema7.String,
-  description: Schema7.optional(Schema7.NullOr(Schema7.String)),
-  inputSchema: Schema7.optional(Schema7.Unknown),
-  parameters: Schema7.optional(Schema7.Unknown),
-  outputSchema: Schema7.optional(Schema7.Unknown),
-  annotations: Schema7.optional(McpToolAnnotations)
+var ListedTool = Schema_exports.Struct({
+  name: Schema_exports.String,
+  description: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  inputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  parameters: Schema_exports.optional(Schema_exports.Unknown),
+  outputSchema: Schema_exports.optional(Schema_exports.Unknown),
+  annotations: Schema_exports.optional(McpToolAnnotations)
 });
-var ListToolsResult = Schema7.Struct({
-  tools: Schema7.Array(ListedTool)
+var ListToolsResult = Schema_exports.Struct({
+  tools: Schema_exports.Array(ListedTool)
 });
-var ListToolsPage = Schema7.Struct({
-  tools: Schema7.Array(Schema7.Unknown),
-  nextCursor: Schema7.optional(Schema7.NullOr(Schema7.String))
+var ListToolsPage = Schema_exports.Struct({
+  tools: Schema_exports.Array(Schema_exports.Unknown),
+  nextCursor: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var ServerInfo = Schema7.Struct({
-  name: Schema7.optional(Schema7.String),
-  version: Schema7.optional(Schema7.String)
+var ServerInfo = Schema_exports.Struct({
+  name: Schema_exports.optional(Schema_exports.String),
+  version: Schema_exports.optional(Schema_exports.String)
 });
-var decodeListToolsResult = Schema7.decodeUnknownOption(ListToolsResult);
-var decodeListToolsPageOption = Schema7.decodeUnknownOption(ListToolsPage);
-var decodeServerInfo = Schema7.decodeUnknownOption(ServerInfo);
+var decodeListToolsResult = Schema_exports.decodeUnknownOption(ListToolsResult);
+var decodeListToolsPageOption = Schema_exports.decodeUnknownOption(ListToolsPage);
+var decodeServerInfo = Schema_exports.decodeUnknownOption(ServerInfo);
 var decodeListToolsPage = (value) => decodeListToolsPageOption(value);
 var sanitize = (value) => {
   const s = value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
@@ -634,18 +643,18 @@ var uniqueId = (value, seen) => {
 var extractManifestFromListToolsResult = (listToolsResult, metadata) => {
   const seen = /* @__PURE__ */ new Map();
   const listed = decodeListToolsResult(listToolsResult).pipe(
-    Option3.map((result) => result.tools),
-    Option3.getOrElse(() => [])
+    Option_exports.map((result) => result.tools),
+    Option_exports.getOrElse(() => [])
   );
   const server = decodeServerInfo(metadata?.serverInfo).pipe(
-    Option3.map(
+    Option_exports.map(
       (info) => ({
         name: info.name ?? null,
         version: info.version ?? null,
         instructions: metadata?.instructions ?? null
       })
     ),
-    Option3.getOrNull
+    Option_exports.getOrNull
   );
   const tools = listed.flatMap((tool2) => {
     const toolName = tool2.name.trim();
@@ -679,13 +688,13 @@ var deriveMcpNamespace = (input) => {
 
 // ../../plugins/mcp/src/sdk/discover.ts
 var MAX_LIST_TOOLS_PAGES = 100;
-var DEFAULT_DISCOVER_TIMEOUT = Duration.seconds(15);
-var listAllTools = (connection) => Effect3.gen(function* () {
+var DEFAULT_DISCOVER_TIMEOUT = Duration_exports.seconds(15);
+var listAllTools = (connection) => Effect_exports.gen(function* () {
   const tools = [];
   let cursor = void 0;
   for (let page = 0; page < MAX_LIST_TOOLS_PAGES; page++) {
     const params = cursor === void 0 ? void 0 : { cursor };
-    const listResult = yield* Effect3.tryPromise({
+    const listResult = yield* Effect_exports.tryPromise({
       try: () => connection.client.listTools(params),
       catch: () => new McpToolDiscoveryError({
         stage: "list_tools",
@@ -693,7 +702,7 @@ var listAllTools = (connection) => Effect3.gen(function* () {
       })
     });
     const decoded = decodeListToolsPage(listResult);
-    if (Option4.isNone(decoded)) {
+    if (Option_exports.isNone(decoded)) {
       return yield* new McpToolDiscoveryError({
         stage: "list_tools",
         message: "MCP listTools response did not match the expected schema"
@@ -712,10 +721,10 @@ var listAllTools = (connection) => Effect3.gen(function* () {
     }
   );
 });
-var discoverTools = (connector, timeoutMs = Duration.toMillis(DEFAULT_DISCOVER_TIMEOUT)) => Effect3.gen(function* () {
+var discoverTools = (connector, timeoutMs = Duration_exports.toMillis(DEFAULT_DISCOVER_TIMEOUT)) => Effect_exports.gen(function* () {
   const connection = yield* connector.pipe(
-    Effect3.mapError((failure) => {
-      const httpStatus = Predicate2.isTagged(failure, "McpConnectionError") ? failure.httpStatus : void 0;
+    Effect_exports.mapError((failure) => {
+      const httpStatus = Predicate_exports.isTagged(failure, "McpConnectionError") ? failure.httpStatus : void 0;
       return new McpToolDiscoveryError({
         stage: "connect",
         message: `Failed connecting to MCP server: ${failure.message}`,
@@ -724,13 +733,13 @@ var discoverTools = (connector, timeoutMs = Duration.toMillis(DEFAULT_DISCOVER_T
     })
   );
   const manifest = yield* listAllTools(connection).pipe(
-    Effect3.onExit(() => closeConnection(connection))
+    Effect_exports.onExit(() => closeConnection(connection))
   );
   return manifest;
 }).pipe(
-  Effect3.timeoutOrElse({
-    duration: Duration.millis(timeoutMs),
-    orElse: () => Effect3.fail(
+  Effect_exports.timeoutOrElse({
+    duration: Duration_exports.millis(timeoutMs),
+    orElse: () => Effect_exports.fail(
       new McpToolDiscoveryError({
         stage: "connect",
         message: `MCP discovery timed out after ${timeoutMs}ms`
@@ -738,8 +747,8 @@ var discoverTools = (connector, timeoutMs = Duration.toMillis(DEFAULT_DISCOVER_T
     )
   })
 );
-var closeConnection = (connection) => Effect3.ignore(
-  Effect3.tryPromise({
+var closeConnection = (connection) => Effect_exports.ignore(
+  Effect_exports.tryPromise({
     try: () => connection.close(),
     catch: () => new McpToolDiscoveryError({
       stage: "list_tools",
@@ -749,16 +758,15 @@ var closeConnection = (connection) => Effect3.ignore(
 );
 
 // ../../plugins/mcp/src/sdk/invoke.ts
-import { Cause, Effect as Effect4, Exit, Option as Option5, Predicate as Predicate3, Schema as Schema8 } from "effect";
 import {
   ElicitRequestSchema,
   ErrorCode,
   McpError,
   ToolListChangedNotificationSchema
 } from "@modelcontextprotocol/sdk/types.js";
-var ArgsRecord = Schema8.Record(Schema8.String, Schema8.Unknown);
-var decodeArgsRecord = Schema8.decodeUnknownOption(ArgsRecord);
-var argsRecord = (value) => Option5.getOrElse(decodeArgsRecord(value), () => ({}));
+var ArgsRecord = Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown);
+var decodeArgsRecord = Schema_exports.decodeUnknownOption(ArgsRecord);
+var argsRecord = (value) => Option_exports.getOrElse(decodeArgsRecord(value), () => ({}));
 var escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 var isUnknownToolMessage = (message, toolName) => {
   const name = escapeRegExp(toolName);
@@ -772,21 +780,21 @@ var isUnknownToolCause = (cause, toolName) => (
   cause instanceof McpError && (cause.code === ErrorCode.InvalidParams || cause.code === ErrorCode.MethodNotFound) && // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: instanceof narrows to the SDK's McpError, whose message carries the only unknown-tool discriminator the protocol provides
   isUnknownToolMessage(cause.message, toolName)
 );
-var McpElicitParams = Schema8.Union([
-  Schema8.Struct({
-    mode: Schema8.Literal("url"),
-    message: Schema8.String,
-    url: Schema8.String,
-    elicitationId: Schema8.optional(Schema8.String),
-    id: Schema8.optional(Schema8.String)
+var McpElicitParams = Schema_exports.Union([
+  Schema_exports.Struct({
+    mode: Schema_exports.Literal("url"),
+    message: Schema_exports.String,
+    url: Schema_exports.String,
+    elicitationId: Schema_exports.optional(Schema_exports.String),
+    id: Schema_exports.optional(Schema_exports.String)
   }),
-  Schema8.Struct({
-    mode: Schema8.optional(Schema8.Literal("form")),
-    message: Schema8.String,
-    requestedSchema: Schema8.Record(Schema8.String, Schema8.Unknown)
+  Schema_exports.Struct({
+    mode: Schema_exports.optional(Schema_exports.Literal("form")),
+    message: Schema_exports.String,
+    requestedSchema: Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown)
   })
 ]);
-var decodeElicitParams = Schema8.decodeUnknownSync(McpElicitParams);
+var decodeElicitParams = Schema_exports.decodeUnknownSync(McpElicitParams);
 var toElicitationRequest = (params) => params.mode === "url" ? UrlElicitation.make({
   message: params.message,
   url: params.url,
@@ -799,23 +807,23 @@ var installElicitationHandler = (client, elicit) => {
   client.setRequestHandler(ElicitRequestSchema, async (request) => {
     const params = decodeElicitParams(request.params);
     const req = toElicitationRequest(params);
-    const exit = await Effect4.runPromiseExit(elicit(req));
-    if (Exit.isSuccess(exit)) {
+    const exit = await Effect_exports.runPromiseExit(elicit(req));
+    if (Exit_exports.isSuccess(exit)) {
       const response = exit.value;
       return {
         action: response.action,
         ...response.action === "accept" && response.content ? { content: response.content } : {}
       };
     }
-    const failure = exit.cause.reasons.find(Cause.isFailReason);
+    const failure = exit.cause.reasons.find(Cause_exports.isFailReason);
     if (failure) {
       const err = failure.error;
-      if (Predicate3.isTagged(err, "ElicitationDeclinedError")) {
-        const action = Predicate3.hasProperty(err, "action") && err.action === "cancel" ? "cancel" : "decline";
+      if (Predicate_exports.isTagged(err, "ElicitationDeclinedError")) {
+        const action = Predicate_exports.hasProperty(err, "action") && err.action === "cancel" ? "cancel" : "decline";
         return { action };
       }
     }
-    throw Cause.squash(exit.cause);
+    throw Cause_exports.squash(exit.cause);
   });
 };
 var installToolListChangedHandler = (client, onToolListChanged) => {
@@ -824,13 +832,13 @@ var installToolListChangedHandler = (client, onToolListChanged) => {
     onToolListChanged();
   });
 };
-var useConnection = (connection, toolName, args, elicit, onToolListChanged) => Effect4.gen(function* () {
+var useConnection = (connection, toolName, args, elicit, onToolListChanged) => Effect_exports.gen(function* () {
   installElicitationHandler(connection.client, elicit);
   installToolListChangedHandler(connection.client, onToolListChanged);
-  return yield* Effect4.tryPromise({
+  return yield* Effect_exports.tryPromise({
     try: () => connection.client.callTool({ name: toolName, arguments: args }),
     catch: (cause) => {
-      if (Predicate3.isTagged(cause, "McpOAuthReauthorizationRequired")) {
+      if (Predicate_exports.isTagged(cause, "McpOAuthReauthorizationRequired")) {
         return new McpOAuthReauthorizationRequired({
           message: "MCP OAuth re-authorization required"
         });
@@ -844,21 +852,21 @@ var useConnection = (connection, toolName, args, elicit, onToolListChanged) => E
       });
     }
   }).pipe(
-    Effect4.withSpan("plugin.mcp.client.call_tool", {
+    Effect_exports.withSpan("plugin.mcp.client.call_tool", {
       attributes: { "mcp.tool.name": toolName }
     })
   );
 });
-var invokeMcpTool = (input) => Effect4.gen(function* () {
+var invokeMcpTool = (input) => Effect_exports.gen(function* () {
   const args = argsRecord(input.args);
-  const connection = yield* Effect4.acquireRelease(
+  const connection = yield* Effect_exports.acquireRelease(
     input.connector.pipe(
-      Effect4.withSpan("plugin.mcp.connection.acquire", {
+      Effect_exports.withSpan("plugin.mcp.connection.acquire", {
         attributes: { "plugin.mcp.transport": input.transport }
       })
     ),
-    (conn) => Effect4.ignore(
-      Effect4.tryPromise({
+    (conn) => Effect_exports.ignore(
+      Effect_exports.tryPromise({
         try: () => conn.close(),
         catch: () => new McpConnectionError({
           transport: input.transport,
@@ -875,8 +883,8 @@ var invokeMcpTool = (input) => Effect4.gen(function* () {
     input.onToolListChanged
   );
 }).pipe(
-  Effect4.scoped,
-  Effect4.withSpan("plugin.mcp.invoke", {
+  Effect_exports.scoped,
+  Effect_exports.withSpan("plugin.mcp.invoke", {
     attributes: {
       "mcp.tool.name": input.toolName,
       "plugin.mcp.tool_id": input.toolId,
@@ -1014,8 +1022,6 @@ var mcpPresets = [
 ];
 
 // ../../plugins/mcp/src/sdk/probe-shape.ts
-import { Data as Data2, Duration as Duration2, Effect as Effect5, Option as Option6, Schema as Schema9 } from "effect";
-import { FetchHttpClient, HttpClient as HttpClient2, HttpClientRequest as HttpClientRequest2 } from "effect/unstable/http";
 var INITIALIZE_BODY = JSON.stringify({
   jsonrpc: "2.0",
   id: 1,
@@ -1035,13 +1041,13 @@ var readHeader = (headers, name) => {
   }
   return null;
 };
-var ProbeTransportError = class extends Data2.TaggedError("ProbeTransportError") {
+var ProbeTransportError = class extends Data_exports.TaggedError("ProbeTransportError") {
 };
-var decodeJsonString = Schema9.decodeUnknownOption(Schema9.fromJsonString(Schema9.Unknown));
+var decodeJsonString = Schema_exports.decodeUnknownOption(Schema_exports.fromJsonString(Schema_exports.Unknown));
 var asObject = (body) => {
   if (!body) return null;
   const parsed = decodeJsonString(body);
-  if (Option6.isNone(parsed)) return null;
+  if (Option_exports.isNone(parsed)) return null;
   const value = parsed.value;
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   return value;
@@ -1058,12 +1064,12 @@ var isOAuthErrorBody = (body) => {
   if (Array.isArray(obj.errors)) return false;
   return typeof obj.error === "string";
 };
-var ProtectedResourceMetadata = Schema9.Struct({
-  resource: Schema9.String,
-  authorization_servers: Schema9.Array(Schema9.String)
+var ProtectedResourceMetadata = Schema_exports.Struct({
+  resource: Schema_exports.String,
+  authorization_servers: Schema_exports.Array(Schema_exports.String)
 });
-var decodeProtectedResourceMetadata = Schema9.decodeUnknownOption(
-  Schema9.fromJsonString(ProtectedResourceMetadata)
+var decodeProtectedResourceMetadata = Schema_exports.decodeUnknownOption(
+  Schema_exports.fromJsonString(ProtectedResourceMetadata)
 );
 var protectedResourceMetadataUrl = (endpoint) => {
   const path2 = endpoint.pathname === "/" ? "" : endpoint.pathname;
@@ -1077,27 +1083,27 @@ var resourceMatchesEndpoint = (resource, endpoint) => {
   const endpointPath = endpoint.pathname.replace(/\/+$/, "");
   return endpointPath === resourcePath || endpointPath.startsWith(`${resourcePath}/`);
 };
-var probeProtectedResourceMetadata = (client, endpoint, timeoutMs) => Effect5.gen(function* () {
+var probeProtectedResourceMetadata = (client, endpoint, timeoutMs) => Effect_exports.gen(function* () {
   const response = yield* client.execute(
-    HttpClientRequest2.get(protectedResourceMetadataUrl(endpoint)).pipe(
-      HttpClientRequest2.setHeader("accept", "application/json")
+    HttpClientRequest_exports.get(protectedResourceMetadataUrl(endpoint)).pipe(
+      HttpClientRequest_exports.setHeader("accept", "application/json")
     )
-  ).pipe(Effect5.timeout(Duration2.millis(timeoutMs)));
+  ).pipe(Effect_exports.timeout(Duration_exports.millis(timeoutMs)));
   if (response.status < 200 || response.status >= 300) return false;
   const body = yield* response.text.pipe(
-    Effect5.timeout(Duration2.millis(timeoutMs)),
-    Effect5.catch(() => Effect5.succeed(""))
+    Effect_exports.timeout(Duration_exports.millis(timeoutMs)),
+    Effect_exports.catch(() => Effect_exports.succeed(""))
   );
   const metadata = decodeProtectedResourceMetadata(body);
-  if (Option6.isNone(metadata)) return false;
+  if (Option_exports.isNone(metadata)) return false;
   if (metadata.value.authorization_servers.length === 0) return false;
   return resourceMatchesEndpoint(metadata.value.resource, endpoint);
-}).pipe(Effect5.catch(() => Effect5.succeed(false)));
-var ErrorMessageShape = Schema9.Struct({ message: Schema9.String });
-var decodeErrorMessageShape = Schema9.decodeUnknownOption(ErrorMessageShape);
+}).pipe(Effect_exports.catch(() => Effect_exports.succeed(false)));
+var ErrorMessageShape = Schema_exports.Struct({ message: Schema_exports.String });
+var decodeErrorMessageShape = Schema_exports.decodeUnknownOption(ErrorMessageShape);
 var reasonFromBoundaryCause = (cause) => {
   const messageShape = decodeErrorMessageShape(cause);
-  if (Option6.isSome(messageShape)) return messageShape.value.message;
+  if (Option_exports.isSome(messageShape)) return messageShape.value.message;
   if (typeof cause === "string") return cause;
   if (typeof cause === "number" || typeof cause === "boolean" || typeof cause === "bigint") {
     return `${cause}`;
@@ -1107,15 +1113,15 @@ var reasonFromBoundaryCause = (cause) => {
   if (typeof cause === "undefined") return "undefined";
   return "fetch failed";
 };
-var probeMcpEndpointShape = (endpoint, options = {}) => Effect5.gen(function* () {
+var probeMcpEndpointShape = (endpoint, options = {}) => Effect_exports.gen(function* () {
   const timeoutMs = options.timeoutMs ?? 8e3;
-  const outcome = yield* Effect5.gen(function* () {
-    const client = yield* HttpClient2.HttpClient;
+  const outcome = yield* Effect_exports.gen(function* () {
+    const client = yield* HttpClient_exports.HttpClient;
     const readBody = (response) => response.text.pipe(
-      Effect5.timeout(Duration2.millis(timeoutMs)),
-      Effect5.catch(() => Effect5.succeed(""))
+      Effect_exports.timeout(Duration_exports.millis(timeoutMs)),
+      Effect_exports.catch(() => Effect_exports.succeed(""))
     );
-    const classify = (response, method) => Effect5.gen(function* () {
+    const classify = (response, method) => Effect_exports.gen(function* () {
       const contentType = readHeader(response.headers, "content-type") ?? "";
       const isSse = /^\s*text\/event-stream\b/i.test(contentType);
       if (response.status === 401) {
@@ -1178,25 +1184,25 @@ var probeMcpEndpointShape = (endpoint, options = {}) => Effect5.gen(function* ()
     for (const [key, value] of Object.entries(options.queryParams ?? {})) {
       url.searchParams.set(key, value);
     }
-    let postRequest = HttpClientRequest2.post(url.toString()).pipe(
-      HttpClientRequest2.setHeader("content-type", "application/json"),
-      HttpClientRequest2.setHeader("accept", "application/json, text/event-stream"),
-      HttpClientRequest2.bodyText(INITIALIZE_BODY, "application/json")
+    let postRequest = HttpClientRequest_exports.post(url.toString()).pipe(
+      HttpClientRequest_exports.setHeader("content-type", "application/json"),
+      HttpClientRequest_exports.setHeader("accept", "application/json, text/event-stream"),
+      HttpClientRequest_exports.bodyText(INITIALIZE_BODY, "application/json")
     );
     for (const [name, value] of Object.entries(options.headers ?? {})) {
-      postRequest = HttpClientRequest2.setHeader(postRequest, name, value);
+      postRequest = HttpClientRequest_exports.setHeader(postRequest, name, value);
     }
-    const postResponse = yield* client.execute(postRequest).pipe(Effect5.timeout(Duration2.millis(timeoutMs)));
+    const postResponse = yield* client.execute(postRequest).pipe(Effect_exports.timeout(Duration_exports.millis(timeoutMs)));
     const postResult = yield* classify(postResponse, "POST");
     if (postResult) return postResult;
     if ([404, 405, 406, 415].includes(postResponse.status)) {
-      let getRequest = HttpClientRequest2.get(url.toString()).pipe(
-        HttpClientRequest2.setHeader("accept", "text/event-stream")
+      let getRequest = HttpClientRequest_exports.get(url.toString()).pipe(
+        HttpClientRequest_exports.setHeader("accept", "text/event-stream")
       );
       for (const [name, value] of Object.entries(options.headers ?? {})) {
-        getRequest = HttpClientRequest2.setHeader(getRequest, name, value);
+        getRequest = HttpClientRequest_exports.setHeader(getRequest, name, value);
       }
-      const getResponse = yield* client.execute(getRequest).pipe(Effect5.timeout(Duration2.millis(timeoutMs)));
+      const getResponse = yield* client.execute(getRequest).pipe(Effect_exports.timeout(Duration_exports.millis(timeoutMs)));
       const getResult = yield* classify(getResponse, "GET");
       if (getResult) return getResult;
     }
@@ -1206,22 +1212,22 @@ var probeMcpEndpointShape = (endpoint, options = {}) => Effect5.gen(function* ()
       reason: `unexpected status ${postResponse.status} for initialize`
     };
   }).pipe(
-    Effect5.provide(options.httpClientLayer ?? FetchHttpClient.layer),
-    Effect5.mapError(
+    Effect_exports.provide(options.httpClientLayer ?? FetchHttpClient_exports.layer),
+    Effect_exports.mapError(
       (cause) => new ProbeTransportError({
         reason: reasonFromBoundaryCause(cause),
         cause
       })
     ),
-    Effect5.catch(
-      (cause) => Effect5.succeed({
+    Effect_exports.catch(
+      (cause) => Effect_exports.succeed({
         kind: "unreachable",
         reason: cause.reason
       })
     )
   );
   return outcome;
-}).pipe(Effect5.withSpan("mcp.plugin.probe_shape"));
+}).pipe(Effect_exports.withSpan("mcp.plugin.probe_shape"));
 
 // ../../plugins/mcp/src/sdk/plugin.ts
 var MCP_PLUGIN_ID = "mcp";
@@ -1254,93 +1260,93 @@ var legacyMcpClientMatches = (client, candidates, config) => {
   }
   return client.grant === "authorization_code" && (client.resource ?? null) === config.endpoint;
 };
-var McpStampSchema = Schema10.Struct({
-  toolName: Schema10.String,
-  upstream: Schema10.optional(
-    Schema10.Struct({
-      title: Schema10.optional(Schema10.String),
-      readOnlyHint: Schema10.optional(Schema10.Boolean),
-      destructiveHint: Schema10.optional(Schema10.Boolean),
-      idempotentHint: Schema10.optional(Schema10.Boolean),
-      openWorldHint: Schema10.optional(Schema10.Boolean)
+var McpStampSchema = Schema_exports.Struct({
+  toolName: Schema_exports.String,
+  upstream: Schema_exports.optional(
+    Schema_exports.Struct({
+      title: Schema_exports.optional(Schema_exports.String),
+      readOnlyHint: Schema_exports.optional(Schema_exports.Boolean),
+      destructiveHint: Schema_exports.optional(Schema_exports.Boolean),
+      idempotentHint: Schema_exports.optional(Schema_exports.Boolean),
+      openWorldHint: Schema_exports.optional(Schema_exports.Boolean)
     })
   )
 });
-var AnnotationsWithStamp = Schema10.Struct({ mcp: McpStampSchema });
-var decodeStamp = Schema10.decodeUnknownOption(AnnotationsWithStamp);
-var readStamp = (annotations) => Option7.match(decodeStamp(annotations), {
+var AnnotationsWithStamp = Schema_exports.Struct({ mcp: McpStampSchema });
+var decodeStamp = Schema_exports.decodeUnknownOption(AnnotationsWithStamp);
+var readStamp = (annotations) => Option_exports.match(decodeStamp(annotations), {
   onNone: () => null,
   onSome: (decoded) => decoded.mcp
 });
-var McpRemoteServerInputSchema = Schema10.Struct({
-  transport: Schema10.optional(Schema10.Literal("remote")),
-  name: Schema10.String,
+var McpRemoteServerInputSchema = Schema_exports.Struct({
+  transport: Schema_exports.optional(Schema_exports.Literal("remote")),
+  name: Schema_exports.String,
   /** Agent-visible catalog description. Defaults to the display name. */
-  description: Schema10.optional(Schema10.String),
-  endpoint: Schema10.String,
-  remoteTransport: Schema10.optional(McpRemoteTransport),
-  headers: Schema10.optional(Schema10.Record(Schema10.String, Schema10.String)),
-  queryParams: Schema10.optional(Schema10.Record(Schema10.String, Schema10.String)),
-  slug: Schema10.optional(Schema10.String),
+  description: Schema_exports.optional(Schema_exports.String),
+  endpoint: Schema_exports.String,
+  remoteTransport: Schema_exports.optional(McpRemoteTransport),
+  headers: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  queryParams: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  slug: Schema_exports.optional(Schema_exports.String),
   /** Declared auth methods a connection can be applied through. */
-  authenticationTemplate: Schema10.optional(Schema10.Array(McpAuthMethodInput)),
+  authenticationTemplate: Schema_exports.optional(Schema_exports.Array(McpAuthMethodInput)),
   /** Single-method shorthand (legacy callers). Ignored when
    *  `authenticationTemplate` is present. Defaults to none. */
-  auth: Schema10.optional(McpAuthShorthand)
+  auth: Schema_exports.optional(McpAuthShorthand)
 });
-var McpStdioServerInputSchema = Schema10.Struct({
-  transport: Schema10.Literal("stdio"),
-  name: Schema10.String,
-  description: Schema10.optional(Schema10.String),
-  command: Schema10.String,
-  args: Schema10.optional(Schema10.Array(Schema10.String)),
+var McpStdioServerInputSchema = Schema_exports.Struct({
+  transport: Schema_exports.Literal("stdio"),
+  name: Schema_exports.String,
+  description: Schema_exports.optional(Schema_exports.String),
+  command: Schema_exports.String,
+  args: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
   /** DECLARE the secret env vars this server needs, by NAME. Their values are
    *  supplied as the connection's secret credentials, not here — so the UI
    *  defines what env vars exist and the connect step provides the secrets. */
-  envVars: Schema10.optional(Schema10.Array(Schema10.String)),
+  envVars: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
   /** Provide secret env values directly (programmatic / agent one-shot): the
    *  add then auto-creates the connection holding them. The UI uses `envVars`
    *  instead and leaves the values to the connect step. */
-  env: Schema10.optional(Schema10.Record(Schema10.String, Schema10.String)),
-  cwd: Schema10.optional(Schema10.String),
-  slug: Schema10.optional(Schema10.String)
+  env: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  cwd: Schema_exports.optional(Schema_exports.String),
+  slug: Schema_exports.optional(Schema_exports.String)
 });
-var McpAddServerInputSchema = Schema10.Union([
+var McpAddServerInputSchema = Schema_exports.Union([
   McpRemoteServerInputSchema,
   McpStdioServerInputSchema
 ]);
-var McpAddServerOutputSchema = Schema10.Struct({
-  slug: Schema10.String
+var McpAddServerOutputSchema = Schema_exports.Struct({
+  slug: Schema_exports.String
 });
-var McpConfigureAuthInputSchema = Schema10.Struct({
-  authenticationTemplate: Schema10.Array(McpAuthMethodInput),
-  mode: Schema10.optional(Schema10.Literals(["merge", "replace"]))
+var McpConfigureAuthInputSchema = Schema_exports.Struct({
+  authenticationTemplate: Schema_exports.Array(McpAuthMethodInput),
+  mode: Schema_exports.optional(Schema_exports.Literals(["merge", "replace"]))
 });
-var McpProbeEndpointInputSchema = Schema10.Struct({
-  endpoint: Schema10.String,
-  headers: Schema10.optional(Schema10.Record(Schema10.String, Schema10.String)),
-  queryParams: Schema10.optional(Schema10.Record(Schema10.String, Schema10.String))
+var McpProbeEndpointInputSchema = Schema_exports.Struct({
+  endpoint: Schema_exports.String,
+  headers: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  queryParams: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String))
 });
-var McpProbeEndpointOutputSchema = Schema10.Struct({
-  connected: Schema10.Boolean,
-  requiresAuthentication: Schema10.Boolean,
-  requiresOAuth: Schema10.Boolean,
-  supportsDynamicRegistration: Schema10.Boolean,
-  name: Schema10.String,
-  slug: Schema10.String,
-  toolCount: Schema10.NullOr(Schema10.Number),
-  serverName: Schema10.NullOr(Schema10.String),
+var McpProbeEndpointOutputSchema = Schema_exports.Struct({
+  connected: Schema_exports.Boolean,
+  requiresAuthentication: Schema_exports.Boolean,
+  requiresOAuth: Schema_exports.Boolean,
+  supportsDynamicRegistration: Schema_exports.Boolean,
+  name: Schema_exports.String,
+  slug: Schema_exports.String,
+  toolCount: Schema_exports.NullOr(Schema_exports.Number),
+  serverName: Schema_exports.NullOr(Schema_exports.String),
   /** The server's `instructions` from initialize — prefill for the add form's
    *  description. Only available when the probe connected unauthenticated. */
-  instructions: Schema10.NullOr(Schema10.String)
+  instructions: Schema_exports.NullOr(Schema_exports.String)
 });
-var McpGetServerInputSchema = Schema10.Struct({
-  slug: Schema10.String
+var McpGetServerInputSchema = Schema_exports.Struct({
+  slug: Schema_exports.String
 });
-var McpGetServerOutputSchema = Schema10.Struct({
-  integration: Schema10.NullOr(Schema10.Unknown)
+var McpGetServerOutputSchema = Schema_exports.Struct({
+  integration: Schema_exports.NullOr(Schema_exports.Unknown)
 });
-var schemaToStaticToolSchema = (schema) => Schema10.toStandardSchemaV1(Schema10.toStandardJSONSchemaV1(schema));
+var schemaToStaticToolSchema = (schema) => Schema_exports.toStandardSchemaV1(Schema_exports.toStandardJSONSchemaV1(schema));
 var McpAddServerInputStandardSchema = schemaToStaticToolSchema(McpAddServerInputSchema);
 var McpAddServerOutputStandardSchema = schemaToStaticToolSchema(McpAddServerOutputSchema);
 var McpProbeEndpointInputStandardSchema = schemaToStaticToolSchema(McpProbeEndpointInputSchema);
@@ -1430,17 +1436,17 @@ var toToolDef = (entry) => {
     annotations
   };
 };
-var McpTextContent = Schema10.Struct({ type: Schema10.Literal("text"), text: Schema10.String });
-var McpToolCallEnvelope = Schema10.Struct({
-  isError: Schema10.optional(Schema10.Boolean),
-  content: Schema10.optional(Schema10.Array(Schema10.Unknown))
+var McpTextContent = Schema_exports.Struct({ type: Schema_exports.Literal("text"), text: Schema_exports.String });
+var McpToolCallEnvelope = Schema_exports.Struct({
+  isError: Schema_exports.optional(Schema_exports.Boolean),
+  content: Schema_exports.optional(Schema_exports.Array(Schema_exports.Unknown))
 });
-var decodeMcpTextContent = Schema10.decodeUnknownOption(McpTextContent);
-var decodeMcpToolCallEnvelope = Schema10.decodeUnknownOption(McpToolCallEnvelope);
+var decodeMcpTextContent = Schema_exports.decodeUnknownOption(McpTextContent);
+var decodeMcpToolCallEnvelope = Schema_exports.decodeUnknownOption(McpToolCallEnvelope);
 var extractMcpErrorMessage = (content) => {
   if (Array.isArray(content)) {
     for (const item of content) {
-      const decoded = Option7.getOrUndefined(decodeMcpTextContent(item));
+      const decoded = Option_exports.getOrUndefined(decodeMcpTextContent(item));
       if (decoded !== void 0 && decoded.text.length > 0) return decoded.text;
     }
   }
@@ -1499,7 +1505,7 @@ var selectAuthMethod = (config, templateSlug) => {
 var buildConnectorInput = (config, values, templateSlug, allowStdio, httpClientLayer) => {
   if (config.transport === "stdio") {
     if (!allowStdio) {
-      return Effect6.fail(
+      return Effect_exports.fail(
         new McpConnectionError({
           transport: "stdio",
           message: "MCP stdio transport is disabled. Enable it by passing `dangerouslyAllowStdioMCP: true` to mcpPlugin() \u2014 only safe for trusted local contexts."
@@ -1514,7 +1520,7 @@ var buildConnectorInput = (config, values, templateSlug, allowStdio, httpClientL
         if (value != null) env[variable2] = value;
       }
     }
-    return Effect6.succeed({
+    return Effect_exports.succeed({
       transport: "stdio",
       command: config.command,
       args: config.args,
@@ -1534,7 +1540,7 @@ var buildConnectorInput = (config, values, templateSlug, allowStdio, httpClientL
     const token = values[TOKEN_VARIABLE];
     if (token != null) authProvider = makeOAuthProvider(token);
   }
-  return Effect6.succeed({
+  return Effect_exports.succeed({
     transport: "remote",
     endpoint: config.endpoint,
     remoteTransport: config.remoteTransport ?? "auto",
@@ -1608,7 +1614,7 @@ var mcpPlugin = definePlugin((options) => {
     storage: () => ({}),
     extension: (ctx) => {
       const httpClientLayer = options?.httpClientLayer ?? ctx.httpClientLayer;
-      const probeEndpoint = (input) => Effect6.gen(function* () {
+      const probeEndpoint = (input) => Effect_exports.gen(function* () {
         const endpoint = typeof input === "string" ? input : input.endpoint;
         const trimmed = endpoint.trim();
         if (!trimmed) {
@@ -1617,10 +1623,10 @@ var mcpPlugin = definePlugin((options) => {
             message: "Endpoint URL is required"
           });
         }
-        const name = yield* Effect6.try({
+        const name = yield* Effect_exports.try({
           try: () => new URL(trimmed).hostname,
           catch: () => "mcp"
-        }).pipe(Effect6.orElseSucceed(() => "mcp"));
+        }).pipe(Effect_exports.orElseSucceed(() => "mcp"));
         const slug = deriveMcpNamespace({ endpoint: trimmed });
         const probeHeaders = typeof input === "string" ? void 0 : input.headers;
         const probeQueryParams = typeof input === "string" ? void 0 : input.queryParams;
@@ -1632,9 +1638,9 @@ var mcpPlugin = definePlugin((options) => {
           httpClientLayer
         });
         const result = yield* discoverTools(connector).pipe(
-          Effect6.map((m) => ({ ok: true, manifest: m })),
-          Effect6.catch(() => Effect6.succeed({ ok: false, manifest: null })),
-          Effect6.withSpan("mcp.plugin.discover_tools")
+          Effect_exports.map((m) => ({ ok: true, manifest: m })),
+          Effect_exports.catch(() => Effect_exports.succeed({ ok: false, manifest: null })),
+          Effect_exports.withSpan("mcp.plugin.discover_tools")
         );
         if (result.ok && result.manifest) {
           return {
@@ -1680,9 +1686,9 @@ var mcpPlugin = definePlugin((options) => {
           };
         }
         const probeResult = yield* ctx.oauth.probe({ url: trimmed }).pipe(
-          Effect6.map((oauth) => ({ ok: true, oauth })),
-          Effect6.catch(() => Effect6.succeed({ ok: false, oauth: null })),
-          Effect6.withSpan("mcp.plugin.probe_oauth")
+          Effect_exports.map((oauth) => ({ ok: true, oauth })),
+          Effect_exports.catch(() => Effect_exports.succeed({ ok: false, oauth: null })),
+          Effect_exports.withSpan("mcp.plugin.probe_oauth")
         );
         if (probeResult.ok) {
           return {
@@ -1715,11 +1721,11 @@ var mcpPlugin = definePlugin((options) => {
           message: "This endpoint looks like MCP, but Executor couldn't discover tools from it. Check the URL and try again."
         });
       }).pipe(
-        Effect6.withSpan("mcp.plugin.probe_endpoint", {
+        Effect_exports.withSpan("mcp.plugin.probe_endpoint", {
           attributes: { "mcp.endpoint": typeof input === "string" ? input : input.endpoint }
         })
       );
-      const addServer = (input) => Effect6.gen(function* () {
+      const addServer = (input) => Effect_exports.gen(function* () {
         const slug = normalizeSlug(input);
         const config = toIntegrationConfig(input);
         const existing = yield* ctx.core.integrations.get(slugFrom(slug));
@@ -1734,7 +1740,7 @@ var mcpPlugin = definePlugin((options) => {
           canRemove: true,
           canRefresh: true
         }).pipe(
-          Effect6.withSpan("mcp.plugin.register_integration", {
+          Effect_exports.withSpan("mcp.plugin.register_integration", {
             attributes: { "mcp.integration.slug": slug }
           })
         );
@@ -1753,18 +1759,18 @@ var mcpPlugin = definePlugin((options) => {
               // valid inputs, but the channel must stay within
               // McpExtensionFailure; surface them as a connection error
               // rather than swallow a real failure.
-              Effect6.catchTags({
-                IntegrationNotFoundError: (cause) => Effect6.fail(
+              Effect_exports.catchTags({
+                IntegrationNotFoundError: (cause) => Effect_exports.fail(
                   new McpConnectionError({ transport: "stdio", message: cause.message })
                 ),
-                CredentialProviderNotRegisteredError: (cause) => Effect6.fail(
+                CredentialProviderNotRegisteredError: (cause) => Effect_exports.fail(
                   new McpConnectionError({ transport: "stdio", message: cause.message })
                 ),
-                InvalidConnectionInputError: (cause) => Effect6.fail(
+                InvalidConnectionInputError: (cause) => Effect_exports.fail(
                   new McpConnectionError({ transport: "stdio", message: cause.message })
                 )
               }),
-              Effect6.withSpan("mcp.plugin.bootstrap_stdio_connection", {
+              Effect_exports.withSpan("mcp.plugin.bootstrap_stdio_connection", {
                 attributes: { "mcp.integration.slug": slug }
               })
             );
@@ -1772,18 +1778,18 @@ var mcpPlugin = definePlugin((options) => {
         }
         return { slug };
       }).pipe(
-        Effect6.withSpan("mcp.plugin.add_server", {
+        Effect_exports.withSpan("mcp.plugin.add_server", {
           attributes: {
             "mcp.server.transport": input.transport ?? "remote",
             "mcp.server.name": input.name
           }
         })
       );
-      const reconcileStdioConnections = () => Effect6.gen(function* () {
+      const reconcileStdioConnections = () => Effect_exports.gen(function* () {
         const integrations = yield* ctx.core.integrations.list();
         for (const integration of integrations) {
           if (integration.kind !== MCP_PLUGIN_ID) continue;
-          yield* Effect6.gen(function* () {
+          yield* Effect_exports.gen(function* () {
             const record = yield* ctx.core.integrations.get(integration.slug);
             const config = record ? parseMcpIntegrationConfig(record.config) : null;
             if (!config || config.transport !== "stdio") return;
@@ -1811,19 +1817,19 @@ var mcpPlugin = definePlugin((options) => {
             };
             yield* ctx.core.integrations.update(integration.slug, { config: nextConfig });
           }).pipe(
-            Effect6.catch(
-              (cause) => Effect6.logWarning(
+            Effect_exports.catch(
+              (cause) => Effect_exports.logWarning(
                 `mcp: failed healing stdio connection for "${integration.slug}"`,
                 cause
               )
             ),
-            Effect6.withSpan("mcp.plugin.reconcile_stdio_connection", {
+            Effect_exports.withSpan("mcp.plugin.reconcile_stdio_connection", {
               attributes: { "mcp.integration.slug": String(integration.slug) }
             })
           );
         }
-      }).pipe(Effect6.withSpan("mcp.plugin.reconcile_stdio_connections"));
-      const removeServer = (slug) => Effect6.gen(function* () {
+      }).pipe(Effect_exports.withSpan("mcp.plugin.reconcile_stdio_connections"));
+      const removeServer = (slug) => Effect_exports.gen(function* () {
         const integration = slugFrom(slug);
         const record = yield* ctx.core.integrations.get(integration);
         const config = record ? parseMcpIntegrationConfig(record.config) : null;
@@ -1870,28 +1876,28 @@ var mcpPlugin = definePlugin((options) => {
             clientsToRemove.set(key, { owner: client.owner, slug: client.slug });
           }
         }
-        yield* ctx.core.integrations.remove(integration).pipe(Effect6.catchTag("IntegrationRemovalNotAllowedError", () => Effect6.void));
-        yield* Effect6.forEach(
+        yield* ctx.core.integrations.remove(integration).pipe(Effect_exports.catchTag("IntegrationRemovalNotAllowedError", () => Effect_exports.void));
+        yield* Effect_exports.forEach(
           clientsToRemove.values(),
           (client) => ctx.oauth.removeClient(client.owner, client.slug),
           { discard: true }
         );
       }).pipe(
-        Effect6.withSpan("mcp.plugin.remove_server", {
+        Effect_exports.withSpan("mcp.plugin.remove_server", {
           attributes: { "mcp.integration.slug": slug }
         })
       );
       const getServer = (slug) => ctx.core.integrations.get(slugFrom(slug)).pipe(
-        Effect6.withSpan("mcp.plugin.get_server", {
+        Effect_exports.withSpan("mcp.plugin.get_server", {
           attributes: { "mcp.integration.slug": slug }
         })
       );
       const configureServer = (slug, config) => ctx.core.integrations.update(slugFrom(slug), { config }).pipe(
-        Effect6.withSpan("mcp.plugin.configure_server", {
+        Effect_exports.withSpan("mcp.plugin.configure_server", {
           attributes: { "mcp.integration.slug": slug }
         })
       );
-      const configureAuth = (slug, input) => Effect6.gen(function* () {
+      const configureAuth = (slug, input) => Effect_exports.gen(function* () {
         const record = yield* ctx.core.integrations.get(slugFrom(slug));
         const current = record ? parseMcpIntegrationConfig(record.config) : null;
         if (!current || current.transport === "stdio") {
@@ -1908,7 +1914,7 @@ var mcpPlugin = definePlugin((options) => {
         });
         return merged;
       }).pipe(
-        Effect6.withSpan("mcp.plugin.configure_auth", {
+        Effect_exports.withSpan("mcp.plugin.configure_auth", {
           attributes: { "mcp.integration.slug": slug }
         })
       );
@@ -1932,11 +1938,11 @@ var mcpPlugin = definePlugin((options) => {
     // the connection still lands, and core keeps any previously persisted
     // catalog instead of wiping it over a transient outage.
     // -----------------------------------------------------------------------
-    resolveTools: ({ config, connection, template, getValues, httpClientLayer }) => Effect6.gen(function* () {
+    resolveTools: ({ config, connection, template, getValues, httpClientLayer }) => Effect_exports.gen(function* () {
       const parsed = parseMcpIntegrationConfig(config);
       if (!parsed) return { tools: [], incomplete: true };
       const values = yield* getValues().pipe(
-        Effect6.orElseSucceed(() => ({}))
+        Effect_exports.orElseSucceed(() => ({}))
       );
       const built = yield* buildConnectorInput(
         parsed,
@@ -1945,13 +1951,13 @@ var mcpPlugin = definePlugin((options) => {
         allowStdio,
         httpClientLayer
       ).pipe(
-        Effect6.map((ci) => createMcpConnector(ci)),
-        Effect6.result
+        Effect_exports.map((ci) => createMcpConnector(ci)),
+        Effect_exports.result
       );
-      const manifest = Result.isSuccess(built) ? yield* discoverTools(built.success).pipe(
-        Effect6.map((m) => ({ ok: true, manifest: m })),
-        Effect6.catch(() => Effect6.succeed({ ok: false, manifest: null })),
-        Effect6.withSpan("mcp.plugin.discover_tools", {
+      const manifest = Result_exports.isSuccess(built) ? yield* discoverTools(built.success).pipe(
+        Effect_exports.map((m) => ({ ok: true, manifest: m })),
+        Effect_exports.catch(() => Effect_exports.succeed({ ok: false, manifest: null })),
+        Effect_exports.withSpan("mcp.plugin.discover_tools", {
           attributes: { "mcp.connection.name": String(connection.name) }
         })
       ) : { ok: false, manifest: null };
@@ -1960,11 +1966,11 @@ var mcpPlugin = definePlugin((options) => {
       }
       return { tools: manifest.manifest.tools.map(toToolDef) };
     }).pipe(
-      Effect6.withSpan("mcp.plugin.resolve_tools", {
+      Effect_exports.withSpan("mcp.plugin.resolve_tools", {
         attributes: { "mcp.connection.name": String(connection.name) }
       })
     ),
-    invokeTool: ({ ctx, toolRow, credential, args, elicit }) => Effect6.gen(function* () {
+    invokeTool: ({ ctx, toolRow, credential, args, elicit }) => Effect_exports.gen(function* () {
       const parsed = parseMcpIntegrationConfig(credential.config);
       if (!parsed) {
         return yield* new McpConnectionError({
@@ -2002,7 +2008,7 @@ var mcpPlugin = definePlugin((options) => {
         String(credential.template),
         allowStdio,
         options?.httpClientLayer ?? ctx.httpClientLayer
-      ).pipe(Effect6.map((ci) => createMcpConnector(ci)));
+      ).pipe(Effect_exports.map((ci) => createMcpConnector(ci)));
       const connectionRef = {
         owner: credential.owner,
         integration: credential.integration,
@@ -2020,15 +2026,15 @@ var mcpPlugin = definePlugin((options) => {
           toolListChanged = true;
         }
       }).pipe(
-        Effect6.onExit(
-          () => toolListChanged ? ctx.connections.markToolsStale(connectionRef).pipe(Effect6.ignore) : Effect6.void
+        Effect_exports.onExit(
+          () => toolListChanged ? ctx.connections.markToolsStale(connectionRef).pipe(Effect_exports.ignore) : Effect_exports.void
         )
       );
-      const envelope = Option7.getOrUndefined(decodeMcpToolCallEnvelope(raw));
+      const envelope = Option_exports.getOrUndefined(decodeMcpToolCallEnvelope(raw));
       if (envelope?.isError === true) {
         const errorMessage = extractMcpErrorMessage(envelope.content);
         if (isUnknownToolMessage(errorMessage, stamp.toolName)) {
-          return yield* ctx.connections.markToolsStale(connectionRef).pipe(Effect6.ignore, Effect6.as(unknownToolFailure(String(toolRow.name), credential)));
+          return yield* ctx.connections.markToolsStale(connectionRef).pipe(Effect_exports.ignore, Effect_exports.as(unknownToolFailure(String(toolRow.name), credential)));
         }
         return ToolResult.fail({
           code: "mcp_tool_error",
@@ -2038,18 +2044,18 @@ var mcpPlugin = definePlugin((options) => {
       }
       return ToolResult.ok(raw);
     }).pipe(
-      Effect6.catchTag(
+      Effect_exports.catchTag(
         "McpOAuthReauthorizationRequired",
-        () => Effect6.succeed(
+        () => Effect_exports.succeed(
           mcpInvocationOAuthReauthFailure({
             integration: String(credential.integration),
             connection: String(credential.connection)
           })
         )
       ),
-      Effect6.catchTag("McpConnectionError", (error) => {
+      Effect_exports.catchTag("McpConnectionError", (error) => {
         if (error.httpStatus === 401 || error.httpStatus === 403) {
-          return Effect6.succeed(
+          return Effect_exports.succeed(
             mcpInvocationAuthFailure({
               status: error.httpStatus,
               integration: String(credential.integration),
@@ -2057,7 +2063,7 @@ var mcpPlugin = definePlugin((options) => {
             })
           );
         }
-        return Effect6.succeed(
+        return Effect_exports.succeed(
           authToolFailure({
             code: "connection_rejected",
             message: error.message,
@@ -2066,9 +2072,9 @@ var mcpPlugin = definePlugin((options) => {
           })
         );
       }),
-      Effect6.catchTag("McpInvocationError", (error) => {
+      Effect_exports.catchTag("McpInvocationError", (error) => {
         if (error.status === 401 || error.status === 403) {
-          return Effect6.succeed(
+          return Effect_exports.succeed(
             mcpInvocationAuthFailure({
               status: error.status,
               integration: String(credential.integration),
@@ -2081,26 +2087,26 @@ var mcpPlugin = definePlugin((options) => {
             owner: credential.owner,
             integration: credential.integration,
             name: credential.connection
-          }).pipe(Effect6.ignore, Effect6.as(unknownToolFailure(String(toolRow.name), credential)));
+          }).pipe(Effect_exports.ignore, Effect_exports.as(unknownToolFailure(String(toolRow.name), credential)));
         }
-        return Effect6.fail(error);
+        return Effect_exports.fail(error);
       }),
-      Effect6.withSpan("mcp.plugin.invoke_tool", {
+      Effect_exports.withSpan("mcp.plugin.invoke_tool", {
         attributes: {
           "mcp.tool.name": String(toolRow.name),
           "mcp.integration.slug": String(toolRow.integration)
         }
       })
     ),
-    detect: ({ ctx, url }) => Effect6.gen(function* () {
+    detect: ({ ctx, url }) => Effect_exports.gen(function* () {
       const httpClientLayer = options?.httpClientLayer ?? ctx.httpClientLayer;
       const trimmed = url.trim();
       if (!trimmed) return null;
-      const parsed = yield* Effect6.try({
+      const parsed = yield* Effect_exports.try({
         try: () => new URL(trimmed),
         catch: (cause) => cause
-      }).pipe(Effect6.option);
-      if (Option7.isNone(parsed)) return null;
+      }).pipe(Effect_exports.option);
+      if (Option_exports.isNone(parsed)) return null;
       const name = parsed.value.hostname || "mcp";
       const slug = deriveMcpNamespace({ endpoint: trimmed });
       const connector = createMcpConnector({
@@ -2109,9 +2115,9 @@ var mcpPlugin = definePlugin((options) => {
         httpClientLayer
       });
       const connected = yield* discoverTools(connector).pipe(
-        Effect6.map(() => true),
-        Effect6.catch(() => Effect6.succeed(false)),
-        Effect6.withSpan("mcp.plugin.discover_tools")
+        Effect_exports.map(() => true),
+        Effect_exports.catch(() => Effect_exports.succeed(false)),
+        Effect_exports.withSpan("mcp.plugin.discover_tools")
       );
       if (connected) {
         return {
@@ -2143,14 +2149,14 @@ var mcpPlugin = definePlugin((options) => {
       }
       return null;
     }).pipe(
-      Effect6.catch(() => Effect6.succeed(null)),
-      Effect6.withSpan("mcp.plugin.detect", {
+      Effect_exports.catch(() => Effect_exports.succeed(null)),
+      Effect_exports.withSpan("mcp.plugin.detect", {
         attributes: { "mcp.endpoint": url }
       })
     ),
     // Honour upstream destructiveHint from MCP ToolAnnotations using the stamp
     // persisted in each tool row's annotations.
-    resolveAnnotations: ({ toolRows }) => Effect6.sync(() => {
+    resolveAnnotations: ({ toolRows }) => Effect_exports.sync(() => {
       const out = {};
       for (const row of toolRows) {
         const stamp = readStamp(row.annotations);
@@ -2173,7 +2179,7 @@ var mcpPlugin = definePlugin((options) => {
     // Only checkHealth is implemented (no candidates/describe/set), so the
     // operation/identity editor stays hidden while the status dot + "Check now"
     // light up.
-    checkHealth: ({ ctx, credential }) => Effect6.gen(function* () {
+    checkHealth: ({ ctx, credential }) => Effect_exports.gen(function* () {
       const parsed = parseMcpIntegrationConfig(credential.config);
       if (!parsed) {
         return { status: "unknown", checkedAt: Date.now() };
@@ -2184,14 +2190,14 @@ var mcpPlugin = definePlugin((options) => {
         credential.template === null ? null : String(credential.template),
         allowStdio,
         options?.httpClientLayer ?? ctx.httpClientLayer
-      ).pipe(Effect6.map((ci) => createMcpConnector(ci)));
+      ).pipe(Effect_exports.map((ci) => createMcpConnector(ci)));
       return yield* discoverTools(connector).pipe(
-        Effect6.map(
+        Effect_exports.map(
           () => ({ status: "healthy", checkedAt: Date.now() })
         ),
-        Effect6.catchTag(
+        Effect_exports.catchTag(
           "McpToolDiscoveryError",
-          (error) => Effect6.succeed({
+          (error) => Effect_exports.succeed({
             status: mcpLivenessFailureStatus(error),
             checkedAt: Date.now(),
             ...error.httpStatus !== void 0 ? { httpStatus: error.httpStatus } : {},
@@ -2201,22 +2207,22 @@ var mcpPlugin = definePlugin((options) => {
       );
     }).pipe(
       // buildConnectorInput rejects (e.g. stdio disabled / missing config).
-      Effect6.catchTag(
+      Effect_exports.catchTag(
         "McpConnectionError",
-        (error) => Effect6.succeed({
+        (error) => Effect_exports.succeed({
           status: mcpLivenessFailureStatus(error),
           checkedAt: Date.now(),
           ...error.httpStatus !== void 0 ? { httpStatus: error.httpStatus } : {},
           detail: error.message
         })
       ),
-      Effect6.withSpan("mcp.plugin.check_health")
+      Effect_exports.withSpan("mcp.plugin.check_health")
     ),
     describeAuthMethods: describeMcpAuthMethods,
     describeIntegrationDisplay: describeMcpIntegrationDisplay,
     integrationConfigure: {
       type: "mcp",
-      configure: ({ ctx, integration, config }) => Effect6.gen(function* () {
+      configure: ({ ctx, integration, config }) => Effect_exports.gen(function* () {
         const next = parseMcpIntegrationConfig(config);
         if (!next) return;
         yield* ctx.core.integrations.update(integration, { config: next });
@@ -2234,10 +2240,10 @@ var mcpPlugin = definePlugin((options) => {
             inputSchema: McpProbeEndpointInputStandardSchema,
             outputSchema: McpProbeEndpointOutputStandardSchema,
             execute: (input) => self.probeEndpoint(input).pipe(
-              Effect6.map(ToolResult.ok),
-              Effect6.catchTag(
+              Effect_exports.map(ToolResult.ok),
+              Effect_exports.catchTag(
                 "McpConnectionError",
-                ({ message, transport }) => Effect6.succeed(mcpToolFailure("mcp_connection_failed", message, { transport }))
+                ({ message, transport }) => Effect_exports.succeed(mcpToolFailure("mcp_connection_failed", message, { transport }))
               )
             )
           }),
@@ -2248,7 +2254,7 @@ var mcpPlugin = definePlugin((options) => {
             outputSchema: McpGetServerOutputStandardSchema,
             execute: (input) => {
               const args = input;
-              return Effect6.map(
+              return Effect_exports.map(
                 self.getServer(args.slug),
                 (integration) => ToolResult.ok({ integration })
               );
@@ -2266,10 +2272,10 @@ var mcpPlugin = definePlugin((options) => {
             execute: (rawInput) => {
               const input = rawInput;
               return self.addServer(input).pipe(
-                Effect6.map(ToolResult.ok),
-                Effect6.catchTag(
+                Effect_exports.map(ToolResult.ok),
+                Effect_exports.catchTag(
                   "IntegrationAlreadyExistsError",
-                  ({ slug }) => Effect6.succeed(
+                  ({ slug }) => Effect_exports.succeed(
                     mcpToolFailure(
                       "integration_already_exists",
                       `Integration ${slug} already exists; update it instead of re-adding.`
@@ -2286,95 +2292,93 @@ var mcpPlugin = definePlugin((options) => {
 });
 
 // ../../plugins/mcp/src/api/group.ts
-import { HttpApiEndpoint, HttpApiGroup } from "effect/unstable/httpapi";
-import { Schema as Schema11 } from "effect";
 var SlugParams = { slug: IntegrationSlug };
-var StringMap2 = Schema11.Record(Schema11.String, Schema11.String);
-var AddRemoteServerPayload = Schema11.Struct({
-  transport: Schema11.optional(Schema11.Literal("remote")),
-  name: Schema11.String,
+var StringMap2 = Schema_exports.Record(Schema_exports.String, Schema_exports.String);
+var AddRemoteServerPayload = Schema_exports.Struct({
+  transport: Schema_exports.optional(Schema_exports.Literal("remote")),
+  name: Schema_exports.String,
   /** Agent-visible catalog description. Defaults to the display name. */
-  description: Schema11.optional(Schema11.String),
-  endpoint: Schema11.String,
-  remoteTransport: Schema11.optional(Schema11.Literals(["streamable-http", "sse", "auto"])),
-  slug: Schema11.optional(Schema11.String),
-  queryParams: Schema11.optional(StringMap2),
-  headers: Schema11.optional(StringMap2),
+  description: Schema_exports.optional(Schema_exports.String),
+  endpoint: Schema_exports.String,
+  remoteTransport: Schema_exports.optional(Schema_exports.Literals(["streamable-http", "sse", "auto"])),
+  slug: Schema_exports.optional(Schema_exports.String),
+  queryParams: Schema_exports.optional(StringMap2),
+  headers: Schema_exports.optional(StringMap2),
   /** Declared auth methods a connection can be applied through. */
-  authenticationTemplate: Schema11.optional(Schema11.Array(McpAuthMethodInput)),
+  authenticationTemplate: Schema_exports.optional(Schema_exports.Array(McpAuthMethodInput)),
   /** Single-method shorthand (legacy callers); ignored when
    *  `authenticationTemplate` is present. */
-  auth: Schema11.optional(McpAuthShorthand)
+  auth: Schema_exports.optional(McpAuthShorthand)
 });
-var AddStdioServerPayload = Schema11.Struct({
-  transport: Schema11.Literal("stdio"),
-  name: Schema11.String,
-  description: Schema11.optional(Schema11.String),
-  command: Schema11.String,
-  args: Schema11.optional(Schema11.Array(Schema11.String)),
+var AddStdioServerPayload = Schema_exports.Struct({
+  transport: Schema_exports.Literal("stdio"),
+  name: Schema_exports.String,
+  description: Schema_exports.optional(Schema_exports.String),
+  command: Schema_exports.String,
+  args: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
   /** Declare the secret env vars this server needs, by name. Their values are
    *  supplied as the connection's secrets (the connect step), not here. */
-  envVars: Schema11.optional(Schema11.Array(Schema11.String)),
+  envVars: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
   /** One-shot secret env values (programmatic). The UI sends `envVars`. */
-  env: Schema11.optional(StringMap2),
-  cwd: Schema11.optional(Schema11.String),
-  slug: Schema11.optional(Schema11.String)
+  env: Schema_exports.optional(StringMap2),
+  cwd: Schema_exports.optional(Schema_exports.String),
+  slug: Schema_exports.optional(Schema_exports.String)
 });
-var AddServerPayload = Schema11.Union([AddRemoteServerPayload, AddStdioServerPayload]);
-var ProbeEndpointPayload = Schema11.Struct({
-  endpoint: Schema11.String,
-  headers: Schema11.optional(StringMap2),
-  queryParams: Schema11.optional(StringMap2)
+var AddServerPayload = Schema_exports.Union([AddRemoteServerPayload, AddStdioServerPayload]);
+var ProbeEndpointPayload = Schema_exports.Struct({
+  endpoint: Schema_exports.String,
+  headers: Schema_exports.optional(StringMap2),
+  queryParams: Schema_exports.optional(StringMap2)
 });
-var ProbeEndpointResponse = Schema11.Struct({
-  connected: Schema11.Boolean,
-  requiresAuthentication: Schema11.Boolean,
-  requiresOAuth: Schema11.Boolean,
-  supportsDynamicRegistration: Schema11.Boolean,
-  name: Schema11.String,
-  slug: Schema11.String,
-  toolCount: Schema11.NullOr(Schema11.Number),
-  serverName: Schema11.NullOr(Schema11.String),
+var ProbeEndpointResponse = Schema_exports.Struct({
+  connected: Schema_exports.Boolean,
+  requiresAuthentication: Schema_exports.Boolean,
+  requiresOAuth: Schema_exports.Boolean,
+  supportsDynamicRegistration: Schema_exports.Boolean,
+  name: Schema_exports.String,
+  slug: Schema_exports.String,
+  toolCount: Schema_exports.NullOr(Schema_exports.Number),
+  serverName: Schema_exports.NullOr(Schema_exports.String),
   /** Server `instructions` from initialize — prefills the description field. */
-  instructions: Schema11.NullOr(Schema11.String)
+  instructions: Schema_exports.NullOr(Schema_exports.String)
 });
-var AddServerResponse = Schema11.Struct({
-  slug: Schema11.String
+var AddServerResponse = Schema_exports.Struct({
+  slug: Schema_exports.String
 });
-var RemoveServerResponse = Schema11.Struct({
-  removed: Schema11.Boolean
+var RemoveServerResponse = Schema_exports.Struct({
+  removed: Schema_exports.Boolean
 });
-var ConfigureServerPayload = Schema11.Struct({
+var ConfigureServerPayload = Schema_exports.Struct({
   config: McpIntegrationConfig
 });
-var ConfigureServerResponse = Schema11.Struct({
+var ConfigureServerResponse = Schema_exports.Struct({
   config: McpIntegrationConfig
 });
-var ConfigureAuthPayload = Schema11.Struct({
-  authenticationTemplate: Schema11.Array(McpAuthMethodInput),
-  mode: Schema11.optional(Schema11.Literals(["merge", "replace"]))
+var ConfigureAuthPayload = Schema_exports.Struct({
+  authenticationTemplate: Schema_exports.Array(McpAuthMethodInput),
+  mode: Schema_exports.optional(Schema_exports.Literals(["merge", "replace"]))
 });
-var ConfigureAuthResponse = Schema11.Struct({
-  authenticationTemplate: Schema11.Array(McpAuthMethod)
+var ConfigureAuthResponse = Schema_exports.Struct({
+  authenticationTemplate: Schema_exports.Array(McpAuthMethod)
 });
-var GetServerResponse = Schema11.NullOr(
-  Schema11.Struct({
+var GetServerResponse = Schema_exports.NullOr(
+  Schema_exports.Struct({
     slug: IntegrationSlug,
-    description: Schema11.String,
-    kind: Schema11.String,
-    canRemove: Schema11.Boolean,
-    canRefresh: Schema11.Boolean,
+    description: Schema_exports.String,
+    kind: Schema_exports.String,
+    canRemove: Schema_exports.Boolean,
+    canRefresh: Schema_exports.Boolean,
     config: McpIntegrationConfig
   })
 );
-var McpGroup = HttpApiGroup.make("mcp").add(
-  HttpApiEndpoint.post("probeEndpoint", "/mcp/probe", {
+var McpGroup = HttpApiGroup_exports.make("mcp").add(
+  HttpApiEndpoint_exports.post("probeEndpoint", "/mcp/probe", {
     payload: ProbeEndpointPayload,
     success: ProbeEndpointResponse,
     error: [InternalError, McpConnectionError, McpToolDiscoveryError]
   })
 ).add(
-  HttpApiEndpoint.post("addServer", "/mcp/servers", {
+  HttpApiEndpoint_exports.post("addServer", "/mcp/servers", {
     payload: AddServerPayload,
     success: AddServerResponse,
     error: [
@@ -2385,26 +2389,26 @@ var McpGroup = HttpApiGroup.make("mcp").add(
     ]
   })
 ).add(
-  HttpApiEndpoint.delete("removeServer", "/mcp/servers/:slug", {
+  HttpApiEndpoint_exports.delete("removeServer", "/mcp/servers/:slug", {
     params: SlugParams,
     success: RemoveServerResponse,
     error: [InternalError, McpConnectionError, McpToolDiscoveryError]
   })
 ).add(
-  HttpApiEndpoint.get("getServer", "/mcp/servers/:slug", {
+  HttpApiEndpoint_exports.get("getServer", "/mcp/servers/:slug", {
     params: SlugParams,
     success: GetServerResponse,
     error: [InternalError, McpConnectionError, McpToolDiscoveryError]
   })
 ).add(
-  HttpApiEndpoint.post("configureServer", "/mcp/servers/:slug/config", {
+  HttpApiEndpoint_exports.post("configureServer", "/mcp/servers/:slug/config", {
     params: SlugParams,
     payload: ConfigureServerPayload,
     success: ConfigureServerResponse,
     error: [InternalError, McpConnectionError, McpToolDiscoveryError]
   })
 ).add(
-  HttpApiEndpoint.post("configureAuth", "/mcp/servers/:slug/auth", {
+  HttpApiEndpoint_exports.post("configureAuth", "/mcp/servers/:slug/auth", {
     params: SlugParams,
     payload: ConfigureAuthPayload,
     success: ConfigureAuthResponse,
@@ -2412,52 +2416,43 @@ var McpGroup = HttpApiGroup.make("mcp").add(
   })
 );
 
-// ../../plugins/mcp/src/api/handlers.ts
-import { HttpApiBuilder } from "effect/unstable/httpapi";
-import { Context as Context2, Effect as Effect10 } from "effect";
-
-// ../api/src/api.ts
-import { HttpApi, OpenApi } from "effect/unstable/httpapi";
-
 // ../api/src/tools/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint2, HttpApiGroup as HttpApiGroup2 } from "effect/unstable/httpapi";
-import { Schema as Schema12 } from "effect";
-var ToolMetadataResponse = Schema12.Struct({
+var ToolMetadataResponse = Schema_exports.Struct({
   address: ToolAddress,
   owner: Owner,
   integration: IntegrationSlug,
   connection: ConnectionName,
-  name: Schema12.String,
-  pluginId: Schema12.String,
-  description: Schema12.String,
-  mayElicit: Schema12.optional(Schema12.Boolean),
+  name: Schema_exports.String,
+  pluginId: Schema_exports.String,
+  description: Schema_exports.String,
+  mayElicit: Schema_exports.optional(Schema_exports.Boolean),
   /** Plugin-derived default approval annotation. Surfaces in the UI as the
    *  "default" policy when no user `tool_policy` rule matches. */
-  requiresApproval: Schema12.optional(Schema12.Boolean),
-  approvalDescription: Schema12.optional(Schema12.String),
-  static: Schema12.optional(Schema12.Boolean)
+  requiresApproval: Schema_exports.optional(Schema_exports.Boolean),
+  approvalDescription: Schema_exports.optional(Schema_exports.String),
+  static: Schema_exports.optional(Schema_exports.Boolean)
 });
-var ListToolsQuery = Schema12.Struct({
-  integration: Schema12.optional(IntegrationSlug),
-  owner: Schema12.optional(Owner),
-  connection: Schema12.optional(ConnectionName),
-  query: Schema12.optional(Schema12.String),
+var ListToolsQuery = Schema_exports.Struct({
+  integration: Schema_exports.optional(IntegrationSlug),
+  owner: Schema_exports.optional(Owner),
+  connection: Schema_exports.optional(ConnectionName),
+  query: Schema_exports.optional(Schema_exports.String),
   // Query params arrive as strings; the handler interprets "true"/"false".
-  includeAnnotations: Schema12.optional(Schema12.String),
-  includeBlocked: Schema12.optional(Schema12.String)
+  includeAnnotations: Schema_exports.optional(Schema_exports.String),
+  includeBlocked: Schema_exports.optional(Schema_exports.String)
 });
-var SchemaQuery = Schema12.Struct({
+var SchemaQuery = Schema_exports.Struct({
   address: ToolAddress
 });
 var ToolNotFound = ToolNotFoundError.annotate({ httpApiStatus: 404 });
-var ToolsApi = HttpApiGroup2.make("tools").add(
-  HttpApiEndpoint2.get("list", "/tools", {
+var ToolsApi = HttpApiGroup_exports.make("tools").add(
+  HttpApiEndpoint_exports.get("list", "/tools", {
     query: ListToolsQuery,
-    success: Schema12.Array(ToolMetadataResponse),
+    success: Schema_exports.Array(ToolMetadataResponse),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint2.get("schema", "/tools/schema", {
+  HttpApiEndpoint_exports.get("schema", "/tools/schema", {
     query: SchemaQuery,
     success: ToolSchemaView,
     error: [InternalError, ToolNotFound]
@@ -2465,210 +2460,206 @@ var ToolsApi = HttpApiGroup2.make("tools").add(
 );
 
 // ../api/src/integrations/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint3, HttpApiGroup as HttpApiGroup3 } from "effect/unstable/httpapi";
-import { Schema as Schema13 } from "effect";
 var IntegrationParams = { slug: IntegrationSlug };
-var PlacementDescriptor = Schema13.Struct({
-  carrier: Schema13.Literals(["header", "query", "env"]),
-  name: Schema13.String,
-  prefix: Schema13.String,
+var PlacementDescriptor = Schema_exports.Struct({
+  carrier: Schema_exports.Literals(["header", "query", "env"]),
+  name: Schema_exports.String,
+  prefix: Schema_exports.String,
   /** Input variable this placement renders from (absent ⇒ `token`). Without
    *  it the client cannot derive per-variable credential inputs for
    *  multi-input methods. */
-  variable: Schema13.optional(Schema13.String),
+  variable: Schema_exports.optional(Schema_exports.String),
   /** Static value rendered verbatim (no credential input). */
-  literal: Schema13.optional(Schema13.String)
+  literal: Schema_exports.optional(Schema_exports.String)
 });
-var OAuthDescriptor = Schema13.Struct({
-  discoveryUrl: Schema13.optional(Schema13.String),
-  authorizationUrl: Schema13.optional(Schema13.String),
-  tokenUrl: Schema13.optional(Schema13.String),
-  resource: Schema13.optional(Schema13.NullOr(Schema13.String)),
-  scopes: Schema13.optional(Schema13.Array(Schema13.String)),
-  registrationEndpoint: Schema13.optional(Schema13.String),
-  supportsDynamicRegistration: Schema13.optional(Schema13.Boolean),
-  supportsClientIdMetadataDocument: Schema13.optional(Schema13.Boolean)
+var OAuthDescriptor = Schema_exports.Struct({
+  discoveryUrl: Schema_exports.optional(Schema_exports.String),
+  authorizationUrl: Schema_exports.optional(Schema_exports.String),
+  tokenUrl: Schema_exports.optional(Schema_exports.String),
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  scopes: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  registrationEndpoint: Schema_exports.optional(Schema_exports.String),
+  supportsDynamicRegistration: Schema_exports.optional(Schema_exports.Boolean),
+  supportsClientIdMetadataDocument: Schema_exports.optional(Schema_exports.Boolean)
 });
-var AuthMethodDescriptorSchema = Schema13.Struct({
-  id: Schema13.String,
-  label: Schema13.String,
-  kind: Schema13.Literals(["oauth", "apikey", "header", "none"]),
-  template: Schema13.String,
-  placements: Schema13.optional(Schema13.Array(PlacementDescriptor)),
-  oauth: Schema13.optional(OAuthDescriptor)
+var AuthMethodDescriptorSchema = Schema_exports.Struct({
+  id: Schema_exports.String,
+  label: Schema_exports.String,
+  kind: Schema_exports.Literals(["oauth", "apikey", "header", "none"]),
+  template: Schema_exports.String,
+  placements: Schema_exports.optional(Schema_exports.Array(PlacementDescriptor)),
+  oauth: Schema_exports.optional(OAuthDescriptor)
 });
-var IntegrationResponse = Schema13.Struct({
+var IntegrationResponse = Schema_exports.Struct({
   slug: IntegrationSlug,
   /** Display name. */
-  name: Schema13.String,
-  description: Schema13.String,
+  name: Schema_exports.String,
+  description: Schema_exports.String,
   /** The plugin that owns this integration kind (e.g. "openapi", "mcp"). */
-  kind: Schema13.String,
-  canRemove: Schema13.Boolean,
-  canRefresh: Schema13.Boolean,
+  kind: Schema_exports.String,
+  canRemove: Schema_exports.Boolean,
+  canRefresh: Schema_exports.Boolean,
   /** Declared auth methods derived from the owning plugin's stored config.
    *  Always present (possibly empty) so the client never handles absence. */
-  authMethods: Schema13.Array(AuthMethodDescriptorSchema),
+  authMethods: Schema_exports.Array(AuthMethodDescriptorSchema),
   /** Non-secret URL derived from opaque integration config for favicons. */
-  displayUrl: Schema13.optional(Schema13.String),
+  displayUrl: Schema_exports.optional(Schema_exports.String),
   /** Catalog family derived from opaque integration config for grouped display. */
-  family: Schema13.optional(Schema13.String)
+  family: Schema_exports.optional(Schema_exports.String)
 });
-var UpdateIntegrationPayload = Schema13.Struct({
-  name: Schema13.optional(Schema13.String),
-  description: Schema13.optional(Schema13.String)
+var UpdateIntegrationPayload = Schema_exports.Struct({
+  name: Schema_exports.optional(Schema_exports.String),
+  description: Schema_exports.optional(Schema_exports.String)
 });
-var DetectRequest = Schema13.Struct({
-  url: Schema13.String.check(Schema13.isMaxLength(2048))
+var DetectRequest = Schema_exports.Struct({
+  url: Schema_exports.String.check(Schema_exports.isMaxLength(2048))
 });
-var SetHealthCheckPayload = Schema13.Struct({
-  spec: Schema13.NullOr(HealthCheckSpec)
+var SetHealthCheckPayload = Schema_exports.Struct({
+  spec: Schema_exports.NullOr(HealthCheckSpec)
 });
 var IntegrationNotFound = IntegrationNotFoundError.annotate({ httpApiStatus: 404 });
 var IntegrationRemovalNotAllowed = IntegrationRemovalNotAllowedError.annotate({
   httpApiStatus: 409
 });
-var IntegrationsApi = HttpApiGroup3.make("integrations").add(
-  HttpApiEndpoint3.get("list", "/integrations", {
-    success: Schema13.Array(IntegrationResponse),
+var IntegrationsApi = HttpApiGroup_exports.make("integrations").add(
+  HttpApiEndpoint_exports.get("list", "/integrations", {
+    success: Schema_exports.Array(IntegrationResponse),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint3.get("get", "/integrations/:slug", {
+  HttpApiEndpoint_exports.get("get", "/integrations/:slug", {
     params: IntegrationParams,
     success: IntegrationResponse,
     error: [InternalError, IntegrationNotFound]
   })
 ).add(
-  HttpApiEndpoint3.patch("update", "/integrations/:slug", {
+  HttpApiEndpoint_exports.patch("update", "/integrations/:slug", {
     params: IntegrationParams,
     payload: UpdateIntegrationPayload,
     success: IntegrationResponse,
     error: [InternalError, IntegrationNotFound]
   })
 ).add(
-  HttpApiEndpoint3.delete("remove", "/integrations/:slug", {
+  HttpApiEndpoint_exports.delete("remove", "/integrations/:slug", {
     params: IntegrationParams,
-    success: Schema13.Struct({ removed: Schema13.Boolean }),
+    success: Schema_exports.Struct({ removed: Schema_exports.Boolean }),
     error: [InternalError, IntegrationRemovalNotAllowed]
   })
 ).add(
-  HttpApiEndpoint3.post("detect", "/integrations/detect", {
+  HttpApiEndpoint_exports.post("detect", "/integrations/detect", {
     payload: DetectRequest,
-    success: Schema13.Array(IntegrationDetectionResult),
+    success: Schema_exports.Array(IntegrationDetectionResult),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint3.get("healthCheckGet", "/integrations/:slug/health-check", {
+  HttpApiEndpoint_exports.get("healthCheckGet", "/integrations/:slug/health-check", {
     params: IntegrationParams,
-    success: Schema13.NullOr(HealthCheckSpec),
+    success: Schema_exports.NullOr(HealthCheckSpec),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint3.get("healthCheckCandidates", "/integrations/:slug/health-check/candidates", {
+  HttpApiEndpoint_exports.get("healthCheckCandidates", "/integrations/:slug/health-check/candidates", {
     params: IntegrationParams,
-    success: Schema13.Array(HealthCheckCandidate),
+    success: Schema_exports.Array(HealthCheckCandidate),
     error: [InternalError, IntegrationNotFound]
   })
 ).add(
-  HttpApiEndpoint3.put("healthCheckSet", "/integrations/:slug/health-check", {
+  HttpApiEndpoint_exports.put("healthCheckSet", "/integrations/:slug/health-check", {
     params: IntegrationParams,
     payload: SetHealthCheckPayload,
-    success: Schema13.Struct({ ok: Schema13.Boolean }),
+    success: Schema_exports.Struct({ ok: Schema_exports.Boolean }),
     error: [InternalError, IntegrationNotFound]
   })
 );
 
 // ../api/src/connections/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint4, HttpApiGroup as HttpApiGroup4 } from "effect/unstable/httpapi";
-import { Predicate as Predicate4, Schema as Schema14 } from "effect";
 var ConnectionParams = {
   owner: Owner,
   integration: IntegrationSlug,
   name: ConnectionName
 };
-var ConnectionResponse = Schema14.Struct({
+var ConnectionResponse = Schema_exports.Struct({
   owner: Owner,
   name: ConnectionName,
   integration: IntegrationSlug,
   template: AuthTemplateSlug,
   provider: ProviderKey,
   address: ConnectionAddress,
-  identityLabel: Schema14.NullOr(Schema14.String),
-  description: Schema14.NullOr(Schema14.String),
-  expiresAt: Schema14.NullOr(Schema14.Number),
+  identityLabel: Schema_exports.NullOr(Schema_exports.String),
+  description: Schema_exports.NullOr(Schema_exports.String),
+  expiresAt: Schema_exports.NullOr(Schema_exports.Number),
   // The OAuth app that minted this connection (its `oauth_client` slug), or null
   // for static credentials. Lets the UI map a connection back to its app. Just a
   // slug — never a secret.
-  oauthClient: Schema14.NullOr(OAuthClientSlug),
-  oauthClientOwner: Schema14.NullOr(Owner),
-  oauthScope: Schema14.NullOr(Schema14.String),
-  missingOAuthScopes: Schema14.Array(Schema14.String),
+  oauthClient: Schema_exports.NullOr(OAuthClientSlug),
+  oauthClientOwner: Schema_exports.NullOr(Owner),
+  oauthScope: Schema_exports.NullOr(Schema_exports.String),
+  missingOAuthScopes: Schema_exports.Array(Schema_exports.String),
   // Last persisted health-check verdict (written by every checkHealth run),
   // so the list can show alive/expired at a glance without probing.
-  lastHealth: Schema14.NullOr(HealthCheckResult)
+  lastHealth: Schema_exports.NullOr(HealthCheckResult)
 });
-var ToolResponse = Schema14.Struct({
-  address: Schema14.String,
+var ToolResponse = Schema_exports.Struct({
+  address: Schema_exports.String,
   owner: Owner,
   integration: IntegrationSlug,
   connection: ConnectionName,
-  name: Schema14.String,
-  pluginId: Schema14.String,
-  description: Schema14.String
+  name: Schema_exports.String,
+  pluginId: Schema_exports.String,
+  description: Schema_exports.String
 });
 var CommonCreateFields = {
   owner: Owner,
   name: ConnectionName,
   integration: IntegrationSlug,
   template: AuthTemplateSlug,
-  identityLabel: Schema14.optional(Schema14.NullOr(Schema14.String)),
-  description: Schema14.optional(Schema14.NullOr(Schema14.String))
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  description: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 };
-var UpdateConnectionPayload = Schema14.Struct({
-  description: Schema14.optional(Schema14.NullOr(Schema14.String)),
-  identityLabel: Schema14.optional(Schema14.NullOr(Schema14.String))
+var UpdateConnectionPayload = Schema_exports.Struct({
+  description: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var CreateConnectionPayload = Schema14.Struct({
+var CreateConnectionPayload = Schema_exports.Struct({
   ...CommonCreateFields,
-  value: Schema14.optional(Schema14.String),
-  values: Schema14.optional(Schema14.Record(Schema14.String, Schema14.String)),
-  from: Schema14.optional(
-    Schema14.Struct({
+  value: Schema_exports.optional(Schema_exports.String),
+  values: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  from: Schema_exports.optional(
+    Schema_exports.Struct({
       provider: ProviderKey,
       id: ProviderItemId
     })
   )
 }).check(
-  Schema14.makeFilter(
-    (payload) => [payload.value, payload.values, payload.from].filter(Predicate4.isNotUndefined).length === 1 ? void 0 : "Expected exactly one credential origin"
+  Schema_exports.makeFilter(
+    (payload) => [payload.value, payload.values, payload.from].filter(Predicate_exports.isNotUndefined).length === 1 ? void 0 : "Expected exactly one credential origin"
   )
 );
-var ValidateConnectionPayload = Schema14.Struct({
+var ValidateConnectionPayload = Schema_exports.Struct({
   owner: Owner,
   integration: IntegrationSlug,
   template: AuthTemplateSlug,
-  spec: Schema14.optional(HealthCheckSpec),
-  value: Schema14.optional(Schema14.String),
-  values: Schema14.optional(Schema14.Record(Schema14.String, Schema14.String)),
-  from: Schema14.optional(
-    Schema14.Struct({
+  spec: Schema_exports.optional(HealthCheckSpec),
+  value: Schema_exports.optional(Schema_exports.String),
+  values: Schema_exports.optional(Schema_exports.Record(Schema_exports.String, Schema_exports.String)),
+  from: Schema_exports.optional(
+    Schema_exports.Struct({
       provider: ProviderKey,
       id: ProviderItemId
     })
   )
 }).check(
-  Schema14.makeFilter(
-    (payload) => [payload.value, payload.values, payload.from].filter(Predicate4.isNotUndefined).length === 1 ? void 0 : "Expected exactly one credential origin"
+  Schema_exports.makeFilter(
+    (payload) => [payload.value, payload.values, payload.from].filter(Predicate_exports.isNotUndefined).length === 1 ? void 0 : "Expected exactly one credential origin"
   )
 );
-var ListConnectionsQuery = Schema14.Struct({
-  integration: Schema14.optional(IntegrationSlug),
-  owner: Schema14.optional(Owner)
+var ListConnectionsQuery = Schema_exports.Struct({
+  integration: Schema_exports.optional(IntegrationSlug),
+  owner: Schema_exports.optional(Owner)
 });
-var CheckHealthQuery = Schema14.Struct({
-  ifStaleMs: Schema14.optional(
-    Schema14.FiniteFromString.check(Schema14.isBetween({ minimum: 0, maximum: 864e5 }))
+var CheckHealthQuery = Schema_exports.Struct({
+  ifStaleMs: Schema_exports.optional(
+    Schema_exports.FiniteFromString.check(Schema_exports.isBetween({ minimum: 0, maximum: 864e5 }))
   )
 });
 var ConnectionNotFound = ConnectionNotFoundError.annotate({
@@ -2683,14 +2674,14 @@ var CredentialProviderNotRegistered = CredentialProviderNotRegisteredError.annot
 var InvalidConnectionInput = InvalidConnectionInputError.annotate({
   httpApiStatus: 400
 });
-var ConnectionsApi = HttpApiGroup4.make("connections").add(
-  HttpApiEndpoint4.get("list", "/connections", {
+var ConnectionsApi = HttpApiGroup_exports.make("connections").add(
+  HttpApiEndpoint_exports.get("list", "/connections", {
     query: ListConnectionsQuery,
-    success: Schema14.Array(ConnectionResponse),
+    success: Schema_exports.Array(ConnectionResponse),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint4.post("create", "/connections", {
+  HttpApiEndpoint_exports.post("create", "/connections", {
     payload: CreateConnectionPayload,
     success: ConnectionResponse,
     error: [
@@ -2701,32 +2692,32 @@ var ConnectionsApi = HttpApiGroup4.make("connections").add(
     ]
   })
 ).add(
-  HttpApiEndpoint4.get("get", "/connections/:owner/:integration/:name", {
+  HttpApiEndpoint_exports.get("get", "/connections/:owner/:integration/:name", {
     params: ConnectionParams,
     success: ConnectionResponse,
     error: [InternalError, ConnectionNotFound]
   })
 ).add(
-  HttpApiEndpoint4.patch("update", "/connections/:owner/:integration/:name", {
+  HttpApiEndpoint_exports.patch("update", "/connections/:owner/:integration/:name", {
     params: ConnectionParams,
     payload: UpdateConnectionPayload,
     success: ConnectionResponse,
     error: [InternalError, ConnectionNotFound]
   })
 ).add(
-  HttpApiEndpoint4.delete("remove", "/connections/:owner/:integration/:name", {
+  HttpApiEndpoint_exports.delete("remove", "/connections/:owner/:integration/:name", {
     params: ConnectionParams,
-    success: Schema14.Struct({ removed: Schema14.Boolean }),
+    success: Schema_exports.Struct({ removed: Schema_exports.Boolean }),
     error: [InternalError, ConnectionNotFound]
   })
 ).add(
-  HttpApiEndpoint4.post("refresh", "/connections/:owner/:integration/:name/refresh", {
+  HttpApiEndpoint_exports.post("refresh", "/connections/:owner/:integration/:name/refresh", {
     params: ConnectionParams,
-    success: Schema14.Array(ToolResponse),
+    success: Schema_exports.Array(ToolResponse),
     error: [InternalError, ConnectionNotFound, IntegrationNotFound2]
   })
 ).add(
-  HttpApiEndpoint4.post("checkHealth", "/connections/:owner/:integration/:name/health", {
+  HttpApiEndpoint_exports.post("checkHealth", "/connections/:owner/:integration/:name/health", {
     params: ConnectionParams,
     // `ifStaleMs`: return the persisted verdict when younger than this
     // instead of probing (the page-load revalidation path). The server owns
@@ -2736,7 +2727,7 @@ var ConnectionsApi = HttpApiGroup4.make("connections").add(
     error: [InternalError, ConnectionNotFound, IntegrationNotFound2]
   })
 ).add(
-  HttpApiEndpoint4.post("validate", "/connections/validate", {
+  HttpApiEndpoint_exports.post("validate", "/connections/validate", {
     payload: ValidateConnectionPayload,
     success: HealthCheckResult,
     error: [InternalError, IntegrationNotFound2]
@@ -2744,75 +2735,71 @@ var ConnectionsApi = HttpApiGroup4.make("connections").add(
 );
 
 // ../api/src/providers/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint5, HttpApiGroup as HttpApiGroup5 } from "effect/unstable/httpapi";
-import { Schema as Schema15 } from "effect";
 var ProviderParams = { key: ProviderKey };
-var ProviderEntryResponse = Schema15.Struct({
+var ProviderEntryResponse = Schema_exports.Struct({
   id: ProviderItemId,
-  name: Schema15.String
+  name: Schema_exports.String
 });
-var ProvidersApi = HttpApiGroup5.make("providers").add(
-  HttpApiEndpoint5.get("list", "/providers", {
-    success: Schema15.Array(ProviderKey),
+var ProvidersApi = HttpApiGroup_exports.make("providers").add(
+  HttpApiEndpoint_exports.get("list", "/providers", {
+    success: Schema_exports.Array(ProviderKey),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint5.get("items", "/providers/:key/items", {
+  HttpApiEndpoint_exports.get("items", "/providers/:key/items", {
     params: ProviderParams,
-    success: Schema15.Array(ProviderEntryResponse),
+    success: Schema_exports.Array(ProviderEntryResponse),
     error: InternalError
   })
 );
 
 // ../api/src/executions/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint6, HttpApiGroup as HttpApiGroup6 } from "effect/unstable/httpapi";
-import { Schema as Schema16 } from "effect";
-var ExecuteRequest = Schema16.Struct({
-  code: Schema16.String,
+var ExecuteRequest = Schema_exports.Struct({
+  code: Schema_exports.String,
   // When true the caller is the human approver: approval-gated tools run to
   // completion instead of pausing. Set by the operator-facing Run/Test panel,
   // where clicking Run is itself the approval. `block` policies still apply.
-  autoApprove: Schema16.optional(Schema16.Boolean)
+  autoApprove: Schema_exports.optional(Schema_exports.Boolean)
 });
-var CompletedResult = Schema16.Struct({
-  status: Schema16.Literal("completed"),
-  text: Schema16.String,
-  structured: Schema16.Unknown,
-  isError: Schema16.Boolean
+var CompletedResult = Schema_exports.Struct({
+  status: Schema_exports.Literal("completed"),
+  text: Schema_exports.String,
+  structured: Schema_exports.Unknown,
+  isError: Schema_exports.Boolean
 });
-var PausedResult = Schema16.Struct({
-  status: Schema16.Literal("paused"),
-  text: Schema16.String,
-  structured: Schema16.Unknown
+var PausedResult = Schema_exports.Struct({
+  status: Schema_exports.Literal("paused"),
+  text: Schema_exports.String,
+  structured: Schema_exports.Unknown
 });
-var ExecuteResponse = Schema16.Union([CompletedResult, PausedResult]);
-var ResumeRequest = Schema16.Struct({
-  action: Schema16.Literals(["accept", "decline", "cancel"]),
-  content: Schema16.optional(Schema16.Unknown)
+var ExecuteResponse = Schema_exports.Union([CompletedResult, PausedResult]);
+var ResumeRequest = Schema_exports.Struct({
+  action: Schema_exports.Literals(["accept", "decline", "cancel"]),
+  content: Schema_exports.optional(Schema_exports.Unknown)
 });
-var ResumeResponse = Schema16.Union([CompletedResult, PausedResult]);
-var PausedExecutionInfo = Schema16.Struct({
-  text: Schema16.String,
-  structured: Schema16.Unknown
+var ResumeResponse = Schema_exports.Union([CompletedResult, PausedResult]);
+var PausedExecutionInfo = Schema_exports.Struct({
+  text: Schema_exports.String,
+  structured: Schema_exports.Unknown
 });
-var ExecutionNotFoundError = Schema16.TaggedStruct("ExecutionNotFoundError", {
-  executionId: Schema16.String
+var ExecutionNotFoundError = Schema_exports.TaggedStruct("ExecutionNotFoundError", {
+  executionId: Schema_exports.String
 }).annotate({ httpApiStatus: 404 });
-var ExecutionParams = { executionId: Schema16.String };
-var ExecutionsApi = HttpApiGroup6.make("executions").add(
-  HttpApiEndpoint6.get("getPaused", "/executions/:executionId", {
+var ExecutionParams = { executionId: Schema_exports.String };
+var ExecutionsApi = HttpApiGroup_exports.make("executions").add(
+  HttpApiEndpoint_exports.get("getPaused", "/executions/:executionId", {
     params: ExecutionParams,
     success: PausedExecutionInfo,
     error: [InternalError, ExecutionNotFoundError]
   })
 ).add(
-  HttpApiEndpoint6.post("execute", "/executions", {
+  HttpApiEndpoint_exports.post("execute", "/executions", {
     payload: ExecuteRequest,
     success: ExecuteResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint6.post("resume", "/executions/:executionId/resume", {
+  HttpApiEndpoint_exports.post("resume", "/executions/:executionId/resume", {
     params: ExecutionParams,
     payload: ResumeRequest,
     success: ResumeResponse,
@@ -2821,83 +2808,81 @@ var ExecutionsApi = HttpApiGroup6.make("executions").add(
 );
 
 // ../api/src/oauth/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint7, HttpApiGroup as HttpApiGroup7, HttpApiSchema } from "effect/unstable/httpapi";
-import { Schema as Schema17 } from "effect";
-var ConnectionResponse2 = Schema17.Struct({
+var ConnectionResponse2 = Schema_exports.Struct({
   owner: Owner,
   name: ConnectionName,
   integration: IntegrationSlug,
   template: AuthTemplateSlug,
   provider: ProviderKey,
   address: ConnectionAddress,
-  identityLabel: Schema17.NullOr(Schema17.String),
-  expiresAt: Schema17.NullOr(Schema17.Number),
+  identityLabel: Schema_exports.NullOr(Schema_exports.String),
+  expiresAt: Schema_exports.NullOr(Schema_exports.Number),
   // The OAuth app (`oauth_client` slug) that minted this connection — these
   // results always come from an OAuth flow, so it is non-null in practice. Just
   // a slug, never a secret; kept consistent with the connections-list shape.
-  oauthClient: Schema17.NullOr(OAuthClientSlug),
-  oauthClientOwner: Schema17.NullOr(Owner),
-  oauthScope: Schema17.NullOr(Schema17.String),
-  missingOAuthScopes: Schema17.Array(Schema17.String)
+  oauthClient: Schema_exports.NullOr(OAuthClientSlug),
+  oauthClientOwner: Schema_exports.NullOr(Owner),
+  oauthScope: Schema_exports.NullOr(Schema_exports.String),
+  missingOAuthScopes: Schema_exports.Array(Schema_exports.String)
 });
-var CreateClientPayload = Schema17.Struct({
+var CreateClientPayload = Schema_exports.Struct({
   owner: Owner,
   slug: OAuthClientSlug,
-  authorizationUrl: Schema17.String,
-  tokenUrl: Schema17.String,
-  grant: Schema17.Literals(["authorization_code", "client_credentials"]),
-  clientId: Schema17.String,
-  clientSecret: Schema17.String,
-  resource: Schema17.optional(Schema17.NullOr(Schema17.String)),
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  grant: Schema_exports.Literals(["authorization_code", "client_credentials"]),
+  clientId: Schema_exports.String,
+  clientSecret: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
   /** Integration whose connect dialog registered this manual app. Recorded so
    *  the picker matches it to this integration by intent, not root domain. */
-  originIntegration: Schema17.optional(Schema17.NullOr(IntegrationSlug))
+  originIntegration: Schema_exports.optional(Schema_exports.NullOr(IntegrationSlug))
 });
-var CreateClientResponse = Schema17.Struct({
+var CreateClientResponse = Schema_exports.Struct({
   client: OAuthClientSlug
 });
-var RegisterDynamicPayload = Schema17.Struct({
+var RegisterDynamicPayload = Schema_exports.Struct({
   owner: Owner,
   slug: OAuthClientSlug,
-  issuer: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  registrationEndpoint: Schema17.String,
-  authorizationUrl: Schema17.String,
-  tokenUrl: Schema17.String,
-  resource: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  scopes: Schema17.Array(Schema17.String),
-  tokenEndpointAuthMethodsSupported: Schema17.optional(Schema17.Array(Schema17.String)),
-  clientName: Schema17.optional(Schema17.String),
-  redirectUri: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  originIntegration: Schema17.optional(Schema17.NullOr(IntegrationSlug))
+  issuer: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  registrationEndpoint: Schema_exports.String,
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  scopes: Schema_exports.Array(Schema_exports.String),
+  tokenEndpointAuthMethodsSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  clientName: Schema_exports.optional(Schema_exports.String),
+  redirectUri: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  originIntegration: Schema_exports.optional(Schema_exports.NullOr(IntegrationSlug))
 });
-var RegisterDynamicResponse = Schema17.Struct({
+var RegisterDynamicResponse = Schema_exports.Struct({
   client: OAuthClientSlug
 });
-var OAuthClientSummaryResponse = Schema17.Struct({
+var OAuthClientSummaryResponse = Schema_exports.Struct({
   owner: Owner,
   slug: OAuthClientSlug,
-  grant: Schema17.Literals(["authorization_code", "client_credentials"]),
-  authorizationUrl: Schema17.String,
-  tokenUrl: Schema17.String,
-  resource: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  clientId: Schema17.String,
-  origin: Schema17.Union([
-    Schema17.Struct({ kind: Schema17.Literal("manual") }),
-    Schema17.Struct({
-      kind: Schema17.Literal("dynamic_client_registration"),
-      integration: Schema17.optional(Schema17.NullOr(IntegrationSlug))
+  grant: Schema_exports.Literals(["authorization_code", "client_credentials"]),
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  clientId: Schema_exports.String,
+  origin: Schema_exports.Union([
+    Schema_exports.Struct({ kind: Schema_exports.Literal("manual") }),
+    Schema_exports.Struct({
+      kind: Schema_exports.Literal("dynamic_client_registration"),
+      integration: Schema_exports.optional(Schema_exports.NullOr(IntegrationSlug))
     })
   ])
 });
-var ListClientsResponse = Schema17.Array(OAuthClientSummaryResponse);
+var ListClientsResponse = Schema_exports.Array(OAuthClientSummaryResponse);
 var RemoveClientParams = { slug: OAuthClientSlug };
-var RemoveClientPayload = Schema17.Struct({
+var RemoveClientPayload = Schema_exports.Struct({
   owner: Owner
 });
-var RemoveClientResponse = Schema17.Struct({
-  removed: Schema17.Boolean
+var RemoveClientResponse = Schema_exports.Struct({
+  removed: Schema_exports.Boolean
 });
-var StartPayload = Schema17.Struct({
+var StartPayload = Schema_exports.Struct({
   client: OAuthClientSlug,
   /** The owner of `client` (a Personal connection may use a shared Workspace app). */
   clientOwner: Owner,
@@ -2905,112 +2890,112 @@ var StartPayload = Schema17.Struct({
   name: ConnectionName,
   integration: IntegrationSlug,
   template: AuthTemplateSlug,
-  identityLabel: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  redirectUri: Schema17.optional(Schema17.NullOr(Schema17.String))
+  identityLabel: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  redirectUri: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var StartResponse = Schema17.Union([
-  Schema17.Struct({
-    status: Schema17.Literal("connected"),
+var StartResponse = Schema_exports.Union([
+  Schema_exports.Struct({
+    status: Schema_exports.Literal("connected"),
     connection: ConnectionResponse2
   }),
-  Schema17.Struct({
-    status: Schema17.Literal("redirect"),
-    authorizationUrl: Schema17.String,
+  Schema_exports.Struct({
+    status: Schema_exports.Literal("redirect"),
+    authorizationUrl: Schema_exports.String,
     state: OAuthState
   })
 ]);
-var CompletePayload = Schema17.Struct({
+var CompletePayload = Schema_exports.Struct({
   state: OAuthState,
-  code: Schema17.String,
+  code: Schema_exports.String,
   /** Regional host echoed back by the authorization server (Datadog's
    *  `domain`/`site`); forwarded so the code is redeemed at the org's region. */
-  callbackDomain: Schema17.optional(Schema17.NullOr(Schema17.String))
+  callbackDomain: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String))
 });
-var CancelPayload = Schema17.Struct({
+var CancelPayload = Schema_exports.Struct({
   state: OAuthState
 });
-var CancelResponse = Schema17.Struct({
-  cancelled: Schema17.Boolean
+var CancelResponse = Schema_exports.Struct({
+  cancelled: Schema_exports.Boolean
 });
-var ProbePayload = Schema17.Struct({
-  url: Schema17.String
+var ProbePayload = Schema_exports.Struct({
+  url: Schema_exports.String
 });
-var ProbeResponse = Schema17.Struct({
-  issuer: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  authorizationUrl: Schema17.String,
-  tokenUrl: Schema17.String,
-  resource: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  scopesSupported: Schema17.optional(Schema17.Array(Schema17.String)),
-  registrationEndpoint: Schema17.optional(Schema17.NullOr(Schema17.String)),
-  tokenEndpointAuthMethodsSupported: Schema17.optional(Schema17.Array(Schema17.String)),
-  clientIdMetadataDocumentSupported: Schema17.optional(Schema17.Boolean)
+var ProbeResponse = Schema_exports.Struct({
+  issuer: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  authorizationUrl: Schema_exports.String,
+  tokenUrl: Schema_exports.String,
+  resource: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  scopesSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  registrationEndpoint: Schema_exports.optional(Schema_exports.NullOr(Schema_exports.String)),
+  tokenEndpointAuthMethodsSupported: Schema_exports.optional(Schema_exports.Array(Schema_exports.String)),
+  clientIdMetadataDocumentSupported: Schema_exports.optional(Schema_exports.Boolean)
 });
-var CallbackUrlParams = Schema17.Struct({
-  state: Schema17.String,
-  code: Schema17.optional(Schema17.String),
-  error: Schema17.optional(Schema17.String),
-  error_description: Schema17.optional(Schema17.String),
+var CallbackUrlParams = Schema_exports.Struct({
+  state: Schema_exports.String,
+  code: Schema_exports.optional(Schema_exports.String),
+  error: Schema_exports.optional(Schema_exports.String),
+  error_description: Schema_exports.optional(Schema_exports.String),
   // Non-standard region hints (Datadog: `domain` is a bare host, `site` a full
   // origin). Captured so the token exchange can target the org's region.
-  domain: Schema17.optional(Schema17.String),
-  site: Schema17.optional(Schema17.String)
+  domain: Schema_exports.optional(Schema_exports.String),
+  site: Schema_exports.optional(Schema_exports.String)
 });
-var HtmlResponse = Schema17.String.pipe(HttpApiSchema.asText());
+var HtmlResponse = Schema_exports.String.pipe(HttpApiSchema_exports.asText());
 var OAuthStart = OAuthStartError.annotate({ httpApiStatus: 400 });
 var OAuthComplete = OAuthCompleteError.annotate({ httpApiStatus: 400 });
 var OAuthProbe = OAuthProbeError.annotate({ httpApiStatus: 400 });
 var OAuthRegisterDynamic = OAuthRegisterDynamicError.annotate({ httpApiStatus: 400 });
 var OAuthSessionNotFound = OAuthSessionNotFoundError.annotate({ httpApiStatus: 404 });
-var OAuthApi = HttpApiGroup7.make("oauth").add(
-  HttpApiEndpoint7.post("createClient", "/oauth/clients", {
+var OAuthApi = HttpApiGroup_exports.make("oauth").add(
+  HttpApiEndpoint_exports.post("createClient", "/oauth/clients", {
     payload: CreateClientPayload,
     success: CreateClientResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint7.post("registerDynamic", "/oauth/clients/register-dynamic", {
+  HttpApiEndpoint_exports.post("registerDynamic", "/oauth/clients/register-dynamic", {
     payload: RegisterDynamicPayload,
     success: RegisterDynamicResponse,
     error: [InternalError, OAuthRegisterDynamic]
   })
 ).add(
-  HttpApiEndpoint7.get("listClients", "/oauth/clients", {
+  HttpApiEndpoint_exports.get("listClients", "/oauth/clients", {
     success: ListClientsResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint7.delete("removeClient", "/oauth/clients/:slug", {
+  HttpApiEndpoint_exports.delete("removeClient", "/oauth/clients/:slug", {
     params: RemoveClientParams,
     payload: RemoveClientPayload,
     success: RemoveClientResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint7.post("start", "/oauth/start", {
+  HttpApiEndpoint_exports.post("start", "/oauth/start", {
     payload: StartPayload,
     success: StartResponse,
     error: [InternalError, OAuthStart]
   })
 ).add(
-  HttpApiEndpoint7.post("complete", "/oauth/complete", {
+  HttpApiEndpoint_exports.post("complete", "/oauth/complete", {
     payload: CompletePayload,
     success: ConnectionResponse2,
     error: [InternalError, OAuthComplete, OAuthSessionNotFound]
   })
 ).add(
-  HttpApiEndpoint7.post("cancel", "/oauth/cancel", {
+  HttpApiEndpoint_exports.post("cancel", "/oauth/cancel", {
     payload: CancelPayload,
     success: CancelResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint7.post("probe", "/oauth/probe", {
+  HttpApiEndpoint_exports.post("probe", "/oauth/probe", {
     payload: ProbePayload,
     success: ProbeResponse,
     error: [InternalError, OAuthProbe]
   })
 ).add(
-  HttpApiEndpoint7.get("callback", "/oauth/callback", {
+  HttpApiEndpoint_exports.get("callback", "/oauth/callback", {
     query: CallbackUrlParams,
     success: HtmlResponse,
     error: [InternalError, OAuthComplete, OAuthSessionNotFound]
@@ -3018,63 +3003,61 @@ var OAuthApi = HttpApiGroup7.make("oauth").add(
 );
 
 // ../api/src/policies/api.ts
-import { HttpApiEndpoint as HttpApiEndpoint8, HttpApiGroup as HttpApiGroup8 } from "effect/unstable/httpapi";
-import { Schema as Schema18 } from "effect";
 var PolicyParams = { policyId: PolicyId };
-var ToolPolicyResponse = Schema18.Struct({
+var ToolPolicyResponse = Schema_exports.Struct({
   id: PolicyId,
   owner: Owner,
-  pattern: Schema18.String,
+  pattern: Schema_exports.String,
   action: ToolPolicyActionSchema,
-  position: Schema18.String,
-  createdAt: Schema18.Number,
-  updatedAt: Schema18.Number
+  position: Schema_exports.String,
+  createdAt: Schema_exports.Number,
+  updatedAt: Schema_exports.Number
 });
-var CreateToolPolicyPayload = Schema18.Struct({
+var CreateToolPolicyPayload = Schema_exports.Struct({
   owner: Owner,
-  pattern: Schema18.String,
+  pattern: Schema_exports.String,
   action: ToolPolicyActionSchema,
-  position: Schema18.optional(Schema18.String)
+  position: Schema_exports.optional(Schema_exports.String)
 });
-var UpdateToolPolicyPayload = Schema18.Struct({
+var UpdateToolPolicyPayload = Schema_exports.Struct({
   owner: Owner,
-  pattern: Schema18.optional(Schema18.String),
-  action: Schema18.optional(ToolPolicyActionSchema),
-  position: Schema18.optional(Schema18.String)
+  pattern: Schema_exports.optional(Schema_exports.String),
+  action: Schema_exports.optional(ToolPolicyActionSchema),
+  position: Schema_exports.optional(Schema_exports.String)
 });
-var RemoveToolPolicyPayload = Schema18.Struct({
+var RemoveToolPolicyPayload = Schema_exports.Struct({
   owner: Owner
 });
-var PoliciesApi = HttpApiGroup8.make("policies").add(
-  HttpApiEndpoint8.get("list", "/policies", {
-    success: Schema18.Array(ToolPolicyResponse),
+var PoliciesApi = HttpApiGroup_exports.make("policies").add(
+  HttpApiEndpoint_exports.get("list", "/policies", {
+    success: Schema_exports.Array(ToolPolicyResponse),
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint8.post("create", "/policies", {
+  HttpApiEndpoint_exports.post("create", "/policies", {
     payload: CreateToolPolicyPayload,
     success: ToolPolicyResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint8.patch("update", "/policies/:policyId", {
+  HttpApiEndpoint_exports.patch("update", "/policies/:policyId", {
     params: PolicyParams,
     payload: UpdateToolPolicyPayload,
     success: ToolPolicyResponse,
     error: InternalError
   })
 ).add(
-  HttpApiEndpoint8.delete("remove", "/policies/:policyId", {
+  HttpApiEndpoint_exports.delete("remove", "/policies/:policyId", {
     params: PolicyParams,
     payload: RemoveToolPolicyPayload,
-    success: Schema18.Struct({ removed: Schema18.Boolean }),
+    success: Schema_exports.Struct({ removed: Schema_exports.Boolean }),
     error: InternalError
   })
 );
 
 // ../api/src/api.ts
-var CoreExecutorApi = HttpApi.make("executor").add(ToolsApi).add(IntegrationsApi).add(ConnectionsApi).add(ProvidersApi).add(ExecutionsApi).add(OAuthApi).add(PoliciesApi).annotateMerge(
-  OpenApi.annotations({
+var CoreExecutorApi = HttpApi_exports.make("executor").add(ToolsApi).add(IntegrationsApi).add(ConnectionsApi).add(ProvidersApi).add(ExecutionsApi).add(OAuthApi).add(PoliciesApi).annotateMerge(
+  OpenApi_exports.annotations({
     title: "Executor API",
     description: "Tool execution platform API"
   })
@@ -3087,226 +3070,215 @@ var NPM_DIST_TAGS_URL = `https://registry.npmjs.org/-/package/${EXECUTOR_PACKAGE
 var DIST_TAGS_TTL_MS = 10 * 60 * 1e3;
 var EMPTY_TTL_MS = 60 * 1e3;
 
-// ../api/src/plugin-routes.ts
-import { Effect as Effect7, Layer as Layer4 } from "effect";
-
-// ../api/src/oauth-popup.ts
-import { Cause as Cause2, Effect as Effect8 } from "effect";
-
 // ../api/src/account/api.ts
-import { HttpApi as HttpApi2, HttpApiEndpoint as HttpApiEndpoint9, HttpApiGroup as HttpApiGroup9 } from "effect/unstable/httpapi";
-import { Schema as Schema19 } from "effect";
-var AccountError = class extends Schema19.TaggedErrorClass()(
+var AccountError = class extends Schema_exports.TaggedErrorClass()(
   "AccountError",
-  { message: Schema19.String },
+  { message: Schema_exports.String },
   { httpApiStatus: 500 }
 ) {
 };
-var AccountForbidden = class extends Schema19.TaggedErrorClass()(
+var AccountForbidden = class extends Schema_exports.TaggedErrorClass()(
   "AccountForbidden",
-  { message: Schema19.optional(Schema19.String) },
+  { message: Schema_exports.optional(Schema_exports.String) },
   { httpApiStatus: 403 }
 ) {
 };
-var AccountNoOrganization = class extends Schema19.TaggedErrorClass()(
+var AccountNoOrganization = class extends Schema_exports.TaggedErrorClass()(
   "AccountNoOrganization",
   {},
   { httpApiStatus: 403 }
 ) {
 };
-var AccountUnauthorized = class extends Schema19.TaggedErrorClass()(
+var AccountUnauthorized = class extends Schema_exports.TaggedErrorClass()(
   "AccountUnauthorized",
   {},
   { httpApiStatus: 401 }
 ) {
 };
-var AccountUser = Schema19.Struct({
-  id: Schema19.String,
-  email: Schema19.String,
-  name: Schema19.NullOr(Schema19.String),
-  avatarUrl: Schema19.NullOr(Schema19.String)
+var AccountUser = Schema_exports.Struct({
+  id: Schema_exports.String,
+  email: Schema_exports.String,
+  name: Schema_exports.NullOr(Schema_exports.String),
+  avatarUrl: Schema_exports.NullOr(Schema_exports.String)
 });
-var AccountOrganization = Schema19.Struct({
-  id: Schema19.String,
-  name: Schema19.String,
+var AccountOrganization = Schema_exports.Struct({
+  id: Schema_exports.String,
+  name: Schema_exports.String,
   /** URL slug for org-prefixed console paths (`/<slug>/policies`). */
-  slug: Schema19.String
+  slug: Schema_exports.String
 });
-var AccountMeResponse = Schema19.Struct({
+var AccountMeResponse = Schema_exports.Struct({
   user: AccountUser,
-  organization: Schema19.NullOr(AccountOrganization)
+  organization: Schema_exports.NullOr(AccountOrganization)
 });
-var ApiKeySummary = Schema19.Struct({
-  id: Schema19.String,
-  name: Schema19.String,
+var ApiKeySummary = Schema_exports.Struct({
+  id: Schema_exports.String,
+  name: Schema_exports.String,
   /** Masked display value (e.g. "exk_…a1b2"). The full secret is only ever
    *  returned once, from `createApiKey`. */
-  obfuscatedValue: Schema19.String,
-  createdAt: Schema19.String,
-  updatedAt: Schema19.String,
-  lastUsedAt: Schema19.NullOr(Schema19.String)
+  obfuscatedValue: Schema_exports.String,
+  createdAt: Schema_exports.String,
+  updatedAt: Schema_exports.String,
+  lastUsedAt: Schema_exports.NullOr(Schema_exports.String)
 });
-var ApiKeysResponse = Schema19.Struct({
-  apiKeys: Schema19.Array(ApiKeySummary)
+var ApiKeysResponse = Schema_exports.Struct({
+  apiKeys: Schema_exports.Array(ApiKeySummary)
 });
-var CreateApiKeyBody = Schema19.Struct({
-  name: Schema19.String
+var CreateApiKeyBody = Schema_exports.Struct({
+  name: Schema_exports.String
 });
-var CreatedApiKeyResponse = Schema19.Struct({
-  id: Schema19.String,
-  name: Schema19.String,
-  obfuscatedValue: Schema19.String,
-  createdAt: Schema19.String,
-  updatedAt: Schema19.String,
-  lastUsedAt: Schema19.NullOr(Schema19.String),
-  value: Schema19.String
+var CreatedApiKeyResponse = Schema_exports.Struct({
+  id: Schema_exports.String,
+  name: Schema_exports.String,
+  obfuscatedValue: Schema_exports.String,
+  createdAt: Schema_exports.String,
+  updatedAt: Schema_exports.String,
+  lastUsedAt: Schema_exports.NullOr(Schema_exports.String),
+  value: Schema_exports.String
 });
-var OrgMember = Schema19.Struct({
-  id: Schema19.String,
-  userId: Schema19.String,
-  email: Schema19.String,
-  name: Schema19.NullOr(Schema19.String),
-  avatarUrl: Schema19.NullOr(Schema19.String),
-  role: Schema19.String,
-  status: Schema19.String,
-  lastActiveAt: Schema19.NullOr(Schema19.String),
-  isCurrentUser: Schema19.Boolean
+var OrgMember = Schema_exports.Struct({
+  id: Schema_exports.String,
+  userId: Schema_exports.String,
+  email: Schema_exports.String,
+  name: Schema_exports.NullOr(Schema_exports.String),
+  avatarUrl: Schema_exports.NullOr(Schema_exports.String),
+  role: Schema_exports.String,
+  status: Schema_exports.String,
+  lastActiveAt: Schema_exports.NullOr(Schema_exports.String),
+  isCurrentUser: Schema_exports.Boolean
 });
-var OrgMemberSeats = Schema19.Struct({
-  used: Schema19.Number,
-  granted: Schema19.Number,
-  unlimited: Schema19.Boolean
+var OrgMemberSeats = Schema_exports.Struct({
+  used: Schema_exports.Number,
+  granted: Schema_exports.Number,
+  unlimited: Schema_exports.Boolean
 });
-var OrgMembersResponse = Schema19.Struct({
-  members: Schema19.Array(OrgMember),
-  seats: Schema19.optional(OrgMemberSeats)
+var OrgMembersResponse = Schema_exports.Struct({
+  members: Schema_exports.Array(OrgMember),
+  seats: Schema_exports.optional(OrgMemberSeats)
 });
-var OrgRole = Schema19.Struct({
-  slug: Schema19.String,
-  name: Schema19.String
+var OrgRole = Schema_exports.Struct({
+  slug: Schema_exports.String,
+  name: Schema_exports.String
 });
-var OrgRolesResponse = Schema19.Struct({
-  roles: Schema19.Array(OrgRole)
+var OrgRolesResponse = Schema_exports.Struct({
+  roles: Schema_exports.Array(OrgRole)
 });
-var InviteMemberBody = Schema19.Struct({
-  email: Schema19.String,
-  roleSlug: Schema19.optional(Schema19.String)
+var InviteMemberBody = Schema_exports.Struct({
+  email: Schema_exports.String,
+  roleSlug: Schema_exports.optional(Schema_exports.String)
 });
-var InviteMemberResponse = Schema19.Struct({
-  id: Schema19.String,
-  email: Schema19.String
+var InviteMemberResponse = Schema_exports.Struct({
+  id: Schema_exports.String,
+  email: Schema_exports.String
 });
-var UpdateMemberRoleBody = Schema19.Struct({
-  roleSlug: Schema19.String
+var UpdateMemberRoleBody = Schema_exports.Struct({
+  roleSlug: Schema_exports.String
 });
-var UpdateOrgNameBody = Schema19.Struct({
-  name: Schema19.String
+var UpdateOrgNameBody = Schema_exports.Struct({
+  name: Schema_exports.String
 });
-var UpdateOrgNameResponse = Schema19.Struct({
-  name: Schema19.String
+var UpdateOrgNameResponse = Schema_exports.Struct({
+  name: Schema_exports.String
 });
-var SuccessResponse = Schema19.Struct({
-  success: Schema19.Boolean
+var SuccessResponse = Schema_exports.Struct({
+  success: Schema_exports.Boolean
 });
-var ApiKeyParams = { apiKeyId: Schema19.String };
-var MembershipParams = { membershipId: Schema19.String };
-var AccountApi = HttpApiGroup9.make("account").add(
-  HttpApiEndpoint9.get("me", "/account/me", {
+var ApiKeyParams = { apiKeyId: Schema_exports.String };
+var MembershipParams = { membershipId: Schema_exports.String };
+var AccountApi = HttpApiGroup_exports.make("account").add(
+  HttpApiEndpoint_exports.get("me", "/account/me", {
     success: AccountMeResponse,
     error: [AccountError, AccountUnauthorized]
   })
 ).add(
-  HttpApiEndpoint9.get("listApiKeys", "/account/api-keys", {
+  HttpApiEndpoint_exports.get("listApiKeys", "/account/api-keys", {
     success: ApiKeysResponse,
     error: [AccountError, AccountUnauthorized, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.post("createApiKey", "/account/api-keys", {
+  HttpApiEndpoint_exports.post("createApiKey", "/account/api-keys", {
     payload: CreateApiKeyBody,
     success: CreatedApiKeyResponse,
     error: [AccountError, AccountUnauthorized, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.delete("revokeApiKey", "/account/api-keys/:apiKeyId", {
+  HttpApiEndpoint_exports.delete("revokeApiKey", "/account/api-keys/:apiKeyId", {
     params: ApiKeyParams,
     success: SuccessResponse,
     error: [AccountError, AccountUnauthorized, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.get("listMembers", "/account/members", {
+  HttpApiEndpoint_exports.get("listMembers", "/account/members", {
     success: OrgMembersResponse,
     error: [AccountError, AccountUnauthorized, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.get("listRoles", "/account/roles", {
+  HttpApiEndpoint_exports.get("listRoles", "/account/roles", {
     success: OrgRolesResponse,
     error: [AccountError, AccountUnauthorized, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.post("inviteMember", "/account/members/invite", {
+  HttpApiEndpoint_exports.post("inviteMember", "/account/members/invite", {
     payload: InviteMemberBody,
     success: InviteMemberResponse,
     error: [AccountError, AccountUnauthorized, AccountForbidden, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.delete("removeMember", "/account/members/:membershipId", {
+  HttpApiEndpoint_exports.delete("removeMember", "/account/members/:membershipId", {
     params: MembershipParams,
     success: SuccessResponse,
     error: [AccountError, AccountUnauthorized, AccountForbidden, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.patch("updateMemberRole", "/account/members/:membershipId/role", {
+  HttpApiEndpoint_exports.patch("updateMemberRole", "/account/members/:membershipId/role", {
     params: MembershipParams,
     payload: UpdateMemberRoleBody,
     success: SuccessResponse,
     error: [AccountError, AccountUnauthorized, AccountForbidden, AccountNoOrganization]
   })
 ).add(
-  HttpApiEndpoint9.patch("updateOrgName", "/account/name", {
+  HttpApiEndpoint_exports.patch("updateOrgName", "/account/name", {
     payload: UpdateOrgNameBody,
     success: UpdateOrgNameResponse,
     error: [AccountError, AccountUnauthorized, AccountForbidden, AccountNoOrganization]
   })
 );
-var AccountHttpApi = HttpApi2.make("executor-account").add(AccountApi);
+var AccountHttpApi = HttpApi_exports.make("executor-account").add(AccountApi);
 
 // ../api/src/observability.ts
-import { Cause as Cause3, Context, Effect as Effect9, Layer as Layer5, Option as Option8, Result as Result2, Schema as Schema20 } from "effect";
-import { HttpServerResponse } from "effect/unstable/http";
-import { HttpApiMiddleware } from "effect/unstable/httpapi";
-var ErrorCapture = class _ErrorCapture extends Context.Service()(
+var ErrorCapture = class _ErrorCapture extends Context_exports.Service()(
   "@executor-js/api/ErrorCapture"
 ) {
   /** No-op — used where capture isn't wired. Traces back as empty string. */
-  static NoOp = Layer5.succeed(_ErrorCapture, {
-    captureException: () => Effect9.succeed("")
+  static NoOp = Layer_exports.succeed(_ErrorCapture, {
+    captureException: () => Effect_exports.succeed("")
   });
 };
-var resolveCapture = Effect9.serviceOption(ErrorCapture).pipe(
-  Effect9.map(
-    (opt) => Option8.isSome(opt) ? opt.value : { captureException: () => Effect9.succeed("") }
+var resolveCapture = Effect_exports.serviceOption(ErrorCapture).pipe(
+  Effect_exports.map(
+    (opt) => Option_exports.isSome(opt) ? opt.value : { captureException: () => Effect_exports.succeed("") }
   )
 );
 var capture = (eff) => eff.pipe(
   // oxlint-disable-next-line executor/no-effect-escape-hatch -- boundary: unique conflicts that reach the HTTP edge are unexpected defects captured by observabilityMiddleware
-  Effect9.catchTag("UniqueViolationError", (err) => Effect9.die(err)),
-  Effect9.catchTag(
+  Effect_exports.catchTag("UniqueViolationError", (err) => Effect_exports.die(err)),
+  Effect_exports.catchTag(
     "StorageError",
     (err) => resolveCapture.pipe(
-      Effect9.flatMap((c) => c.captureException(Cause3.fail(err))),
-      Effect9.flatMap((traceId) => Effect9.fail(new InternalError({ traceId })))
+      Effect_exports.flatMap((c) => c.captureException(Cause_exports.fail(err))),
+      Effect_exports.flatMap((traceId) => Effect_exports.fail(new InternalError({ traceId })))
     )
   )
 );
-var isInternalError = Schema20.is(InternalError);
-var ObservabilityMiddleware = class extends HttpApiMiddleware.Service()(
+var isInternalError = Schema_exports.is(InternalError);
+var ObservabilityMiddleware = class extends HttpApiMiddleware_exports.Service()(
   "@executor-js/api/ObservabilityMiddleware",
   { error: InternalError }
 ) {
 };
 
 // ../../plugins/mcp/src/api/handlers.ts
-var McpExtensionService = class extends Context2.Service()(
+var McpExtensionService = class extends Context_exports.Service()(
   "McpExtensionService"
 ) {
 };
@@ -3340,13 +3312,13 @@ var toServerInput = (payload) => {
     auth: p.auth
   };
 };
-var McpHandlers = HttpApiBuilder.group(
+var McpHandlers = HttpApiBuilder_exports.group(
   ExecutorApiWithMcp,
   "mcp",
   (handlers) => handlers.handle(
     "probeEndpoint",
     ({ payload }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         return yield* ext.probeEndpoint(payload);
       })
@@ -3354,7 +3326,7 @@ var McpHandlers = HttpApiBuilder.group(
   ).handle(
     "addServer",
     ({ payload }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         return yield* ext.addServer(
           toServerInput(payload)
@@ -3364,7 +3336,7 @@ var McpHandlers = HttpApiBuilder.group(
   ).handle(
     "removeServer",
     ({ params: path2 }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         yield* ext.removeServer(path2.slug);
         return { removed: true };
@@ -3373,7 +3345,7 @@ var McpHandlers = HttpApiBuilder.group(
   ).handle(
     "getServer",
     ({ params: path2 }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         const integration = yield* ext.getServer(path2.slug);
         if (integration === null) return null;
@@ -3392,7 +3364,7 @@ var McpHandlers = HttpApiBuilder.group(
   ).handle(
     "configureServer",
     ({ params: path2, payload }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         yield* ext.configureServer(path2.slug, payload.config);
         return { config: payload.config };
@@ -3401,7 +3373,7 @@ var McpHandlers = HttpApiBuilder.group(
   ).handle(
     "configureAuth",
     ({ params: path2, payload }) => capture(
-      Effect10.gen(function* () {
+      Effect_exports.gen(function* () {
         const ext = yield* McpExtensionService;
         const authenticationTemplate = yield* ext.configureAuth(path2.slug, {
           authenticationTemplate: payload.authenticationTemplate,
@@ -3422,7 +3394,6 @@ var mcpHttpPlugin = definePlugin((options) => ({
 }));
 
 // ../../plugins/file-secrets/src/index.ts
-import { Effect as Effect11, Schema as Schema21 } from "effect";
 import * as fs from "fs";
 import * as path from "path";
 var APP_NAME = "executor";
@@ -3435,23 +3406,23 @@ var xdgDataHome = () => {
 };
 var authDir = (overrideDir) => overrideDir ?? path.join(xdgDataHome(), APP_NAME);
 var authFilePath = (overrideDir) => path.join(authDir(overrideDir), "auth.json");
-var FlatAuthFile = Schema21.Record(Schema21.String, Schema21.String);
-var decodeFlatAuthFile = Schema21.decodeUnknownEffect(Schema21.fromJsonString(FlatAuthFile));
+var FlatAuthFile = Schema_exports.Record(Schema_exports.String, Schema_exports.String);
+var decodeFlatAuthFile = Schema_exports.decodeUnknownEffect(Schema_exports.fromJsonString(FlatAuthFile));
 var isFileNotFoundCause = (cause) => typeof cause === "object" && cause !== null && "code" in cause && cause.code === "ENOENT";
 var toStorageError = (message) => (cause) => new StorageError({ message, cause });
 var readAll = (filePath) => {
-  if (!fs.existsSync(filePath)) return Effect11.succeed({});
-  return Effect11.try({
+  if (!fs.existsSync(filePath)) return Effect_exports.succeed({});
+  return Effect_exports.try({
     try: () => fs.readFileSync(filePath, "utf-8"),
     catch: toStorageError("Failed to read auth file")
   }).pipe(
-    Effect11.catchIf(
+    Effect_exports.catchIf(
       (error) => isFileNotFoundCause(error.cause),
-      () => Effect11.succeed("")
+      () => Effect_exports.succeed("")
     ),
-    Effect11.flatMap(
-      (raw) => raw === "" ? Effect11.succeed({}) : decodeFlatAuthFile(raw).pipe(
-        Effect11.mapError(toStorageError("Failed to parse auth file"))
+    Effect_exports.flatMap(
+      (raw) => raw === "" ? Effect_exports.succeed({}) : decodeFlatAuthFile(raw).pipe(
+        Effect_exports.mapError(toStorageError("Failed to parse auth file"))
       )
     )
   );
@@ -3459,18 +3430,18 @@ var readAll = (filePath) => {
 var writeAll = (filePath, secrets) => {
   const dir = path.dirname(filePath);
   const tmp = `${filePath}.tmp`;
-  return Effect11.gen(function* () {
+  return Effect_exports.gen(function* () {
     if (!fs.existsSync(dir)) {
-      yield* Effect11.try({
+      yield* Effect_exports.try({
         try: () => fs.mkdirSync(dir, { recursive: true, mode: 448 }),
         catch: toStorageError("Failed to create auth directory")
       });
     }
-    yield* Effect11.try({
+    yield* Effect_exports.try({
       try: () => fs.writeFileSync(tmp, JSON.stringify(secrets, null, 2), { mode: 384 }),
       catch: toStorageError("Failed to write temporary auth file")
     });
-    yield* Effect11.try({
+    yield* Effect_exports.try({
       try: () => fs.renameSync(tmp, filePath),
       catch: toStorageError("Failed to replace auth file")
     });
@@ -3483,14 +3454,14 @@ var FILE_PROVIDER_KEY = ProviderKey.make("file");
 var makeFileProvider = (filePath) => ({
   key: FILE_PROVIDER_KEY,
   writable: true,
-  get: (id) => readAll(filePath).pipe(Effect11.map((data) => data[id] ?? null)),
-  has: (id) => readAll(filePath).pipe(Effect11.map((data) => id in data)),
-  set: (id, value) => Effect11.gen(function* () {
+  get: (id) => readAll(filePath).pipe(Effect_exports.map((data) => data[id] ?? null)),
+  has: (id) => readAll(filePath).pipe(Effect_exports.map((data) => id in data)),
+  set: (id, value) => Effect_exports.gen(function* () {
     const data = yield* readAll(filePath);
     data[id] = value;
     yield* writeAll(filePath, data);
   }),
-  delete: (id) => Effect11.gen(function* () {
+  delete: (id) => Effect_exports.gen(function* () {
     const data = yield* readAll(filePath);
     if (id in data) {
       delete data[id];
@@ -3498,7 +3469,7 @@ var makeFileProvider = (filePath) => ({
     }
   }),
   list: () => readAll(filePath).pipe(
-    Effect11.map((data) => Object.keys(data).map((k) => ({ id: ProviderItemId.make(k), name: k })))
+    Effect_exports.map((data) => Object.keys(data).map((k) => ({ id: ProviderItemId.make(k), name: k })))
   )
 });
 var resolveFilePath = (config) => authFilePath(config?.directory);

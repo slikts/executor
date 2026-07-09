@@ -7,19 +7,25 @@ import {
   formatPausedExecution,
   formatTtlDuration,
   renderSkillsIndex
-} from "./chunk-SF3PL65Y.js";
+} from "./chunk-57RSGHHS.js";
 import {
   _enum,
   string
 } from "./chunk-C6PYLKD6.js";
 import {
   isToolFile
-} from "./chunk-QEPUABPQ.js";
+} from "./chunk-PODQSLKX.js";
+import {
+  Duration_exports,
+  Effect_exports,
+  Match_exports,
+  Option_exports,
+  Schema_exports,
+  pretty
+} from "./chunk-RDRLBN2D.js";
 import "./chunk-4VNS5WPM.js";
 
 // ../../hosts/mcp/src/tool-server.ts
-import { Duration, Effect, Match, Option, Schema } from "effect";
-import * as Cause from "effect/Cause";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { ContentBlockSchema } from "@modelcontextprotocol/sdk/types.js";
 
@@ -1125,42 +1131,42 @@ var capabilitySnapshot = (server) => ({
   clientCapabilities: server.server.getClientCapabilities() ?? null,
   elicitationSupport: getElicitationSupport(server)
 });
-var elicitationRequestTag = (request) => Match.value(request).pipe(
-  Match.tag("UrlElicitation", () => "UrlElicitation"),
-  Match.tag("FormElicitation", () => "FormElicitation"),
-  Match.exhaustive
+var elicitationRequestTag = (request) => Match_exports.value(request).pipe(
+  Match_exports.tag("UrlElicitation", () => "UrlElicitation"),
+  Match_exports.tag("FormElicitation", () => "FormElicitation"),
+  Match_exports.exhaustive
 );
-var requestedSchemaIsNonEmpty = (request) => Match.value(request).pipe(
-  Match.tag("FormElicitation", (req) => Object.keys(req.requestedSchema).length > 0),
-  Match.tag("UrlElicitation", () => false),
-  Match.exhaustive
+var requestedSchemaIsNonEmpty = (request) => Match_exports.value(request).pipe(
+  Match_exports.tag("FormElicitation", (req) => Object.keys(req.requestedSchema).length > 0),
+  Match_exports.tag("UrlElicitation", () => false),
+  Match_exports.exhaustive
 );
-var elicitationRequestUrl = (request) => Match.value(request).pipe(
-  Match.tag("UrlElicitation", (req) => req.url),
-  Match.tag("FormElicitation", () => void 0),
-  Match.exhaustive
+var elicitationRequestUrl = (request) => Match_exports.value(request).pipe(
+  Match_exports.tag("UrlElicitation", (req) => req.url),
+  Match_exports.tag("FormElicitation", () => void 0),
+  Match_exports.exhaustive
 );
 var pausedInteractionKind = (request) => elicitationRequestTag(request);
-var elicitationRequestToParams = Match.type().pipe(
-  Match.tag("UrlElicitation", (req) => ({
+var elicitationRequestToParams = Match_exports.type().pipe(
+  Match_exports.tag("UrlElicitation", (req) => ({
     mode: "url",
     message: req.message,
     url: req.url,
     elicitationId: req.elicitationId
   })),
-  Match.tag("FormElicitation", (req) => ({
+  Match_exports.tag("FormElicitation", (req) => ({
     message: req.message,
     // The MCP SDK validates requestedSchema as a JSON Schema with
     // `type: "object"` and `properties`. For approval-only elicitations
     // where no fields are needed, provide a minimal valid schema.
     requestedSchema: Object.keys(req.requestedSchema).length === 0 ? { type: "object", properties: {} } : req.requestedSchema
   })),
-  Match.exhaustive
+  Match_exports.exhaustive
 );
 var makeMcpElicitationHandler = (server, debugLog) => (ctx) => {
   const { url: supportsUrl } = getElicitationSupport(server);
-  const params = Match.value(ctx.request).pipe(
-    Match.tag(
+  const params = Match_exports.value(ctx.request).pipe(
+    Match_exports.tag(
       "UrlElicitation",
       (req) => !supportsUrl ? {
         message: `${req.message}
@@ -1172,10 +1178,10 @@ Click accept once you have completed the flow.`,
         requestedSchema: { type: "object", properties: {} }
       } : elicitationRequestToParams(req)
     ),
-    Match.tag("FormElicitation", (req) => elicitationRequestToParams(req)),
-    Match.exhaustive
+    Match_exports.tag("FormElicitation", (req) => elicitationRequestToParams(req)),
+    Match_exports.exhaustive
   );
-  return Effect.promise(async () => {
+  return Effect_exports.promise(async () => {
     const requestTag = elicitationRequestTag(ctx.request);
     debugLog?.("elicitation.request", {
       requestTag,
@@ -1347,7 +1353,7 @@ var toMcpFailureResult = (cause) => {
   try {
     console.error(
       `[executor:mcp] execute defect correlation_id=${correlationId}`,
-      Cause.pretty(cause)
+      pretty(cause)
     );
   } catch {
   }
@@ -1432,18 +1438,18 @@ var extractInventory = (description) => {
   const index = description.indexOf(INTEGRATION_INVENTORY_HEADER);
   return index === -1 ? "" : description.slice(index).trimEnd();
 };
-var JsonObjectFromString = Schema.fromJsonString(Schema.Record(Schema.String, Schema.Unknown));
-var decodeJsonObjectString = Schema.decodeUnknownOption(JsonObjectFromString);
+var JsonObjectFromString = Schema_exports.fromJsonString(Schema_exports.Record(Schema_exports.String, Schema_exports.Unknown));
+var decodeJsonObjectString = Schema_exports.decodeUnknownOption(JsonObjectFromString);
 var parseJsonContent = (raw) => {
   if (raw === "{}") return void 0;
   const parsed = decodeJsonObjectString(raw);
-  return Option.isSome(parsed) ? parsed.value : void 0;
+  return Option_exports.isSome(parsed) ? parsed.value : void 0;
 };
-var createExecutorMcpServer = (config) => Effect.gen(function* () {
+var createExecutorMcpServer = (config) => Effect_exports.gen(function* () {
   const engine = "engine" in config ? config.engine : createExecutionEngine(config);
-  const description = config.description ?? (yield* engine.getDescription.pipe(Effect.withSpan("mcp.host.get_description")));
+  const description = config.description ?? (yield* engine.getDescription.pipe(Effect_exports.withSpan("mcp.host.get_description")));
   const executeInventory = extractInventory(description);
-  const context = yield* Effect.context();
+  const context = yield* Effect_exports.context();
   const debugEnabled = config.debug ?? readDebugDefault();
   const debugLog = (event, data) => {
     if (!debugEnabled) return;
@@ -1460,18 +1466,18 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     const ttlMs = config.pausedExecutionLeaseMs;
     return ttlMs === void 0 || ttlMs <= 0 ? void 0 : { ttlMs, expiresAt: new Date(Date.now() + ttlMs).toISOString() };
   };
-  const onExecutionPaused = (executionId, deadline) => config.pausedExecutionHooks?.onExecutionPaused?.(executionId, deadline) ?? Effect.void;
-  const onResumeStarted = (executionId) => config.pausedExecutionHooks?.onResumeStarted?.(executionId) ?? Effect.void;
-  const onResumeSettled = (executionId) => config.pausedExecutionHooks?.onResumeSettled?.(executionId) ?? Effect.void;
-  const resumeWithLifecycle = (executionId, response) => Effect.gen(function* () {
+  const onExecutionPaused = (executionId, deadline) => config.pausedExecutionHooks?.onExecutionPaused?.(executionId, deadline) ?? Effect_exports.void;
+  const onResumeStarted = (executionId) => config.pausedExecutionHooks?.onResumeStarted?.(executionId) ?? Effect_exports.void;
+  const onResumeSettled = (executionId) => config.pausedExecutionHooks?.onResumeSettled?.(executionId) ?? Effect_exports.void;
+  const resumeWithLifecycle = (executionId, response) => Effect_exports.gen(function* () {
     yield* onResumeStarted(executionId);
     return yield* engine.resume(executionId, response);
-  }).pipe(Effect.ensuring(onResumeSettled(executionId)));
-  const localExecutionAlreadySettled = (executionId) => engine.isExecutionSettled?.(executionId) ?? Effect.succeed(false);
-  const resumeFallback = (executionId, response) => config.resumeFallback?.(executionId, response).pipe(Effect.catchCause(() => Effect.succeed(null))) ?? Effect.succeed(null);
-  const formatPausedModelResult = (execution, source) => Effect.gen(function* () {
+  }).pipe(Effect_exports.ensuring(onResumeSettled(executionId)));
+  const localExecutionAlreadySettled = (executionId) => engine.isExecutionSettled?.(executionId) ?? Effect_exports.succeed(false);
+  const resumeFallback = (executionId, response) => config.resumeFallback?.(executionId, response).pipe(Effect_exports.catchCause(() => Effect_exports.succeed(null))) ?? Effect_exports.succeed(null);
+  const formatPausedModelResult = (execution, source) => Effect_exports.gen(function* () {
     const deadline = pauseDeadline();
-    yield* Effect.annotateCurrentSpan({
+    yield* Effect_exports.annotateCurrentSpan({
       "mcp.execute.paused": true,
       "mcp.execute.paused_execution_id": execution.id,
       "mcp.execute.pause_source": source
@@ -1485,14 +1491,14 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
   };
   const anchor = (effect) => {
     const parent = resolveParentSpan();
-    return parent ? Effect.withParentSpan(effect, parent) : effect;
+    return parent ? Effect_exports.withParentSpan(effect, parent) : effect;
   };
-  const runToolEffect = (effect) => Effect.runPromiseWith(context)(
+  const runToolEffect = (effect) => Effect_exports.runPromiseWith(context)(
     anchor(effect).pipe(
-      Effect.catchCause((cause) => Effect.succeed(toMcpFailureResult(cause)))
+      Effect_exports.catchCause((cause) => Effect_exports.succeed(toMcpFailureResult(cause)))
     )
   );
-  const server = yield* Effect.sync(
+  const server = yield* Effect_exports.sync(
     () => new McpServer(
       { name: "executor", version: "1.0.0" },
       {
@@ -1500,8 +1506,8 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
         jsonSchemaValidator: new CfWorkerJsonSchemaValidator()
       }
     )
-  ).pipe(Effect.withSpan("mcp.host.create_server"));
-  const executeCode = (code) => Effect.gen(function* () {
+  ).pipe(Effect_exports.withSpan("mcp.host.create_server"));
+  const executeCode = (code) => Effect_exports.gen(function* () {
     debugLog("execute.call", {
       elicitationMode: elicitationMode.mode,
       elicitationSupport: getElicitationSupport(server),
@@ -1522,7 +1528,7 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     });
     if (outcome.status === "paused") {
       const deadline = pauseDeadline();
-      yield* Effect.annotateCurrentSpan({
+      yield* Effect_exports.annotateCurrentSpan({
         "mcp.execute.paused": true,
         "mcp.execute.paused_execution_id": outcome.execution.id,
         "mcp.execute.pause_source": "execute"
@@ -1532,14 +1538,14 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     }
     return toMcpResult(outcome.result);
   }).pipe(
-    Effect.withSpan("mcp.host.tool.execute", {
+    Effect_exports.withSpan("mcp.host.tool.execute", {
       attributes: {
         "mcp.tool.name": "execute",
         "mcp.execute.code_length": code.length
       }
     })
   );
-  const resumeExecution = (executionId, action, content) => Effect.gen(function* () {
+  const resumeExecution = (executionId, action, content) => Effect_exports.gen(function* () {
     debugLog("resume.call", {
       executionId,
       action,
@@ -1570,7 +1576,7 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     }
     return toMcpResult(outcome.result);
   }).pipe(
-    Effect.withSpan("mcp.host.tool.resume", {
+    Effect_exports.withSpan("mcp.host.tool.resume", {
       attributes: {
         "mcp.tool.name": "resume",
         "mcp.execute.resume.action": action,
@@ -1578,7 +1584,7 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
       }
     })
   );
-  const requireUserResumeApproval = (executionId) => Effect.sync(() => {
+  const requireUserResumeApproval = (executionId) => Effect_exports.sync(() => {
     const approvalUrl = elicitationMode.mode === "browser" ? elicitationMode.approvalUrl(executionId) : defaultResumeApprovalUrl(executionId);
     debugLog("resume.user_approval_required", {
       executionId,
@@ -1587,7 +1593,7 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     });
     return formatResumeApprovalRequired({ executionId, approvalUrl });
   }).pipe(
-    Effect.withSpan("mcp.host.tool.resume.user_approval_required", {
+    Effect_exports.withSpan("mcp.host.tool.resume.user_approval_required", {
       attributes: {
         "mcp.tool.name": "resume",
         "mcp.execute.execution_id": executionId
@@ -1595,19 +1601,19 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     })
   );
   const takeBrowserApprovalResponse = (executionId) => {
-    return config.browserApprovalStore?.takeResponse(executionId) ?? Effect.succeed(null);
+    return config.browserApprovalStore?.takeResponse(executionId) ?? Effect_exports.succeed(null);
   };
   const waitForBrowserApprovalResponse = (executionId) => {
     const waitForResponse = config.browserApprovalStore?.waitForResponse;
     if (!waitForResponse) return takeBrowserApprovalResponse(executionId);
     return waitForResponse(executionId).pipe(
-      Effect.timeoutOrElse({
-        duration: Duration.millis(BROWSER_APPROVAL_WAIT_TIMEOUT_MS),
-        orElse: () => Effect.succeed(null)
+      Effect_exports.timeoutOrElse({
+        duration: Duration_exports.millis(BROWSER_APPROVAL_WAIT_TIMEOUT_MS),
+        orElse: () => Effect_exports.succeed(null)
       })
     );
   };
-  const resumeAfterBrowserApproval = (executionId) => Effect.gen(function* () {
+  const resumeAfterBrowserApproval = (executionId) => Effect_exports.gen(function* () {
     const response = yield* waitForBrowserApprovalResponse(executionId);
     if (!response) return yield* requireUserResumeApproval(executionId);
     const outcome = yield* resumeWithLifecycle(executionId, response);
@@ -1616,7 +1622,7 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     }
     if (outcome.status === "paused") {
       const deadline = pauseDeadline();
-      yield* Effect.annotateCurrentSpan({
+      yield* Effect_exports.annotateCurrentSpan({
         "mcp.execute.paused": true,
         "mcp.execute.paused_execution_id": outcome.execution.id,
         "mcp.execute.pause_source": "browser_resume"
@@ -1625,14 +1631,14 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
     }
     return outcome.status === "completed" ? toMcpResult(outcome.result) : yield* requireUserResumeApproval(outcome.execution.id);
   }).pipe(
-    Effect.withSpan("mcp.host.tool.resume.browser_approval", {
+    Effect_exports.withSpan("mcp.host.tool.resume.browser_approval", {
       attributes: {
         "mcp.tool.name": "resume",
         "mcp.execute.execution_id": executionId
       }
     })
   );
-  yield* Effect.sync(
+  yield* Effect_exports.sync(
     () => server.registerTool(
       "execute",
       {
@@ -1642,11 +1648,11 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
       ({ code }) => runToolEffect(executeCode(code))
     )
   ).pipe(
-    Effect.withSpan("mcp.host.register_tool", {
+    Effect_exports.withSpan("mcp.host.register_tool", {
       attributes: { "mcp.tool.name": "execute" }
     })
   );
-  yield* Effect.sync(
+  yield* Effect_exports.sync(
     () => server.registerTool(
       "skills",
       {
@@ -1659,14 +1665,14 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
           name: string().optional().describe('The skill to fetch, e.g. "execute". Omit to list available skills.')
         }
       },
-      ({ name }) => runToolEffect(Effect.succeed(skillsResult(name, executeInventory)))
+      ({ name }) => runToolEffect(Effect_exports.succeed(skillsResult(name, executeInventory)))
     )
   ).pipe(
-    Effect.withSpan("mcp.host.register_tool", {
+    Effect_exports.withSpan("mcp.host.register_tool", {
       attributes: { "mcp.tool.name": "skills" }
     })
   );
-  yield* Effect.sync(() => {
+  yield* Effect_exports.sync(() => {
     if (elicitationMode.mode === "native") {
       return void 0;
     }
@@ -1702,11 +1708,11 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
       ({ executionId }) => runToolEffect(resumeAfterBrowserApproval(executionId))
     );
   }).pipe(
-    Effect.withSpan("mcp.host.register_tool", {
+    Effect_exports.withSpan("mcp.host.register_tool", {
       attributes: { "mcp.tool.name": "resume" }
     })
   );
-  yield* Effect.sync(() => {
+  yield* Effect_exports.sync(() => {
     console.error(
       "[executor] MCP session mode",
       JSON.stringify({
@@ -1721,9 +1727,9 @@ var createExecutorMcpServer = (config) => Effect.gen(function* () {
       elicitationMode: elicitationMode.mode,
       resumeEnabled: elicitationMode.mode !== "native"
     });
-  }).pipe(Effect.withSpan("mcp.host.sync_tool_availability"));
+  }).pipe(Effect_exports.withSpan("mcp.host.sync_tool_availability"));
   return server;
-}).pipe(Effect.withSpan("mcp.host.create_executor_server"));
+}).pipe(Effect_exports.withSpan("mcp.host.create_executor_server"));
 export {
   createExecutorMcpServer
 };
