@@ -1,5 +1,27 @@
 # executor
 
+## 1.5.30
+
+### Patch Changes
+
+- [#1375](https://github.com/UsefulSoftwareCo/executor/pull/1375) [`0f81165`](https://github.com/UsefulSoftwareCo/executor/commit/0f81165138c1c987f13ff9839e46539f80b229b0) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Run cloud custom tool bundling in a dynamically loaded Worker so dependency installation and bundling do not share the serving request isolate.
+
+- [#1349](https://github.com/UsefulSoftwareCo/executor/pull/1349) [`a7e3091`](https://github.com/UsefulSoftwareCo/executor/commit/a7e3091a94fbdf032ef134989ceaba4f0b1b3231) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Back-stop code execution with a host-side timeout so a wedged sandbox delivers a descriptive error instead of hanging silently.
+
+- [#1351](https://github.com/UsefulSoftwareCo/executor/pull/1351) [`93b000a`](https://github.com/UsefulSoftwareCo/executor/commit/93b000a4ba24317f5a1f08fd8d7f72457d115f06) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Let stock MCP clients auto-reconnect and recover a tool result when a POST stream drops mid-call.
+
+- [#1345](https://github.com/UsefulSoftwareCo/executor/pull/1345) [`c46730b`](https://github.com/UsefulSoftwareCo/executor/commit/c46730b5d48cc62dae1abdbe32136f3c229d79f6) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Preserve MCP tool results across dropped streamable HTTP SSE connections.
+
+- [#1357](https://github.com/UsefulSoftwareCo/executor/pull/1357) [`4c319ee`](https://github.com/UsefulSoftwareCo/executor/commit/4c319ee2e4a8d062402a80419dd3e1d829908ad8) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Throw a guidance error when sandbox code enumerates the `tools` proxy (`Object.keys`, spread, `for...in`) instead of returning an empty list, pointing agents at `tools.search()`.
+
+- [#1352](https://github.com/UsefulSoftwareCo/executor/pull/1352) [`8bdf315`](https://github.com/UsefulSoftwareCo/executor/commit/8bdf31550f702e6bce6c3460bb9d26fcce925d7b) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Treat a transient WorkOS outage during the MCP live-membership check as a retryable 503 instead of a Forbidden that destroys the session.
+
+- Updated dependencies []:
+  - @executor-js/sdk@1.5.30
+  - @executor-js/runtime-quickjs@1.5.30
+  - @executor-js/local@1.4.4
+  - @executor-js/api@1.4.50
+
 ## 1.5.29
 
 ### Patch Changes
