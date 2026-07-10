@@ -2,29 +2,6 @@
   "name": "@slikts/executor",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./packages/core/facade/dist/index.d.ts",
-      "default": "./packages/core/facade/dist/index.js"
-    },
-    "./mcp": {
-      "types": "./packages/core/facade/dist/mcp.d.ts",
-      "default": "./packages/core/facade/dist/mcp.js"
-    },
-    "./execution": {
-      "types": "./packages/core/facade/dist/execution.d.ts",
-      "default": "./packages/core/facade/dist/execution.js"
-    },
-    "./config": {
-      "types": "./packages/core/facade/dist/config.d.ts",
-      "default": "./packages/core/facade/dist/config.js"
-    },
-    "./plugin-mcp": {
-      "types": "./packages/core/facade/dist/plugin-mcp.d.ts",
-      "default": "./packages/core/facade/dist/plugin-mcp.js"
-    }
-  },
   "description": "Local AI executor with a CLI, local API server, and web UI.",
   "keywords": [
     "agent",
@@ -52,6 +29,28 @@
     "e2e"
   ],
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./packages/core/facade/dist/index.d.ts",
+      "default": "./packages/core/facade/dist/index.js"
+    },
+    "./mcp": {
+      "types": "./packages/core/facade/dist/mcp.d.ts",
+      "default": "./packages/core/facade/dist/mcp.js"
+    },
+    "./execution": {
+      "types": "./packages/core/facade/dist/execution.d.ts",
+      "default": "./packages/core/facade/dist/execution.js"
+    },
+    "./config": {
+      "types": "./packages/core/facade/dist/config.d.ts",
+      "default": "./packages/core/facade/dist/config.js"
+    },
+    "./plugin-mcp": {
+      "types": "./packages/core/facade/dist/plugin-mcp.d.ts",
+      "default": "./packages/core/facade/dist/plugin-mcp.js"
+    }
+  },
   "scripts": {
     "bootstrap": "bun run scripts/bootstrap.ts",
     "reap": "bun run scripts/reap-dev-servers.ts",
@@ -90,7 +89,10 @@
     "release:smoke:packages": "bun run scripts/smoke-test-packed.ts",
     "clean": "bun run scripts/clean.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "quickjs-emscripten": "^0.31.0"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.30.0",
