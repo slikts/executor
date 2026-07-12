@@ -23,9 +23,9 @@ import {
 } from "./executor";
 import type { ElicitationContext, ElicitationResponse } from "./elicitation";
 import type { FumaDb, FumaTables } from "./fuma-runtime";
-import { Subject, Tenant } from "./ids";
+import { ProviderItemId, ProviderKey, Subject, Tenant } from "./ids";
 import type { AnyPlugin } from "./plugin";
-import type { CredentialProvider } from "./provider";
+import type { CredentialProvider, ProviderEntry } from "./provider";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -65,6 +65,16 @@ export interface PromiseInvokeOptions {
   readonly onElicitation?: PromiseOnElicitation;
 }
 
+export interface PromiseCredentialProvider {
+  readonly key: string;
+  readonly writable: boolean;
+  readonly get: (id: string) => Promise<string | null>;
+  readonly has?: (id: string) => Promise<boolean>;
+  readonly set?: (id: string, value: string) => Promise<void>;
+  readonly delete?: (id: string) => Promise<void>;
+  readonly list?: () => Promise<readonly { readonly id: string; readonly name: string }[]>;
+}
+
 type PromisifiedArg<T> = T extends EffectInvokeOptions | undefined
   ? PromiseInvokeOptions | undefined
   : Unbrand<T>;
@@ -92,15 +102,8 @@ export interface ExecutorConfig<TPlugins extends readonly AnyPlugin[] = readonly
   /** The acting member. Omit for a pure-org executor (no `owner:"user"`). */
   readonly subject?: string;
   readonly plugins?: TPlugins;
-  /**
-   * Config-level credential providers, merged with every
-   * `plugin.credentialProviders`. Config providers register first, so the
-   * default (first writable) store is selected from them when present. A
-   * writable provider is required before `connections.create({ value })` can
-   * store an inline credential. Providers are Effect-native objects (their
-   * `get`/`set` return `Effect`s) — bring them from `@executor-js/sdk/core`.
-   */
-  readonly providers?: readonly CredentialProvider[];
+  /** Config-level plain Promise credential providers. */
+  readonly providers?: readonly PromiseCredentialProvider[];
   /**
    * FumaDB ORM handle, or a factory that receives the executor-owned table
    * map. Public consumers usually want the factory form so `collectTables()`
@@ -147,7 +150,17 @@ const isPromiseOnElicitation = (value: unknown): value is PromiseOnElicitation =
 const toEffectOnElicitation = (handler: PromiseOnElicitation): OnElicitation =>
   handler === "accept-all"
     ? "accept-all"
-    : (ctx) => Effect.promise(() => Promise.resolve(handler(ctx)));
+    : (ctx) => {
+        // The execution engine's pause machinery threads Effect-returning
+        // handlers through this Promise boundary, and a function-identity
+        // check cannot tell them apart from Promise handlers. Wrapping an
+        // Effect in Promise.resolve would hand the Effect object itself back
+        // as the "response" (action: undefined), so pass Effects through.
+        const result = (handler as (c: typeof ctx) => unknown)(ctx);
+        return Effect.isEffect(result)
+          ? (result as ReturnType<Extract<OnElicitation, (...args: never[]) => unknown>>)
+          : Effect.promise(() => Promise.resolve(result as Awaited<ReturnType<typeof handler>>));
+      };
 
 const adaptPromiseInvokeOptions = (value: unknown): unknown => {
   if (!isPlainObject(value) || !Object.hasOwn(value, "onElicitation")) return value;
@@ -161,6 +174,36 @@ const adaptPromiseInvokeOptions = (value: unknown): unknown => {
 
 const adaptPromiseArgs = (args: readonly unknown[]): unknown[] =>
   args.map((arg) => adaptPromiseInvokeOptions(arg));
+
+const toEffectProvider = (provider: PromiseCredentialProvider): CredentialProvider => ({
+  key: ProviderKey.make(provider.key),
+  writable: provider.writable,
+  get: (id) => Effect.promise(() => provider.get(String(id))),
+  ...(provider.has
+    ? { has: (id: ProviderItemId) => Effect.promise(() => provider.has!(String(id))) }
+    : {}),
+  ...(provider.set
+    ? {
+        set: (id: ProviderItemId, value: string) =>
+          Effect.promise(() => provider.set!(String(id), value)),
+      }
+    : {}),
+  ...(provider.delete
+    ? { delete: (id: ProviderItemId) => Effect.promise(() => provider.delete!(String(id))) }
+    : {}),
+  ...(provider.list
+    ? {
+        list: () =>
+          Effect.promise(
+            async (): Promise<readonly ProviderEntry[]> =>
+              (await provider.list!()).map((entry) => ({
+                id: ProviderItemId.make(entry.id),
+                name: entry.name,
+              })),
+          ),
+      }
+    : {}),
+});
 
 const promisifyDeep = <T>(value: T): Promisified<T> => {
   if (typeof value === "function") {
@@ -211,7 +254,8 @@ export const createExecutor = async <const TPlugins extends readonly AnyPlugin[]
     tenant: Tenant.make(config.tenant ?? "default-tenant"),
     ...(config.subject !== undefined ? { subject: Subject.make(config.subject) } : {}),
     plugins,
-    ...(config.providers ? { providers: config.providers } : {}),
+    ...(config.coreTools ? { coreTools: config.coreTools } : {}),
+    ...(config.providers ? { providers: config.providers.map(toEffectProvider) } : {}),
     onElicitation: toEffectOnElicitation(config.onElicitation),
     ...(db ? { db } : {}),
   };
