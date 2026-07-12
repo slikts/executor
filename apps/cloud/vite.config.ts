@@ -44,6 +44,20 @@ const loadWranglerPublicVars = () => {
   );
 };
 
+const resolveOtlpProxyTarget = (env: {
+  readonly OTEL_EXPORTER_OTLP_ENDPOINT?: string;
+  readonly OTEL_EXPORTER_OTLP_TRACES_ENDPOINT?: string;
+}): string | null => {
+  const configuredEndpoint =
+    env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ?? env.OTEL_EXPORTER_OTLP_ENDPOINT;
+  if (!configuredEndpoint) return null;
+  const url = new URL(configuredEndpoint);
+  const pathname = url.pathname.replace(/\/+$/, "");
+  url.pathname = pathname.endsWith("/v1") ? `${pathname}/traces` : `${pathname || ""}/v1/traces`;
+  url.pathname = url.pathname.replace(/\/v1\/traces$/, "");
+  return url.toString();
+};
+
 // VITE_PUBLIC_ANALYTICS_PATH is generated once per build by `scripts/build.mjs`
 // and inherited via process.env, so the client and SSR/Cloudflare environment
 // builds bake the same value. The fallback "a" is for `vite dev`, where the
@@ -65,6 +79,14 @@ export default defineConfig(({ command, mode }) => {
   if (command === "serve" && !process.env.MOTEL_URL && !env.VITE_PUBLIC_OTLP_TRACES_URL) {
     delete (publicEnv as Record<string, string | undefined>).VITE_PUBLIC_OTLP_TRACES_URL;
   }
+
+  const otlpProxyTarget =
+    resolveOtlpProxyTarget({
+      OTEL_EXPORTER_OTLP_ENDPOINT: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+    }) ??
+    process.env.MOTEL_URL ??
+    "http://127.0.0.1:27686";
 
   // Deps vite only discovers once a lazy-loaded React chunk actually renders
   // (e.g. opening the MCP/OpenAPI "add integration" flow). Discovering them mid-run
@@ -104,7 +126,7 @@ export default defineConfig(({ command, mode }) => {
     // in preflight. Dev-only; unrouted when nothing listens.
     server: {
       proxy: {
-        "/v1/traces": process.env.MOTEL_URL ?? "http://127.0.0.1:27686",
+        "/v1/traces": otlpProxyTarget,
       },
     },
     resolve: { tsconfigPaths: true },

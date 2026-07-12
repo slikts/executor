@@ -51,6 +51,7 @@ import {
   OTEL_MAX_SPAN_QUEUE_SIZE,
   recordForceFlush,
 } from "./memory-metrics";
+import { resolveOtlpTraceExportConfig } from "./otlp";
 
 const SERVICE_NAME = "executor-cloud";
 const SERVICE_VERSION = "1.0.0";
@@ -61,7 +62,8 @@ const SERVICE_VERSION = "1.0.0";
 let provider: WebTracerProvider | null = null;
 const ensureGlobalTracerProvider = (): boolean => {
   if (provider) return true;
-  if (!env.AXIOM_TOKEN) return false;
+  const traceExportConfig = resolveOtlpTraceExportConfig(env);
+  if (!traceExportConfig.endpoint) return false;
   provider = new WebTracerProvider({
     resource: resourceFromAttributes({
       [ATTR_SERVICE_NAME]: SERVICE_NAME,
@@ -71,11 +73,8 @@ const ensureGlobalTracerProvider = (): boolean => {
       let countingProcessor: CountingSpanProcessor;
       const exporter = new CountingSpanExporter(
         new OTLPTraceExporter({
-          url: env.AXIOM_TRACES_URL ?? "https://api.axiom.co/v1/traces",
-          headers: {
-            Authorization: `Bearer ${env.AXIOM_TOKEN}`,
-            "X-Axiom-Dataset": env.AXIOM_DATASET ?? "executor-cloud",
-          },
+          url: traceExportConfig.endpoint,
+          headers: traceExportConfig.headers,
         }),
         (spans) => countingProcessor.recordExportAttempt(spans),
       );

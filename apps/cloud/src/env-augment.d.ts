@@ -10,6 +10,8 @@ declare global {
       AXIOM_DATASET?: string;
       AXIOM_TRACES_URL?: string;
       AXIOM_TRACES_SAMPLE_RATIO?: string;
+      OTEL_EXPORTER_OTLP_ENDPOINT?: string;
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT?: string;
       SENTRY_DSN?: string;
       SENTRY_OTEL_LOG_PAYLOAD?: string;
       SENTRY_OTEL_VERIFY?: string;

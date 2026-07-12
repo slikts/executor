@@ -14,6 +14,10 @@ const baseEnv = {
   AXIOM_DATASET: "executor-cloud",
 } as Env;
 
+const collectorEnv = {
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector.local:4318",
+} as Env;
+
 describe("browserTracesResponse", () => {
   it("ignores non-/v1/traces requests entirely", () => {
     expect(browserTracesResponse(makeRequest({ path: "/api/tools" }), baseEnv)).toBeNull();
@@ -51,6 +55,26 @@ describe("browserTracesResponse", () => {
     expect(seen?.dataset).toBe("executor-cloud");
     expect(response?.status).toBe(204);
     expect(await response?.text()).toBe("");
+  });
+
+  it("forwards to a generic OTLP collector without Axiom headers", async () => {
+    let seen: { url: string; auth: string | null; dataset: string | null } | undefined;
+    const response = await browserTracesResponse(
+      makeRequest({ headers: { cookie: "wos-session=abc" } }),
+      collectorEnv,
+      (async (url: RequestInfo | URL, init?: RequestInit) => {
+        seen = {
+          url: String(url),
+          auth: new Headers(init?.headers).get("authorization"),
+          dataset: new Headers(init?.headers).get("x-axiom-dataset"),
+        };
+        return new Response("collector-ok", { status: 200 });
+      }) as typeof fetch,
+    );
+    expect(seen?.url).toBe("http://collector.local:4318/v1/traces");
+    expect(seen?.auth).toBeNull();
+    expect(seen?.dataset).toBeNull();
+    expect(response?.status).toBe(204);
   });
 
   it("reports upstream failure as 502 without leaking detail", async () => {
