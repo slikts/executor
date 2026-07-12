@@ -57,12 +57,24 @@ export type ExecutionEngine = {
 
 /**
  * Wrap a Promise thunk into the Effect shape the engine consumes. The Promise
- * executor façade has already erased the SDK typed error channel (rejections
- * carry the tagged error as the rejected value), so we re-orphan it as a defect.
+ * executor façade erases the SDK typed error channel at the type level, but
+ * rejections still carry the tagged error as the rejected value. Re-fail with
+ * it so the engine's expected-failure handling (tool_not_found, tool_blocked,
+ * credential resolution, argument validation) keeps working; orphaning it as
+ * a defect would collapse every expected failure into the opaque
+ * "Internal tool error" path. Untagged rejections stay defects.
  */
+const isTaggedRejection = (cause: unknown): cause is { readonly _tag: string } =>
+  typeof cause === "object" &&
+  cause !== null &&
+  "_tag" in cause &&
+  typeof (cause as { readonly _tag: unknown })._tag === "string";
+
 const fromPromise = <A>(try_: () => Promise<A>): Effect.Effect<A> =>
-  // oxlint-disable-next-line executor/no-effect-escape-hatch -- boundary: Promise executor facade has already erased the SDK typed error channel
-  Effect.tryPromise({ try: try_, catch: (cause) => cause }).pipe(Effect.orDie);
+  // oxlint-disable-next-line executor/no-effect-escape-hatch -- boundary: Promise executor facade erased the typed error channel; re-fail structurally
+  Effect.tryPromise({ try: try_, catch: (cause) => cause }).pipe(
+    Effect.catch((cause) => (isTaggedRejection(cause) ? Effect.fail(cause) : Effect.die(cause))),
+  ) as Effect.Effect<A>;
 
 // ---------------------------------------------------------------------------
 // wrapPromiseExecutor — adapt the v2 Promise `Executor` back into an Effect
