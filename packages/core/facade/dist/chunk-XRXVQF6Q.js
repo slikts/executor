@@ -393,12 +393,12 @@ function format(input, options) {
       return ["[ownKeys threw]"];
     }
   };
-  function recur5(v, d = 0) {
+  function recur6(v, d = 0) {
     if (Array.isArray(v)) {
       if (seen.has(v)) return CIRCULAR;
       seen.add(v);
-      if (!gap || v.length <= 1) return `[${v.map((x) => recur5(x, d)).join(",")}]`;
-      const inner = v.map((x) => recur5(x, d + 1)).join(",\n" + ind(d + 1));
+      if (!gap || v.length <= 1) return `[${v.map((x) => recur6(x, d)).join(",")}]`;
+      const inner = v.map((x) => recur6(x, d + 1)).join(",\n" + ind(d + 1));
       return `[
 ${ind(d + 1)}${inner}
 ${ind(d)}]`;
@@ -407,7 +407,7 @@ ${ind(d)}]`;
     if (!options?.ignoreToString && hasProperty(v, "toString") && typeof v["toString"] === "function" && v["toString"] !== Object.prototype.toString && v["toString"] !== Array.prototype.toString) {
       const s = safeToString(v);
       if (v instanceof Error && v.cause) {
-        return `${s} (cause: ${recur5(v.cause, d)})`;
+        return `${s} (cause: ${recur6(v.cause, d)})`;
       }
       return s;
     }
@@ -419,21 +419,21 @@ ${ind(d)}]`;
       seen.add(v);
       if (symbolRedactable in v) return format(getRedacted(v));
       if (Symbol.iterator in v) {
-        return `${v.constructor.name}(${recur5(Array.from(v), d)})`;
+        return `${v.constructor.name}(${recur6(Array.from(v), d)})`;
       }
       const keys5 = ownKeys(v);
       if (!gap || keys5.length <= 1) {
-        const body2 = `{${keys5.map((k) => `${formatPropertyKey(k)}:${recur5(v[k], d)}`).join(",")}}`;
+        const body2 = `{${keys5.map((k) => `${formatPropertyKey(k)}:${recur6(v[k], d)}`).join(",")}}`;
         return wrap(v, body2);
       }
       const body = `{
-${keys5.map((k) => `${ind(d + 1)}${formatPropertyKey(k)}: ${recur5(v[k], d + 1)}`).join(",\n")}
+${keys5.map((k) => `${ind(d + 1)}${formatPropertyKey(k)}: ${recur6(v[k], d + 1)}`).join(",\n")}
 ${ind(d)}}`;
       return wrap(v, body);
     }
     return String(v);
   }
-  return recur5(input, 0);
+  return recur6(input, 0);
 }
 var CIRCULAR = "[Circular]";
 function formatPropertyKey(name) {
@@ -1254,15 +1254,15 @@ var makePrimitiveProto = (options) => ({
   [contAll]: options[contAll]
 });
 var makePrimitive = (options) => {
-  const Proto5 = makePrimitiveProto(options);
+  const Proto7 = makePrimitiveProto(options);
   return function() {
-    const self = Object.create(Proto5);
+    const self = Object.create(Proto7);
     self[args] = options.single === false ? arguments : arguments[0];
     return self;
   };
 };
 var makeExit = (options) => {
-  const Proto5 = {
+  const Proto7 = {
     ...makePrimitiveProto(options),
     [ExitTypeId]: ExitTypeId,
     _tag: options.op,
@@ -1287,7 +1287,7 @@ var makeExit = (options) => {
     }
   };
   return function(value5) {
-    const self = Object.create(Proto5);
+    const self = Object.create(Proto7);
     self[args] = value5;
     return self;
   };
@@ -1761,6 +1761,161 @@ function makeReducerFailFast(reducer2) {
   });
 }
 
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Result.js
+var Result_exports = {};
+__export(Result_exports, {
+  Do: () => Do2,
+  all: () => all2,
+  andThen: () => andThen2,
+  bind: () => bind3,
+  bindTo: () => bindTo3,
+  fail: () => fail2,
+  failVoid: () => failVoid,
+  filterOrFail: () => filterOrFail,
+  flatMap: () => flatMap2,
+  flip: () => flip,
+  fromNullishOr: () => fromNullishOr2,
+  fromOption: () => fromOption2,
+  gen: () => gen2,
+  getFailure: () => getFailure3,
+  getOrElse: () => getOrElse2,
+  getOrNull: () => getOrNull2,
+  getOrThrow: () => getOrThrow2,
+  getOrThrowWith: () => getOrThrowWith2,
+  getOrUndefined: () => getOrUndefined2,
+  getSuccess: () => getSuccess3,
+  isFailure: () => isFailure2,
+  isResult: () => isResult2,
+  isSuccess: () => isSuccess2,
+  let: () => let_3,
+  liftPredicate: () => liftPredicate2,
+  makeEquivalence: () => makeEquivalence2,
+  map: () => map2,
+  mapBoth: () => mapBoth,
+  mapError: () => mapError,
+  match: () => match2,
+  merge: () => merge,
+  orElse: () => orElse2,
+  succeed: () => succeed2,
+  succeedNone: () => succeedNone,
+  succeedSome: () => succeedSome,
+  tap: () => tap2,
+  transposeMapOption: () => transposeMapOption,
+  transposeOption: () => transposeOption,
+  try: () => try_,
+  void: () => void_2
+});
+var succeed2 = succeed;
+var fail2 = fail;
+var void_2 = /* @__PURE__ */ succeed2(void 0);
+var failVoid = /* @__PURE__ */ fail2(void 0);
+var fromNullishOr2 = /* @__PURE__ */ dual(2, (self, onNullish) => self == null ? fail2(onNullish(self)) : succeed2(self));
+var fromOption2 = fromOption;
+var try_ = (evaluate2) => {
+  if (isFunction(evaluate2)) {
+    try {
+      return succeed2(evaluate2());
+    } catch (e) {
+      return fail2(e);
+    }
+  } else {
+    try {
+      return succeed2(evaluate2.try());
+    } catch (e) {
+      return fail2(evaluate2.catch(e));
+    }
+  }
+};
+var isResult2 = isResult;
+var isFailure2 = isFailure;
+var isSuccess2 = isSuccess;
+var getSuccess3 = getSuccess;
+var getFailure3 = getFailure;
+var makeEquivalence2 = (success, failure) => make3((x, y) => isFailure2(x) ? isFailure2(y) && failure(x.failure, y.failure) : isSuccess2(y) && success(x.success, y.success));
+var mapBoth = /* @__PURE__ */ dual(2, (self, {
+  onFailure,
+  onSuccess
+}) => isFailure2(self) ? fail2(onFailure(self.failure)) : succeed2(onSuccess(self.success)));
+var mapError = /* @__PURE__ */ dual(2, (self, f) => isFailure2(self) ? fail2(f(self.failure)) : succeed2(self.success));
+var map2 = /* @__PURE__ */ dual(2, (self, f) => isSuccess2(self) ? succeed2(f(self.success)) : fail2(self.failure));
+var match2 = /* @__PURE__ */ dual(2, (self, {
+  onFailure,
+  onSuccess
+}) => isFailure2(self) ? onFailure(self.failure) : onSuccess(self.success));
+var liftPredicate2 = /* @__PURE__ */ dual(3, (a, predicate, orFailWith) => predicate(a) ? succeed2(a) : fail2(orFailWith(a)));
+var filterOrFail = /* @__PURE__ */ dual(3, (self, predicate, orFailWith) => flatMap2(self, (a) => predicate(a) ? succeed2(a) : fail2(orFailWith(a))));
+var merge = /* @__PURE__ */ match2({
+  onFailure: identity,
+  onSuccess: identity
+});
+var getOrElse2 = /* @__PURE__ */ dual(2, (self, onFailure) => isFailure2(self) ? onFailure(self.failure) : self.success);
+var getOrNull2 = /* @__PURE__ */ getOrElse2(constNull);
+var getOrUndefined2 = /* @__PURE__ */ getOrElse2(constUndefined);
+var getOrThrowWith2 = /* @__PURE__ */ dual(2, (self, onFailure) => {
+  if (isSuccess2(self)) {
+    return self.success;
+  }
+  throw onFailure(self.failure);
+});
+var getOrThrow2 = /* @__PURE__ */ getOrThrowWith2(identity);
+var orElse2 = /* @__PURE__ */ dual(2, (self, that) => isFailure2(self) ? that(self.failure) : succeed2(self.success));
+var flatMap2 = /* @__PURE__ */ dual(2, (self, f) => isFailure2(self) ? fail2(self.failure) : f(self.success));
+var andThen2 = /* @__PURE__ */ dual(2, (self, f) => flatMap2(self, (a) => {
+  const out = isFunction(f) ? f(a) : f;
+  return isResult2(out) ? out : succeed2(out);
+}));
+var all2 = (input) => {
+  if (Symbol.iterator in input) {
+    const out2 = [];
+    for (const e of input) {
+      if (isFailure2(e)) {
+        return e;
+      }
+      out2.push(e.success);
+    }
+    return succeed2(out2);
+  }
+  const out = {};
+  for (const key of Object.keys(input)) {
+    const e = input[key];
+    if (isFailure2(e)) {
+      return e;
+    }
+    out[key] = e.success;
+  }
+  return succeed2(out);
+};
+var flip = (self) => isFailure2(self) ? succeed2(self.failure) : fail2(self.success);
+var gen2 = (...args2) => {
+  const f = args2.length === 1 ? args2[0] : args2[1].bind(args2[0]);
+  const iterator = f();
+  let state = iterator.next();
+  while (!state.done) {
+    const current = state.value;
+    if (isFailure2(current)) {
+      return current;
+    }
+    state = iterator.next(current.success);
+  }
+  return succeed2(state.value);
+};
+var Do2 = /* @__PURE__ */ succeed2({});
+var bind3 = /* @__PURE__ */ bind(map2, flatMap2);
+var bindTo3 = /* @__PURE__ */ bindTo(map2);
+var let_3 = /* @__PURE__ */ let_(map2);
+var transposeOption = (self) => {
+  return isNone(self) ? succeedNone : map2(self.value, some2);
+};
+var transposeMapOption = /* @__PURE__ */ dual(2, (self, f) => isNone(self) ? succeedNone : map2(f(self.value), some2));
+var succeedNone = /* @__PURE__ */ succeed2(none);
+var succeedSome = (a) => succeed2(some2(a));
+var tap2 = /* @__PURE__ */ dual(2, (self, f) => {
+  if (isSuccess2(self)) {
+    f(self.success);
+  }
+  return self;
+});
+
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Context.js
 var Context_exports = {};
 __export(Context_exports, {
@@ -1772,8 +1927,8 @@ __export(Context_exports, {
   empty: () => empty,
   get: () => get,
   getOption: () => getOption,
-  getOrElse: () => getOrElse2,
-  getOrUndefined: () => getOrUndefined2,
+  getOrElse: () => getOrElse3,
+  getOrUndefined: () => getOrUndefined3,
   getReferenceUnsafe: () => getReferenceUnsafe,
   getUnsafe: () => getUnsafe,
   isContext: () => isContext,
@@ -1781,7 +1936,7 @@ __export(Context_exports, {
   isReference: () => isReference,
   make: () => make5,
   makeUnsafe: () => makeUnsafe,
-  merge: () => merge,
+  merge: () => merge2,
   mergeAll: () => mergeAll,
   mutate: () => mutate,
   omit: () => omit,
@@ -1898,13 +2053,13 @@ var addOrOmit = /* @__PURE__ */ dual(3, (self, key, service4) => withMapUnsafe(s
     map16.set(key.key, service4.value);
   }
 }));
-var getOrElse2 = /* @__PURE__ */ dual(3, (self, key, orElse5) => {
+var getOrElse3 = /* @__PURE__ */ dual(3, (self, key, orElse5) => {
   if (self.mapUnsafe.has(key.key)) {
     return self.mapUnsafe.get(key.key);
   }
   return isReference(key) ? getDefaultValue(key) : orElse5();
 });
-var getOrUndefined2 = /* @__PURE__ */ dual(2, (self, key) => self.mapUnsafe.get(key.key));
+var getOrUndefined3 = /* @__PURE__ */ dual(2, (self, key) => self.mapUnsafe.get(key.key));
 var getUnsafe = /* @__PURE__ */ dual(2, (self, service4) => {
   if (!self.mapUnsafe.has(service4.key)) {
     if (ReferenceTypeId in service4) return getDefaultValue(service4);
@@ -1950,7 +2105,7 @@ var getOption = /* @__PURE__ */ dual(2, (self, service4) => {
   }
   return isReference(service4) ? some3(getDefaultValue(service4)) : none2();
 });
-var merge = /* @__PURE__ */ dual(2, (self, that) => {
+var merge2 = /* @__PURE__ */ dual(2, (self, that) => {
   if (self.mapUnsafe.size === 0) return that;
   if (that.mapUnsafe.size === 0) return self;
   return withMapUnsafe(self, (map16) => {
@@ -2025,7 +2180,7 @@ __export(Duration_exports, {
   isNegative: () => isNegative,
   isPositive: () => isPositive,
   isZero: () => isZero,
-  match: () => match2,
+  match: () => match3,
   matchPair: () => matchPair,
   max: () => max3,
   micros: () => micros,
@@ -2300,37 +2455,37 @@ var minutes = (minutes2) => make6(minutes2 * 6e4);
 var hours = (hours2) => make6(hours2 * 36e5);
 var days = (days2) => make6(days2 * 864e5);
 var weeks = (weeks2) => make6(weeks2 * 6048e5);
-var toMillis = (self) => match2(self, {
+var toMillis = (self) => match3(self, {
   onMillis: identity,
   onNanos: (nanos2) => Number(nanos2) / 1e6,
   onInfinity: () => Infinity,
   onNegativeInfinity: () => -Infinity
 });
-var toSeconds = (self) => match2(self, {
+var toSeconds = (self) => match3(self, {
   onMillis: (millis2) => millis2 / 1e3,
   onNanos: (nanos2) => Number(nanos2) / 1e9,
   onInfinity: () => Infinity,
   onNegativeInfinity: () => -Infinity
 });
-var toMinutes = (self) => match2(self, {
+var toMinutes = (self) => match3(self, {
   onMillis: (millis2) => millis2 / 6e4,
   onNanos: (nanos2) => Number(nanos2) / 6e10,
   onInfinity: () => Infinity,
   onNegativeInfinity: () => -Infinity
 });
-var toHours = (self) => match2(self, {
+var toHours = (self) => match3(self, {
   onMillis: (millis2) => millis2 / 36e5,
   onNanos: (nanos2) => Number(nanos2) / 36e11,
   onInfinity: () => Infinity,
   onNegativeInfinity: () => -Infinity
 });
-var toDays = (self) => match2(self, {
+var toDays = (self) => match3(self, {
   onMillis: (millis2) => millis2 / 864e5,
   onNanos: (nanos2) => Number(nanos2) / 864e11,
   onInfinity: () => Infinity,
   onNegativeInfinity: () => -Infinity
 });
-var toWeeks = (self) => match2(self, {
+var toWeeks = (self) => match3(self, {
   onMillis: (millis2) => millis2 / 6048e5,
   onNanos: (nanos2) => Number(nanos2) / 6048e11,
   onInfinity: () => Infinity,
@@ -2368,7 +2523,7 @@ var toHrTime = (self) => {
     }
   }
 };
-var match2 = /* @__PURE__ */ dual(2, (self, options) => {
+var match3 = /* @__PURE__ */ dual(2, (self, options) => {
   switch (self.value._tag) {
     case "Millis":
       return options.onMillis(self.value.millis);
@@ -2411,7 +2566,7 @@ var clamp2 = /* @__PURE__ */ clamp(Order);
 var divide = /* @__PURE__ */ dual(2, (self, by) => {
   if (!Number.isFinite(by)) return none2();
   if (by === 0 || Object.is(by, -0)) return none2();
-  return match2(self, {
+  return match3(self, {
     onMillis: (millis2) => some3(make6(millis2 / by)),
     onNanos: (nanos2) => {
       try {
@@ -2426,7 +2581,7 @@ var divide = /* @__PURE__ */ dual(2, (self, by) => {
 });
 var divideUnsafe = /* @__PURE__ */ dual(2, (self, by) => {
   if (!Number.isFinite(by)) return zero;
-  return match2(self, {
+  return match3(self, {
     onMillis: (millis2) => make6(millis2 / by),
     onNanos: (nanos2) => {
       if (Object.is(by, 0) || Object.is(by, -0)) {
@@ -2445,7 +2600,7 @@ var divideUnsafe = /* @__PURE__ */ dual(2, (self, by) => {
     onNegativeInfinity: () => by > 0 ? negativeInfinity : by < 0 ? infinity : zero
   });
 });
-var times = /* @__PURE__ */ dual(2, (self, times2) => match2(self, {
+var times = /* @__PURE__ */ dual(2, (self, times2) => match3(self, {
   onMillis: (millis2) => make6(millis2 * times2),
   onNanos: (nanos2) => make6(nanos2 * BigInt(times2)),
   onInfinity: () => times2 > 0 ? infinity : times2 < 0 ? negativeInfinity : zero,
@@ -2625,161 +2780,6 @@ __export(Cause_exports, {
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/array.js
 var isArrayNonEmpty = (self) => self.length > 0;
 
-// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Result.js
-var Result_exports = {};
-__export(Result_exports, {
-  Do: () => Do2,
-  all: () => all2,
-  andThen: () => andThen2,
-  bind: () => bind3,
-  bindTo: () => bindTo3,
-  fail: () => fail2,
-  failVoid: () => failVoid,
-  filterOrFail: () => filterOrFail,
-  flatMap: () => flatMap2,
-  flip: () => flip,
-  fromNullishOr: () => fromNullishOr2,
-  fromOption: () => fromOption2,
-  gen: () => gen2,
-  getFailure: () => getFailure3,
-  getOrElse: () => getOrElse3,
-  getOrNull: () => getOrNull2,
-  getOrThrow: () => getOrThrow2,
-  getOrThrowWith: () => getOrThrowWith2,
-  getOrUndefined: () => getOrUndefined3,
-  getSuccess: () => getSuccess3,
-  isFailure: () => isFailure2,
-  isResult: () => isResult2,
-  isSuccess: () => isSuccess2,
-  let: () => let_3,
-  liftPredicate: () => liftPredicate2,
-  makeEquivalence: () => makeEquivalence2,
-  map: () => map2,
-  mapBoth: () => mapBoth,
-  mapError: () => mapError,
-  match: () => match3,
-  merge: () => merge2,
-  orElse: () => orElse2,
-  succeed: () => succeed2,
-  succeedNone: () => succeedNone,
-  succeedSome: () => succeedSome,
-  tap: () => tap2,
-  transposeMapOption: () => transposeMapOption,
-  transposeOption: () => transposeOption,
-  try: () => try_,
-  void: () => void_2
-});
-var succeed2 = succeed;
-var fail2 = fail;
-var void_2 = /* @__PURE__ */ succeed2(void 0);
-var failVoid = /* @__PURE__ */ fail2(void 0);
-var fromNullishOr2 = /* @__PURE__ */ dual(2, (self, onNullish) => self == null ? fail2(onNullish(self)) : succeed2(self));
-var fromOption2 = fromOption;
-var try_ = (evaluate2) => {
-  if (isFunction(evaluate2)) {
-    try {
-      return succeed2(evaluate2());
-    } catch (e) {
-      return fail2(e);
-    }
-  } else {
-    try {
-      return succeed2(evaluate2.try());
-    } catch (e) {
-      return fail2(evaluate2.catch(e));
-    }
-  }
-};
-var isResult2 = isResult;
-var isFailure2 = isFailure;
-var isSuccess2 = isSuccess;
-var getSuccess3 = getSuccess;
-var getFailure3 = getFailure;
-var makeEquivalence2 = (success, failure) => make3((x, y) => isFailure2(x) ? isFailure2(y) && failure(x.failure, y.failure) : isSuccess2(y) && success(x.success, y.success));
-var mapBoth = /* @__PURE__ */ dual(2, (self, {
-  onFailure,
-  onSuccess
-}) => isFailure2(self) ? fail2(onFailure(self.failure)) : succeed2(onSuccess(self.success)));
-var mapError = /* @__PURE__ */ dual(2, (self, f) => isFailure2(self) ? fail2(f(self.failure)) : succeed2(self.success));
-var map2 = /* @__PURE__ */ dual(2, (self, f) => isSuccess2(self) ? succeed2(f(self.success)) : fail2(self.failure));
-var match3 = /* @__PURE__ */ dual(2, (self, {
-  onFailure,
-  onSuccess
-}) => isFailure2(self) ? onFailure(self.failure) : onSuccess(self.success));
-var liftPredicate2 = /* @__PURE__ */ dual(3, (a, predicate, orFailWith) => predicate(a) ? succeed2(a) : fail2(orFailWith(a)));
-var filterOrFail = /* @__PURE__ */ dual(3, (self, predicate, orFailWith) => flatMap2(self, (a) => predicate(a) ? succeed2(a) : fail2(orFailWith(a))));
-var merge2 = /* @__PURE__ */ match3({
-  onFailure: identity,
-  onSuccess: identity
-});
-var getOrElse3 = /* @__PURE__ */ dual(2, (self, onFailure) => isFailure2(self) ? onFailure(self.failure) : self.success);
-var getOrNull2 = /* @__PURE__ */ getOrElse3(constNull);
-var getOrUndefined3 = /* @__PURE__ */ getOrElse3(constUndefined);
-var getOrThrowWith2 = /* @__PURE__ */ dual(2, (self, onFailure) => {
-  if (isSuccess2(self)) {
-    return self.success;
-  }
-  throw onFailure(self.failure);
-});
-var getOrThrow2 = /* @__PURE__ */ getOrThrowWith2(identity);
-var orElse2 = /* @__PURE__ */ dual(2, (self, that) => isFailure2(self) ? that(self.failure) : succeed2(self.success));
-var flatMap2 = /* @__PURE__ */ dual(2, (self, f) => isFailure2(self) ? fail2(self.failure) : f(self.success));
-var andThen2 = /* @__PURE__ */ dual(2, (self, f) => flatMap2(self, (a) => {
-  const out = isFunction(f) ? f(a) : f;
-  return isResult2(out) ? out : succeed2(out);
-}));
-var all2 = (input) => {
-  if (Symbol.iterator in input) {
-    const out2 = [];
-    for (const e of input) {
-      if (isFailure2(e)) {
-        return e;
-      }
-      out2.push(e.success);
-    }
-    return succeed2(out2);
-  }
-  const out = {};
-  for (const key of Object.keys(input)) {
-    const e = input[key];
-    if (isFailure2(e)) {
-      return e;
-    }
-    out[key] = e.success;
-  }
-  return succeed2(out);
-};
-var flip = (self) => isFailure2(self) ? succeed2(self.failure) : fail2(self.success);
-var gen2 = (...args2) => {
-  const f = args2.length === 1 ? args2[0] : args2[1].bind(args2[0]);
-  const iterator = f();
-  let state = iterator.next();
-  while (!state.done) {
-    const current = state.value;
-    if (isFailure2(current)) {
-      return current;
-    }
-    state = iterator.next(current.success);
-  }
-  return succeed2(state.value);
-};
-var Do2 = /* @__PURE__ */ succeed2({});
-var bind3 = /* @__PURE__ */ bind(map2, flatMap2);
-var bindTo3 = /* @__PURE__ */ bindTo(map2);
-var let_3 = /* @__PURE__ */ let_(map2);
-var transposeOption = (self) => {
-  return isNone(self) ? succeedNone : map2(self.value, some2);
-};
-var transposeMapOption = /* @__PURE__ */ dual(2, (self, f) => isNone(self) ? succeedNone : map2(f(self.value), some2));
-var succeedNone = /* @__PURE__ */ succeed2(none);
-var succeedSome = (a) => succeed2(some2(a));
-var tap2 = /* @__PURE__ */ dual(2, (self, f) => {
-  if (isSuccess2(self)) {
-    f(self.success);
-  }
-  return self;
-});
-
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Tuple.js
 var makeEquivalence3 = Tuple2;
 
@@ -2917,6 +2917,7 @@ var makeEquivalence4 = (equivalence) => {
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Array.js
 var Array2 = globalThis.Array;
+var allocate = (n) => new Array2(n);
 var makeBy2 = /* @__PURE__ */ dual(2, (n, f) => {
   const max6 = Math.max(1, Math.floor(n));
   const out = new Array2(max6);
@@ -3826,7 +3827,7 @@ var fiberJoinAll = (self) => callback((resume) => {
 var fiberInterrupt = (self) => withFiber((fiber3) => fiberInterruptAs(self, fiber3.id));
 var fiberInterruptAs = /* @__PURE__ */ dual((args2) => hasProperty(args2[0], FiberTypeId), (self, fiberId3, annotations2) => withFiber((parent) => {
   let ann = fiberStackAnnotations(parent);
-  ann = ann && annotations2 ? merge(ann, annotations2) : ann ?? annotations2;
+  ann = ann && annotations2 ? merge2(ann, annotations2) : ann ?? annotations2;
   self.interruptUnsafe(fiberId3, ann);
   return asVoid2(fiberAwait(self));
 }));
@@ -4267,7 +4268,7 @@ var getContext = /* @__PURE__ */ withFiber((fiber3) => succeed3(fiber3.context))
 var contextWith = (f) => withFiber((fiber3) => f(fiber3.context));
 var provideContext = /* @__PURE__ */ dual(2, (self, context4) => {
   if (effectIsExit(self)) return self;
-  return updateContext(self, merge(context4));
+  return updateContext(self, merge2(context4));
 });
 var provideService = function() {
   if (arguments.length === 1) {
@@ -6002,9 +6003,9 @@ var MemoMapImpl = class {
     return MemoMapTypeId;
   }
   map = /* @__PURE__ */ new Map();
-  getOrElseMemoize(layer, scope3, build2) {
-    if (this.map.has(layer)) {
-      const entry2 = this.map.get(layer);
+  getOrElseMemoize(layer2, scope3, build2) {
+    if (this.map.has(layer2)) {
+      const entry2 = this.map.get(layer2);
       entry2.observers++;
       return andThen3(scopeAddFinalizerExit(scope3, (exit3) => entry2.finalizer(exit3)), entry2.effect);
     }
@@ -6016,13 +6017,13 @@ var MemoMapImpl = class {
       finalizer: (exit3) => suspend(() => {
         entry.observers--;
         if (entry.observers === 0) {
-          this.map.delete(layer);
+          this.map.delete(layer2);
           return close(layerScope, exit3);
         }
         return void_3;
       })
     };
-    this.map.set(layer, entry);
+    this.map.set(layer2, entry);
     return scopeAddFinalizerExit(scope3, entry.finalizer).pipe(flatMap3(() => build2(this, layerScope)), onExit((exit3) => {
       entry.effect = exit3;
       return done3(deferred, exit3);
@@ -6032,7 +6033,7 @@ var MemoMapImpl = class {
 var makeMemoMapUnsafe = () => new MemoMapImpl();
 var makeMemoMap = /* @__PURE__ */ sync(makeMemoMapUnsafe);
 var CurrentMemoMap = class extends (/* @__PURE__ */ Service()("effect/Layer/CurrentMemoMap")) {
-  static getOrCreate = /* @__PURE__ */ getOrElse2(this, makeMemoMapUnsafe);
+  static getOrCreate = /* @__PURE__ */ getOrElse3(this, makeMemoMapUnsafe);
 };
 var buildWithMemoMap = /* @__PURE__ */ dual(3, (self, memoMap, scope3) => provideService(map5(self.build(memoMap, scope3), add(CurrentMemoMap, memoMap)), CurrentMemoMap, memoMap));
 var build = (self) => withFiber((fiber3) => buildWithMemoMap(self, CurrentMemoMap.getOrCreate(fiber3.context), getUnsafe(fiber3.context, Scope)));
@@ -6068,7 +6069,7 @@ var unwrap = (self) => {
 };
 var mergeAllEffect = (layers, memoMap, scope3) => {
   const parentScope = forkUnsafe2(scope3, "parallel");
-  return forEach(layers, (layer) => layer.build(memoMap, forkUnsafe2(parentScope, "sequential")), {
+  return forEach(layers, (layer2) => layer2.build(memoMap, forkUnsafe2(parentScope, "sequential")), {
     concurrency: layers.length
   }).pipe(map5((context4) => mergeAll(...context4)));
 };
@@ -6076,7 +6077,7 @@ var mergeAll2 = (...layers) => fromBuild((memoMap, scope3) => mergeAllEffect(lay
 var merge3 = /* @__PURE__ */ dual(2, (self, that) => mergeAll2(self, ...Array.isArray(that) ? that : [that]));
 var provideWith = (self, that, f) => fromBuild((memoMap, scope3) => flatMap3(Array.isArray(that) ? mergeAllEffect(that, memoMap, scope3) : that.build(memoMap, scope3), (context4) => self.build(memoMap, scope3).pipe(provideContext(context4), map5((merged) => f(merged, context4)))));
 var provide2 = /* @__PURE__ */ dual(2, (self, that) => provideWith(self, that, identity));
-var provideMerge = /* @__PURE__ */ dual(2, (self, that) => provideWith(self, that, (self2, that2) => merge(that2, self2)));
+var provideMerge = /* @__PURE__ */ dual(2, (self, that) => provideWith(self, that, (self2, that2) => merge2(that2, self2)));
 var flatMap4 = /* @__PURE__ */ dual(2, (self, f) => fromBuild((memoMap, scope3) => flatMap3(self.build(memoMap, scope3), (context4) => f(context4).build(memoMap, scope3))));
 var tap4 = /* @__PURE__ */ dual(2, (self, f) => fromBuild((memoMap, scope3) => flatMap3(self.build(memoMap, scope3), (context4) => provide(as2(f(context4), context4), scope3))));
 var tapError2 = /* @__PURE__ */ dual(2, (self, f) => fromBuild((memoMap, scope3) => catch_(self.build(memoMap, scope3), (error) => provide(andThen3(f(error), fail3(error)), scope3))));
@@ -6085,7 +6086,7 @@ var orDie2 = (self) => fromBuildUnsafe((memoMap, scope3) => orDie(self.build(mem
 var catch_2 = /* @__PURE__ */ dual(2, (self, onError5) => fromBuildUnsafe((memoMap, scope3) => catch_(self.build(memoMap, scope3), (e) => onError5(e).build(memoMap, scope3))));
 var catchTag2 = /* @__PURE__ */ dual(3, (self, k, f) => fromBuildUnsafe((memoMap, scope3) => catchTag(self.build(memoMap, scope3), k, (error) => f(error).build(memoMap, scope3))));
 var catchCause2 = /* @__PURE__ */ dual(2, (self, onError5) => fromBuildUnsafe((memoMap, scope3) => catchCause(self.build(memoMap, scope3), (cause) => onError5(cause).build(memoMap, scope3))));
-var updateService2 = /* @__PURE__ */ dual(3, (layer, service4, f) => provide2(layer, effect(service4, map5(service4.asEffect(), f))));
+var updateService2 = /* @__PURE__ */ dual(3, (layer2, service4, f) => provide2(layer2, effect(service4, map5(service4.asEffect(), f))));
 var fresh = (self) => fromBuildUnsafe((_, scope3) => self.build(makeMemoMapUnsafe(), scope3));
 var launch = (self) => scoped(andThen3(build(self), never));
 var mock = function() {
@@ -6132,9 +6133,9 @@ var makeUnimplemented = (error) => {
 };
 var StreamTypeId = "~effect/Stream";
 var ChannelTypeId = "~effect/Channel";
-var satisfiesSuccessType = () => (layer) => layer;
-var satisfiesErrorType = () => (layer) => layer;
-var satisfiesServicesType = () => (layer) => layer;
+var satisfiesSuccessType = () => (layer2) => layer2;
+var satisfiesErrorType = () => (layer2) => layer2;
+var satisfiesServicesType = () => (layer2) => layer2;
 var span = (name, options) => {
   options = addSpanStackTrace(options);
   return effect(ParentSpan, options?.onEnd ? tap3(makeSpanScoped(name, options), (span2) => addFinalizer((exit3) => options.onEnd(span2, exit3))) : makeSpanScoped(name, options));
@@ -6896,6 +6897,22 @@ var nextPow2 = (n) => {
   const nextPow = Math.ceil(Math.log(n) / Math.log(2));
   return Math.max(Math.pow(2, nextPow), 2);
 };
+var parse = (s) => {
+  if (s === "NaN") {
+    return some3(NaN);
+  }
+  if (s === "Infinity") {
+    return some3(Infinity);
+  }
+  if (s === "-Infinity") {
+    return some3(-Infinity);
+  }
+  if (s.trim() === "") {
+    return none2();
+  }
+  const n = Number3(s);
+  return Number3.isNaN(n) ? none2() : some3(n);
+};
 var ReducerMax = /* @__PURE__ */ make2((a, b) => Math.max(a, b), -Infinity);
 var ReducerMin = /* @__PURE__ */ make2((a, b) => Math.min(a, b), Infinity);
 
@@ -6989,6 +7006,8 @@ var toStepWithMetadata = (schedule4) => clockWith((clock) => map5(toStep(schedul
   });
 }));
 var toStepWithSleep = (schedule4) => map5(toStepWithMetadata(schedule4), (step) => (input) => map5(step(input), (meta) => meta.output));
+var addDelay = /* @__PURE__ */ dual(2, (self, f) => modifyDelay(self, (output, delay3) => map5(f(output), (d) => sum(fromInputUnsafe(d), fromInputUnsafe(delay3)))));
+var modifyDelay = /* @__PURE__ */ dual(2, (self, f) => fromStep(map5(toStep(self), (step) => (now2, input) => flatMap3(step(now2, input), ([output, delay3]) => map5(f(output, delay3), (delay4) => [output, fromInputUnsafe(delay4)])))));
 var passthrough = (self) => fromStep(map5(toStep(self), (step) => (now2, input) => matchEffect2(step(now2, input), {
   onSuccess: (result6) => succeed3([input, result6[1]]),
   onFailure: failCause,
@@ -7016,7 +7035,7 @@ var while_ = /* @__PURE__ */ dual(2, (self, predicate) => fromStep(map5(toStep(s
 var forever3 = /* @__PURE__ */ spaced(zero);
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/layer.js
-var provideLayer = (self, layer, options) => scopedWith((scope3) => flatMap3(options?.local ? buildWithMemoMap(layer, makeMemoMapUnsafe(), scope3) : buildWithScope(layer, scope3), (context4) => provideContext(self, context4)));
+var provideLayer = (self, layer2, options) => scopedWith((scope3) => flatMap3(options?.local ? buildWithMemoMap(layer2, makeMemoMapUnsafe(), scope3) : buildWithScope(layer2, scope3), (context4) => provideContext(self, context4)));
 var provide3 = /* @__PURE__ */ dual((args2) => isEffect(args2[0]), (self, source, options) => isContext(source) ? provideContext(self, source) : provideLayer(self, Array.isArray(source) ? mergeAll2(...source) : source, options));
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/schedule.js
@@ -7344,6 +7363,16 @@ var Metric$ = class {
   }
 };
 var update = /* @__PURE__ */ dual(2, (self, input) => contextWith((services) => sync(() => self.updateUnsafe(input, services))));
+var snapshotUnsafe = (context4) => {
+  const registry = get(context4, MetricRegistry);
+  return Array.from(registry.values()).map(({
+    hooks,
+    ...meta
+  }) => ({
+    ...meta,
+    state: hooks.get(context4)
+  }));
+};
 function makeKey(metric, attributes) {
   let key = `${metric.type}:${metric.id}`;
   if (isNotUndefined(metric.description)) {
@@ -10493,6 +10522,22 @@ function stringifyJson(options) {
     })
   }));
 }
+function splitKeyValue(options) {
+  const separator = options?.separator ?? ",";
+  const keyValueSeparator = options?.keyValueSeparator ?? "=";
+  return transform((input) => input.split(separator).reduce((acc, pair) => {
+    const [key, value5] = pair.split(keyValueSeparator);
+    if (key && value5) {
+      acc[key] = value5;
+    }
+    return acc;
+  }, {}));
+}
+function joinKeyValue(options) {
+  const separator = options?.separator ?? ",";
+  const keyValueSeparator = options?.keyValueSeparator ?? "=";
+  return transform((input) => Object.entries(input).map(([key, value5]) => `${key}${keyValueSeparator}${value5}`).join(separator));
+}
 function split(options) {
   const separator = options?.separator ?? ",";
   return transform((input) => input === "" ? [] : input.split(separator));
@@ -10512,7 +10557,7 @@ function decodeBase642() {
   })).asEffect());
 }
 function decodeBase64String2() {
-  return transformOrFail((input) => match3(decodeBase64String(input), {
+  return transformOrFail((input) => match2(decodeBase64String(input), {
     onFailure: (e) => fail7(new InvalidValue(some3(input), {
       message: e.message
     })),
@@ -10520,7 +10565,7 @@ function decodeBase64String2() {
   }));
 }
 function decodeBase64Url2() {
-  return transformOrFail((input) => match3(decodeBase64Url(input), {
+  return transformOrFail((input) => match2(decodeBase64Url(input), {
     onFailure: (e) => fail7(new InvalidValue(some3(input), {
       message: e.message
     })),
@@ -10528,7 +10573,7 @@ function decodeBase64Url2() {
   }));
 }
 function decodeBase64UrlString2() {
-  return transformOrFail((input) => match3(decodeBase64UrlString(input), {
+  return transformOrFail((input) => match2(decodeBase64UrlString(input), {
     onFailure: (e) => fail7(new InvalidValue(some3(input), {
       message: e.message
     })),
@@ -10536,7 +10581,7 @@ function decodeBase64UrlString2() {
   }));
 }
 function decodeHex2() {
-  return transformOrFail((input) => match3(decodeHex(input), {
+  return transformOrFail((input) => match2(decodeHex(input), {
     onFailure: (e) => fail7(new InvalidValue(some3(input), {
       message: e.message
     })),
@@ -10544,7 +10589,7 @@ function decodeHex2() {
   }));
 }
 function decodeHexString2() {
-  return transformOrFail((input) => match3(decodeHexString(input), {
+  return transformOrFail((input) => match2(decodeHexString(input), {
     onFailure: (e) => fail7(new InvalidValue(some3(input), {
       message: e.message
     })),
@@ -10732,6 +10777,9 @@ function transformOptional2(options) {
 }
 function trim3() {
   return new Transformation(trim2(), passthrough2());
+}
+function splitKeyValue2(options) {
+  return new Transformation(splitKeyValue(options), joinKeyValue(options));
 }
 var passthrough_2 = /* @__PURE__ */ new Transformation(/* @__PURE__ */ passthrough2(), /* @__PURE__ */ passthrough2());
 function passthrough3() {
@@ -10948,8 +10996,8 @@ var Declaration = class _Declaration extends Base2 {
     };
   }
   /** @internal */
-  recur(recur5) {
-    const tps = mapOrSame(this.typeParameters, recur5);
+  recur(recur6) {
+    const tps = mapOrSame(this.typeParameters, recur6);
     return tps === this.typeParameters ? this : new _Declaration(tps, this.run, this.annotations, this.checks, void 0, this.context);
   }
   /** @internal */
@@ -11111,8 +11159,8 @@ var TemplateLiteral = class extends Base2 {
     this.encodedParts = encodedParts;
   }
   /** @internal */
-  getParser(recur5) {
-    const parser = recur5(this.asTemplateLiteralParser());
+  getParser(recur6) {
+    const parser = recur6(this.asTemplateLiteralParser());
     return (oinput, options) => mapBothEager2(parser(oinput, options), {
       onSuccess: () => oinput,
       onFailure: (issue) => new Composite(this, oinput, [issue])
@@ -11297,15 +11345,15 @@ var Arrays = class _Arrays extends Base2 {
     }
   }
   /** @internal */
-  getParser(recur5) {
+  getParser(recur6) {
     const ast = this;
     const elements = ast.elements.map((ast2) => ({
       ast: ast2,
-      parser: recur5(ast2)
+      parser: recur6(ast2)
     }));
     const rest = ast.rest.map((ast2) => ({
       ast: ast2,
-      parser: recur5(ast2)
+      parser: recur6(ast2)
     }));
     const elementLen = elements.length;
     const [head, ...tail] = rest;
@@ -11361,9 +11409,9 @@ var Arrays = class _Arrays extends Base2 {
     });
   }
   /** @internal */
-  recur(recur5) {
-    const elements = mapOrSame(this.elements, recur5);
-    const rest = mapOrSame(this.rest, recur5);
+  recur(recur6) {
+    const elements = mapOrSame(this.elements, recur6);
+    const rest = mapOrSame(this.rest, recur6);
     return elements === this.elements && rest === this.rest ? this : new _Arrays(this.isMutable, elements, rest, this.annotations, this.checks, void 0, this.context);
   }
   /** @internal */
@@ -11484,7 +11532,7 @@ var Objects = class _Objects extends Base2 {
     }
   }
   /** @internal */
-  getParser(recur5) {
+  getParser(recur6) {
     const ast = this;
     const expectedKeys = [];
     const expectedKeysSet = /* @__PURE__ */ new Set();
@@ -11494,7 +11542,7 @@ var Objects = class _Objects extends Base2 {
       expectedKeysSet.add(ps.name);
       properties.push({
         ps,
-        parser: recur5(ps.type),
+        parser: recur6(ps.type),
         name: ps.name,
         type: ps.type
       });
@@ -11505,7 +11553,7 @@ var Objects = class _Objects extends Base2 {
     }
     const parseIndexes = indexCount > 0 ? iterateEager()({
       onItem: fnUntracedEager2(function* (s, [key, is5]) {
-        const parserKey = recur5(indexSignatureParameterFromString(is5.parameter));
+        const parserKey = recur6(indexSignatureParameterFromString(is5.parameter));
         const effKey = parserKey(some3(key), s.options);
         const exitKey = effectIsExit(effKey) ? effKey : yield* exit2(effKey);
         if (exitKey._tag === "Failure") {
@@ -11514,7 +11562,7 @@ var Objects = class _Objects extends Base2 {
           return;
         }
         const value5 = some3(s.input[key]);
-        const parserValue = recur5(is5.type);
+        const parserValue = recur6(is5.type);
         const effValue = parserValue(value5, s.options);
         const exitValue = effectIsExit(effValue) ? effValue : yield* exit2(effValue);
         if (exitValue._tag === "Failure") {
@@ -11610,26 +11658,26 @@ var Objects = class _Objects extends Base2 {
       return some3(out);
     });
   }
-  rebuild(recur5, flipMerge) {
+  rebuild(recur6, flipMerge) {
     const props = mapOrSame(this.propertySignatures, (ps) => {
-      const t = recur5(ps.type);
+      const t = recur6(ps.type);
       return t === ps.type ? ps : new PropertySignature(ps.name, t);
     });
     const indexes = mapOrSame(this.indexSignatures, (is5) => {
-      const p = recur5(is5.parameter);
-      const t = recur5(is5.type);
+      const p = recur6(is5.parameter);
+      const t = recur6(is5.type);
       const merge7 = flipMerge ? is5.merge?.flip() : is5.merge;
       return p === is5.parameter && t === is5.type && merge7 === is5.merge ? is5 : new IndexSignature(p, t, merge7);
     });
     return props === this.propertySignatures && indexes === this.indexSignatures ? this : new _Objects(props, indexes, this.annotations, this.checks, void 0, this.context);
   }
   /** @internal */
-  flip(recur5) {
-    return this.rebuild(recur5, true);
+  flip(recur6) {
+    return this.rebuild(recur6, true);
   }
   /** @internal */
-  recur(recur5) {
-    return this.rebuild(recur5, false);
+  recur(recur6) {
+    return this.rebuild(recur6, false);
   }
   /** @internal */
   getExpected() {
@@ -11840,7 +11888,7 @@ var Union = class _Union extends Base2 {
     this.mode = mode;
   }
   /** @internal */
-  getParser(recur5) {
+  getParser(recur6) {
     const ast = this;
     return (oinput, options) => {
       if (oinput._tag === "None") {
@@ -11850,7 +11898,7 @@ var Union = class _Union extends Base2 {
       const candidates = getCandidates(input, ast.types);
       const state = {
         ast,
-        recur: recur5,
+        recur: recur6,
         oinput,
         input,
         out: void 0,
@@ -11869,8 +11917,8 @@ var Union = class _Union extends Base2 {
     };
   }
   /** @internal */
-  recur(recur5) {
-    const types = mapOrSame(this.types, recur5);
+  recur(recur6) {
+    const types = mapOrSame(this.types, recur6);
     return types === this.types ? this : new _Union(types, this.mode, this.annotations, this.checks, void 0, this.context);
   }
   /** @internal */
@@ -11955,12 +12003,12 @@ var Suspend = class _Suspend extends Base2 {
     this.thunk = memoizeThunk(thunk);
   }
   /** @internal */
-  getParser(recur5) {
-    return recur5(this.thunk());
+  getParser(recur6) {
+    return recur6(this.thunk());
   }
   /** @internal */
-  recur(recur5) {
-    return new _Suspend(() => recur5(this.thunk()), this.annotations, this.checks, void 0, this.context);
+  recur(recur6) {
+    return new _Suspend(() => recur6(this.thunk()), this.annotations, this.checks, void 0, this.context);
   }
   /** @internal */
   getExpected(getExpected2) {
@@ -12421,8 +12469,8 @@ var resolveDescription2 = resolveDescription;
 function isJson(u) {
   const onPath = /* @__PURE__ */ new Set();
   const validated = /* @__PURE__ */ new Set();
-  return recur5(u);
-  function recur5(u2) {
+  return recur6(u);
+  function recur6(u2) {
     if (u2 === null || typeof u2 === "string" || typeof u2 === "boolean") {
       return true;
     }
@@ -12439,7 +12487,7 @@ function isJson(u) {
       return true;
     }
     onPath.add(u2);
-    const ok = Array.isArray(u2) ? u2.every(recur5) : Object.keys(u2).every((key) => recur5(u2[key]));
+    const ok = Array.isArray(u2) ? u2.every(recur6) : Object.keys(u2).every((key) => recur6(u2[key]));
     onPath.delete(u2);
     if (ok) {
       validated.add(u2);
@@ -12471,8 +12519,8 @@ var unknownToNull = /* @__PURE__ */ new Link(null_, /* @__PURE__ */ new Transfor
 var unknownToJson = /* @__PURE__ */ new Link(Json, /* @__PURE__ */ passthrough3());
 function isStringTree(u) {
   const seen = /* @__PURE__ */ new Set();
-  return recur5(u);
-  function recur5(u2) {
+  return recur6(u);
+  function recur6(u2) {
     if (u2 === void 0 || typeof u2 === "string") {
       return true;
     }
@@ -12484,9 +12532,9 @@ function isStringTree(u) {
     }
     seen.add(u2);
     if (Array.isArray(u2)) {
-      return u2.every(recur5);
+      return u2.every(recur6);
     }
-    return Object.keys(u2).every((key) => recur5(u2[key]));
+    return Object.keys(u2).every((key) => recur6(u2[key]));
   }
 }
 var StringTree = /* @__PURE__ */ new Declaration([], () => (input, ast) => isStringTree(input) ? succeed7(input) : fail7(new InvalidType(ast, some3(input))), {
@@ -12884,8 +12932,8 @@ var recurDefaults = /* @__PURE__ */ memoize((ast) => {
       return ast;
   }
 });
-function makeEffect(schema) {
-  const ast = recurDefaults(toType(schema.ast));
+function makeEffect(schema2) {
+  const ast = recurDefaults(toType(schema2.ast));
   const parser = run(ast);
   return (input, options) => {
     return parser(input, options?.disableChecks ? options?.parseOptions ? {
@@ -12896,22 +12944,22 @@ function makeEffect(schema) {
     } : options?.parseOptions);
   };
 }
-function makeOption(schema) {
-  const parser = makeEffect(schema);
+function makeOption(schema2) {
+  const parser = makeEffect(schema2);
   return (input, options) => {
     return getSuccess4(runSyncExit2(parser(input, options)));
   };
 }
-function makeUnsafe5(schema) {
-  const parser = makeEffect(schema);
+function makeUnsafe5(schema2) {
+  const parser = makeEffect(schema2);
   return (input, options) => {
     return runSync2(mapErrorEager2(parser(input, options), (issue) => new Error(issue.toString(), {
       cause: issue
     })));
   };
 }
-function is(schema) {
-  return _is(schema.ast);
+function is(schema2) {
+  return _is(schema2.ast);
 }
 function _is(ast) {
   const parser = asExit(run(toType(ast)));
@@ -12928,8 +12976,8 @@ function _issue(ast) {
     }));
   };
 }
-function asserts(schema) {
-  const parser = asExit(run(toType(schema.ast)));
+function asserts(schema2) {
+  const parser = asExit(run(toType(schema2.ast)));
   return (input) => {
     const exit3 = parser(input, defaultParseOptions);
     if (isFailure4(exit3)) {
@@ -12943,49 +12991,49 @@ function asserts(schema) {
     }
   };
 }
-function decodeUnknownEffect(schema) {
-  return run(schema.ast);
+function decodeUnknownEffect(schema2) {
+  return run(schema2.ast);
 }
 var decodeEffect = decodeUnknownEffect;
-function decodeUnknownPromise(schema) {
-  return asPromise(decodeUnknownEffect(schema));
+function decodeUnknownPromise(schema2) {
+  return asPromise(decodeUnknownEffect(schema2));
 }
-function decodePromise(schema) {
-  return asPromise(decodeEffect(schema));
+function decodePromise(schema2) {
+  return asPromise(decodeEffect(schema2));
 }
-function decodeUnknownExit(schema) {
-  return asExit(decodeUnknownEffect(schema));
+function decodeUnknownExit(schema2) {
+  return asExit(decodeUnknownEffect(schema2));
 }
-function decodeUnknownOption(schema) {
-  return asOption(decodeUnknownEffect(schema));
+function decodeUnknownOption(schema2) {
+  return asOption(decodeUnknownEffect(schema2));
 }
 var decodeOption = decodeUnknownOption;
-function decodeUnknownResult(schema) {
-  return asResult(decodeUnknownEffect(schema));
+function decodeUnknownResult(schema2) {
+  return asResult(decodeUnknownEffect(schema2));
 }
 var decodeResult = decodeUnknownResult;
-function decodeUnknownSync(schema) {
-  return asSync(decodeUnknownEffect(schema));
+function decodeUnknownSync(schema2) {
+  return asSync(decodeUnknownEffect(schema2));
 }
 var decodeSync = decodeUnknownSync;
-function encodeUnknownEffect(schema) {
-  return run(flip4(schema.ast));
+function encodeUnknownEffect(schema2) {
+  return run(flip4(schema2.ast));
 }
-var encodeUnknownPromise = (schema) => asPromise(encodeUnknownEffect(schema));
+var encodeUnknownPromise = (schema2) => asPromise(encodeUnknownEffect(schema2));
 var encodePromise = encodeUnknownPromise;
-function encodeUnknownExit(schema) {
-  return asExit(encodeUnknownEffect(schema));
+function encodeUnknownExit(schema2) {
+  return asExit(encodeUnknownEffect(schema2));
 }
-function encodeUnknownOption(schema) {
-  return asOption(encodeUnknownEffect(schema));
+function encodeUnknownOption(schema2) {
+  return asOption(encodeUnknownEffect(schema2));
 }
 var encodeOption = encodeUnknownOption;
-function encodeUnknownResult(schema) {
-  return asResult(encodeUnknownEffect(schema));
+function encodeUnknownResult(schema2) {
+  return asResult(encodeUnknownEffect(schema2));
 }
 var encodeResult = encodeUnknownResult;
-function encodeUnknownSync(schema) {
-  return asSync(encodeUnknownEffect(schema));
+function encodeUnknownSync(schema2) {
+  return asSync(encodeUnknownEffect(schema2));
 }
 var encodeSync = encodeUnknownSync;
 function run(ast) {
@@ -13318,7 +13366,7 @@ function fromASTs(asts) {
   const referenceMap = /* @__PURE__ */ new Map();
   const uniqueReferences = /* @__PURE__ */ new Set();
   const visiting = /* @__PURE__ */ new Set();
-  const schemas = map4(asts, (ast) => recur5(ast));
+  const schemas = map4(asts, (ast) => recur6(ast));
   return {
     representations: schemas,
     references
@@ -13332,7 +13380,7 @@ function fromASTs(asts) {
     uniqueReferences.add(candidate);
     return candidate;
   }
-  function recur5(ast, prefix) {
+  function recur6(ast, prefix) {
     const found = referenceMap.get(ast);
     if (found !== void 0) {
       return {
@@ -13343,7 +13391,7 @@ function fromASTs(asts) {
     const last = getLastEncoding(ast);
     const identifier2 = resolveIdentifier(ast) ?? prefix;
     if (ast !== last) {
-      return recur5(last, identifier2);
+      return recur6(last, identifier2);
     }
     if (identifier2 !== void 0) {
       const reference = gen6(identifier2);
@@ -13397,10 +13445,10 @@ function fromASTs(asts) {
     const annotations2 = fromASTAnnotations(last.annotations);
     switch (last._tag) {
       case "Declaration": {
-        const encodedSchema = recur5(getEncodedSchema(last));
+        const encodedSchema = recur6(getEncodedSchema(last));
         return {
           _tag: "Declaration",
-          typeParameters: last.typeParameters.map((ast) => recur5(ast)),
+          typeParameters: last.typeParameters.map((ast) => recur6(ast)),
           encodedSchema,
           checks: fromASTChecks(last.checks),
           ...annotations2
@@ -13426,7 +13474,7 @@ function fromASTs(asts) {
           checks: fromASTChecks(last.checks),
           ...annotations2,
           ...typeof contentMediaType === "string" && isAST(contentSchema) ? {
-            contentSchema: recur5(contentSchema)
+            contentSchema: recur6(contentSchema)
           } : void 0
         };
       }
@@ -13463,7 +13511,7 @@ function fromASTs(asts) {
       case "TemplateLiteral":
         return {
           _tag: last._tag,
-          parts: last.parts.map((ast) => recur5(ast)),
+          parts: last.parts.map((ast) => recur6(ast)),
           ...annotations2
         };
       case "Arrays":
@@ -13473,11 +13521,11 @@ function fromASTs(asts) {
             const last2 = getLastEncoding(e);
             return {
               isOptional: isOptional(last2),
-              type: recur5(e),
+              type: recur6(e),
               ...fromASTAnnotations(last2.context?.annotations)
             };
           }),
-          rest: last.rest.map((ast) => recur5(ast)),
+          rest: last.rest.map((ast) => recur6(ast)),
           checks: fromASTChecks(last.checks),
           ...annotations2
         };
@@ -13488,15 +13536,15 @@ function fromASTs(asts) {
             const last2 = getLastEncoding(ps.type);
             return {
               name: ps.name,
-              type: recur5(ps.type),
+              type: recur6(ps.type),
               isOptional: isOptional(last2),
               isMutable: isMutable(last2),
               ...fromASTAnnotations(last2.context?.annotations)
             };
           }),
           indexSignatures: last.indexSignatures.map((is5) => ({
-            parameter: recur5(is5.parameter),
-            type: recur5(is5.type)
+            parameter: recur6(is5.parameter),
+            type: recur6(is5.type)
           })),
           checks: fromASTChecks(last.checks),
           ...annotations2
@@ -13505,7 +13553,7 @@ function fromASTs(asts) {
         const types = jsonReorder(last.types);
         return {
           _tag: last._tag,
-          types: types.map((ast) => recur5(ast)),
+          types: types.map((ast) => recur6(ast)),
           mode: last.mode,
           ...annotations2
         };
@@ -13514,7 +13562,7 @@ function fromASTs(asts) {
         return {
           _tag: "Suspend",
           checks: [],
-          thunk: recur5(last.thunk()),
+          thunk: recur6(last.thunk()),
           ...annotations2
         };
       }
@@ -13532,7 +13580,7 @@ function fromASTs(asts) {
               _tag: "Filter",
               meta: meta._tag === "isPropertyNames" ? {
                 _tag: "isPropertyNames",
-                propertyNames: recur5(meta.propertyNames)
+                propertyNames: recur6(meta.propertyNames)
               } : meta,
               ...fromASTAnnotations(c.annotations)
             };
@@ -13587,23 +13635,23 @@ function toJsonSchemaDocument(document, options) {
     representations: [document.representation],
     references: document.references
   }, options);
-  const schema = schemas[0];
+  const schema2 = schemas[0];
   return {
     dialect: source,
-    schema,
+    schema: schema2,
     definitions
   };
 }
 function toJsonSchemaMultiDocument(multiDocument, options) {
   const generateDescriptions = options?.generateDescriptions ?? false;
   const additionalProperties = options?.additionalProperties ?? false;
-  const definitions = map3(multiDocument.references, (d) => recur5(d));
+  const definitions = map3(multiDocument.references, (d) => recur6(d));
   return {
     dialect: "draft-2020-12",
-    schemas: map4(multiDocument.representations, (s) => recur5(s)),
+    schemas: map4(multiDocument.representations, (s) => recur6(s)),
     definitions
   };
-  function recur5(s) {
+  function recur6(s) {
     let js = on(s);
     if ("annotations" in s) {
       const a = collectJsonSchemaAnnotations(s.annotations);
@@ -13622,8 +13670,8 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
     }
     return js;
   }
-  function on(schema) {
-    switch (schema._tag) {
+  function on(schema2) {
+    switch (schema2._tag) {
       case "Any":
       case "Unknown":
       case "ObjectKeyword":
@@ -13649,12 +13697,12 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
           }]
         };
       case "Declaration":
-        return recur5(schema.encodedSchema);
+        return recur6(schema2.encodedSchema);
       case "Suspend":
-        return recur5(schema.thunk);
+        return recur6(schema2.thunk);
       case "Reference":
         return {
-          $ref: `#/$defs/${escapeToken(schema.$ref)}`
+          $ref: `#/$defs/${escapeToken(schema2.$ref)}`
         };
       case "Null":
         return {
@@ -13668,18 +13716,18 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         const out = {
           type: "string"
         };
-        if (schema.contentMediaType !== void 0) {
-          out.contentMediaType = schema.contentMediaType;
+        if (schema2.contentMediaType !== void 0) {
+          out.contentMediaType = schema2.contentMediaType;
         }
-        if (schema.contentSchema !== void 0) {
-          out.contentSchema = recur5(schema.contentSchema);
+        if (schema2.contentSchema !== void 0) {
+          out.contentSchema = recur6(schema2.contentSchema);
         }
         return out;
       }
       case "Number":
-        return hasCheck2(schema.checks, "isInt") ? {
+        return hasCheck2(schema2.checks, "isInt") ? {
           type: "integer"
-        } : hasCheck2(schema.checks, "isFinite") ? {
+        } : hasCheck2(schema2.checks, "isFinite") ? {
           type: "number"
         } : {
           "anyOf": [{
@@ -13700,7 +13748,7 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
           type: "boolean"
         };
       case "Literal": {
-        const literal = schema.literal;
+        const literal = schema2.literal;
         if (typeof literal === "string") {
           return {
             type: "string",
@@ -13725,9 +13773,9 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         };
       }
       case "Enum": {
-        return recur5({
+        return recur6({
           _tag: "Union",
-          types: schema.enums.map(([title, value5]) => ({
+          types: schema2.enums.map(([title, value5]) => ({
             _tag: "Literal",
             literal: value5,
             annotations: {
@@ -13735,44 +13783,44 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
             }
           })),
           mode: "anyOf",
-          annotations: schema.annotations
+          annotations: schema2.annotations
         });
       }
       case "TemplateLiteral": {
-        const pattern = schema.parts.map(getPartPattern).join("");
+        const pattern = schema2.parts.map(getPartPattern).join("");
         return {
           type: "string",
           pattern: `^${pattern}$`
         };
       }
       case "Arrays": {
-        if (schema.rest.length > 1) {
+        if (schema2.rest.length > 1) {
           throw new globalThis.Error("Generating a JSON Schema for post-rest elements is not supported");
         }
         const out = {
           type: "array"
         };
-        let minItems = schema.elements.length;
-        const prefixItems = schema.elements.map((e) => {
+        let minItems = schema2.elements.length;
+        const prefixItems = schema2.elements.map((e) => {
           if (e.isOptional) {
             minItems--;
           }
-          const v = recur5(e.type);
+          const v = recur6(e.type);
           const a = collectJsonSchemaAnnotations(e.annotations);
           return a ? appendJsonSchema(v, a) : v;
         });
         if (prefixItems.length > 0) {
           out.prefixItems = prefixItems;
-          out.maxItems = schema.elements.length;
+          out.maxItems = schema2.elements.length;
           if (minItems > 0) {
             out.minItems = minItems;
           }
         } else {
           out.items = false;
         }
-        if (schema.rest.length > 0) {
+        if (schema2.rest.length > 0) {
           delete out.maxItems;
-          const rest = recur5(schema.rest[0]);
+          const rest = recur6(schema2.rest[0]);
           if (Object.keys(rest).length > 0) {
             out.items = rest;
           } else {
@@ -13782,7 +13830,7 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         return out;
       }
       case "Objects": {
-        if (schema.propertySignatures.length === 0 && schema.indexSignatures.length === 0) {
+        if (schema2.propertySignatures.length === 0 && schema2.indexSignatures.length === 0) {
           return {
             anyOf: [{
               type: "object"
@@ -13796,12 +13844,12 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         };
         const properties = {};
         const required2 = [];
-        for (const ps of schema.propertySignatures) {
+        for (const ps of schema2.propertySignatures) {
           const name = ps.name;
           if (typeof name !== "string") {
             throw new globalThis.Error(`Unsupported property signature name: ${format(name)}`);
           }
-          const v = recur5(ps.type);
+          const v = recur6(ps.type);
           const a = collectJsonSchemaAnnotations(ps.annotations);
           properties[name] = a ? appendJsonSchema(v, a) : v;
           if (!ps.isOptional) {
@@ -13816,8 +13864,8 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         }
         out.additionalProperties = additionalProperties;
         const patternProperties = {};
-        for (const is5 of schema.indexSignatures) {
-          let type3 = recur5(is5.type);
+        for (const is5 of schema2.indexSignatures) {
+          let type3 = recur6(is5.type);
           if (Object.keys(type3).length === 1 && "not" in type3) {
             type3 = false;
           }
@@ -13840,7 +13888,7 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
         return out;
       }
       case "Union": {
-        const types = schema.types.map(recur5);
+        const types = schema2.types.map(recur6);
         if (types.length === 0) {
           return {
             not: {}
@@ -13850,7 +13898,7 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
           const compacted = compactEnums(types);
           if (compacted) return compacted;
         }
-        return schema.mode === "anyOf" ? {
+        return schema2.mode === "anyOf" ? {
           anyOf: types
         } : {
           oneOf: types
@@ -14031,7 +14079,7 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
           };
         case "isPropertyNames":
           return {
-            propertyNames: recur5(meta2.propertyNames)
+            propertyNames: recur6(meta2.propertyNames)
           };
         case "isDateValid":
           return {
@@ -14056,8 +14104,8 @@ function toJsonSchemaMultiDocument(multiDocument, options) {
   }
 }
 function getPatterns(s) {
-  return recur5(s.checks);
-  function recur5(checks) {
+  return recur6(s.checks);
+  function recur6(checks) {
     return checks.flatMap((c) => {
       switch (c._tag) {
         case "Filter": {
@@ -14067,7 +14115,7 @@ function getPatterns(s) {
           return [];
         }
         case "FilterGroup":
-          return recur5(c.checks);
+          return recur6(c.checks);
       }
     });
   }
@@ -14360,8 +14408,8 @@ function toDocumentDraft07(document) {
     definitions: map3(document.definitions, toSchemaDraft07)
   };
 }
-function toSchemaDraft07(schema) {
-  return rewrite(schema);
+function toSchemaDraft07(schema2) {
+  return rewrite(schema2);
   function rewrite(node) {
     return walk(rewrite_refs(node, (ref) => ref.replace(RE_DEFS, "#/definitions")), true);
   }
@@ -14451,8 +14499,8 @@ function toMultiDocumentOpenApi3_1(multiDocument) {
       keyMap2.set(key, sanitized);
     }
   }
-  function rewrite(schema) {
-    return rewrite_refs(schema, ($ref) => {
+  function rewrite(schema2) {
+    return rewrite_refs(schema2, ($ref) => {
       const tokens = $ref.split("/");
       if (tokens.length > 0) {
         const identifier2 = unescapeToken(tokens[tokens.length - 1]);
@@ -14629,10 +14677,10 @@ var OptionalImpl = class {
     this.replaceResult = replaceResult;
   }
   replace(a, s) {
-    return getOrElse3(this.replaceResult(a, s), () => s);
+    return getOrElse2(this.replaceResult(a, s), () => s);
   }
   modify(f) {
-    return (s) => getOrElse3(flatMap2(this.getResult(s), (a) => this.replaceResult(f(a), s)), () => s);
+    return (s) => getOrElse2(flatMap2(this.getResult(s), (a) => this.replaceResult(f(a), s)), () => s);
   }
   compose(that) {
     return make20(compose2(this.node, that.node));
@@ -14728,7 +14776,7 @@ var OptionalImpl = class {
     );
   }
   modifyAll(f) {
-    return (s) => getOrElse3(flatMap2(this.getResult(s), (as4) => this.replaceResult(as4.map(f), s)), () => s);
+    return (s) => getOrElse2(flatMap2(this.getResult(s), (as4) => this.replaceResult(as4.map(f), s)), () => s);
   }
 };
 var IsoImpl = class extends OptionalImpl {
@@ -14767,7 +14815,7 @@ var PrismImpl = class extends OptionalImpl {
     return this.set(a);
   }
   modify(f) {
-    return (s) => getOrElse3(map2(this.getResult(s), (a) => this.set(f(a))), () => s);
+    return (s) => getOrElse2(map2(this.getResult(s), (a) => this.set(f(a))), () => s);
   }
 };
 function make20(node) {
@@ -24555,18 +24603,18 @@ function toStandardSchemaV1(self, options) {
 function toBaseStandardJSONSchemaV1(self, target) {
   const doc2020_12 = toJsonSchemaDocument2(self);
   if (target === "draft-2020-12") {
-    const schema = doc2020_12.schema;
+    const schema2 = doc2020_12.schema;
     if (Object.keys(doc2020_12.definitions).length > 0) {
-      schema.$defs = doc2020_12.definitions;
+      schema2.$defs = doc2020_12.definitions;
     }
-    return schema;
+    return schema2;
   } else if (target === "draft-07") {
     const doc07 = toDocumentDraft07(doc2020_12);
-    const schema = doc07.schema;
+    const schema2 = doc07.schema;
     if (Object.keys(doc07.definitions).length > 0) {
-      schema.definitions = doc07.definitions;
+      schema2.definitions = doc07.definitions;
     }
-    return schema;
+    return schema2;
   }
   throw new globalThis.Error(`Unsupported target: ${target}`);
 }
@@ -24598,15 +24646,15 @@ function toStandardJSONSchemaV1(self) {
 }
 var is2 = is;
 var asserts2 = asserts;
-function decodeUnknownEffect2(schema) {
-  const parser = decodeUnknownEffect(schema);
+function decodeUnknownEffect2(schema2) {
+  const parser = decodeUnknownEffect(schema2);
   return (input, options) => {
     return mapErrorEager2(parser(input, options), (issue) => new SchemaError(issue));
   };
 }
 var decodeEffect2 = decodeUnknownEffect2;
-function decodeUnknownExit2(schema) {
-  const parser = decodeUnknownExit(schema);
+function decodeUnknownExit2(schema2) {
+  const parser = decodeUnknownExit(schema2);
   return (input, options) => {
     return mapError3(parser(input, options), (issue) => new SchemaError(issue));
   };
@@ -24620,15 +24668,15 @@ var decodeUnknownPromise2 = decodeUnknownPromise;
 var decodePromise2 = decodePromise;
 var decodeUnknownSync2 = decodeUnknownSync;
 var decodeSync2 = decodeSync;
-function encodeUnknownEffect2(schema) {
-  const parser = encodeUnknownEffect(schema);
+function encodeUnknownEffect2(schema2) {
+  const parser = encodeUnknownEffect(schema2);
   return (input, options) => {
     return mapErrorEager2(parser(input, options), (issue) => new SchemaError(issue));
   };
 }
 var encodeEffect = encodeUnknownEffect2;
-function encodeUnknownExit2(schema) {
-  const parser = encodeUnknownExit(schema);
+function encodeUnknownExit2(schema2) {
+  const parser = encodeUnknownExit(schema2);
   return (input, options) => {
     return mapError3(parser(input, options), (issue) => new SchemaError(issue));
   };
@@ -24643,41 +24691,41 @@ var encodePromise2 = encodePromise;
 var encodeUnknownSync2 = encodeUnknownSync;
 var encodeSync2 = encodeSync;
 var make21 = make19;
-function asClass(schema) {
+function asClass(schema2) {
   class Class5 {
   }
-  return Object.setPrototypeOf(Class5, schema);
+  return Object.setPrototypeOf(Class5, schema2);
 }
 function isSchema(u) {
   return hasProperty(u, TypeId22) && u[TypeId22] === TypeId22;
 }
-var optionalKey2 = /* @__PURE__ */ lambda((schema) => make21(optionalKey(schema.ast), {
-  schema
+var optionalKey2 = /* @__PURE__ */ lambda((schema2) => make21(optionalKey(schema2.ast), {
+  schema: schema2
 }));
 var requiredKey = /* @__PURE__ */ lambda((self) => self.schema);
 var optional = /* @__PURE__ */ lambda((self) => optionalKey2(UndefinedOr(self)));
 var required = /* @__PURE__ */ lambda((self) => self.schema.members[0]);
-var mutableKey2 = /* @__PURE__ */ lambda((schema) => make21(mutableKey(schema.ast), {
-  schema
+var mutableKey2 = /* @__PURE__ */ lambda((schema2) => make21(mutableKey(schema2.ast), {
+  schema: schema2
 }));
 var readonlyKey = /* @__PURE__ */ lambda((self) => self.schema);
-var toType2 = /* @__PURE__ */ lambda((schema) => make21(toType(schema.ast), {
-  schema
+var toType2 = /* @__PURE__ */ lambda((schema2) => make21(toType(schema2.ast), {
+  schema: schema2
 }));
-var toEncoded2 = /* @__PURE__ */ lambda((schema) => make21(toEncoded(schema.ast), {
-  schema
+var toEncoded2 = /* @__PURE__ */ lambda((schema2) => make21(toEncoded(schema2.ast), {
+  schema: schema2
 }));
 var FlipTypeId = "~effect/Schema/flip";
-function isFlip$(schema) {
-  return hasProperty(schema, FlipTypeId) && schema[FlipTypeId] === FlipTypeId;
+function isFlip$(schema2) {
+  return hasProperty(schema2, FlipTypeId) && schema2[FlipTypeId] === FlipTypeId;
 }
-function flip5(schema) {
-  if (isFlip$(schema)) {
-    return schema.schema.rebuild(flip4(schema.ast));
+function flip5(schema2) {
+  if (isFlip$(schema2)) {
+    return schema2.schema.rebuild(flip4(schema2.ast));
   }
-  return make21(flip4(schema.ast), {
+  return make21(flip4(schema2.ast), {
     [FlipTypeId]: FlipTypeId,
-    schema
+    schema: schema2
   });
 }
 function Literal2(literal) {
@@ -24799,9 +24847,9 @@ function Record2(key, value5, options) {
     value: value5
   });
 }
-function StructWithRest(schema, records) {
-  return make21(structWithRest(schema.ast, records.map(getAST)), {
-    schema,
+function StructWithRest(schema2, records) {
+  return make21(structWithRest(schema2.ast, records.map(getAST)), {
+    schema: schema2,
     records
   });
 }
@@ -24817,20 +24865,20 @@ function makeTuple(ast, elements) {
 function Tuple3(elements) {
   return makeTuple(tuple(elements), elements);
 }
-function TupleWithRest(schema, rest) {
-  return make21(tupleWithRest(schema.ast, rest.map(getAST)), {
-    schema,
+function TupleWithRest(schema2, rest) {
+  return make21(tupleWithRest(schema2.ast, rest.map(getAST)), {
+    schema: schema2,
     rest
   });
 }
-var ArraySchema = /* @__PURE__ */ lambda((schema) => make21(new Arrays(false, [], [schema.ast]), {
-  schema
+var ArraySchema = /* @__PURE__ */ lambda((schema2) => make21(new Arrays(false, [], [schema2.ast]), {
+  schema: schema2
 }));
-var NonEmptyArray = /* @__PURE__ */ lambda((schema) => make21(new Arrays(false, [schema.ast], [schema.ast]), {
-  schema
+var NonEmptyArray = /* @__PURE__ */ lambda((schema2) => make21(new Arrays(false, [schema2.ast], [schema2.ast]), {
+  schema: schema2
 }));
-function ArrayEnsure(schema) {
-  return Union2([schema, ArraySchema(schema)]).pipe(decodeTo2(ArraySchema(toType2(schema)), transform2({
+function ArrayEnsure(schema2) {
+  return Union2([schema2, ArraySchema(schema2)]).pipe(decodeTo2(ArraySchema(toType2(schema2)), transform2({
     decode: ensure,
     encode: (array4) => array4.length === 1 ? array4[0] : array4
   })));
@@ -24838,9 +24886,9 @@ function ArrayEnsure(schema) {
 function UniqueArray(item) {
   return ArraySchema(item).check(isUnique());
 }
-var mutable = /* @__PURE__ */ lambda((schema) => {
-  return make21(new Arrays(true, schema.ast.elements, schema.ast.rest), {
-    schema
+var mutable = /* @__PURE__ */ lambda((schema2) => {
+  return make21(new Arrays(true, schema2.ast.elements, schema2.ast.rest), {
+    schema: schema2
   });
 });
 function makeUnion(ast, members) {
@@ -24881,13 +24929,13 @@ function check2(...checks) {
   return (self) => self.check(...checks);
 }
 function refine(refinement, annotations2) {
-  return (schema) => make21(appendChecks(schema.ast, [makeFilterByGuard(refinement, annotations2)]), {
-    schema
+  return (schema2) => make21(appendChecks(schema2.ast, [makeFilterByGuard(refinement, annotations2)]), {
+    schema: schema2
   });
 }
 function brand2(identifier2) {
-  return (schema) => make21(brand(schema.ast, identifier2), {
-    schema,
+  return (schema2) => make21(brand(schema2.ast, identifier2), {
+    schema: schema2,
     identifier: identifier2
   });
 }
@@ -24897,13 +24945,13 @@ function fromBrand(identifier2, ctor) {
   };
 }
 function middlewareDecoding2(decode2) {
-  return (schema) => make21(middlewareDecoding(schema.ast, new Middleware(decode2, identity)), {
-    schema
+  return (schema2) => make21(middlewareDecoding(schema2.ast, new Middleware(decode2, identity)), {
+    schema: schema2
   });
 }
 function middlewareEncoding2(encode2) {
-  return (schema) => make21(middlewareEncoding(schema.ast, new Middleware(identity, encode2)), {
-    schema
+  return (schema2) => make21(middlewareEncoding(schema2.ast, new Middleware(identity, encode2)), {
+    schema: schema2
   });
 }
 function catchDecoding(f) {
@@ -24942,8 +24990,8 @@ function encode(transformation) {
   };
 }
 function withConstructorDefault2(defaultValue) {
-  return (schema) => make21(withConstructorDefault(schema.ast, defaultValue), {
-    schema
+  return (schema2) => make21(withConstructorDefault(schema2.ast, defaultValue), {
+    schema: schema2
   });
 }
 function withDecodingDefaultKey(defaultValue, options) {
@@ -25000,17 +25048,17 @@ function toTaggedUnion(tag4) {
       guards,
       match: match9
     });
-    function walk(schema) {
-      const ast = schema.ast;
-      if (isUnion(ast) && "members" in schema && globalThis.Array.isArray(schema.members) && schema.members.every(isSchema)) {
-        return schema.members.forEach(walk);
+    function walk(schema2) {
+      const ast = schema2.ast;
+      if (isUnion(ast) && "members" in schema2 && globalThis.Array.isArray(schema2.members) && schema2.members.every(isSchema)) {
+        return schema2.members.forEach(walk);
       }
       const sentinels = collectSentinels(ast);
       if (sentinels.length > 0) {
         const literal = sentinels.find((s) => s.key === tag4)?.literal;
         if (isPropertyKey(literal)) {
-          cases[literal] = schema;
-          guards[literal] = is2(toType2(schema));
+          cases[literal] = schema2;
+          guards[literal] = is2(toType2(schema2));
           return;
         }
       }
@@ -25049,10 +25097,10 @@ function TaggedUnion(casesByTag) {
   });
 }
 function Opaque() {
-  return (schema) => {
+  return (schema2) => {
     class Opaque2 {
     }
-    return Object.setPrototypeOf(Opaque2, schema);
+    return Object.setPrototypeOf(Opaque2, schema2);
   };
 }
 function instanceOf(constructor, annotations2) {
@@ -25861,7 +25909,7 @@ function isUnique(annotations2) {
 var NonEmptyString = /* @__PURE__ */ String5.check(/* @__PURE__ */ isNonEmpty());
 var Char = /* @__PURE__ */ String5.check(/* @__PURE__ */ isLengthBetween(1, 1));
 function Option(value5) {
-  const schema = declareConstructor()([value5], ([value6]) => (input, ast, options) => {
+  const schema2 = declareConstructor()([value5], ([value6]) => (input, ast, options) => {
     if (isOption2(input)) {
       if (isNone2(input)) {
         return succeedNone3;
@@ -25908,35 +25956,35 @@ function Option(value5) {
       onSome: (t) => `some(${value6(t)})`
     })
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5
   });
 }
-function OptionFromNullOr(schema) {
-  return NullOr(schema).pipe(decodeTo2(Option(toType2(schema)), optionFromNullOr()));
+function OptionFromNullOr(schema2) {
+  return NullOr(schema2).pipe(decodeTo2(Option(toType2(schema2)), optionFromNullOr()));
 }
-function OptionFromUndefinedOr(schema) {
-  return UndefinedOr(schema).pipe(decodeTo2(Option(toType2(schema)), optionFromUndefinedOr()));
+function OptionFromUndefinedOr(schema2) {
+  return UndefinedOr(schema2).pipe(decodeTo2(Option(toType2(schema2)), optionFromUndefinedOr()));
 }
-function OptionFromNullishOr(schema, options) {
-  return NullishOr(schema).pipe(decodeTo2(Option(toType2(schema)), optionFromNullishOr(options)));
+function OptionFromNullishOr(schema2, options) {
+  return NullishOr(schema2).pipe(decodeTo2(Option(toType2(schema2)), optionFromNullishOr(options)));
 }
-function OptionFromOptionalKey(schema) {
-  return optionalKey2(schema).pipe(decodeTo2(Option(toType2(schema)), optionFromOptionalKey()));
+function OptionFromOptionalKey(schema2) {
+  return optionalKey2(schema2).pipe(decodeTo2(Option(toType2(schema2)), optionFromOptionalKey()));
 }
-function OptionFromOptional(schema) {
-  return optional(schema).pipe(decodeTo2(Option(toType2(schema)), optionFromOptional()));
+function OptionFromOptional(schema2) {
+  return optional(schema2).pipe(decodeTo2(Option(toType2(schema2)), optionFromOptional()));
 }
-function OptionFromOptionalNullOr(schema, options) {
+function OptionFromOptionalNullOr(schema2, options) {
   const onNoneEncoding = options === void 0 ? "omit" : options.onNoneEncoding;
   const noneValue = onNoneEncoding === null ? null : void 0;
-  return optional(NullOr(schema)).pipe(decodeTo2(Option(toType2(schema)), transformOptional2({
+  return optional(NullOr(schema2)).pipe(decodeTo2(Option(toType2(schema2)), transformOptional2({
     decode: (oe) => oe.pipe(filter(isNotNullish), some3),
     encode: onNoneEncoding === "omit" ? flatten : (ot) => some3(getOrElse(flatten(ot), () => noneValue))
   })));
 }
 function Result(success, failure) {
-  const schema = declareConstructor()([success, failure], ([success2, failure2]) => (input, ast, options) => {
+  const schema2 = declareConstructor()([success, failure], ([success2, failure2]) => (input, ast, options) => {
     if (!isResult2(input)) {
       return fail7(new InvalidType(ast, some3(input)));
     }
@@ -25985,19 +26033,19 @@ function Result(success, failure) {
       } : {}, success2.map(succeed2), failure2.map(fail2));
     },
     toEquivalence: ([success2, failure2]) => makeEquivalence2(success2, failure2),
-    toFormatter: ([success2, failure2]) => match3({
+    toFormatter: ([success2, failure2]) => match2({
       onSuccess: (t) => `success(${success2(t)})`,
       onFailure: (t) => `failure(${failure2(t)})`
     })
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     success,
     failure
   });
 }
 function Redacted(value5, options) {
   const decodeLabel = typeof options?.label === "string" ? decodeUnknownEffect(Literal2(options.label)) : void 0;
-  const schema = declareConstructor()([value5], ([value6]) => (input, ast, poptions) => {
+  const schema2 = declareConstructor()([value5], ([value6]) => (input, ast, poptions) => {
     if (isRedacted(input)) {
       const label = decodeLabel !== void 0 ? mapErrorEager2(decodeLabel(input.label, poptions), (issue) => new Pointer(["label"], issue)) : void_5;
       return flatMapEager2(label, () => mapBothEager2(decodeUnknownEffect(value6)(value2(input), poptions), {
@@ -26031,12 +26079,12 @@ function Redacted(value5, options) {
     toFormatter: () => globalThis.String,
     toEquivalence: ([value6]) => makeEquivalence7(value6)
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5
   });
 }
-function redact3(schema) {
-  return schema.pipe(middlewareDecoding2(mapErrorEager2(redact2)));
+function redact3(schema2) {
+  return schema2.pipe(middlewareDecoding2(mapErrorEager2(redact2)));
 }
 function RedactedFromValue(value5, options) {
   return redact3(value5).pipe(decodeTo2(Redacted(toType2(value5), options), {
@@ -26047,7 +26095,7 @@ function RedactedFromValue(value5, options) {
   }));
 }
 function CauseReason(error, defect) {
-  const schema = declareConstructor()([error, defect], ([error2, defect2]) => (input, ast, options) => {
+  const schema2 = declareConstructor()([error, defect], ([error2, defect2]) => (input, ast, options) => {
     if (!isReason(input)) {
       return fail7(new InvalidType(ast, some3(input)));
     }
@@ -26101,7 +26149,7 @@ function CauseReason(error, defect) {
     toEquivalence: ([error2, defect2]) => causeReasonToEquivalence(error2, defect2),
     toFormatter: ([error2, defect2]) => causeReasonToFormatter(error2, defect2)
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     error,
     defect
   });
@@ -26142,7 +26190,7 @@ function causeReasonToFormatter(error, defect) {
   };
 }
 function Cause(error, defect) {
-  const schema = declareConstructor()([error, defect], ([error2, defect2]) => {
+  const schema2 = declareConstructor()([error, defect], ([error2, defect2]) => {
     const failures = ArraySchema(CauseReason(error2, defect2));
     return (input, ast, options) => {
       if (!isCause2(input)) {
@@ -26173,7 +26221,7 @@ function Cause(error, defect) {
     toEquivalence: ([error2, defect2]) => causeToEquivalence(error2, defect2),
     toFormatter: ([error2, defect2]) => causeToFormatter(error2, defect2)
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     error,
     defect
   });
@@ -26240,7 +26288,7 @@ var DefectWithStack = /* @__PURE__ */ Union2([/* @__PURE__ */ ErrorJsonEncoded.p
   toArbitrary: () => (fc) => fc.json()
 }), defectTransformation))]);
 function Exit(value5, error, defect) {
-  const schema = declareConstructor()([value5, error, defect], ([value6, error2, defect2]) => {
+  const schema2 = declareConstructor()([value5, error, defect], ([value6, error2, defect2]) => {
     const cause = Cause(error2, defect2);
     return (input, ast, options) => {
       if (!isExit2(input)) {
@@ -26313,14 +26361,14 @@ function Exit(value5, error, defect) {
       };
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5,
     error,
     defect
   });
 }
 function ReadonlyMap(key, value5) {
-  const schema = declareConstructor()([key, value5], ([key2, value6]) => {
+  const schema2 = declareConstructor()([key, value5], ([key2, value6]) => {
     const array4 = ArraySchema(Tuple3([key2, value6]));
     return (input, ast, options) => {
       if (input instanceof globalThis.Map) {
@@ -26360,13 +26408,13 @@ function ReadonlyMap(key, value5) {
       return `ReadonlyMap(${size8}) { ${entries3.join(", ")} }`;
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     key,
     value: value5
   });
 }
 function HashMap(key, value5) {
-  const schema = declareConstructor()([key, value5], ([key2, value6]) => {
+  const schema2 = declareConstructor()([key, value5], ([key2, value6]) => {
     const entries3 = ArraySchema(Tuple3([key2, value6]));
     return (input, ast, options) => {
       if (isHashMap2(input)) {
@@ -26407,13 +26455,13 @@ function HashMap(key, value5) {
       return `HashMap(${size8}) { ${entries3.join(", ")} }`;
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     key,
     value: value5
   });
 }
 function ReadonlySet(value5) {
-  const schema = declareConstructor()([value5], ([value6]) => {
+  const schema2 = declareConstructor()([value5], ([value6]) => {
     const array4 = ArraySchema(value6);
     return (input, ast, options) => {
       if (input instanceof globalThis.Set) {
@@ -26453,12 +26501,12 @@ function ReadonlySet(value5) {
       return `ReadonlySet(${size8}) { ${values2.join(", ")} }`;
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5
   });
 }
 function HashSet(value5) {
-  const schema = declareConstructor()([value5], ([value6]) => {
+  const schema2 = declareConstructor()([value5], ([value6]) => {
     const values2 = ArraySchema(value6);
     return (input, ast, options) => {
       if (isHashSet2(input)) {
@@ -26498,12 +26546,12 @@ function HashSet(value5) {
       return `HashSet(${size8}) { ${values2.join(", ")} }`;
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5
   });
 }
 function Chunk(value5) {
-  const schema = declareConstructor()([value5], ([value6]) => {
+  const schema2 = declareConstructor()([value5], ([value6]) => {
     const values2 = ArraySchema(value6);
     return (input, ast, options) => {
       if (isChunk(input)) {
@@ -26543,7 +26591,7 @@ function Chunk(value5) {
       return `Chunk(${size8}) { ${values2.join(", ")} }`;
     }
   });
-  return make21(schema.ast, {
+  return make21(schema2.ast, {
     value: value5
   });
 }
@@ -26708,12 +26756,12 @@ var BigDecimal = /* @__PURE__ */ declare(isBigDecimal, {
 });
 var BigDecimalFromString = /* @__PURE__ */ BigDecimalString.pipe(/* @__PURE__ */ decodeTo2(BigDecimal, bigDecimalFromString));
 var UnknownFromJsonString = /* @__PURE__ */ fromJsonString2(Unknown2);
-function fromJsonString2(schema) {
+function fromJsonString2(schema2) {
   return String5.annotate({
     expected: "a string that will be decoded as JSON",
     contentMediaType: "application/json",
-    contentSchema: toEncoded(schema.ast)
-  }).pipe(decodeTo2(schema, fromJsonString));
+    contentSchema: toEncoded(schema2.ast)
+  }).pipe(decodeTo2(schema2, fromJsonString));
 }
 var File = /* @__PURE__ */ instanceOf(globalThis.File, {
   typeConstructor: {
@@ -26730,7 +26778,7 @@ var File = /* @__PURE__ */ instanceOf(globalThis.File, {
     name: String5,
     lastModified: Number6
   }), transformOrFail2({
-    decode: (e) => match3(decodeBase64(e.data), {
+    decode: (e) => match2(decodeBase64(e.data), {
       onFailure: (error) => fail7(new InvalidValue(some3(e.data), {
         message: error.message
       })),
@@ -26798,8 +26846,8 @@ var FormData2 = /* @__PURE__ */ instanceOf(globalThis.FormData, {
     }
   }))
 });
-function fromFormData2(schema) {
-  return FormData2.pipe(decodeTo2(schema, fromFormData));
+function fromFormData2(schema2) {
+  return FormData2.pipe(decodeTo2(schema2, fromFormData));
 }
 var URLSearchParams2 = /* @__PURE__ */ instanceOf(globalThis.URLSearchParams, {
   typeConstructor: {
@@ -26817,8 +26865,8 @@ var URLSearchParams2 = /* @__PURE__ */ instanceOf(globalThis.URLSearchParams, {
     encode: (params) => params.toString()
   }))
 });
-function fromURLSearchParams2(schema) {
-  return URLSearchParams2.pipe(decodeTo2(schema, fromURLSearchParams));
+function fromURLSearchParams2(schema2) {
+  return URLSearchParams2.pipe(decodeTo2(schema2, fromURLSearchParams));
 }
 var Finite = /* @__PURE__ */ Number6.check(/* @__PURE__ */ isFinite2());
 var Int = /* @__PURE__ */ Number6.check(/* @__PURE__ */ isInt());
@@ -27099,11 +27147,11 @@ function getClassSchemaFactory(from, identifier2, annotations2) {
     return memo2;
   };
 }
-function isStruct(schema) {
-  return isSchema(schema);
+function isStruct(schema2) {
+  return isSchema(schema2);
 }
-var Class4 = (identifier2) => (schema, annotations2) => {
-  const struct2 = isStruct(schema) ? schema : Struct4(schema);
+var Class4 = (identifier2) => (schema2, annotations2) => {
+  const struct2 = isStruct(schema2) ? schema2 : Struct4(schema2);
   return makeClass(Class3, identifier2, struct2, annotations2, (identifier3) => ({
     toString() {
       return `${identifier3}(${format({
@@ -27113,38 +27161,38 @@ var Class4 = (identifier2) => (schema, annotations2) => {
   }));
 };
 var TaggedClass2 = (identifier2) => {
-  return (tagValue, schema, annotations2) => {
-    return Class4(identifier2 ?? tagValue)(isStruct(schema) ? schema.mapFields((fields) => ({
+  return (tagValue, schema2, annotations2) => {
+    return Class4(identifier2 ?? tagValue)(isStruct(schema2) ? schema2.mapFields((fields) => ({
       _tag: tag(tagValue),
       ...fields
     }), {
       unsafePreserveChecks: true
-    }) : TaggedStruct(tagValue, schema), annotations2);
+    }) : TaggedStruct(tagValue, schema2), annotations2);
   };
 };
-var ErrorClass = (identifier2) => (schema, annotations2) => {
-  const struct2 = isStruct(schema) ? schema : Struct4(schema);
+var ErrorClass = (identifier2) => (schema2, annotations2) => {
+  const struct2 = isStruct(schema2) ? schema2 : Struct4(schema2);
   const self = makeClass(Error2, identifier2, struct2, annotations2, (identifier3) => ({
     name: identifier3
   }));
   return self;
 };
 var TaggedErrorClass = (identifier2) => {
-  return (tagValue, schema, annotations2) => {
-    return ErrorClass(identifier2 ?? tagValue)(isStruct(schema) ? schema.mapFields((fields) => ({
+  return (tagValue, schema2, annotations2) => {
+    return ErrorClass(identifier2 ?? tagValue)(isStruct(schema2) ? schema2.mapFields((fields) => ({
       _tag: tag(tagValue),
       ...fields
     }), {
       unsafePreserveChecks: true
-    }) : TaggedStruct(tagValue, schema), annotations2);
+    }) : TaggedStruct(tagValue, schema2), annotations2);
   };
 };
-function toArbitraryLazy(schema) {
-  const lawc = memoized(schema.ast);
+function toArbitraryLazy(schema2) {
+  const lawc = memoized(schema2.ast);
   return (fc) => lawc(fc, {});
 }
-function toArbitrary(schema) {
-  return toArbitraryLazy(schema)(FastCheck_exports);
+function toArbitrary(schema2) {
+  return toArbitraryLazy(schema2)(FastCheck_exports);
 }
 function overrideToFormatter(toFormatter2) {
   return (self) => {
@@ -27153,15 +27201,15 @@ function overrideToFormatter(toFormatter2) {
     });
   };
 }
-function toFormatter(schema, options) {
-  return recur5(schema.ast);
-  function recur5(ast) {
+function toFormatter(schema2, options) {
+  return recur6(schema2.ast);
+  function recur6(ast) {
     const annotation = resolve(ast)?.["toFormatter"];
     if (typeof annotation === "function") {
-      return annotation(isDeclaration(ast) ? ast.typeParameters.map(recur5) : []);
+      return annotation(isDeclaration(ast) ? ast.typeParameters.map(recur6) : []);
     }
     if (options?.onBefore) {
-      const onBefore = options.onBefore(ast, recur5);
+      const onBefore = options.onBefore(ast, recur6);
       if (onBefore !== void 0) {
         return onBefore;
       }
@@ -27177,8 +27225,8 @@ function toFormatter(schema, options) {
       case "Void":
         return () => "void";
       case "Arrays": {
-        const elements = ast.elements.map(recur5);
-        const rest = ast.rest.map(recur5);
+        const elements = ast.elements.map(recur6);
+        const rest = ast.rest.map(recur6);
         return (t) => {
           const out = [];
           let i = 0;
@@ -27205,8 +27253,8 @@ function toFormatter(schema, options) {
         };
       }
       case "Objects": {
-        const propertySignatures = ast.propertySignatures.map((ps) => recur5(ps.type));
-        const indexSignatures = ast.indexSignatures.map((is5) => recur5(is5.type));
+        const propertySignatures = ast.propertySignatures.map((ps) => recur6(ps.type));
+        const indexSignatures = ast.indexSignatures.map((is5) => recur6(is5.type));
         if (ast.propertySignatures.length === 0 && ast.indexSignatures.length === 0) {
           return format;
         }
@@ -27243,14 +27291,14 @@ function toFormatter(schema, options) {
           for (let i = 0; i < candidates.length; i++) {
             const is5 = refinements[i];
             if (is5(t)) {
-              return recur5(candidates[i])(t);
+              return recur6(candidates[i])(t);
             }
           }
           return format(t);
         };
       }
       case "Suspend": {
-        const get11 = memoizeThunk(() => recur5(ast.thunk()));
+        const get11 = memoizeThunk(() => recur6(ast.thunk()));
         return (t) => get11()(t);
       }
     }
@@ -27261,14 +27309,14 @@ function overrideToEquivalence(toEquivalence3) {
     toEquivalence: toEquivalence3
   });
 }
-function toEquivalence2(schema) {
-  return toEquivalence(schema.ast);
+function toEquivalence2(schema2) {
+  return toEquivalence(schema2.ast);
 }
-function toRepresentation(schema) {
-  return fromAST(schema.ast);
+function toRepresentation(schema2) {
+  return fromAST(schema2.ast);
 }
-function toJsonSchemaDocument2(schema, options) {
-  const sd = toRepresentation(schema);
+function toJsonSchemaDocument2(schema2, options) {
+  const sd = toRepresentation(schema2);
   const jd = toJsonSchemaDocument(sd, options);
   return {
     dialect: "draft-2020-12",
@@ -27276,21 +27324,21 @@ function toJsonSchemaDocument2(schema, options) {
     definitions: jd.definitions
   };
 }
-function toCodecJson(schema) {
-  return make21(toCodecJsonTop(schema.ast));
+function toCodecJson(schema2) {
+  return make21(toCodecJsonTop(schema2.ast));
 }
 var toCodecJsonTop = /* @__PURE__ */ toCodec((ast) => {
   const out = toCodecJsonBase(ast, toCodecJsonTop);
   return out !== ast && isOptional(ast) ? optionalKeyLastLink(out) : out;
 });
-function toCodecJsonBase(ast, recur5) {
+function toCodecJsonBase(ast, recur6) {
   switch (ast._tag) {
     case "Declaration": {
       const getLink = ast.annotations?.toCodecJson ?? ast.annotations?.toCodec;
       if (isFunction(getLink)) {
         const tps = isDeclaration(ast) ? ast.typeParameters.map((tp) => make19(toEncoded(tp))) : [];
         const link2 = getLink(tps);
-        const to = recur5(link2.to);
+        const to = recur6(link2.to);
         return replaceEncoding(ast, to === link2.to ? [link2] : [new Link(to, link2.transformation)]);
       }
       return replaceEncoding(ast, [unknownToNull]);
@@ -27313,35 +27361,35 @@ function toCodecJsonBase(ast, recur5) {
           cause: ast
         });
       }
-      return ast.recur(recur5);
+      return ast.recur(recur6);
     }
     case "Union": {
       const sortedTypes = jsonReorder(ast.types);
       if (sortedTypes !== ast.types) {
-        return new Union(sortedTypes, ast.mode, ast.annotations, ast.checks, ast.encoding, ast.context).recur(recur5);
+        return new Union(sortedTypes, ast.mode, ast.annotations, ast.checks, ast.encoding, ast.context).recur(recur6);
       }
-      return ast.recur(recur5);
+      return ast.recur(recur6);
     }
     case "Arrays":
     case "Suspend":
-      return ast.recur(recur5);
+      return ast.recur(recur6);
   }
   return ast;
 }
-function toCodecIso(schema) {
-  return make21(toCodecIsoTop(toType(schema.ast)));
+function toCodecIso(schema2) {
+  return make21(toCodecIsoTop(toType(schema2.ast)));
 }
 var toCodecIsoTop = /* @__PURE__ */ memoize((ast) => {
   const out = toCodecIsoBase(ast, toCodecIsoTop);
   return out !== ast && isOptional(ast) ? optionalKeyLastLink(out) : out;
 });
-function toCodecIsoBase(ast, recur5) {
+function toCodecIsoBase(ast, recur6) {
   switch (ast._tag) {
     case "Declaration": {
       const getLink = ast.annotations?.toCodecIso ?? ast.annotations?.toCodec;
       if (isFunction(getLink)) {
         const link2 = getLink(ast.typeParameters.map((tp) => make19(tp)));
-        const to = recur5(link2.to);
+        const to = recur6(link2.to);
         return replaceEncoding(ast, to === link2.to ? [link2] : [new Link(to, link2.transformation)]);
       }
       return ast;
@@ -27350,12 +27398,12 @@ function toCodecIsoBase(ast, recur5) {
     case "Objects":
     case "Union":
     case "Suspend":
-      return ast.recur(recur5);
+      return ast.recur(recur6);
   }
   return ast;
 }
-function toCodecStringTree(schema, options) {
-  return make21(toCodecEnsureArray(options?.keepDeclarations === true ? serializerStringTreeKeepDeclarations(schema.ast) : serializerStringTree(schema.ast)));
+function toCodecStringTree(schema2, options) {
+  return make21(toCodecEnsureArray(options?.keepDeclarations === true ? serializerStringTreeKeepDeclarations(schema2.ast) : serializerStringTree(schema2.ast)));
 }
 function toEncoderXml(codec, options) {
   const rootName = resolveIdentifier(codec.ast) ?? resolveTitle(codec.ast);
@@ -27373,12 +27421,12 @@ function stringTreeToXml(value5, options) {
   const sortKeys = options.sortKeys ?? true;
   const seen = /* @__PURE__ */ new Set();
   const lines = [];
-  recur5(rootName, value5, 0);
+  recur6(rootName, value5, 0);
   return lines.join(pretty2 ? "\n" : "");
   function push(depth, text) {
     lines.push(pretty2 ? indent.repeat(depth) + text : text);
   }
-  function recur5(tagName, node, depth, originalNameForMeta) {
+  function recur6(tagName, node, depth, originalNameForMeta) {
     const {
       attrs,
       safe
@@ -27401,7 +27449,7 @@ function stringTreeToXml(value5, options) {
             return;
           }
           push(depth, `<${safe}${attrs}>`);
-          for (const item of node) recur5(arrayItemName, item, depth + 1);
+          for (const item of node) recur6(arrayItemName, item, depth + 1);
           push(depth, `</${safe}>`);
           return;
         }
@@ -27414,7 +27462,7 @@ function stringTreeToXml(value5, options) {
         }
         push(depth, `<${safe}${attrs}>`);
         for (const k of keys5) {
-          recur5(xml.parseTagName(k).safe, obj[k], depth + 1, k);
+          recur6(xml.parseTagName(k).safe, obj[k], depth + 1, k);
         }
         push(depth, `</${safe}>`);
       } finally {
@@ -27468,14 +27516,14 @@ function getStringTreePriority(ast) {
   }
 }
 var treeReorder = /* @__PURE__ */ makeReorder(getStringTreePriority);
-function serializerTree(ast, recur5, onMissingAnnotation) {
+function serializerTree(ast, recur6, onMissingAnnotation) {
   switch (ast._tag) {
     case "Declaration": {
       const getLink = ast.annotations?.toCodecJson ?? ast.annotations?.toCodec;
       if (isFunction(getLink)) {
-        const tps = isDeclaration(ast) ? ast.typeParameters.map((tp) => make21(recur5(toEncoded(tp)))) : [];
+        const tps = isDeclaration(ast) ? ast.typeParameters.map((tp) => make21(recur6(toEncoded(tp)))) : [];
         const link2 = getLink(tps);
-        const to = recur5(link2.to);
+        const to = recur6(link2.to);
         return replaceEncoding(ast, to === link2.to ? [link2] : [new Link(to, link2.transformation)]);
       }
       return onMissingAnnotation(ast);
@@ -27500,18 +27548,18 @@ function serializerTree(ast, recur5, onMissingAnnotation) {
           cause: ast
         });
       }
-      return ast.recur(recur5);
+      return ast.recur(recur6);
     }
     case "Union": {
       const sortedTypes = treeReorder(ast.types);
       if (sortedTypes !== ast.types) {
-        return new Union(sortedTypes, ast.mode, ast.annotations, ast.checks, ast.encoding, ast.context).recur(recur5);
+        return new Union(sortedTypes, ast.mode, ast.annotations, ast.checks, ast.encoding, ast.context).recur(recur6);
       }
-      return ast.recur(recur5);
+      return ast.recur(recur6);
     }
     case "Arrays":
     case "Suspend":
-      return ast.recur(recur5);
+      return ast.recur(recur6);
   }
   return ast;
 }
@@ -27558,8 +27606,8 @@ function onSerializerEnsureArray(ast) {
       return ast.recur(toCodecEnsureArray);
   }
 }
-function toIso(schema) {
-  const serializer = toCodecIso(schema);
+function toIso(schema2) {
+  const serializer = toCodecIso(schema2);
   return makeIso(encodeSync(serializer), decodeSync(serializer));
 }
 function toIsoSource(_) {
@@ -27569,16 +27617,16 @@ function toIsoFocus(_) {
   return id();
 }
 function overrideToCodecIso(to, transformation) {
-  return (schema) => {
-    return make21(annotate2(schema.ast, {
+  return (schema2) => {
+    return make21(annotate2(schema2.ast, {
       toCodecIso: () => new Link(to.ast, make18(transformation))
     }), {
-      schema
+      schema: schema2
     });
   };
 }
-function toDifferJsonPatch(schema) {
-  const serializer = toCodecJson(schema);
+function toDifferJsonPatch(schema2) {
+  const serializer = toCodecJson(schema2);
   const get11 = encodeSync(serializer);
   const set7 = decodeSync(serializer);
   return {
@@ -27599,11 +27647,88 @@ function Tree(node) {
 }
 var Json2 = /* @__PURE__ */ make21(Json);
 var MutableJson2 = /* @__PURE__ */ make21(MutableJson);
-function resolveAnnotations(schema) {
-  return resolve(schema.ast);
+function resolveAnnotations(schema2) {
+  return resolve(schema2.ast);
 }
-function resolveAnnotationsKey(schema) {
-  return schema.ast.context?.annotations;
+function resolveAnnotationsKey(schema2) {
+  return schema2.ast.context?.annotations;
+}
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/ManagedRuntime.js
+var ManagedRuntime_exports = {};
+__export(ManagedRuntime_exports, {
+  isManagedRuntime: () => isManagedRuntime,
+  make: () => make22
+});
+var TypeId23 = "~effect/ManagedRuntime";
+var isManagedRuntime = (input) => hasProperty(input, TypeId23);
+var make22 = (layer2, options) => {
+  const memoMap = options?.memoMap ?? makeMemoMapUnsafe();
+  const scope3 = makeUnsafe3("parallel");
+  const layerScope = forkUnsafe2(scope3, "sequential");
+  const defaultRunOptions = {
+    onFiberStart: runIn(scope3)
+  };
+  const mergeRunOptions = (options2) => options2 ? {
+    ...options2,
+    onFiberStart: options2.onFiberStart ? (fiber3) => {
+      defaultRunOptions.onFiberStart(fiber3);
+      options2.onFiberStart(fiber3);
+    } : defaultRunOptions.onFiberStart
+  } : defaultRunOptions;
+  let buildFiber;
+  const contextEffect = withFiber2((fiber3) => {
+    if (!buildFiber) {
+      buildFiber = runFork2(tap5(buildWithMemoMap(layer2, memoMap, layerScope), (context4) => sync4(() => {
+        self.cachedContext = context4;
+      })), {
+        ...defaultRunOptions,
+        scheduler: fiber3.currentScheduler
+      });
+    }
+    return flatten4(await_(buildFiber));
+  });
+  const self = {
+    [TypeId23]: TypeId23,
+    memoMap,
+    scope: scope3,
+    contextEffect,
+    cachedContext: void 0,
+    context() {
+      return self.cachedContext === void 0 ? runPromise2(self.contextEffect) : Promise.resolve(self.cachedContext);
+    },
+    dispose() {
+      return runPromise2(self.disposeEffect);
+    },
+    disposeEffect: suspend3(() => {
+      ;
+      self.contextEffect = die5("ManagedRuntime disposed");
+      self.cachedContext = void 0;
+      return close(self.scope, void_4);
+    }),
+    runFork(effect2, options2) {
+      return self.cachedContext === void 0 ? runFork2(provide5(self, effect2), mergeRunOptions(options2)) : runForkWith2(self.cachedContext)(effect2, mergeRunOptions(options2));
+    },
+    runCallback(effect2, options2) {
+      return self.cachedContext === void 0 ? runCallback2(provide5(self, effect2), mergeRunOptions(options2)) : runCallbackWith2(self.cachedContext)(effect2, mergeRunOptions(options2));
+    },
+    runSyncExit(effect2) {
+      return self.cachedContext === void 0 ? runSyncExit2(provide5(self, effect2)) : runSyncExitWith2(self.cachedContext)(effect2);
+    },
+    runSync(effect2) {
+      return self.cachedContext === void 0 ? runSync2(provide5(self, effect2)) : runSyncWith2(self.cachedContext)(effect2);
+    },
+    runPromiseExit(effect2, options2) {
+      return self.cachedContext === void 0 ? runPromiseExit2(provide5(self, effect2), mergeRunOptions(options2)) : runPromiseExitWith2(self.cachedContext)(effect2, mergeRunOptions(options2));
+    },
+    runPromise(effect2, options2) {
+      return self.cachedContext === void 0 ? runPromise2(provide5(self, effect2), mergeRunOptions(options2)) : runPromiseWith2(self.cachedContext)(effect2, mergeRunOptions(options2));
+    }
+  };
+  return self;
+};
+function provide5(managed, effect2) {
+  return flatMap5(managed.contextEffect, (context4) => provideContext2(effect2, context4));
 }
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Match.js
@@ -27649,9 +27774,9 @@ __export(Match_exports, {
 });
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/matcher.js
-var TypeId23 = "~effect/match/Match/Matcher";
+var TypeId24 = "~effect/match/Match/Matcher";
 var TypeMatcherProto = {
-  [TypeId23]: {
+  [TypeId24]: {
     _input: identity,
     _filters: identity,
     _remaining: identity,
@@ -27672,7 +27797,7 @@ function makeTypeMatcher(cases) {
   return matcher;
 }
 var ValueMatcherProto = {
-  [TypeId23]: {
+  [TypeId24]: {
     _input: identity,
     _filters: identity,
     _result: identity,
@@ -27873,12 +27998,12 @@ var result3 = (self) => {
 var option4 = (self) => {
   const toResult = result3(self);
   if (isResult2(toResult)) {
-    return match3(toResult, {
+    return match2(toResult, {
       onFailure: () => none2(),
       onSuccess: some3
     });
   }
-  return (input) => match3(toResult(input), {
+  return (input) => match2(toResult(input), {
     onFailure: () => none2(),
     onSuccess: some3
   });
@@ -27941,9 +28066,9 @@ var option5 = option4;
 var exhaustive2 = exhaustive;
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/MutableHashMap.js
-var TypeId24 = "~effect/collections/MutableHashMap";
+var TypeId25 = "~effect/collections/MutableHashMap";
 var MutableHashMapProto = {
-  [TypeId24]: TypeId24,
+  [TypeId25]: TypeId25,
   [Symbol.iterator]() {
     return this.backing[Symbol.iterator]();
   },
@@ -28065,12 +28190,12 @@ var size7 = (self) => self.backing.size;
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Latch.js
 var makeUnsafe6 = makeLatchUnsafe;
-var make22 = makeLatch;
+var make23 = makeLatch;
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/MutableRef.js
-var TypeId25 = "~effect/MutableRef";
+var TypeId26 = "~effect/MutableRef";
 var MutableRefProto = {
-  [TypeId25]: TypeId25,
+  [TypeId26]: TypeId26,
   ...PipeInspectableProto,
   toJSON() {
     return {
@@ -28079,7 +28204,7 @@ var MutableRefProto = {
     };
   }
 };
-var make23 = (value5) => {
+var make24 = (value5) => {
   const ref = Object.create(MutableRefProto);
   ref.current = value5;
   return ref;
@@ -28091,22 +28216,22 @@ var set6 = /* @__PURE__ */ dual(2, (self, value5) => {
 });
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/PubSub.js
-var TypeId26 = "~effect/PubSub";
+var TypeId27 = "~effect/PubSub";
 var SubscriptionTypeId = "~effect/PubSub/Subscription";
-var make24 = (options) => sync4(() => makePubSubUnsafe(options.atomicPubSub(), /* @__PURE__ */ new Map(), makeUnsafe3(), makeUnsafe6(false), make23(false), options.strategy()));
-var bounded2 = (capacity) => make24({
+var make25 = (options) => sync4(() => makePubSubUnsafe(options.atomicPubSub(), /* @__PURE__ */ new Map(), makeUnsafe3(), makeUnsafe6(false), make24(false), options.strategy()));
+var bounded2 = (capacity) => make25({
   atomicPubSub: () => makeAtomicBounded(capacity),
   strategy: () => new BackPressureStrategy()
 });
-var dropping2 = (capacity) => make24({
+var dropping2 = (capacity) => make25({
   atomicPubSub: () => makeAtomicBounded(capacity),
   strategy: () => new DroppingStrategy()
 });
-var sliding2 = (capacity) => make24({
+var sliding2 = (capacity) => make25({
   atomicPubSub: () => makeAtomicBounded(capacity),
   strategy: () => new SlidingStrategy()
 });
-var unbounded2 = (options) => make24({
+var unbounded2 = (options) => make25({
   atomicPubSub: () => makeAtomicUnbounded(options),
   strategy: () => new DroppingStrategy()
 });
@@ -28232,7 +28357,7 @@ var removeSubscribers = (subscribers, subscription, pollers) => {
     subscribers.delete(subscription);
   }
 };
-var makeSubscriptionUnsafe = (pubsub, subscribers, strategy) => new SubscriptionImpl(pubsub, subscribers, pubsub.subscribe(), make10(), makeUnsafe6(false), make23(false), strategy, pubsub.replayWindow());
+var makeSubscriptionUnsafe = (pubsub, subscribers, strategy) => new SubscriptionImpl(pubsub, subscribers, pubsub.subscribe(), make10(), makeUnsafe6(false), make24(false), strategy, pubsub.replayWindow());
 var BoundedPubSubArb = class {
   array;
   publisherIndex = 0;
@@ -28884,7 +29009,7 @@ var SubscriptionImpl = class {
   }
 };
 var PubSubImpl = class {
-  [TypeId26] = {
+  [TypeId27] = {
     _A: identity
   };
   pubsub;
@@ -29232,10 +29357,10 @@ var SemaphoreImpl = class {
 var toPull = (take6) => isExit2(take6) ? isSuccess4(take6) ? done2(take6.value) : take6 : succeed7(take6);
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Channel.js
-var TypeId27 = "~effect/Channel";
-var isChannel = (u) => hasProperty(u, TypeId27);
+var TypeId28 = "~effect/Channel";
+var isChannel = (u) => hasProperty(u, TypeId28);
 var ChannelProto = {
-  [TypeId27]: {
+  [TypeId28]: {
     _Env: identity,
     _InErr: identity,
     _InElem: identity,
@@ -29685,7 +29810,7 @@ var mergeAll3 = /* @__PURE__ */ dual(2, (channels, {
 }) => fromTransformBracket(fnUntraced2(function* (upstream, scope3, forkedScope) {
   const concurrencyN = concurrency === "unbounded" ? Number.MAX_SAFE_INTEGER : Math.max(1, concurrency);
   const semaphore = switch_ ? void 0 : makeUnsafe7(concurrencyN);
-  const doneLatch = yield* make22(true);
+  const doneLatch = yield* make23(true);
   const fibers = /* @__PURE__ */ new Set();
   const queue = yield* bounded(bufferSize);
   yield* addFinalizer2(forkedScope, shutdown(queue));
@@ -29898,7 +30023,7 @@ var runWith = (self, f, onHalt) => suspend3(() => {
 var provideContext3 = /* @__PURE__ */ dual(2, (self, context4) => fromTransform((upstream, scope3) => map8(provideContext2(toTransform(self)(upstream, scope3), context4), provideContext2(context4))));
 var provideService3 = /* @__PURE__ */ dual(3, (self, key, service4) => fromTransform((upstream, scope3) => map8(provideService2(toTransform(self)(upstream, scope3), key, service4), provideService2(key, service4))));
 var provideServiceEffect3 = /* @__PURE__ */ dual(3, (self, key, service4) => fromTransform((upstream, scope3) => flatMap5(service4, (s) => toTransform(provideService3(self, key, s))(upstream, scope3))));
-var provide5 = /* @__PURE__ */ dual((args2) => isChannel(args2[0]), (self, layer, options) => isContext(layer) ? provideContext3(self, layer) : fromTransform((upstream, scope3) => flatMap5(options?.local ? buildWithMemoMap(layer, makeMemoMapUnsafe(), scope3) : buildWithScope(layer, scope3), (context4) => map8(provideContext2(toTransform(self)(upstream, scope3), context4), provideContext2(context4)))));
+var provide6 = /* @__PURE__ */ dual((args2) => isChannel(args2[0]), (self, layer2, options) => isContext(layer2) ? provideContext3(self, layer2) : fromTransform((upstream, scope3) => flatMap5(options?.local ? buildWithMemoMap(layer2, makeMemoMapUnsafe(), scope3) : buildWithScope(layer2, scope3), (context4) => map8(provideContext2(toTransform(self)(upstream, scope3), context4), provideContext2(context4)))));
 var updateContext3 = /* @__PURE__ */ dual(2, (self, f) => fromTransform((upstream, scope3) => contextWith2((context4) => {
   const toProvide = f(context4);
   return toTransform(provideContext3(self, toProvide))(upstream, scope3);
@@ -30010,7 +30135,7 @@ var toPubSubTake = /* @__PURE__ */ dual(2, /* @__PURE__ */ fnUntraced2(function*
 }));
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/PlatformError.js
-var TypeId28 = "~effect/platform/PlatformError";
+var TypeId29 = "~effect/platform/PlatformError";
 var BadArgument = class extends (/* @__PURE__ */ TaggedError2("BadArgument")) {
   /**
    * @since 4.0.0
@@ -30035,21 +30160,21 @@ var PlatformError = class extends (/* @__PURE__ */ TaggedError2("PlatformError")
   /**
    * @since 4.0.0
    */
-  [TypeId28] = TypeId28;
+  [TypeId29] = TypeId29;
   get message() {
     return this.reason.message;
   }
 };
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/stream.js
-var TypeId29 = "~effect/Stream";
+var TypeId30 = "~effect/Stream";
 var streamVariance = {
   _R: identity,
   _E: identity,
   _A: identity
 };
 var StreamProto = {
-  [TypeId29]: streamVariance,
+  [TypeId30]: streamVariance,
   pipe() {
     return pipeArguments(this, arguments);
   }
@@ -30061,7 +30186,7 @@ var fromChannel = (channel) => {
 };
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Sink.js
-var TypeId30 = "~effect/Sink";
+var TypeId31 = "~effect/Sink";
 var sinkVariance = {
   _A: identity,
   _In: identity,
@@ -30070,7 +30195,7 @@ var sinkVariance = {
   _R: identity
 };
 var SinkProto = {
-  [TypeId30]: sinkVariance,
+  [TypeId31]: sinkVariance,
   pipe() {
     return pipeArguments(this, arguments);
   }
@@ -30115,7 +30240,7 @@ var Stream_exports = {};
 __export(Stream_exports, {
   DefaultChunkSize: () => DefaultChunkSize2,
   Do: () => Do5,
-  TypeId: () => TypeId33,
+  TypeId: () => TypeId34,
   accumulate: () => accumulate,
   aggregate: () => aggregate,
   aggregateWithin: () => aggregateWithin,
@@ -30213,7 +30338,7 @@ __export(Stream_exports, {
   isStream: () => isStream,
   iterate: () => iterate,
   let: () => let_6,
-  make: () => make28,
+  make: () => make29,
   map: () => map15,
   mapAccum: () => mapAccum3,
   mapAccumArray: () => mapAccumArray,
@@ -30250,7 +30375,7 @@ __export(Stream_exports, {
   pipeThroughChannel: () => pipeThroughChannel,
   pipeThroughChannelOrFail: () => pipeThroughChannelOrFail,
   prepend: () => prepend2,
-  provide: () => provide6,
+  provide: () => provide7,
   provideContext: () => provideContext4,
   provideService: () => provideService4,
   provideServiceEffect: () => provideServiceEffect4,
@@ -30345,9 +30470,9 @@ __export(Stream_exports, {
 });
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/RcMap.js
-var TypeId31 = "~effect/RcMap";
+var TypeId32 = "~effect/RcMap";
 var makeUnsafe8 = (options) => ({
-  [TypeId31]: TypeId31,
+  [TypeId32]: TypeId32,
   lookup: options.lookup,
   context: options.context,
   scope: options.scope,
@@ -30361,7 +30486,7 @@ var makeUnsafe8 = (options) => ({
     return pipeArguments(this, arguments);
   }
 });
-var make25 = (options) => withFiber2((fiber3) => {
+var make26 = (options) => withFiber2((fiber3) => {
   const context4 = fiber3.context;
   const scope3 = get(context4, Scope);
   const self = makeUnsafe8({
@@ -30462,7 +30587,7 @@ var touch = /* @__PURE__ */ dual(2, (self, key) => clockWith2((clock) => {
 }));
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/internal/rcRef.js
-var TypeId32 = "~effect/RcRef";
+var TypeId33 = "~effect/RcRef";
 var stateEmpty = {
   _tag: "Empty"
 };
@@ -30474,7 +30599,7 @@ var variance2 = {
   _E: identity
 };
 var RcRefImpl = class {
-  [TypeId32] = variance2;
+  [TypeId33] = variance2;
   pipe() {
     return pipeArguments(this, arguments);
   }
@@ -30491,7 +30616,7 @@ var RcRefImpl = class {
     this.idleTimeToLive = idleTimeToLive;
   }
 };
-var make26 = (options) => withFiber2((fiber3) => {
+var make27 = (options) => withFiber2((fiber3) => {
   const context4 = fiber3.context;
   const scope3 = get(context4, Scope);
   const ref = new RcRefImpl(options.acquire, context4, scope3, options.idleTimeToLive ? fromInputUnsafe(options.idleTimeToLive) : void 0);
@@ -30560,12 +30685,12 @@ var get8 = /* @__PURE__ */ fnUntraced2(function* (self_) {
 });
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/RcRef.js
-var make27 = make26;
+var make28 = make27;
 var get9 = get8;
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Stream.js
-var TypeId33 = "~effect/Stream";
-var isStream = (u) => hasProperty(u, TypeId33);
+var TypeId34 = "~effect/Stream";
+var isStream = (u) => hasProperty(u, TypeId34);
 var DefaultChunkSize2 = DefaultChunkSize;
 var fromChannel2 = fromChannel;
 var fromEffect2 = (effect2) => fromChannel2(fromEffect(map8(effect2, of)));
@@ -30608,7 +30733,7 @@ var toChannel2 = (stream2) => stream2.channel;
 var callback3 = (f, options) => fromChannel2(callbackArray(f, options));
 var empty11 = /* @__PURE__ */ fromChannel2(empty10);
 var succeed9 = (value5) => fromChannel2(succeed8(of(value5)));
-var make28 = (...values2) => fromArray2(values2);
+var make29 = (...values2) => fromArray2(values2);
 var sync6 = (evaluate2) => fromChannel2(sync5(() => of(evaluate2())));
 var suspend6 = (stream2) => fromChannel2(suspend5(() => stream2().channel));
 var fail11 = (error) => fromChannel2(fail10(error));
@@ -31103,7 +31228,7 @@ var withExecutionPlan3 = /* @__PURE__ */ dual((args2) => isStream(args2[0]), (se
     if (!step) {
       return fail11(getOrThrow(lastError));
     }
-    let nextStream = provideMeta(provide6(self, step.provide));
+    let nextStream = provideMeta(provide7(self, step.provide));
     let receivedElements = false;
     if (isSome2(lastError)) {
       const error = lastError.value;
@@ -31575,7 +31700,7 @@ var groupByImpl = (self, f, options) => transformPullBracket(self, fnUntraced2(f
   const out = yield* unbounded();
   yield* addFinalizer2(scope3, shutdown(out));
   const queueMap = empty9();
-  const queues = yield* make25({
+  const queues = yield* make26({
     lookup: (key) => acquireRelease2(make11({
       capacity: options?.bufferSize ?? 4096
     }).pipe(tap5((queue) => {
@@ -31707,7 +31832,7 @@ var aggregateWithin = /* @__PURE__ */ dual(3, (self, sink, schedule4) => fromCha
   }).pipe(flatMap5((pull2) => raceFirst2(catchSinkHalt(pull2), stepToBuffer)));
 }))));
 var broadcast = /* @__PURE__ */ dual(2, (self, options) => map8(toPubSubTake2(self, options), fromPubSubTake2));
-var share = /* @__PURE__ */ dual(2, (self, options) => map8(make27({
+var share = /* @__PURE__ */ dual(2, (self, options) => map8(make28({
   acquire: broadcast(self, options),
   idleTimeToLive: options.idleTimeToLive
 }), (ref) => unwrap3(get9(ref))));
@@ -31822,7 +31947,7 @@ var onStart2 = /* @__PURE__ */ dual(2, (self, onStart3) => fromChannel2(onStart(
 var onFirst2 = /* @__PURE__ */ dual(2, (self, onFirst3) => fromChannel2(onFirst(self.channel, (arr) => onFirst3(arr[0]))));
 var onEnd2 = /* @__PURE__ */ dual(2, (self, onEnd3) => fromChannel2(onEnd(self.channel, onEnd3)));
 var ensuring4 = /* @__PURE__ */ dual(2, (self, finalizer) => fromChannel2(ensuring3(self.channel, finalizer)));
-var provide6 = /* @__PURE__ */ dual((args2) => isStream(args2[0]), (self, layer, options) => fromChannel2(provide5(self.channel, layer, options)));
+var provide7 = /* @__PURE__ */ dual((args2) => isStream(args2[0]), (self, layer2, options) => fromChannel2(provide6(self.channel, layer2, options)));
 var provideContext4 = /* @__PURE__ */ dual(2, (self, context4) => fromChannel2(provideContext3(self.channel, context4)));
 var provideService4 = /* @__PURE__ */ dual(3, (self, key, service4) => fromChannel2(provideService3(self.channel, key, service4)));
 var provideServiceEffect4 = /* @__PURE__ */ dual(3, (self, key, service4) => fromChannel2(provideServiceEffect3(self.channel, key, service4)));
@@ -32021,7 +32146,7 @@ var bigintPiB = bigint1024 * bigint1024 * bigint1024 * bigint1024 * bigint1024;
 var FileSystem = /* @__PURE__ */ Service("effect/platform/FileSystem");
 
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Path.js
-var TypeId34 = "~effect/platform/Path";
+var TypeId35 = "~effect/platform/Path";
 var Path = /* @__PURE__ */ Service("effect/Path");
 function normalizeStringPosix(path, allowAboveRoot) {
   let res = "";
@@ -32198,7 +32323,7 @@ function encodePathChars(filepath) {
   return filepath;
 }
 var posixImpl = /* @__PURE__ */ Path.of({
-  [TypeId34]: TypeId34,
+  [TypeId35]: TypeId35,
   resolve: resolve2,
   normalize(path) {
     if (path.length === 0) return ".";
@@ -32488,13 +32613,241 @@ var posixImpl = /* @__PURE__ */ Path.of({
   toNamespacedPath: identity
 });
 
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/ConfigProvider.js
+function makeValue(value5) {
+  return {
+    _tag: "Value",
+    value: value5
+  };
+}
+function makeRecord(keys5, value5) {
+  return {
+    _tag: "Record",
+    keys: keys5,
+    value: value5
+  };
+}
+function makeArray(length, value5) {
+  return {
+    _tag: "Array",
+    length,
+    value: value5
+  };
+}
+var ConfigProvider = /* @__PURE__ */ Reference("effect/ConfigProvider", {
+  defaultValue: () => fromEnv()
+});
+var Proto5 = {
+  ...PipeInspectableProto,
+  toJSON() {
+    return {
+      _id: "ConfigProvider"
+    };
+  }
+};
+function make30(get11, mapInput3, prefix) {
+  const self = Object.create(Proto5);
+  self.get = get11;
+  self.mapInput = mapInput3;
+  self.prefix = prefix;
+  self.load = (path) => {
+    if (mapInput3) path = mapInput3(path);
+    if (prefix) path = [...prefix, ...path];
+    return get11(path);
+  };
+  return self;
+}
+function fromEnv(options) {
+  const env = options?.env ?? {
+    ...globalThis?.process?.env,
+    ...import.meta?.env
+  };
+  const trie = buildEnvTrie(env);
+  return make30((path) => succeed7(nodeAtEnv(trie, env, path)));
+}
+function buildEnvTrie(env) {
+  const root = {};
+  for (const [name, value5] of Object.entries(env)) {
+    if (value5 === void 0) continue;
+    const segments = name.split("_");
+    let node = root;
+    for (const seg of segments) {
+      node.children ??= {};
+      node = node.children[seg] ??= {};
+    }
+    node.value = value5;
+  }
+  return root;
+}
+var NUMERIC_INDEX = /^(0|[1-9][0-9]*)$/;
+function nodeAtEnv(trie, env, path) {
+  const key = path.map(String).join("_");
+  const leafValue = env[key];
+  const trieNode = trieNodeAt(trie, path);
+  const children = trieNode?.children ? Object.keys(trieNode.children) : [];
+  if (children.length === 0) {
+    return leafValue === void 0 ? void 0 : makeValue(leafValue);
+  }
+  const allNumeric = children.every((k) => NUMERIC_INDEX.test(k));
+  if (allNumeric) {
+    const length = Math.max(...children.map((k) => parseInt(k, 10))) + 1;
+    return makeArray(length, leafValue);
+  }
+  return makeRecord(new Set(children), leafValue);
+}
+function trieNodeAt(root, path) {
+  if (path.length === 0) return root;
+  let node = root;
+  for (const seg of path) {
+    node = node?.children?.[String(seg)];
+    if (!node) return void 0;
+  }
+  return node;
+}
+
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Config.js
+var TypeId36 = "~effect/Config";
+var ConfigError = class {
+  _tag = "ConfigError";
+  name = "ConfigError";
+  cause;
+  constructor(cause) {
+    this.cause = cause;
+  }
+  get message() {
+    return this.cause.toString();
+  }
+  toString() {
+    return `ConfigError(${this.message})`;
+  }
+};
+var Proto6 = {
+  ...PipeInspectableProto,
+  ...YieldableProto,
+  [TypeId36]: TypeId36,
+  asEffect() {
+    return flatMap5(ConfigProvider.asEffect(), (provider) => this.parse(provider));
+  },
+  toJSON() {
+    return {
+      _id: "Config"
+    };
+  }
+};
+function make31(parse2) {
+  const self = Object.create(Proto6);
+  self.parse = parse2;
+  return self;
+}
+var dump = /* @__PURE__ */ fnUntraced2(function* (provider, path) {
+  const stat = yield* provider.load(path);
+  if (stat === void 0) return void 0;
+  switch (stat._tag) {
+    case "Value":
+      return stat.value;
+    case "Record": {
+      if (stat.value !== void 0) return stat.value;
+      const out = {};
+      for (const key of stat.keys) {
+        const child = yield* dump(provider, [...path, key]);
+        if (child !== void 0) out[key] = child;
+      }
+      return out;
+    }
+    case "Array": {
+      if (stat.value !== void 0) return stat.value;
+      const out = [];
+      for (let i = 0; i < stat.length; i++) {
+        out.push(yield* dump(provider, [...path, i]));
+      }
+      return out;
+    }
+  }
+});
+var recur5 = /* @__PURE__ */ fnUntraced2(function* (ast, provider, path) {
+  switch (ast._tag) {
+    case "Objects": {
+      const out = {};
+      for (const ps of ast.propertySignatures) {
+        const name = ps.name;
+        if (typeof name === "string") {
+          const value5 = yield* recur5(ps.type, provider, [...path, name]);
+          if (value5 !== void 0) out[name] = value5;
+        }
+      }
+      if (ast.indexSignatures.length > 0) {
+        const stat = yield* provider.load(path);
+        if (stat && stat._tag === "Record") {
+          for (const is5 of ast.indexSignatures) {
+            const matches = _is(is5.parameter);
+            for (const key of stat.keys) {
+              if (!Object.hasOwn(out, key) && matches(key)) {
+                const value5 = yield* recur5(is5.type, provider, [...path, key]);
+                if (value5 !== void 0) out[key] = value5;
+              }
+            }
+          }
+        }
+      }
+      return out;
+    }
+    case "Arrays": {
+      const stat = yield* provider.load(path);
+      if (stat && stat._tag === "Value") return stat.value;
+      const out = [];
+      for (let i = 0; i < ast.elements.length; i++) {
+        out.push(yield* recur5(ast.elements[i], provider, [...path, i]));
+      }
+      return out;
+    }
+    case "Union":
+      return yield* dump(provider, path);
+    case "Suspend":
+      return yield* recur5(ast.thunk(), provider, path);
+    default: {
+      const stat = yield* provider.load(path);
+      if (stat === void 0) return void 0;
+      if (stat._tag === "Value") return stat.value;
+      if (stat._tag === "Record" && stat.value !== void 0) return stat.value;
+      if (stat._tag === "Array" && stat.value !== void 0) return stat.value;
+      return void 0;
+    }
+  }
+});
+function schema(codec, path) {
+  const codecStringTree = toCodecStringTree(codec);
+  const decodeUnknownEffect3 = decodeUnknownEffect(codecStringTree);
+  const codecStringTreeEncoded = toEncoded(codecStringTree.ast);
+  const defaultPath = typeof path === "string" ? [path] : path ?? [];
+  return make31((provider) => {
+    const path2 = provider.prefix ? [...provider.prefix, ...defaultPath] : defaultPath;
+    return recur5(codecStringTreeEncoded, provider, defaultPath).pipe(flatMapEager2((tree) => decodeUnknownEffect3(tree).pipe(mapErrorEager2((issue) => new SchemaError(path2.length > 0 ? new Pointer(path2, issue) : issue)))), mapErrorEager2((cause) => new ConfigError(cause)));
+  });
+}
+var Record3 = (key, value5, options) => {
+  const record4 = Record2(key, value5);
+  const recordString = String5.pipe(decodeTo2(Record2(String5, String5), splitKeyValue2(options)), decodeTo2(record4));
+  return Union2([record4, recordString]);
+};
+
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/ErrorReporter.js
 var ignore5 = "~effect/ErrorReporter/ignore";
 
+// ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Logger.js
+var CurrentLoggers2 = CurrentLoggers;
+var make32 = loggerMake;
+var layer = (loggers, options) => effect(CurrentLoggers2, withFiber(fnUntraced(function* (fiber3) {
+  const currentLoggers = new Set(options?.mergeWithExisting === true ? fiber3.getRef(CurrentLoggers) : []);
+  for (const logger of loggers) {
+    currentLoggers.add(isEffect(logger) ? yield* logger : logger);
+  }
+  return currentLoggers;
+})));
+
 // ../../../node_modules/.bun/effect@4.0.0-beta.59/node_modules/effect/dist/Ref.js
-var TypeId35 = "~effect/Ref";
+var TypeId37 = "~effect/Ref";
 var RefProto = {
-  [TypeId35]: {
+  [TypeId37]: {
     _A: identity
   },
   ...PipeInspectableProto,
@@ -32546,9 +32899,12 @@ export {
   some3 as some,
   isSome2 as isSome,
   match,
+  getOrElse,
   fromNullishOr,
+  fromUndefinedOr,
   getOrUndefined,
   map,
+  flatMap,
   Option_exports,
   succeed2 as succeed,
   fail2 as fail,
@@ -32563,6 +32919,7 @@ export {
   map3,
   set,
   makeEquivalence4 as makeEquivalence2,
+  allocate,
   fromIterable2 as fromIterable,
   ensure,
   append,
@@ -32577,25 +32934,30 @@ export {
   makeUnsafe,
   empty as empty3,
   add,
-  getOrElse2 as getOrElse,
+  getOrElse3 as getOrElse2,
   getUnsafe,
   get,
   getOption,
-  merge,
+  merge2 as merge,
   omit,
   Reference,
   Context_exports,
   fromInputUnsafe,
   isFinite,
   isZero,
+  zero,
   millis,
   seconds,
   max3 as max,
   equals2 as equals,
   Duration_exports,
+  make7 as make2,
   DisablePropagation,
+  Tracer,
   isFailReason2 as isFailReason,
+  hasInterruptsOnly2 as hasInterruptsOnly,
   hasInterrupts2 as hasInterrupts,
+  prettyErrors,
   pretty,
   Done2 as Done,
   done2 as done,
@@ -32606,7 +32968,10 @@ export {
   map7 as map5,
   Exit_exports,
   Deferred_exports,
+  CurrentLogAnnotations2 as CurrentLogAnnotations,
+  CurrentLogSpans2 as CurrentLogSpans,
   Scope,
+  addFinalizer2 as addFinalizer,
   CurrentMemoMap,
   buildWithMemoMap,
   succeed6 as succeed2,
@@ -32614,6 +32979,7 @@ export {
   effect,
   effectContext,
   effectDiscard,
+  mergeAll2 as mergeAll,
   provide2 as provide,
   provideMerge,
   Layer_exports,
@@ -32622,9 +32988,13 @@ export {
   TaggedError2 as TaggedError,
   Data_exports,
   Clock,
+  parse,
   isDoneCause,
   isSchedule,
+  addDelay,
   passthrough,
+  forever3 as forever,
+  snapshotUnsafe,
   isEffect2 as isEffect,
   tryPromise2 as tryPromise,
   succeed7 as succeed3,
@@ -32637,11 +33007,12 @@ export {
   die5 as die,
   try_3 as try_2,
   withFiber2 as withFiber,
-  flatMap5 as flatMap,
+  flatMap5 as flatMap2,
   andThen4 as andThen,
   tap5 as tap,
   result2 as result,
   map8 as map6,
+  asVoid4 as asVoid,
   catch_3 as catch_,
   catchTag3 as catchTag,
   catchTags2 as catchTags,
@@ -32650,7 +33021,9 @@ export {
   orDie3 as orDie,
   tapError3 as tapError,
   retry2 as retry,
+  ignore2 as ignore,
   withErrorReporting2 as withErrorReporting,
+  timeoutOption2 as timeoutOption,
   delay2 as delay,
   sleep2 as sleep,
   filterOrElse2 as filterOrElse,
@@ -32662,22 +33035,30 @@ export {
   contextWith2 as contextWith,
   provideContext2 as provideContext,
   updateContext2 as updateContext,
-  addFinalizer3 as addFinalizer,
+  provideService2 as provideService,
+  addFinalizer3 as addFinalizer2,
   cached2 as cached,
+  interruptible2 as interruptible,
   onInterrupt2 as onInterrupt,
   uninterruptibleMask2 as uninterruptibleMask,
+  forever4 as forever2,
   repeat3 as repeat,
+  withTracerEnabled2 as withTracerEnabled,
   useSpan2 as useSpan,
   withSpan3 as withSpan,
   withParentSpan3 as withParentSpan,
+  forkIn2 as forkIn,
+  runForkWith2 as runForkWith,
   runPromiseWith2 as runPromiseWith,
   runSync2 as runSync,
   fnUntraced2 as fnUntraced,
+  logDebug,
+  annotateLogs,
   Effect_exports,
   decodeBase64String,
   Encoding_exports,
   stringOrRedacted,
-  make16 as make2,
+  make16 as make3,
   InvalidValue,
   Forbidden,
   transformOrFail2 as transformOrFail,
@@ -32694,6 +33075,7 @@ export {
   resolveIdentifier2 as resolveIdentifier,
   resolveDescription2 as resolveDescription,
   getCurrent,
+  runIn,
   Fiber_exports,
   Queue_exports,
   fromTransform,
@@ -32717,6 +33099,7 @@ export {
   Void2 as Void,
   Struct4 as Struct,
   Union2,
+  UndefinedOr,
   brand2 as brand,
   decodeTo2 as decodeTo,
   tag,
@@ -32745,7 +33128,12 @@ export {
   Size,
   FileSystem,
   Path,
-  ignore5 as ignore,
+  schema,
+  Record3 as Record,
+  ignore5 as ignore2,
+  make32 as make4,
+  layer,
+  ManagedRuntime_exports,
   Match_exports,
   get10 as get2,
   update2 as update,
