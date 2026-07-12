@@ -26,6 +26,7 @@ import type { FumaDb, FumaTables } from "./fuma-runtime";
 import { ProviderItemId, ProviderKey, Subject, Tenant } from "./ids";
 import type { AnyPlugin } from "./plugin";
 import type { CredentialProvider, ProviderEntry } from "./provider";
+import { runAdapterPromise } from "./promise-runtime";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -222,7 +223,7 @@ const promisifyDeep = <T>(value: T): Promisified<T> => {
         adaptPromiseArgs(args),
       );
       if (Effect.isEffect(result)) {
-        return Effect.runPromise(result as Effect.Effect<unknown, unknown>);
+        return runAdapterPromise(result as Effect.Effect<unknown, unknown>);
       }
       return result;
     }) as Promisified<T>;
@@ -237,7 +238,7 @@ const promisifyDeep = <T>(value: T): Promisified<T> => {
         return (...args: unknown[]) => {
           const result = (v as (...a: unknown[]) => unknown).apply(target, adaptPromiseArgs(args));
           if (Effect.isEffect(result)) {
-            return Effect.runPromise(result as Effect.Effect<unknown, unknown>);
+            return runAdapterPromise(result as Effect.Effect<unknown, unknown>);
           }
           return result;
         };
@@ -275,13 +276,13 @@ export const createExecutor = async <const TPlugins extends readonly AnyPlugin[]
   // get the tagged error as the rejected value. See
   // notes/promise-sdk-typed-errors.md for the planned `runPromiseExit`
   // rewrite that exposes the full error union to consumers.
-  const effectExecutor = await Effect.runPromise(createEffectExecutor(effectConfig));
+  const effectExecutor = await runAdapterPromise(createEffectExecutor(effectConfig));
 
   const executor = promisifyDeep(effectExecutor) as Executor<TPlugins>;
   return {
     ...executor,
     close: async () => {
-      await Effect.runPromise(effectExecutor.close());
+      await runAdapterPromise(effectExecutor.close());
     },
   } as Executor<TPlugins>;
 };

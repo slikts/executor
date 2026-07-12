@@ -1,6 +1,10 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import { createExecutor as createPromiseExecutor } from "@executor-js/sdk/promise";
+import {
+  createExecutor as createPromiseExecutor,
+  configurePromiseTelemetry,
+  disposePromiseTelemetry,
+} from "@executor-js/sdk/promise";
 import { mcpPlugin as makeMcpPlugin } from "@executor-js/plugin-mcp/promise";
 import { createExecutionEngine as createPromiseExecutionEngine } from "@executor-js/execution/promise";
 import { makeQuickJsExecutor as makeQuickJsCodeExecutor } from "@executor-js/runtime-quickjs";
@@ -87,3 +91,23 @@ export const createExecutionEngine = (config: ExecutionEngineConfig): ExecutionE
 export const createExecutorMcpServer = (config: ExecutorMcpServerConfig): Promise<McpServer> =>
   createPromiseExecutorMcpServer(config as Parameters<typeof createPromiseExecutorMcpServer>[0]);
 
+export interface TelemetryConfig {
+  /** OTLP/HTTP base URL, e.g. "http://127.0.0.1:4318". */
+  readonly otlpBaseUrl: string;
+  readonly serviceName: string;
+  readonly serviceVersion?: string;
+  readonly exportInterval?: string;
+}
+
+/**
+ * Route every facade-run effect (executor calls, engine executions, MCP tool
+ * handling) through an OTLP-exporting runtime so spans and logs reach the
+ * host's collector. Plain data only; call before creating executors. Each
+ * `engine.execute` produces one complete trace (sandbox exec, tool
+ * dispatches, upstream calls) under the given service name.
+ */
+export const configureTelemetry = (config: TelemetryConfig): void =>
+  configurePromiseTelemetry(config);
+
+/** Flush pending exports and revert to the default (non-exporting) runtime. */
+export const disposeTelemetry = (): Promise<void> => disposePromiseTelemetry();

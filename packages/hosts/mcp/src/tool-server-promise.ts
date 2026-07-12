@@ -6,6 +6,7 @@ import type { ExecutionEngine, ResumeResponse } from "@executor-js/execution/pro
 import type { Skill } from "@executor-js/execution";
 
 import { createExecutorMcpServer as createEffectExecutorMcpServer } from "./tool-server";
+import { runAdapterPromise } from "@executor-js/sdk/promise";
 
 export interface ExecutorMcpServerConfig {
   readonly engine: ExecutionEngine;
@@ -21,7 +22,7 @@ const toEffectEngine = (engine: ExecutionEngine): EffectExecutionEngine => ({
   execute: (code, options) =>
     fromPromise(() =>
       engine.execute(code, {
-        onElicitation: (context) => Effect.runPromise(options.onElicitation(context)),
+        onElicitation: (context) => runAdapterPromise(options.onElicitation(context)),
       }),
     ),
   executeWithPause: (code, options) => fromPromise(() => engine.executeWithPause(code, options)),
@@ -34,7 +35,7 @@ const toEffectEngine = (engine: ExecutionEngine): EffectExecutionEngine => ({
 });
 
 export const createExecutorMcpServer = (config: ExecutorMcpServerConfig): Promise<McpServer> =>
-  Effect.runPromise(
+  runAdapterPromise(
     createEffectExecutorMcpServer({
       ...config,
       engine: toEffectEngine(config.engine),

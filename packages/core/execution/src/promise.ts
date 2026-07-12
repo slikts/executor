@@ -28,6 +28,7 @@ import {
   type PausedExecution,
   type ResumeResponse,
 } from "./engine";
+import { runAdapterPromise } from "@executor-js/sdk/promise";
 
 export type ElicitationHandler = (ctx: ElicitationContext) => Promise<ElicitationResponse>;
 
@@ -159,19 +160,19 @@ export const toPromiseExecutionEngine = <E extends Cause.YieldableError>(
   engine: EffectExecutionEngine<E>,
 ): ExecutionEngine => ({
   execute: (code, options) =>
-    Effect.runPromise(
+    runAdapterPromise(
       engine.execute(code, {
         onElicitation: (ctx) =>
           // oxlint-disable-next-line executor/no-effect-escape-hatch -- boundary: host-provided Promise elicitation callback is outside the Effect error model
           Effect.tryPromise(() => options.onElicitation(ctx)).pipe(Effect.orDie),
       }),
     ),
-  executeWithPause: (code, options) => Effect.runPromise(engine.executeWithPause(code, options)),
-  resume: (executionId, response) => Effect.runPromise(engine.resume(executionId, response)),
-  getPausedExecution: (executionId) => Effect.runPromise(engine.getPausedExecution(executionId)),
-  pausedExecutionCount: () => Effect.runPromise(engine.pausedExecutionCount()),
-  hasPausedExecutions: () => Effect.runPromise(engine.hasPausedExecutions()),
-  getDescription: () => Effect.runPromise(engine.getDescription),
+  executeWithPause: (code, options) => runAdapterPromise(engine.executeWithPause(code, options)),
+  resume: (executionId, response) => runAdapterPromise(engine.resume(executionId, response)),
+  getPausedExecution: (executionId) => runAdapterPromise(engine.getPausedExecution(executionId)),
+  pausedExecutionCount: () => runAdapterPromise(engine.pausedExecutionCount()),
+  hasPausedExecutions: () => runAdapterPromise(engine.hasPausedExecutions()),
+  getDescription: () => runAdapterPromise(engine.getDescription),
 });
 
 export const createExecutionEngine = <E extends Cause.YieldableError = CodeExecutionError>(

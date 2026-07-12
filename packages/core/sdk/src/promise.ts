@@ -8,6 +8,7 @@ export {
   type ExecutorConfig,
   type PromiseInvokeOptions,
   type PromiseOnElicitation,
+  type PromiseCredentialProvider,
   type Promisified,
 } from "./promise-executor";
 
@@ -82,3 +83,13 @@ export {
   IntegrationRemovalNotAllowedError,
   type ExecutorError,
 } from "./errors";
+
+// Telemetry for Promise-surface consumers: plain-data OTLP configuration so
+// adapter-run effects (spans and logs) export without Effect crossing the
+// boundary.
+export {
+  configurePromiseTelemetry,
+  disposePromiseTelemetry,
+  runAdapterPromise,
+  type PromiseTelemetryConfig,
+} from "./promise-runtime";
