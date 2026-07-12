@@ -1,6 +1,6 @@
 import { describe, expect, it } from "@effect/vitest";
 
-import { createExecutor, ProviderItemId, ProviderKey, type CredentialProvider } from "./promise";
+import { createExecutor, type PromiseCredentialProvider } from "./promise";
 import { definePlugin, tool } from "./plugin";
 import type { ToolDef } from "./tool";
 import { IntegrationSlug, ToolName } from "./ids";
@@ -38,6 +38,21 @@ const echoPlugin = definePlugin(() => ({
 }));
 
 describe("promise/createExecutor", () => {
+  it("threads coreTools into the Effect executor", async () => {
+    const executor = await createExecutor({
+      coreTools: {},
+      onElicitation: "accept-all",
+    });
+
+    const tools = await executor.tools.list({
+      integration: "executor",
+      includeBlocked: true,
+    });
+    expect(tools.map((tool) => String(tool.name))).toContain("coreTools.connections.list");
+
+    await executor.close();
+  });
+
   it("returns Promise-shaped executor and invokes static tools", async () => {
     const plugins = [echoPlugin()] as const;
     const executor = await createExecutor({
@@ -145,14 +160,14 @@ describe("promise/createExecutor", () => {
     }));
 
     const store = new Map<string, string>();
-    const memoryProvider: CredentialProvider = {
-      key: ProviderKey.make("memory"),
+    const memoryProvider: PromiseCredentialProvider = {
+      key: "memory",
       writable: true,
-      get: (id: ProviderItemId) => Effect.sync(() => store.get(String(id)) ?? null),
-      set: (id: ProviderItemId, value: string) =>
-        Effect.sync(() => {
-          store.set(String(id), value);
-        }),
+      get: (id) => Promise.resolve(store.get(id) ?? null),
+      set: (id, value) => {
+        store.set(id, value);
+        return Promise.resolve();
+      },
     };
 
     const plugins = [inventoryPlugin()] as const;

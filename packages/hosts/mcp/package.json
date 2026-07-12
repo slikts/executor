@@ -12,6 +12,10 @@
       "types": "./src/tool-server.ts",
       "default": "./src/tool-server.ts"
     },
+    "./tool-server-promise": {
+      "types": "./src/tool-server-promise.ts",
+      "default": "./src/tool-server-promise.ts"
+    },
     "./in-memory-session-store": {
       "types": "./src/in-memory-session-store.ts",
       "default": "./src/in-memory-session-store.ts"

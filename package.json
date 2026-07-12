@@ -49,6 +49,10 @@
     "./plugin-mcp": {
       "types": "./packages/core/facade/dist/plugin-mcp.d.ts",
       "default": "./packages/core/facade/dist/plugin-mcp.js"
+    },
+    "./plain": {
+      "types": "./packages/core/facade/dist/plain.d.ts",
+      "default": "./packages/core/facade/dist/plain.js"
     }
   },
   "scripts": {

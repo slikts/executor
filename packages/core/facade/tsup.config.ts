@@ -7,6 +7,7 @@ export default defineConfig({
     execution: "src/execution.ts",
     config: "src/config.ts",
     "plugin-mcp": "src/plugin-mcp.ts",
+    plain: "src/plain.ts",
   },
   format: ["esm"],
   dts: { resolve: true },

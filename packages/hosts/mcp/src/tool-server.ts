@@ -124,7 +124,7 @@ type SharedMcpServerConfig = {
    * Additional skills to expose alongside the built-in ones. Called on each
    * `skills` tool invocation so content is always live from disk.
    */
-  readonly additionalSkills?: () => readonly Skill[];
+  readonly additionalSkills?: () => readonly Skill[] | Effect.Effect<readonly Skill[]>;
 };
 
 export type ExecutorMcpServerConfig<E extends Cause.YieldableError = Cause.YieldableError> =
@@ -627,7 +627,11 @@ const fallbackOutcomeResult = (
 // The `execute` skill also gets the live integration inventory appended, the
 // same block the execute tool description carries, so a model reading the guide
 // sees what is connected without a second round trip.
-const skillsResult = (name: string | undefined, executeInventory: string, extra: readonly Skill[]): McpToolResult => {
+const skillsResult = (
+  name: string | undefined,
+  executeInventory: string,
+  extra: readonly Skill[],
+): McpToolResult => {
   const allSkills: readonly Skill[] = extra.length > 0 ? [...SKILLS, ...extra] : SKILLS;
   const index = () =>
     [
@@ -976,7 +980,13 @@ export const createExecutorMcpServer = <E extends Cause.YieldableError>(
               .describe('The skill to fetch, e.g. "execute". Omit to list available skills.'),
           },
         },
-        ({ name }) => runToolEffect(Effect.succeed(skillsResult(name, executeInventory, config.additionalSkills?.() ?? []))),
+        ({ name }) =>
+          runToolEffect(
+            Effect.suspend(() => {
+              const additional = config.additionalSkills?.() ?? [];
+              return Effect.isEffect(additional) ? additional : Effect.succeed(additional);
+            }).pipe(Effect.map((additional) => skillsResult(name, executeInventory, additional))),
+          ),
       ),
     ).pipe(
       Effect.withSpan("mcp.host.register_tool", {

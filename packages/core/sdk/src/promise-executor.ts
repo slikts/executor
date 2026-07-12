@@ -102,6 +102,15 @@ export interface ExecutorConfig<TPlugins extends readonly AnyPlugin[] = readonly
   /** The acting member. Omit for a pure-org executor (no `owner:"user"`). */
   readonly subject?: string;
   readonly plugins?: TPlugins;
+  /**
+   * Enable the built-in `core-tools` plugin (agent-facing static tools over
+   * the v2 surface). Mirrors the Effect config's `coreTools` shape.
+   */
+  readonly coreTools?: {
+    readonly webBaseUrl?: string;
+    readonly orgSlug?: string;
+    readonly includeProviders?: boolean;
+  };
   /** Config-level plain Promise credential providers. */
   readonly providers?: readonly PromiseCredentialProvider[];
   /**

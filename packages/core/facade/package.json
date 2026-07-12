@@ -1,6 +1,9 @@
 {
   "name": "@slikts/executor",
   "version": "0.0.1",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -22,27 +25,30 @@
     "./plugin-mcp": {
       "types": "./dist/plugin-mcp.d.ts",
       "default": "./dist/plugin-mcp.js"
+    },
+    "./plain": {
+      "types": "./dist/plain.d.ts",
+      "default": "./dist/plain.js"
     }
   },
-  "files": ["dist"],
   "scripts": {
     "build": "tsup"
   },
   "dependencies": {
-    "@executor-js/sdk": "workspace:*",
-    "@executor-js/host-mcp": "workspace:*",
+    "@executor-js/config": "workspace:*",
     "@executor-js/execution": "workspace:*",
-    "@executor-js/plugin-mcp": "workspace:*",
+    "@executor-js/host-mcp": "workspace:*",
     "@executor-js/plugin-file-secrets": "workspace:*",
+    "@executor-js/plugin-mcp": "workspace:*",
     "@executor-js/runtime-quickjs": "workspace:*",
-    "@executor-js/config": "workspace:*"
+    "@executor-js/sdk": "workspace:*"
   },
   "devDependencies": {
     "tsup": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "effect": ">=4.0.0-beta.59",
-    "@modelcontextprotocol/sdk": "^1.12.1"
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "effect": ">=4.0.0-beta.59"
   }
 }
